@@ -14,6 +14,7 @@ import { FC, PropsWithChildren, ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 
 import { SET_COMPANY_USER_INFO } from '@/store/actionTypes';
+import { hasPermissionFlag } from './utils';
 
 interface IProps {
   flag?: string;
@@ -25,8 +26,7 @@ const Permission: FC<PropsWithChildren<IProps>> = ({ children, flag }) => {
   );
   const permissions = selector?.userInfo?.permissions || [];
 
-  const isRender =
-    permissions.length > 0 && flag && permissions?.includes(flag.trim());
+  const isRender = hasPermissionFlag(permissions, flag);
 
   if (!isRender) return null;
 
@@ -45,8 +45,7 @@ export const usePermission = (flag: string) => {
   );
   const permissions = selector?.userInfo?.permissions || [];
 
-  const hasPermission =
-    permissions.length > 0 && flag && permissions?.includes(flag.trim());
+  const hasPermission = hasPermissionFlag(permissions, flag);
   return hasPermission;
 };
 
@@ -62,7 +61,6 @@ export const getPermission = (flag: string) => {
     } catch (error) {}
   }
 
-  const hasPermission =
-    permissions.length > 0 && flag && permissions?.includes(flag.trim());
+  const hasPermission = hasPermissionFlag(permissions, flag);
   return hasPermission;
 };

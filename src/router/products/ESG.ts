@@ -1,9 +1,144 @@
 import I18N from '@src/lang/I18N';
 import { lazy } from 'react';
 
+import type { Routes } from '../config';
 import { RouteMaps } from '../route-paths';
 
-export const ESGRoutes = [
+const esgSubRoutes: Routes[] = [
+  {
+    path: RouteMaps.ESGManagement,
+    component: lazy(() => import('@views/ESG/Management')),
+    meta: {
+      title: I18N.esg.esgIndicators,
+    },
+    children: [
+      {
+        path: RouteMaps.ESGIndicatorInfo,
+        component: lazy(() => import('@views/ESG/IndicatorInfo')),
+      },
+    ],
+  },
+  {
+    path: RouteMaps.ESGFillManagement,
+    component: lazy(() => import('@/views/ESG/FillManagement')),
+    meta: {
+      title: I18N.router.esgTasks,
+    },
+    children: [
+      {
+        path: RouteMaps.ESGOrgTaskList,
+        component: lazy(() => import('@views/ESG/OrgTaskList')),
+      },
+      {
+        path: RouteMaps.ESGIndicatorFillInfo,
+        component: lazy(() => import('@views/ESG/IndicatorFillInfo')),
+      },
+    ],
+  },
+  {
+    path: RouteMaps.ESGSummary,
+    component: lazy(() => import('@/views/ESG/Summary')),
+    meta: {
+      title: I18N.router.esgData,
+    },
+  },
+  {
+    path: RouteMaps.ESGAiGenerateDetail,
+    component: lazy(() => import('@views/ESG/AiGenerateDetail')),
+    meta: {
+      title: 'ESG指标体系管理',
+    },
+  },
+  {
+    path: RouteMaps.ESGAiGenerateOutline,
+    component: lazy(() => import('@views/ESG/AiGenerateOutline')),
+    meta: {
+      title: 'ESG指标体系管理',
+    },
+  },
+  {
+    path: RouteMaps.ESGAiGenerateHome,
+    component: lazy(() => import('@views/ESG/AiGenerateHome')),
+    meta: {
+      title: 'ESG指标体系管理',
+    },
+  },
+  {
+    path: RouteMaps.ESGAiGenerateList,
+    component: lazy(() => import('@views/ESG/AiGenerateList')),
+    meta: {
+      title: 'ESG指标体系管理',
+    },
+  },
+  {
+    path: RouteMaps.ESGMsciRatingList,
+    component: lazy(() => import('@views/ESG/MsciRatingList')),
+    meta: {
+      title: 'MSCI 评级列表',
+    },
+  },
+  {
+    path: RouteMaps.ESGMsciRatingDetail,
+    component: lazy(() => import('@views/ESG/MsciRatingDetail')),
+    meta: {
+      title: 'MSCI 评级详情',
+    },
+  },
+  {
+    path: RouteMaps.ESGImportanceAnalysis,
+    component: lazy(() => import('@views/ESG/ImportanceAnalysis')),
+    meta: {
+      title: '重要性议题分析',
+    },
+    children: [
+      {
+        path: RouteMaps.ESGImportanceAnalysisAdd,
+        component: lazy(() => import('@views/ESG/ImportanceAnalysisInfo')),
+        meta: {
+          title: '新增重要性议题分析',
+        },
+      },
+      {
+        path: RouteMaps.ESGImportanceAnalysisInfo,
+        component: lazy(() => import('@views/ESG/ImportanceAnalysisInfo')),
+        meta: {
+          title: '重要性议题分析详情',
+        },
+      },
+      {
+        path: RouteMaps.ESGImportanceAnalysisFill,
+        id: 'ESGImportanceAnalysisFill',
+        component: lazy(() => import('@views/ESG/ImportanceAnalysisFill')),
+        meta: {
+          title: '重要性议题分析填写',
+        },
+      },
+      {
+        path: RouteMaps.ESGImportanceAnalysisResult,
+        component: lazy(() => import('@views/ESG/ImportanceAnalysisResult')),
+        meta: {
+          title: '重要性议题分析结果',
+        },
+      },
+    ],
+  },
+];
+
+const mapEsgRoutePrefix = (
+  routes: Routes[],
+  prefix: '/ESG2' | '/esg2',
+): Routes[] =>
+  routes.map(route => ({
+    ...route,
+    path: route.path.replace(/^\/ESG(?=\/|$)/, prefix),
+    redirect: route.redirect?.replace(/^\/ESG(?=\/|$)/, prefix),
+    id: route.id ? `${route.id}_${prefix.slice(1)}` : undefined,
+    children: route.children
+      ? mapEsgRoutePrefix(route.children, prefix)
+      : undefined,
+  }));
+
+export const ESGRoutes: Routes[] = [
   {
     path: RouteMaps.ESG,
     meta: {
@@ -11,126 +146,24 @@ export const ESGRoutes = [
       icon: 'DashboardOutlined',
     },
     redirect: RouteMaps.ESGManagement,
-    children: [
-      {
-        path: RouteMaps.ESGManagement,
-        component: lazy(() => import('@views/ESG/Management')),
-        meta: {
-          title: I18N.esg.esgIndicators,
-        },
-        children: [
-          {
-            path: RouteMaps.ESGIndicatorInfo,
-            component: lazy(() => import('@views/ESG/IndicatorInfo')),
-          },
-        ],
-      },
-      {
-        path: RouteMaps.ESGFillManagement,
-        component: lazy(() => import('@/views/ESG/FillManagement')),
-        meta: {
-          title: I18N.router.esgTasks,
-        },
-        children: [
-          {
-            path: RouteMaps.ESGOrgTaskList,
-            component: lazy(() => import('@views/ESG/OrgTaskList')),
-          },
-          {
-            path: RouteMaps.ESGIndicatorFillInfo,
-            component: lazy(() => import('@views/ESG/IndicatorFillInfo')),
-          },
-        ],
-      },
-      {
-        path: RouteMaps.ESGSummary,
-        component: lazy(() => import('@/views/ESG/Summary')),
-        meta: {
-          title: I18N.router.esgData,
-        },
-      },
-      {
-        path: RouteMaps.ESGAiGenerateDetail,
-        component: lazy(() => import('@views/ESG/AiGenerateDetail')),
-        meta: {
-          title: 'ESG指标体系管理',
-        },
-      },
-      {
-        path: RouteMaps.ESGAiGenerateOutline,
-        component: lazy(() => import('@views/ESG/AiGenerateOutline')),
-        meta: {
-          title: 'ESG指标体系管理',
-        },
-      },
-      {
-        path: RouteMaps.ESGAiGenerateHome,
-        component: lazy(() => import('@views/ESG/AiGenerateHome')),
-        meta: {
-          title: 'ESG指标体系管理',
-        },
-      },
-      {
-        path: RouteMaps.ESGAiGenerateList,
-        component: lazy(() => import('@views/ESG/AiGenerateList')),
-        meta: {
-          title: 'ESG指标体系管理',
-        },
-      },
-      {
-        path: RouteMaps.ESGMsciRatingList,
-        component: lazy(() => import('@views/ESG/MsciRatingList')),
-        meta: {
-          title: 'MSCI 评级列表',
-        },
-      },
-      {
-        path: RouteMaps.ESGMsciRatingDetail,
-        component: lazy(() => import('@views/ESG/MsciRatingDetail')),
-        meta: {
-          title: 'MSCI 评级详情',
-        },
-      },
-      {
-        path: RouteMaps.ESGImportanceAnalysis,
-        component: lazy(() => import('@views/ESG/ImportanceAnalysis')),
-        meta: {
-          title: '重要性议题分析',
-        },
-        children: [
-          {
-            path: RouteMaps.ESGImportanceAnalysisAdd,
-            component: lazy(() => import('@views/ESG/ImportanceAnalysisInfo')),
-            meta: {
-              title: '新增重要性议题分析',
-            },
-          },
-          {
-            path: RouteMaps.ESGImportanceAnalysisInfo,
-            component: lazy(() => import('@views/ESG/ImportanceAnalysisInfo')),
-            meta: {
-              title: '重要性议题分析详情',
-            },
-          },
-          {
-            path: RouteMaps.ESGImportanceAnalysisFill,
-            id: 'ESGImportanceAnalysisFill',
-            component: lazy(() => import('@views/ESG/ImportanceAnalysisFill')),
-            meta: {
-              title: '重要性议题分析填写',
-            },
-          },
-          {
-            path: RouteMaps.ESGImportanceAnalysisResult,
-            component: lazy(
-              () => import('@views/ESG/ImportanceAnalysisResult'),
-            ),
-            meta: {
-              title: '重要性议题分析结果',
-            },
-          },
-        ],
-      },
-    ],
+    children: esgSubRoutes,
+  },
+  {
+    path: '/ESG2',
+    meta: {
+      title: 'ESG2',
+      icon: 'DashboardOutlined',
+    },
+    redirect: '/ESG2/management',
+    children: mapEsgRoutePrefix(esgSubRoutes, '/ESG2'),
+  },
+  {
+    path: '/esg2',
+    meta: {
+      title: 'ESG2',
+      icon: 'DashboardOutlined',
+    },
+    redirect: '/esg2/msciRatingList',
+    children: mapEsgRoutePrefix(esgSubRoutes, '/esg2'),
   },
 ];
