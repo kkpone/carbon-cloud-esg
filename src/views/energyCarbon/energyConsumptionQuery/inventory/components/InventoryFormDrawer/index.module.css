@@ -1,0 +1,16 @@
+.fullWidth {
+  width: 100%;
+}
+
+/* 数量输入和单位共用当前列宽，单位保持单行，不被输入框挤压换行。 */
+.quantityGroup {
+  width: 100%;
+}
+.quantityInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+.quantityUnit {
+  white-space: nowrap;
+}

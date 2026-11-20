@@ -1,0 +1,29 @@
+.fullWidth {
+  width: 100%;
+}
+
+/* 能耗台账能源名称筛选固定宽度，长名称沿用 Select 的省略展示，避免撑开筛选行。 */
+.energyNameFilter {
+  width: 196px;
+  min-width: 196px;
+  max-width: 196px;
+}
+
+/* 数量与价值保持和能耗填报详情一致的“数值 + 单位”布局。 */
+.numberGroup {
+  width: 100%;
+}
+
+.numberInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+.numberUnit {
+  flex: 0 0 96px;
+  min-width: 96px;
+  max-width: 96px;
+  text-align: center;
+  white-space: nowrap;
+}

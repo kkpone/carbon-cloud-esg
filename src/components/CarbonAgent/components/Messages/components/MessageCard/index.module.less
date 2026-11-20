@@ -1,0 +1,116 @@
+.card {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 14px 0;
+  padding: 6px;
+  border: 1px solid #e2eae6;
+  border-radius: 12px;
+  background: #f5f8f6;
+}
+.result {
+  border-color: #b9e5db;
+  background: linear-gradient(180deg, #effbf7, #f7fcfa);
+}
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px 10px;
+  color: #477369;
+  > :global(.anticon) {
+    flex: none;
+    margin-top: 3px;
+    font-size: 16px;
+    color: #328e7c;
+  }
+  strong {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 22px;
+    overflow-wrap: anywhere;
+  }
+}
+.status {
+  flex: none;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #e9f3ee;
+  color: #628173;
+  font-size: 11px;
+  line-height: 22px;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fff;
+}
+.title {
+  margin: 0;
+  color: #284e40;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  overflow-wrap: anywhere;
+}
+.description {
+  margin: 0;
+  color: #718478;
+  font-size: 13px;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #edf2ee;
+  :global(.ant-btn) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 36px;
+    height: auto;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 13px;
+    white-space: normal;
+  }
+}
+@container (max-width: 400px) {
+  .actions :global(.ant-btn) {
+    flex: 1;
+  }
+}
+.enterpriseMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.reportFiles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+.reportFileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #026961;
+  font-size: 13px;
+  line-height: 20px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

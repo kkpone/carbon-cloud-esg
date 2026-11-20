@@ -1,0 +1,301 @@
+.awards {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  color: #04252b;
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+}
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  > h3 {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 30px;
+  }
+}
+.individual {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.rankings {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 352fr) minmax(0, 420fr) minmax(0, 352fr);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12.8114cqw 0 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 0 0 21px 21px;
+    pointer-events: none;
+  }
+}
+.rank {
+  min-width: 0;
+  position: relative;
+}
+.rankDivider {
+  position: absolute;
+  top: calc(15.8363cqw + 24px);
+  left: -0.5px;
+  pointer-events: none;
+}
+.silver {
+  --award-color: #537dac;
+}
+.gold {
+  --award-color: #c68d27;
+  z-index: 1;
+}
+.bronze {
+  --award-color: #c86c39;
+}
+.individual .bronze {
+  --award-color: #c68d27;
+}
+.rewards li,
+.topTen li {
+  font-size: 14px;
+  line-height: 24px;
+}
+.rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 24px 0 0;
+  padding: 0 24px 28px;
+  list-style: none;
+  li {
+    position: relative;
+    padding-left: 18px;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--award-color);
+    }
+  }
+}
+.topTen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 20px 20px;
+  background: linear-gradient(90deg, #0cbf9f00, #0cbf9f1a 50%, #0cbf9f00);
+  h4 {
+    position: relative;
+    width: 149px;
+    height: 36px;
+    flex-shrink: 0;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: none;
+    }
+    span {
+      position: relative;
+      display: block;
+      text-align: center;
+      padding: 4px 0;
+      color: #fff;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 500;
+    }
+  }
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 24px 50px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    position: relative;
+    padding-left: 18px;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #0cbf9f;
+    }
+  }
+}
+.benefits {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  background: #ecfaf7;
+  border: 1px solid #e4edec;
+  padding: 20px 32px;
+  border-radius: 12px;
+  > div {
+    min-width: 0;
+  }
+  p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  h3 {
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  strong {
+    color: #078a74;
+    font-weight: 600;
+  }
+}
+.awards .benefits h3 {
+  color: #087d70;
+}
+.contribution {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 106px;
+  padding: 24px 32px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #fceed6 50%, #fffdfa 75%, #fceed6);
+}
+.contributionPattern {
+  position: absolute;
+  top: 11px;
+  right: -66px;
+  pointer-events: none;
+}
+.medal {
+  position: relative;
+  flex: 0 0 50px;
+  height: 50px;
+  img {
+    position: absolute;
+    display: block;
+    max-width: none;
+  }
+}
+.medalOuter {
+  left: -3.3333px;
+  top: -3.3333px;
+}
+.medalInner {
+  inset: 0;
+}
+.medalGraphic {
+  position: absolute;
+  left: 5.388px;
+  top: 5.3916px;
+  width: 39.2157px;
+  height: 39.2157px;
+  > img:nth-child(1) {
+    left: 29.16%;
+    top: 41.67%;
+  }
+  > img:nth-child(2),
+  > img:nth-child(3) {
+    left: 20.84%;
+    top: 12.5%;
+  }
+  > img:nth-child(4) {
+    left: 33.68%;
+    top: 27.6%;
+  }
+  > img:nth-child(5) {
+    left: 36.12%;
+    top: 53.6%;
+  }
+}
+.contributionCopy {
+  position: relative;
+  min-width: 0;
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    margin-bottom: 8px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 50px;
+  height: 50px;
+  img {
+    display: block;
+  }
+}
+.description {
+  white-space: pre-wrap;
+}
+
+@container (max-width: 850px) {
+  .rankDivider {
+    display: none;
+  }
+  .rankings {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    &::before {
+      display: none;
+    }
+  }
+  .rank > div {
+    max-width: 420px;
+    margin-inline: auto;
+  }
+  .gold {
+    order: -1;
+  }
+  .rewards {
+    margin-top: 0;
+    padding-top: 24px;
+    border: 1px solid #e5e7eb;
+    border-top: 0;
+    border-radius: 0 0 20px 20px;
+    li {
+      white-space: normal;
+    }
+  }
+  .topTen ul {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .benefits,
+  .contribution {
+    align-items: flex-start;
+    padding: 24px 20px;
+    gap: 16px;
+  }
+}

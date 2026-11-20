@@ -1,0 +1,55 @@
+.card {
+  display: flex;
+  min-height: 459px;
+  padding: 0 24px 24px;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 8px;
+  background: #fff;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 70px;
+  }
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    color: #04252b;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+
+    i {
+      width: 3px;
+      height: 20px;
+      border-radius: 8px;
+      background: #026961;
+    }
+  }
+
+  :global(.ant-select) {
+    width: 160px;
+  }
+
+  :global(.ant-select-selector) {
+    height: 38px !important;
+    border-color: #d2d6da !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+  }
+
+  :global(.ant-select-selection-item),
+  :global(.ant-select-selection-placeholder) {
+    line-height: 36px !important;
+  }
+}
+
+.chart {
+  height: 349px !important;
+}

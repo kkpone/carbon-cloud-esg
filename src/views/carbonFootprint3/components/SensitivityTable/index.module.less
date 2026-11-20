@@ -1,0 +1,102 @@
+@import '../../styles/analysis.less';
+.wrapper {
+  .analysisControls();
+  .analysisTable();
+  min-width: 0;
+  width: 100%;
+
+  && :global(.ant-table .ant-table-thead > tr > th.ant-table-selection-column),
+  && :global(.ant-table .ant-table-tbody > tr > td.ant-table-selection-column) {
+    padding-inline: 12px;
+    text-align: center;
+  }
+}
+.filter,
+.activeFilter {
+  && {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+  }
+}
+.activeFilter {
+  && {
+    background: #ddf4f2;
+    outline: 1px solid #026961;
+  }
+}
+.filterContent {
+  .analysisControls();
+  padding: 4px;
+  :global(.ant-checkbox-group) {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.helpIcon {
+  height: 22px;
+  line-height: 0;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+}
+
+.columnTitle {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  :global(.ant-space-item) {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.table {
+  container-type: inline-size;
+}
+.columnTitle {
+  max-width: 100%;
+  :global(.ant-space-item:first-child) {
+    display: block;
+    min-width: 0;
+  }
+  :global(.ant-space-item:last-child) {
+    flex: none;
+  }
+}
+@container (max-width: 600px) {
+  .table.table
+    :global(
+      .ant-table .ant-table-thead > tr > th:not(.ant-table-selection-column)
+    ),
+  .table.table
+    :global(
+      .ant-table .ant-table-tbody > tr > td:not(.ant-table-selection-column)
+    ) {
+    padding-inline: 6px;
+    white-space: nowrap;
+  }
+  .table.table :global(.ant-table .ant-table-thead > tr > th) {
+    font-size: 12px;
+  }
+  .columnTitle {
+    gap: 4px !important;
+  }
+  .filter,
+  .activeFilter {
+    && {
+      width: 16px;
+      min-width: 16px;
+    }
+  }
+}

@@ -1,0 +1,147 @@
+@import (reference) '@src/styles/var.less';
+
+.productModal {
+  :global {
+    .ant-modal-header {
+      margin-bottom: 16px !important;
+    }
+  }
+}
+
+.modalFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.lcaEntry {
+  color: @primary-color;
+  border-color: @primary-color;
+}
+
+.productForm {
+  :global {
+    .ant-formily-item {
+      margin-bottom: 0;
+    }
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+  }
+}
+
+.productFields:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.productBaseInfoRow {
+  display: flex;
+  column-gap: 20px;
+}
+
+.productPicUploadWrapper {
+  width: 165px;
+  height: 152px;
+  overflow: hidden;
+}
+
+.productPicUpload {
+  :global {
+    .ant-upload,
+    .ant-upload-list-item,
+    .ant-upload-list-item-container {
+      width: 165px !important;
+      height: 152px !important;
+    }
+  }
+}
+
+.productNameWrapper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.productInfoRow {
+  display: flex;
+  column-gap: 32px;
+  :global {
+    .ant-formily-item {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+}
+
+.perWeightRow {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  column-gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .productBaseInfoRow,
+  .productInfoRow {
+    flex-direction: column;
+    row-gap: 16px;
+  }
+}
+
+.lcaTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-right: 32px;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.lcaModal {
+  :global {
+    .ant-modal-content {
+      display: flex;
+      flex-direction: column;
+      // 保留浏览器端 min 计算，避免 LESS 将视口上限折叠成固定 1000px。
+      max-height: ~'min(1000px, calc(100vh - 64px))';
+      max-height: ~'min(1000px, calc(100dvh - 64px))';
+      overflow: hidden;
+    }
+
+    .ant-modal-header {
+      flex-shrink: 0;
+      margin-bottom: 16px !important;
+    }
+
+    .ant-modal-body {
+      min-height: 0;
+      padding-bottom: 4px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .ant-modal-footer {
+      flex-shrink: 0;
+      margin-top: 32px;
+    }
+  }
+}

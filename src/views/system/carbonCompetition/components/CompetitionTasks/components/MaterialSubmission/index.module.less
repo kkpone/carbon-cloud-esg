@@ -1,0 +1,50 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.panel {
+  min-width: 0;
+  :global(.ant-select) {
+    width: 100%;
+    min-height: 40px;
+  }
+  :global(.ant-descriptions-item-content) {
+    overflow-wrap: anywhere;
+  }
+}
+.hint {
+  color: #6c757d;
+  font-size: 13px;
+  line-height: 22px;
+  margin: 0 0 4px;
+}
+.tools {
+  :global(.ant-collapse-header) {
+    padding: 4px 0 !important;
+    color: #006d66 !important;
+  }
+  :global(.ant-collapse-content-box) {
+    padding: 12px 0 !important;
+  }
+}
+.toolFields {
+  display: grid;
+  gap: 12px;
+  :global(.ant-space) {
+    width: 100%;
+  }
+}
+.actions {
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: 12px;
+  :global(.ant-btn) {
+    height: 38px;
+  }
+  :global(.ant-btn-primary:not(:disabled)) {
+    background: #004541;
+  }
+}

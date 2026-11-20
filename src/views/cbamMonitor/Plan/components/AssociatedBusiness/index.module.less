@@ -1,0 +1,28 @@
+.wrapper {
+  min-width: 0;
+  padding: 0 20px 20px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.pushConfirmContent {
+  align-items: flex-start;
+
+  > :global(.anticon) {
+    margin-top: 3px;
+  }
+
+  > span:last-child {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

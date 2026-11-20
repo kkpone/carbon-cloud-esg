@@ -1,0 +1,312 @@
+.roster {
+  min-width: 0;
+  width: 100%;
+  max-width: 730px;
+  margin: 0 auto;
+  color: #04252b;
+  > :global(.ant-alert) {
+    margin-bottom: 16px;
+  }
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+  h1 {
+    margin: 0 0 8px;
+    color: inherit;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+  }
+  p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 22px;
+    color: #999ea4;
+  }
+  > span {
+    color: #004541;
+    flex-shrink: 0;
+  }
+}
+.invitation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #ecfaf7;
+  border: 1px solid #e4edec;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  :global(.ant-btn) {
+    color: #026961;
+    border: 1px dashed #026961;
+    height: auto;
+    min-height: 38px;
+    white-space: normal;
+  }
+}
+.brand {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  > div {
+    width: 53.2px;
+    height: 51.635px;
+    position: relative;
+    overflow: hidden;
+  }
+  img {
+    position: absolute;
+    height: 112.48%;
+    width: 142.31%;
+    max-width: none;
+    left: -21.16%;
+    top: -8.73%;
+  }
+}
+.invitationText {
+  flex: 1;
+  min-width: 0;
+  border-left: 1px solid #e4edec;
+  padding-left: 16px;
+  strong {
+    color: #026961;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+  p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+.table {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  :global(.ant-table-thead > tr > th) {
+    background: #f7f8f9;
+    font-weight: 500;
+    height: 48px;
+    padding: 12px 12px;
+    border: none;
+    &::before {
+      display: none !important;
+    }
+  }
+  :global(.ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 5px 12px;
+    border-bottom: 1px solid #f7f8f9;
+  }
+  :global(.ant-input) {
+    height: 36px;
+    padding: 6px 10px;
+  }
+  :global(.ant-table-expanded-row > td.ant-table-cell) {
+    height: auto;
+    padding: 0 12px 10px;
+    background: #fff;
+  }
+  :global(.ant-btn-link) {
+    padding: 0;
+    height: auto;
+    white-space: normal;
+  }
+}
+.member,
+.captain {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: #f7f8f9;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.memberError {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #fff3f1;
+  color: #b9453d;
+  font-size: 12px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+  > :global(.anticon) {
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 14px;
+  }
+}
+.captain {
+  color: #026961;
+  background: #ecfaf7;
+}
+.registered,
+.unregistered {
+  display: inline-block;
+  border-radius: 20px;
+  background: #ddf4f2;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+.unregistered {
+  background: #fceedf;
+}
+.bonus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #026961;
+}
+.add {
+  margin-top: 16px;
+  min-height: 38px;
+}
+.minimum {
+  color: #999ea4;
+  margin: 16px 0 0;
+}
+.declaration {
+  margin-top: 24px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+  :global(.ant-btn) {
+    min-height: 38px;
+    height: auto;
+    white-space: normal;
+    padding-inline: 24px;
+  }
+  :global(.ant-btn-primary:disabled) {
+    color: #fff;
+    background: #b5b8bb;
+    border-color: #b5b8bb;
+  }
+}
+.back {
+  margin-right: auto;
+}
+.submitActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-left: auto;
+}
+.teamBonus {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 38px;
+  padding: 7px 16px 7px 12px;
+  border-radius: 8px;
+  background: #ecfaf7;
+  font-size: 14px;
+  line-height: 22px;
+  strong {
+    color: #0cbf9f;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+}
+.teamBonusIcon {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 18px;
+  margin-right: 4px;
+  overflow: hidden;
+  img {
+    position: absolute;
+    width: 138.89%;
+    height: 122.22%;
+    max-width: none;
+    left: -22.22%;
+    top: -11.11%;
+  }
+}
+.saveDraft {
+  margin-top: 12px;
+}
+.registeredNotice {
+  color: #026961;
+}
+.confirmModal {
+  :global(.ant-modal-content) {
+    padding: 32px;
+    border-radius: 12px;
+  }
+  :global(.ant-modal-footer) {
+    margin-top: 32px;
+  }
+  :global(.ant-modal-close) {
+    top: 32px;
+    right: 28px;
+  }
+}
+.confirmTitle {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-right: 24px;
+  font-size: 24px;
+  line-height: 32px;
+  color: #04252b;
+  img {
+    flex-shrink: 0;
+  }
+}
+.confirmHint {
+  font-size: 16px;
+  line-height: 28px;
+  margin: 32px 0 16px;
+  color: #04252b;
+}
+.smsHint {
+  background: #f7f8f9;
+  padding: 12px;
+  border-radius: 8px;
+  color: #6c757d;
+  line-height: 22px;
+}
+@media (max-width: 767px) {
+  .heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .invitation {
+    flex-wrap: wrap;
+    .invitationText {
+      flex-basis: calc(100% - 68px);
+    }
+    > :global(.ant-btn) {
+      margin-left: auto;
+    }
+  }
+  .actions,
+  .submitActions {
+    gap: 12px;
+  }
+  .confirmTitle {
+    font-size: 20px;
+  }
+}

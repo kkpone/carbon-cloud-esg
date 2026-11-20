@@ -1,0 +1,174 @@
+.banner {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 24px;
+  background: #effaf7;
+  border-radius: 12px;
+}
+
+.content {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-width: 0;
+}
+
+.avatarShell {
+  display: block;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.avatarShell img {
+  display: block;
+  width: 175px;
+  max-width: none;
+  height: 36px;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.headingRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.headingRow h2 {
+  margin: 0;
+  color: #04252b;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: 'PingFang SC', sans-serif;
+  line-height: 24px;
+}
+
+.badge {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 20px;
+  padding: 0 8px;
+  color: #026961;
+  font-weight: 400;
+  font-size: 12px;
+  font-family: 'PingFang SC', sans-serif;
+  line-height: 20px;
+  background: #ddf4f2;
+  border-radius: 10px;
+}
+
+.copy p {
+  max-width: none;
+  overflow: hidden;
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+  font-family: 'PingFang SC', sans-serif;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: auto !important;
+  min-height: 38px;
+  padding: 8px 0 !important;
+  color: #004541 !important;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: 'PingFang SC', sans-serif;
+  line-height: 22px;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.action:hover,
+.action:focus-visible {
+  color: #026961 !important;
+  background: transparent !important;
+}
+
+.action:active {
+  color: #004541 !important;
+  background: transparent !important;
+}
+
+.actionIcon {
+  display: block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 1100px) {
+  .banner {
+    gap: 16px;
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .content {
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .avatarShell {
+    flex-basis: 30px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .avatarShell img {
+    width: 146px;
+    height: 30px;
+  }
+
+  .headingRow {
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+
+  .headingRow h2 {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .copy p {
+    overflow: visible;
+    font-size: 13px;
+    line-height: 20px;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .action {
+    align-self: flex-end;
+  }
+}

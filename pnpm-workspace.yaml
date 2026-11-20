@@ -1,0 +1,13 @@
+shamefullyHoist: true
+
+overrides:
+  react-router: ~5.3.4
+  react-router-dom: ~5.3.4
+  '@babel/generator': 7.24.8
+  '@mui/core-downloads-tracker': 6.1.10
+  prosemirror-markdown: npm:carbons-prosemirror-markdown@^1.13.8
+
+allowBuilds:
+  canvas: set this to true or false
+  core-js: set this to true or false
+  fsevents: set this to true or false

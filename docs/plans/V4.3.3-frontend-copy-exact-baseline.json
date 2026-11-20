@@ -1,0 +1,1062 @@
+{
+  "i18n_translation": {
+    "baseline_id": "V4.3.3-frontend-copy-fix",
+    "revision": "feishu-952-i18n-20260910",
+    "source": "https://carbonstop.feishu.cn/docx/HzTkdOP2toaTJdxPw0QcsUn8nDd revision 952; 2026-09-10 用户确认按需求原文",
+    "items": [
+      {
+        "id": "REQ-LCA-TEXT-030",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "加工处理/标准/技术路线",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "加工处理/标准/技术路线",
+        "resource_key": "treatmentStandardsRoutes"
+      },
+      {
+        "id": "LCA-I18N-mixNLocationTypes",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "混合与地理类型",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "混合与地理类型",
+        "resource_key": "mixNLocationTypes"
+      },
+      {
+        "id": "LCA-I18N-includedActivitiesStart",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "活动过程开始边界",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "活动过程开始边界",
+        "resource_key": "includedActivitiesStart"
+      },
+      {
+        "id": "LCA-I18N-includedActivitiesEnd",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "活动过程结束边界",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "活动过程结束边界",
+        "resource_key": "includedActivitiesEnd"
+      },
+      {
+        "id": "LCA-I18N-lcaClassification",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "分类",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "分类",
+        "resource_key": "lcaClassification"
+      },
+      {
+        "id": "LCA-I18N-generalComment",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "数据集的一般评论",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "数据集的一般评论",
+        "resource_key": "generalComment"
+      },
+      {
+        "id": "LCA-I18N-technologicalApplicability",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "产品或过程的技术目的",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "产品或过程的技术目的",
+        "resource_key": "technologicalApplicability"
+      },
+      {
+        "id": "LCA-I18N-dataCutoffNCompletenessPrinciples",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "数据cut-off和完整性原则",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "数据cut-off和完整性原则",
+        "resource_key": "dataCutoffNCompletenessPrinciples"
+      },
+      {
+        "id": "LCA-I18N-annualSupplyOrProductionVolume",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "每年供应或生产的体量",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "每年供应或生产的体量",
+        "resource_key": "annualSupplyOrProductionVolume"
+      },
+      {
+        "id": "LCA-I18N-intendedApplications",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "数据集建模的预期应用场景",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "数据集建模的预期应用场景",
+        "resource_key": "intendedApplications"
+      },
+      {
+        "id": "REQ-LCA-TEXT-009",
+        "source_location": "本文件既有LCA原文基线及任务开始时入口/层级/占位符；本次用户授权翻译",
+        "source_quote": "LCA信息管理",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "LCA信息管理",
+        "resource_key": "lcaInformationManagement"
+      },
+      {
+        "id": "REQ-LCA-TEXT-028",
+        "source_location": "本文件既有LCA原文基线及任务开始时入口/层级/占位符；本次用户授权翻译",
+        "source_quote": "产品级",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "产品级",
+        "resource_key": "productLevel"
+      },
+      {
+        "id": "REQ-LCA-TEXT-065",
+        "source_location": "本文件既有LCA原文基线及任务开始时入口/层级/占位符；本次用户授权翻译",
+        "source_quote": "核算级",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "核算级",
+        "resource_key": "accountLevel"
+      },
+      {
+        "id": "LCA-I18N-basicInformation",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "基本信息",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "基本信息",
+        "resource_key": "basicInformation"
+      },
+      {
+        "id": "LCA-I18N-modelingInformation",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "建模信息",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "建模信息",
+        "resource_key": "modelingInformation"
+      },
+      {
+        "id": "LCA-I18N-managementInformation",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "管理信息",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "管理信息",
+        "resource_key": "managementInformation"
+      },
+      {
+        "id": "REQ-LCA-TEXT-066",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "已自动带入产品级LCA信息。本核算中的修改仅对当前核算生效，不会覆盖产品级信息。",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "已自动带入产品级LCA信息。本核算中的修改仅对当前核算生效，不会覆盖产品级信息。",
+        "resource_key": "accountInheritanceHint"
+      },
+      {
+        "id": "LCA-SCREEN-PLACEHOLDER",
+        "source_location": "本文件既有LCA原文基线及任务开始时入口/层级/占位符；本次用户授权翻译",
+        "source_quote": "请选择",
+        "context": "产品/核算LCA",
+        "kind": "text",
+        "expected": "请选择",
+        "resource_key": "pleaseSelect"
+      },
+      {
+        "id": "REQ-DESC-TEXT-008",
+        "source_location": "4.3.4 / CzPfdqCeRoBJj8x727JcDqGTnbg / A5TcdCoChoDvMDx3eaLceNEGnpb / BGYXd0OCJodz2UxSyjpcZV9anRh",
+        "source_quote": "排放源描述",
+        "context": "现有非运输排放源描述/匹配入口，保留现有显隐条件",
+        "kind": "text",
+        "expected": "排放源描述",
+        "resource_key": "emissionSourceDescription"
+      },
+      {
+        "id": "LCA-I18N-emissionSourceDescriptionPlaceholder",
+        "source_location": "4.3.4 / CzPfdqCeRoBJj8x727JcDqGTnbg / A5TcdCoChoDvMDx3eaLceNEGnpb / BGYXd0OCJodz2UxSyjpcZV9anRh",
+        "source_quote": "请描述排放源，可包含数据来源、型号、材质、处置方式、计算方法等",
+        "context": "现有非运输排放源描述/匹配入口，保留现有显隐条件",
+        "kind": "text",
+        "expected": "请描述排放源，可包含数据来源、型号、材质、处置方式、计算方法等",
+        "resource_key": "emissionSourceDescriptionPlaceholder"
+      },
+      {
+        "id": "REQ-DESC-TEXT-009",
+        "source_location": "4.3.4 / CzPfdqCeRoBJj8x727JcDqGTnbg / A5TcdCoChoDvMDx3eaLceNEGnpb / BGYXd0OCJodz2UxSyjpcZV9anRh",
+        "source_quote": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+        "context": "现有非运输排放源描述/匹配入口，保留现有显隐条件",
+        "kind": "text",
+        "expected": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+        "resource_key": "emissionDescriptionMatchHint"
+      },
+      {
+        "id": "REQ-DESC-TEXT-010",
+        "source_location": "4.3.4 / CzPfdqCeRoBJj8x727JcDqGTnbg / A5TcdCoChoDvMDx3eaLceNEGnpb / BGYXd0OCJodz2UxSyjpcZV9anRh",
+        "source_quote": "智能匹配",
+        "context": "现有非运输排放源描述/匹配入口，保留现有显隐条件",
+        "kind": "text",
+        "expected": "智能匹配",
+        "resource_key": "emissionDescriptionMatchLabel"
+      },
+      {
+        "id": "LCA-I18N-FIELD-ORDER",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "加工处理/标准/技术路线 → 混合与地理类型 → 活动过程开始边界 → 活动过程结束边界 → 分类 → 数据集的一般评论 → 产品或过程的技术目的 → 数据cut-off和完整性原则 → 每年供应或生产的体量 → 数据集建模的预期应用场景",
+        "context": "产品和核算共享字段顺序",
+        "kind": "order",
+        "expected": [
+          "加工处理/标准/技术路线",
+          "混合与地理类型",
+          "活动过程开始边界",
+          "活动过程结束边界",
+          "分类",
+          "数据集的一般评论",
+          "产品或过程的技术目的",
+          "数据cut-off和完整性原则",
+          "每年供应或生产的体量",
+          "数据集建模的预期应用场景"
+        ]
+      },
+      {
+        "id": "LCA-I18N-GROUP-ORDER",
+        "source_location": "4.3.3 / UCAAdfTjPonB2cxjTLecNPhMnOc",
+        "source_quote": "基本信息 → 建模信息 → 管理信息",
+        "context": "LCA分组顺序",
+        "kind": "order",
+        "expected": [
+          "基本信息",
+          "建模信息",
+          "管理信息"
+        ]
+      }
+    ],
+    "scope": [
+      "现有产品级/核算级LCA入口、字段、提示及排放源描述/智能匹配文案"
+    ],
+    "excluded": [
+      "BOSS/后端",
+      "动态业务输入与接口枚举值",
+      "运输场景新增描述或匹配入口",
+      "无关AI建模按钮"
+    ],
+    "supersedes": "本次用户明确选择需求原文：REQ-DESC-TEXT-010改为智能匹配，REQ-DESC-TEXT-009采用更加精确；旧快照及其验证记录仅保留历史。其余布局、校验、交互保持任务开始时实现。",
+    "source_coverage": "已读取需求正文和字段表；未展开原型图片。本次对已实现入口静态文案补国际化，不新增图片中未知功能。",
+    "verification": "三语言22键一致且非空；英文无中文残留；原文及顺序24项进行compare_exact；运输guard与任务开始时一致；用户WIP字节不变；lw pnpm build exit0；UI另列运行证据。"
+  },
+  "text_length_feedback": {
+    "latest_override": {
+      "revision": "length-input-20260910-3",
+      "source": "2026-09-10当前会话用户确认：产品名称仅作为参考；本次LCA和排放源描述达到上限不再输入，不显示字数计数，允许输入法组合期间文字变红。",
+      "contract": "用户最新双图确认：参照产品名称，组合期间只允许输入文字变红，不显示Formily长度错误红框或下方超长文案。移除本次文本字段的显式长度validator；使用既有字段上限，maxLength配合count.exceedFormatter在组件内部裁剪已确认输入，count.show=false；不在onInput中修改DOM，不自动裁剪接口回显或历史存储值。",
+      "applicable": ["LcaInformationFields的产品级、核算级及快速核算编辑入口", "EmissionDescriptionSection的主排放源及排放源库新增编辑入口"],
+      "excluded": ["产品名称参考字段", "只读预览", "运输类型未提供的描述输入", "管理端及后端接口"],
+      "supersedes": "下方length-feedback-20260908-1的允许超长输入与显示计数规则及其验证结果；历史记录保留，不作为本次验收依据。",
+      "runtime_verification": "localhost:3000 productId=6300独立标签产品级LCA：9个文本字段40/200/500超限输入均限制至上限，无计数、Formily红框及下方超长文案；已取消草稿并关闭任务标签。真实IME、核算级、快速核算和排放源描述入口运行未验证。npm run build exit0；两组件Prettier/oxlint及git diff --check通过。"
+    },
+    "revision": "length-feedback-20260908-1",
+    "source": "用户Image #1-211113及明确要求：文本长度超出后不要截断，红色字体提示超出长度，本次计划涉及的前端页面都调整。",
+    "scope": ["LCA产品级、核算级、快速核算共享文本字段", "REQ007/008排放源描述及运输描述的编辑入口"],
+    "contract": "长度上限和现有错误文案不变；移除输入硬截断，保留实际字数/上限显示；超限触发Formily错误反馈并拦截保存或匹配；缩回上限后错误解除。",
+    "unchanged": "非计划新增字段、只读预览、后端限制及数据契约",
+    "verification": {
+      "compile": "lw compile_only npm run build exit0；四个改动文件Prettier/oxlint及git diff --check通过",
+      "source": "LCA、主排放源、排放源库、运输remark全部移除原生maxLength，使用count.max/show且未配置exceedFormatter；validator及提示原文未变。安装Formily依赖证实max/maxLength对字符串按长度校验。",
+      "runtime": "localhost3000/productId6251当前ProductModal草稿：41/40、201/200、501/500均保留完整输入并显示原超限错误，子保存被阻止；缩回40后错误消失；已取消所有草稿，未落库。",
+      "unverified": "核算级、快速核算、主排放源、库与运输入口仅源码和共享契约核验，未逐页运行；未测试实际保存和外部匹配。",
+      "agent_lifecycle": "工具无close/release能力；浏览器已关闭本轮弹窗。"
+    }
+  },
+  "lca_viewport_fix": {
+    "source": "用户Image #1-210109：按页面高度，按钮固定可见；2026-09-08",
+    "revision": "viewport-20260908-1",
+    "root_cause": "构建CSS将未转义LESS min(1000px,calc(100vh - 64px))求值为max-height:1e3px，低视口下弹窗溢出。",
+    "change": "LESS转义CSS min，保留vh回退并使用dvh动态视口上限；内容内部滚动，footer不参与滚动。",
+    "previous_evidence_limit": "此前192.168.10.11浏览器页面modal类为ProductDetail/LcaInfoModal，与本仓库ProductModal不是同一运行实现，旧浏览器结果不能证明当前源码满足需求。",
+    "verification": "lw npm run build exit0；query核对最新CSS保留min与vh/dvh；gl在localhost3000/productId6251确认当前ProductModal类，真实视口1614x837，弹窗960x773/y32，body clientHeight593/scrollHeight1157，footer y747/height38处于可视区，动态max-height773px生效。无临时样式、无业务写入，弹窗已关闭。"
+  },
+  "lca_edit_draft": {
+    "baseline_id": "product-lca-edit-draft",
+    "revision": "confirmed-20260908-1",
+    "source": "Image #1-203137 clipboard-2026-09-08-203137-29974F4B.png及用户确认保存方案；2026-09-08复核",
+    "scope": "产品表单底部左侧LCA按钮，正文不直接展示LCA字段；共用产品级弹窗布局，底部取消保存固定可见。",
+    "save_contract": "编辑内LCA保存仅回填产品草稿，外层保存统一提交；LCA取消丢弃本次子草稿，外层取消丢弃全部未提交修改；产品信息直接打开LCA仍直接提交。",
+    "verification": {
+      "source_exact": "compare_exact.py --stdin 2/2 match；实际JSX及zh-CN映射独立提取",
+      "compile": "lw compile_only npm run build exit0",
+      "static": "ProductModal TSX oxlint、Prettier及git diff --check通过",
+      "runtime": "gl在productId888000验证：编辑正文无LCA字段，底部LCA信息管理/取消/保存；子保存保留LCA草稿，子取消丢弃本次修改，外层取消后产品描述和LCA临时值均丢弃；直接入口正常；LCA打开scrollTop0且取消保存固定。截图/tmp/product-edit-draft-888000.png；所有弹窗已关闭。",
+      "unverified": "未点击外层或直接入口保存，未验证API持久化；浏览器无网络明细能力，子保存无请求仅源码证据。",
+      "maintainability_review": "MAINTAINABILITY_REVIEW_NOT_RUN",
+      "agent_lifecycle": "无关闭代理工具；不能确认资源释放。"
+    },
+    "items": [
+      {"id":"REQ-LCA-TEXT-024","source_location":"Image #1-203137 左下按钮","source_quote":"LCA信息管理","context":"产品编辑底部入口","kind":"text","expected":"LCA信息管理"},
+      {"id":"LCA-EDIT-FOOTER","source_location":"Image #1-203137 底部左至右","source_quote":"LCA信息管理 → 取消 → 保存","context":"编辑产品操作区","kind":"order","expected":["LCA信息管理","取消","保存"]}
+    ]
+  },
+  "lca_screenshot": {
+    "baseline_id": "product-lca-screenshot",
+    "revision": "screenshot-20260908-202719-1",
+    "source": "用户 Image #1 / clipboard-2026-09-08-202719-2B1EEFE3.png；原生版本未提供；2026-09-08读取并由image_query复核",
+    "authorization": "用户要求按截图修改LCA弹窗，并确认入口放在产品信息下面；覆盖此前产品级弹窗布局冻结与产品级标识位置，其他范围不变。",
+    "layout": ["入口紧接产品描述之后，左对齐", "产品级标签与弹窗标题同行", "弹窗宽约960px，内容左右留白48px", "首行两个40字输入框双列，间距24px", "分类半宽，其余可见多行字段整行", "分组标题左侧青绿色竖线", "内容滚动，取消和保存固定底部右对齐"],
+    "unseen": "建模信息首字段下方被截断，沿用现有字段与契约，不推断新内容。",
+    "source_recheck": "已逐项核对图片可见区域；generalComment末字经再次图片复核为论。",
+    "verification": {
+      "source_exact_comparison": "compare_exact.py --stdin: 7/7 match；从最终源码字段数组、JSX和zh-CN映射独立提取",
+      "runtime": "gl在本地productId=888000已登录页面验证：入口在产品描述之后且同x=252；dialog宽960；首行双列；分组绿竖线；body clientHeight796/scrollHeight1124；取消保存固定底部；可见字段文案及顺序一致",
+      "runtime_scroll": "分类外框420px；实际滚动到底可见管理信息及数据集建模的预期应用场景；取消/保存仍位于y=1008，尺寸76x38；截图/tmp/lca-product-888000-bottom.png",
+      "compile": "lw compile_only npm run build exit0，最终具名字段条件修正后重新编译通过",
+      "static_checks": "改动TSX oxlint、Prettier和git diff --check通过",
+      "unverified": ["窄或低视口", "保存接口及数据库持久化", "角色权限组合"],
+      "maintainability_review": "MAINTAINABILITY_REVIEW_NOT_RUN",
+      "agent_lifecycle": "无close/release能力，不能确认代理资源释放；浏览器使用现有标签，检查后关闭弹窗。"
+    },
+    "items": [
+      {"id":"REQ-LCA-TEXT-009","source_location":"Image #1 左侧产品描述之后","source_quote":"LCA信息管理","context":"产品详情入口","kind":"text","expected":"LCA信息管理"},
+      {"id":"REQ-LCA-TEXT-027","source_location":"Image #1 弹窗左上","source_quote":"LCA信息管理","context":"产品LCA弹窗标题","kind":"text","expected":"LCA信息管理"},
+      {"id":"REQ-LCA-TEXT-028","source_location":"Image #1 弹窗标题右侧","source_quote":"产品级","context":"产品LCA标题同行绿色标签","kind":"text","expected":"产品级"},
+      {"id":"LCA-SCREEN-FIELDS","source_location":"Image #1 基本信息至建模信息首字段","source_quote":"加工处理/标准/技术路线 → 混合与地理类型 → 活动过程开始边界 → 活动过程结束边界 → 分类 → 数据集的一般评论 → 产品或过程的技术目的 → 数据cut-off和完整性原则","context":"产品级弹窗可见字段顺序","kind":"order","expected":["加工处理/标准/技术路线","混合与地理类型","活动过程开始边界","活动过程结束边界","分类","数据集的一般评论","产品或过程的技术目的","数据cut-off和完整性原则"]},
+      {"id":"LCA-SCREEN-GROUPS","source_location":"Image #1 弹窗内容分组标题","source_quote":"基本信息 → 建模信息","context":"截图可见分组","kind":"order","expected":["基本信息","建模信息"]},
+      {"id":"LCA-SCREEN-PLACEHOLDER","source_location":"Image #1 分类下拉框","source_quote":"请选择","context":"分类无值","kind":"text","expected":"请选择"},
+      {"id":"LCA-SCREEN-FOOTER","source_location":"Image #1 弹窗右下","source_quote":"取消 → 保存","context":"有编辑权限时底部按钮","kind":"order","expected":["取消","保存"]}
+    ]
+  },
+  "baseline_id": "V4.3.3-frontend-copy-fix",
+  "revision": "feishu-909-node-fix-1",
+  "source": "https://carbonstop.feishu.cn/docx/HzTkdOP2toaTJdxPw0QcsUn8nDd",
+  "projection_of": "本会话revision907前端文案审查报告，同一REQ编号",
+  "source_rechecked_at": "2026-09-08T14:48:50+08:00",
+  "review_scope_contract": {
+    "status": "locked",
+    "review_profile": "presentation_contract",
+    "included_checks": [
+      "上一轮13条确认差异的文案及顺序"
+    ],
+    "excluded_checks": [
+      "其他功能页面",
+      "管理端已对齐项",
+      "API",
+      "数据库",
+      "业务逻辑",
+      "样式颜色",
+      "TASK08"
+    ]
+  },
+  "modification_scope_contract": {
+    "modification_profile": "text_and_order_only",
+    "layout_frozen": true,
+    "allowed_change_types": [
+      "exact_visible_text_replacement",
+      "reorder_existing_peer_items"
+    ],
+    "forbidden_change_types": [
+      "styles",
+      "layout",
+      "structure",
+      "node_add_delete",
+      "interaction",
+      "data",
+      "api"
+    ],
+    "allowed_files": [
+      "src/views/carbonFootprint3/components/LcaInformation/index.tsx",
+      "src/views/carbonFootprint3/component/ProductModal/index.tsx",
+      "src/views/carbonFootprint3/FootprintAccount/component/AccountInfoModal/index.tsx",
+      "src/views/carbonFootprint3/FootprintAccount/ProductDetail/ProductInfoCard/index.tsx",
+      "src/views/carbonFootprint3/FootprintAccount/ProductDetail/AccountListCard/index.tsx",
+      "src/views/carbonFootprint3/component/EmissionSourceDrawer/schema.ts"
+    ],
+    "explicit_user_exception": {
+      "authorization": "用户确认补充产品级、核算级及选择模型只读排放源描述后，明确回复：修改，注意不能影响非本次需求的页面",
+      "allowed_ids": [
+        "REQ-LCA-TEXT-028",
+        "REQ-LCA-TEXT-065",
+        "REQ-DESC-TEXT-008"
+      ],
+      "allowed_changes": [
+        "LCA标题下基本信息前增加对应层级标识",
+        "仅选择模型详情启用只读排放源描述展示，位于单位之后，现有描述为空显示-",
+        "为隔离其他页面所必要的局部可选展示配置"
+      ],
+      "otherwise_frozen": true,
+      "allowed_files": [
+        "src/views/carbonFootprint3/components/LcaInformation/index.tsx",
+        "src/views/carbonFootprint3/FootprintAccount/SelectModel/index.tsx",
+        "src/views/subModules/CarbonFootprintModel/components/EmissionSourceDrawer/index.tsx",
+        "src/views/subModules/CarbonFootprintModel/emissionDescriptionContext.ts"
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "REQ-LCA-TEXT-009",
+      "source_location": "Fr3QdPDL4oHiMcxG8AQc9uYxnue",
+      "source_quote": "LCA信息管理",
+      "context": "产品详情入口",
+      "kind": "text",
+      "expected": "LCA信息管理",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-024",
+      "source_location": "ThUGdVbGNoRkWwxdMepcsWzsn4d",
+      "source_quote": "LCA信息管理",
+      "context": "产品表单LCA入口",
+      "kind": "text",
+      "expected": "LCA信息管理",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-027",
+      "source_location": "TjrTdlDFDopfbOxIZilcs8ODnWe",
+      "source_quote": "LCA信息管理",
+      "context": "产品LCA弹窗标题",
+      "kind": "text",
+      "expected": "LCA信息管理",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-043",
+      "source_location": "HPEjd8BMvoadzux3afpcH1JznJb",
+      "source_quote": "LCA信息管理",
+      "context": "核算更多入口",
+      "kind": "text",
+      "expected": "LCA信息管理",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-061",
+      "source_location": "JKXNdHGLponMi3xsXuActa5Tn7b",
+      "source_quote": "LCA信息管理",
+      "context": "核算表单LCA入口",
+      "kind": "text",
+      "expected": "LCA信息管理",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-064",
+      "source_location": "Xua4dccwiofb2CxzgkPcCq8dnac",
+      "source_quote": "LCA信息管理",
+      "context": "核算LCA弹窗标题",
+      "kind": "text",
+      "expected": "LCA信息管理",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-030",
+      "source_location": "TOpBdkfccoERwNxx3nzcDCkBnRb",
+      "source_quote": "加工处理/标准/技术路线",
+      "context": "产品/核算LCA基本信息",
+      "kind": "text",
+      "expected": "加工处理/标准/技术路线",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-068",
+      "source_location": "TOpBdkfccoERwNxx3nzcDCkBnRb",
+      "source_quote": "加工处理/标准/技术路线",
+      "context": "产品/核算LCA基本信息",
+      "kind": "text",
+      "expected": "加工处理/标准/技术路线",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-066",
+      "source_location": "Xua4dccwiofb2CxzgkPcCq8dnac",
+      "source_quote": "已自动带入产品级LCA信息。本核算中的修改仅对当前核算生效，不会覆盖产品级信息。",
+      "context": "现有核算提示",
+      "kind": "text",
+      "expected": "已自动带入产品级LCA信息。本核算中的修改仅对当前核算生效，不会覆盖产品级信息。",
+      "fixability": "allowed_text",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-028",
+      "source_location": "TjrTdlDFDopfbOxIZilcs8ODnWe / Xua4dccwiofb2CxzgkPcCq8dnac",
+      "source_quote": "产品级",
+      "context": "产品LCA标题下、基本信息前；位置按用户确认方案",
+      "kind": "text",
+      "expected": "产品级",
+      "fixability": "explicit_user_node_exception",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-LCA-TEXT-065",
+      "source_location": "TjrTdlDFDopfbOxIZilcs8ODnWe / Xua4dccwiofb2CxzgkPcCq8dnac",
+      "source_quote": "核算级",
+      "context": "核算LCA标题下、基本信息前；位置按用户确认方案",
+      "kind": "text",
+      "expected": "核算级",
+      "fixability": "explicit_user_node_exception",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-DESC-TEXT-008",
+      "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU",
+      "source_quote": "排放源描述",
+      "context": "仅选择模型预览只读排放源详情；单位后，空值-，位置和空值按用户确认方案",
+      "kind": "text",
+      "expected": "排放源描述",
+      "fixability": "explicit_user_node_exception",
+      "status": "implemented"
+    },
+    {
+      "id": "REQ-DESC-ORDER-001",
+      "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU",
+      "source_quote": "类型 → 名称 → 消耗数量 → 单位 → 排放源描述",
+      "context": "grid.properties同级字段，amountColumn展开amount/unitCode",
+      "kind": "order",
+      "expected": [
+        "类型",
+        "名称",
+        "消耗数量",
+        "单位",
+        "排放源描述"
+      ],
+      "fixability": "allowed_order",
+      "status": "implemented"
+    }
+  ],
+  "unverified_unchanged": [
+    "REQ-LCA-TEXT-007",
+    "REQ-LCA-TEXT-011",
+    "REQ-LCA-TEXT-035",
+    "REQ-LCA-TEXT-073"
+  ],
+  "verification_previous_revision": {
+    "exact_source_comparison": {
+      "matched": 10,
+      "pending_node_approval": 3,
+      "overall_passed": false
+    },
+    "compile": {
+      "executor": "lw",
+      "validation_scope": "compile_only",
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    "second_review": {
+      "F-LCA": "passed; 9 repaired, 2 pending",
+      "F-DESC": "passed; 1 repaired, 1 pending"
+    },
+    "layout_freeze_check": "passed; source text replacements and identical peer block relocation only",
+    "scope_delta": "6 frontend source files plus this baseline; no other existing WIP or repositories changed",
+    "runtime_ui": "not_verified",
+    "pending_node_authorization": [
+      "REQ-LCA-TEXT-028",
+      "REQ-LCA-TEXT-065",
+      "REQ-DESC-TEXT-008"
+    ]
+  },
+  "verification": {
+    "exact_source_comparison": {
+      "matched": 13,
+      "newly_verified": 3,
+      "reused_unchanged": 10,
+      "overall_passed": true,
+      "boundary": "源码逐字比较；非完整PRD909重审"
+    },
+    "compile": {
+      "executor": "lw",
+      "validation_scope": "compile_only",
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    "second_review": {
+      "F-LCA": "passed; 2 text contracts verified, no unauthorized changes, runtime UI not verified",
+      "F-DESC": "passed; 1 text and 1 order verified, no unauthorized changes, runtime UI not verified"
+    },
+    "layout_freeze_check": "passed_with_explicit_user_exception; only 3 authorized display nodes and scoped Context; no CSS/schema/request/submit changes",
+    "scope_delta": "4 frontend source files (2 in nested CarbonFootprintModel submodule) plus baseline; other repository WIP unchanged",
+    "runtime_ui": "not_verified",
+    "maintainability_review": "not_run",
+    "pending_node_authorization": [],
+    "agent_lifecycle": "任务代理完成后无可用close/release工具，无法确认释放；本轮未创建浏览器页面。"
+  },
+  "source_recheck_scope": "仅三个新增节点对应4.3.3/4.3.4复核909；其余10项沿用907已验证结果且本轮不修改。位置与空值-以本会话用户确认方案为准。",
+  "context_recovery_check": {
+    "scope_contract_restored": true,
+    "exact_text_contract_count": 12,
+    "ordered_contract_count": 1,
+    "source_scope": "three node requirements refreshed at revision909, prior10 unchanged observations reused",
+    "explicit_exception": "user authorized only three missing display nodes"
+  },
+  "node_fix_feature_baselines": [
+    {
+      "feature_id": "F-LCA",
+      "feature_baseline_status": "complete",
+      "scope": "仅本轮用户明确授权新增节点；不代表整功能审查",
+      "source": "https://carbonstop.feishu.cn/docx/HzTkdOP2toaTJdxPw0QcsUn8nDd",
+      "revision": "feishu-909-node-fix-1",
+      "source_supplement": "本会话用户确认节点位置及只读空值-",
+      "review_scope_contract": {
+        "status": "locked",
+        "review_profile": "presentation_contract",
+        "included_checks": [
+          "本轮指定节点的精确文案、确认位置、条件和调用范围"
+        ],
+        "excluded_checks": [
+          "其他功能页面",
+          "管理端已对齐项",
+          "API",
+          "数据库",
+          "业务逻辑",
+          "样式颜色",
+          "TASK08"
+        ],
+        "exact_text_contracts": [
+          {
+            "id": "REQ-LCA-TEXT-028",
+            "source_location": "TjrTdlDFDopfbOxIZilcs8ODnWe / Xua4dccwiofb2CxzgkPcCq8dnac",
+            "source_quote": "产品级",
+            "context": "产品LCA标题下、基本信息前；位置按用户确认方案",
+            "kind": "text",
+            "expected": "产品级",
+            "fixability": "explicit_user_node_exception",
+            "status": "implemented"
+          },
+          {
+            "id": "REQ-LCA-TEXT-065",
+            "source_location": "TjrTdlDFDopfbOxIZilcs8ODnWe / Xua4dccwiofb2CxzgkPcCq8dnac",
+            "source_quote": "核算级",
+            "context": "核算LCA标题下、基本信息前；位置按用户确认方案",
+            "kind": "text",
+            "expected": "核算级",
+            "fixability": "explicit_user_node_exception",
+            "status": "implemented"
+          }
+        ],
+        "ordered_contracts": []
+      },
+      "modification_scope_contract": {
+        "modification_profile": "text_and_order_only",
+        "layout_frozen": true,
+        "allowed_change_types": [
+          "exact_visible_text_replacement",
+          "reorder_existing_peer_items"
+        ],
+        "forbidden_change_types": [
+          "styles",
+          "layout",
+          "structure",
+          "node_add_delete",
+          "interaction",
+          "data",
+          "api"
+        ],
+        "allowed_files": [
+          "src/views/carbonFootprint3/components/LcaInformation/index.tsx",
+          "src/views/carbonFootprint3/component/ProductModal/index.tsx",
+          "src/views/carbonFootprint3/FootprintAccount/component/AccountInfoModal/index.tsx",
+          "src/views/carbonFootprint3/FootprintAccount/ProductDetail/ProductInfoCard/index.tsx",
+          "src/views/carbonFootprint3/FootprintAccount/ProductDetail/AccountListCard/index.tsx",
+          "src/views/carbonFootprint3/component/EmissionSourceDrawer/schema.ts"
+        ],
+        "explicit_user_exception": {
+          "authorization": "用户确认补充产品级、核算级及选择模型只读排放源描述后，明确回复：修改，注意不能影响非本次需求的页面",
+          "allowed_ids": [
+            "REQ-LCA-TEXT-028",
+            "REQ-LCA-TEXT-065",
+            "REQ-DESC-TEXT-008"
+          ],
+          "allowed_changes": [
+            "LCA标题下基本信息前增加对应层级标识",
+            "仅选择模型详情启用只读排放源描述展示，位于单位之后，现有描述为空显示-",
+            "为隔离其他页面所必要的局部可选展示配置"
+          ],
+          "otherwise_frozen": true,
+          "allowed_files": [
+            "src/views/carbonFootprint3/components/LcaInformation/index.tsx",
+            "src/views/carbonFootprint3/FootprintAccount/SelectModel/index.tsx",
+            "src/views/subModules/CarbonFootprintModel/components/EmissionSourceDrawer/index.tsx",
+            "src/views/subModules/CarbonFootprintModel/emissionDescriptionContext.ts"
+          ]
+        }
+      },
+      "req_coverage_matrix": [
+        {
+          "id": "REQ-LCA-TEXT-028",
+          "before": "missing",
+          "after": "产品级",
+          "status": "已修复",
+          "evidence": "/tmp/saas-ilcd-node-fix-907/change.patch"
+        },
+        {
+          "id": "REQ-LCA-TEXT-065",
+          "before": "missing",
+          "after": "核算级",
+          "status": "已修复",
+          "evidence": "/tmp/saas-ilcd-node-fix-907/change.patch"
+        }
+      ]
+    },
+    {
+      "feature_id": "F-DESC",
+      "feature_baseline_status": "complete",
+      "scope": "仅本轮用户明确授权新增节点；不代表整功能审查",
+      "source": "https://carbonstop.feishu.cn/docx/HzTkdOP2toaTJdxPw0QcsUn8nDd",
+      "revision": "feishu-909-node-fix-1",
+      "source_supplement": "本会话用户确认节点位置及只读空值-",
+      "review_scope_contract": {
+        "status": "locked",
+        "review_profile": "presentation_contract",
+        "included_checks": [
+          "本轮指定节点的精确文案、确认位置、条件和调用范围"
+        ],
+        "excluded_checks": [
+          "其他功能页面",
+          "管理端已对齐项",
+          "API",
+          "数据库",
+          "业务逻辑",
+          "样式颜色",
+          "TASK08"
+        ],
+        "exact_text_contracts": [
+          {
+            "id": "REQ-DESC-TEXT-008",
+            "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU",
+            "source_quote": "排放源描述",
+            "context": "仅选择模型预览只读排放源详情；单位后，空值-，位置和空值按用户确认方案",
+            "kind": "text",
+            "expected": "排放源描述",
+            "fixability": "explicit_user_node_exception",
+            "status": "implemented"
+          }
+        ],
+        "ordered_contracts": [
+          {
+            "expected": [
+              "类型",
+              "名称",
+              "消耗数量",
+              "单位",
+              "排放源描述"
+            ],
+            "source": "用户确认描述在单位之后"
+          }
+        ]
+      },
+      "modification_scope_contract": {
+        "modification_profile": "text_and_order_only",
+        "layout_frozen": true,
+        "allowed_change_types": [
+          "exact_visible_text_replacement",
+          "reorder_existing_peer_items"
+        ],
+        "forbidden_change_types": [
+          "styles",
+          "layout",
+          "structure",
+          "node_add_delete",
+          "interaction",
+          "data",
+          "api"
+        ],
+        "allowed_files": [
+          "src/views/carbonFootprint3/components/LcaInformation/index.tsx",
+          "src/views/carbonFootprint3/component/ProductModal/index.tsx",
+          "src/views/carbonFootprint3/FootprintAccount/component/AccountInfoModal/index.tsx",
+          "src/views/carbonFootprint3/FootprintAccount/ProductDetail/ProductInfoCard/index.tsx",
+          "src/views/carbonFootprint3/FootprintAccount/ProductDetail/AccountListCard/index.tsx",
+          "src/views/carbonFootprint3/component/EmissionSourceDrawer/schema.ts"
+        ],
+        "explicit_user_exception": {
+          "authorization": "用户确认补充产品级、核算级及选择模型只读排放源描述后，明确回复：修改，注意不能影响非本次需求的页面",
+          "allowed_ids": [
+            "REQ-LCA-TEXT-028",
+            "REQ-LCA-TEXT-065",
+            "REQ-DESC-TEXT-008"
+          ],
+          "allowed_changes": [
+            "LCA标题下基本信息前增加对应层级标识",
+            "仅选择模型详情启用只读排放源描述展示，位于单位之后，现有描述为空显示-",
+            "为隔离其他页面所必要的局部可选展示配置"
+          ],
+          "otherwise_frozen": true,
+          "allowed_files": [
+            "src/views/carbonFootprint3/components/LcaInformation/index.tsx",
+            "src/views/carbonFootprint3/FootprintAccount/SelectModel/index.tsx",
+            "src/views/subModules/CarbonFootprintModel/components/EmissionSourceDrawer/index.tsx",
+            "src/views/subModules/CarbonFootprintModel/emissionDescriptionContext.ts"
+          ]
+        }
+      },
+      "req_coverage_matrix": [
+        {
+          "id": "REQ-DESC-TEXT-008",
+          "before": "missing",
+          "after": "排放源描述",
+          "status": "已修复",
+          "evidence": "/tmp/saas-ilcd-node-fix-907/change.patch"
+        }
+      ]
+    }
+  ],
+  "task08": {
+    "baseline_id": "V4.3.3-TASK08",
+    "revision": "feishu-909-task08-1",
+    "source": "https://carbonstop.feishu.cn/docx/HzTkdOP2toaTJdxPw0QcsUn8nDd",
+    "feature_baseline_status": "complete",
+    "authorization": "用户确认按需求修改，补齐本地按钮、提示和描述透传；远端实现交接他人",
+    "scope": [
+      "仅排放源描述参与点击重新匹配",
+      "复用既有匹配接口、权限和响应",
+      "字段emissionSourceDescription可选string，取当前remark，最长200字"
+    ],
+    "excluded": [
+      "其他功能页面",
+      "远端实现",
+      "AI名称拼接或接口切换",
+      "SQL",
+      "新增单元测试"
+    ],
+    "items": [
+      {
+        "id": "REQ-DESC-TEXT-009",
+        "kind": "text",
+        "expected": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+        "source_quote": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+        "source_location": "A5TcdCoChoDvMDx3eaLceNEGnpb",
+        "context": "可编辑排放源匹配区域提示"
+      },
+      {
+        "id": "REQ-DESC-TEXT-010",
+        "kind": "text",
+        "expected": "智能匹配因子",
+        "source_quote": "智能匹配因子",
+        "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU",
+        "context": "主动重新匹配按钮"
+      }
+    ],
+    "modification_scope_contract": {
+      "explicit_user_override": "TASK08从暂缓改为实施，允许所需按钮/提示/请求透传及描述缓存区分；原text_and_order_only不限制本次明确功能实现",
+      "forbidden": [
+        "无关页面",
+        "样式重设计",
+        "新增权限或接口流程"
+      ]
+    },
+    "feature_id": "F-DESC-TASK08",
+    "review_scope_contract": {
+      "status": "locked",
+      "review_profile": "presentation_contract",
+      "included_checks": [
+        "TASK08按钮与提示原文",
+        "排放源描述之后因子信息之前",
+        "本地点击读取当前remark与运输项隔离",
+        "既有只读/匹配方式边界"
+      ],
+      "excluded_checks": [
+        "其他功能页面",
+        "远端实现",
+        "AI名称拼接或接口切换",
+        "SQL",
+        "新增单元测试",
+        "远端实际效果",
+        "运行UI",
+        "API_UNVERIFIED不得作为本地预接入交付阻断；用户明确远端消费由对接人后补"
+      ],
+      "exact_text_contracts": [
+        {
+          "id": "REQ-DESC-TEXT-009",
+          "kind": "text",
+          "expected": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+          "source_quote": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+          "source_location": "A5TcdCoChoDvMDx3eaLceNEGnpb",
+          "context": "可编辑排放源匹配区域提示"
+        },
+        {
+          "id": "REQ-DESC-TEXT-010",
+          "kind": "text",
+          "expected": "智能匹配因子",
+          "source_quote": "智能匹配因子",
+          "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU",
+          "context": "主动重新匹配按钮"
+        }
+      ],
+      "ordered_contracts": [
+        {
+          "expected": [
+            "排放源描述",
+            "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+            "智能匹配因子",
+            "因子信息"
+          ]
+        }
+      ]
+    },
+    "verification": {
+      "front_compile": "lw npm run build exit0 after final manual-factor boundary fix",
+      "java_compile": "lw mvn -pl carbonstop-modules/carbonstop-footprint3 -am -DskipTests test-compile exit0",
+      "runtime_ui": "not_verified",
+      "remote_matching": "pending_integration",
+      "second_review": "F-DESC-TASK08 passed; 8/8 coverage, text2/2, order matched; manual transport factor boundary fixed",
+      "review_fix": "TransportDescriptionMatch手动新建因子时隐藏按钮，发请求前拦截，响应回填前再次保护；本地透传通过不代表远端生效",
+      "local_status": "implemented_and_minimum_compile_verified"
+    },
+    "req_coverage_matrix": [
+      {
+        "id": "REQ-DESC-TEXT-009",
+        "requirement": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+        "status": "已修复",
+        "implementation": "components/EmissionDescriptionMatch/index.tsx EMISSION_DESCRIPTION_MATCH_HINT",
+        "evidence": "/tmp/saas-task08/observed.json; compare_exact exit0"
+      },
+      {
+        "id": "REQ-DESC-TEXT-010",
+        "requirement": "智能匹配因子",
+        "status": "已修复",
+        "implementation": "components/EmissionDescriptionMatch/index.tsx Button",
+        "evidence": "/tmp/saas-task08/observed.json; compare_exact exit0"
+      },
+      {
+        "id": "REQ-008-request",
+        "parent_req": "REQ-008",
+        "requirement": "点击后读取当前排放源描述重新匹配；emissionSourceDescription独立透传，不拼name",
+        "source_location": "BGYXd0OCJodz2UxSyjpcVZ9anRh及用户允许先新增字段",
+        "status": "已修复",
+        "implementation": "component/EmissionSourceDrawer/index.tsx onBasicNameChange; discharge/emissionSoureLibrary/EmissionSourceLibDrawer/index.tsx onBasicNameChange; component/AccessoryDrawer/EmissionDrawer/service.ts AutoMatchFactorParams; backend/carbon FactorServiceImpl.matchFactor",
+        "evidence": "/tmp/saas-task08/change.patch; 前端lw build/后端lw test_compile passed; 远端消费另列待对接"
+      },
+      {
+        "id": "REQ-007-length",
+        "parent_req": "REQ-007",
+        "requirement": "排放源描述选填，上限200字；空值保持原无描述匹配",
+        "source_location": "CzPfdqCeRoBJj8x727JcDqGTnbg及用户新增可选字段口径",
+        "status": "已修复",
+        "implementation": "各remark既有maxLength200; onBasicNameChange form.validate; TransportDescriptionMatch remark.validate; FactorServiceImpl.matchFactor类型/长度/空白校验",
+        "evidence": "源码和patch; lw编译通过; 未运行接口边界测试"
+      },
+      {
+        "id": "REQ-008-transport",
+        "parent_req": "REQ-008",
+        "requirement": "当前运输项描述与当前因子对应，不使用父项或其他运输项",
+        "source_location": "用户授权本需求，沿既有独立运输remark契约",
+        "status": "已修复",
+        "implementation": "components/TransportDescriptionMatch/index.tsx sibling(.remark)/sibling(.factorSchema.factorObj)",
+        "evidence": "query读取已安装Formily BaseField/Query/parser确认相对路径；patch；真实多项UI未验证"
+      },
+      {
+        "id": "REQ-008-boundary",
+        "parent_req": "REQ-008",
+        "requirement": "保留既有只读、onlyCreateFactor、匹配方式和分享访问边界",
+        "source_location": "实施计划接口兼容约束及用户不能影响非本次需求页面",
+        "status": "已修复",
+        "implementation": "EmissionDescriptionMatchControls显隐；主/库onBasicNameChange既有guards及新readonlyguard；TransportDescriptionMatch field.readPretty/onlyCreateFactor; TransportDescriptionMatch isManualFactor protects render/request/response",
+        "evidence": "patch，服务仍原withShareEditSnapFlag及后端会话，无权限代码变更"
+      },
+      {
+        "id": "REQ-008-order",
+        "parent_req": "ORDER-DESC-001",
+        "requirement": [
+          "排放源描述",
+          "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+          "智能匹配因子",
+          "因子信息"
+        ],
+        "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU 当前TASK08区域投影",
+        "status": "已修复",
+        "implementation": "主/库基础schema后Controls、之后既有因子区；transportDescriptionSchema gridWrapper remark/descriptionMatch/factorSchema",
+        "evidence": "patch中的JSX/schema顺序及query核验factorSchema位置"
+      },
+      {
+        "id": "REQ-008-cache",
+        "parent_req": "REQ-008",
+        "requirement": "描述变化不得复用旧描述的运输匹配缓存；无描述兼容旧键",
+        "source_location": "实现必要兼容性，沿现有缓存不新增机制",
+        "status": "已修复",
+        "implementation": "backend/carbon FactorServiceImpl.buildTransportMatchFactorKey",
+        "evidence": "patch if非空描述追加原文；空白移除保持原canonical；lw test_compile passed"
+      }
+    ],
+    "REQ_COVERAGE_MATRIX": [
+      {
+        "id": "REQ-DESC-TEXT-009",
+        "requirement": "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+        "status": "已修复",
+        "implementation": "components/EmissionDescriptionMatch/index.tsx EMISSION_DESCRIPTION_MATCH_HINT",
+        "evidence": "/tmp/saas-task08/observed.json; compare_exact exit0"
+      },
+      {
+        "id": "REQ-DESC-TEXT-010",
+        "requirement": "智能匹配因子",
+        "status": "已修复",
+        "implementation": "components/EmissionDescriptionMatch/index.tsx Button",
+        "evidence": "/tmp/saas-task08/observed.json; compare_exact exit0"
+      },
+      {
+        "id": "REQ-008-request",
+        "parent_req": "REQ-008",
+        "requirement": "点击后读取当前排放源描述重新匹配；emissionSourceDescription独立透传，不拼name",
+        "source_location": "BGYXd0OCJodz2UxSyjpcVZ9anRh及用户允许先新增字段",
+        "status": "已修复",
+        "implementation": "component/EmissionSourceDrawer/index.tsx onBasicNameChange; discharge/emissionSoureLibrary/EmissionSourceLibDrawer/index.tsx onBasicNameChange; component/AccessoryDrawer/EmissionDrawer/service.ts AutoMatchFactorParams; backend/carbon FactorServiceImpl.matchFactor",
+        "evidence": "/tmp/saas-task08/change.patch; 前端lw build/后端lw test_compile passed; 远端消费另列待对接"
+      },
+      {
+        "id": "REQ-007-length",
+        "parent_req": "REQ-007",
+        "requirement": "排放源描述选填，上限200字；空值保持原无描述匹配",
+        "source_location": "CzPfdqCeRoBJj8x727JcDqGTnbg及用户新增可选字段口径",
+        "status": "已修复",
+        "implementation": "各remark既有maxLength200; onBasicNameChange form.validate; TransportDescriptionMatch remark.validate; FactorServiceImpl.matchFactor类型/长度/空白校验",
+        "evidence": "源码和patch; lw编译通过; 未运行接口边界测试"
+      },
+      {
+        "id": "REQ-008-transport",
+        "parent_req": "REQ-008",
+        "requirement": "当前运输项描述与当前因子对应，不使用父项或其他运输项",
+        "source_location": "用户授权本需求，沿既有独立运输remark契约",
+        "status": "已修复",
+        "implementation": "components/TransportDescriptionMatch/index.tsx sibling(.remark)/sibling(.factorSchema.factorObj)",
+        "evidence": "query读取已安装Formily BaseField/Query/parser确认相对路径；patch；真实多项UI未验证"
+      },
+      {
+        "id": "REQ-008-boundary",
+        "parent_req": "REQ-008",
+        "requirement": "保留既有只读、onlyCreateFactor、匹配方式和分享访问边界",
+        "source_location": "实施计划接口兼容约束及用户不能影响非本次需求页面",
+        "status": "已修复",
+        "implementation": "EmissionDescriptionMatchControls显隐；主/库onBasicNameChange既有guards及新readonlyguard；TransportDescriptionMatch field.readPretty/onlyCreateFactor; TransportDescriptionMatch isManualFactor protects render/request/response",
+        "evidence": "patch，服务仍原withShareEditSnapFlag及后端会话，无权限代码变更"
+      },
+      {
+        "id": "REQ-008-order",
+        "parent_req": "ORDER-DESC-001",
+        "requirement": [
+          "排放源描述",
+          "可添加排放源描述后重新匹配因子，有效的描述将实现更加精确的匹配。",
+          "智能匹配因子",
+          "因子信息"
+        ],
+        "source_location": "ShLed8LK6ookwhxJyLecCCXEnSU 当前TASK08区域投影",
+        "status": "已修复",
+        "implementation": "主/库基础schema后Controls、之后既有因子区；transportDescriptionSchema gridWrapper remark/descriptionMatch/factorSchema",
+        "evidence": "patch中的JSX/schema顺序及query核验factorSchema位置"
+      },
+      {
+        "id": "REQ-008-cache",
+        "parent_req": "REQ-008",
+        "requirement": "描述变化不得复用旧描述的运输匹配缓存；无描述兼容旧键",
+        "source_location": "实现必要兼容性，沿现有缓存不新增机制",
+        "status": "已修复",
+        "implementation": "backend/carbon FactorServiceImpl.buildTransportMatchFactorKey",
+        "evidence": "patch if非空描述追加原文；空白移除保持原canonical；lw test_compile passed"
+      }
+    ]
+  }
+}

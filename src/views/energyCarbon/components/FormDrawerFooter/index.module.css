@@ -1,0 +1,21 @@
+.root {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--ant-color-bg-container);
+  z-index: 1;
+}
+
+/* 自定义保存、提交文案较长时允许按钮增高，避免抽屉底部截字。 */
+.root :global(.ant-btn) {
+  max-width: 100%;
+  height: auto;
+  min-height: 32px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

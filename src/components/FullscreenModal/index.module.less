@@ -1,0 +1,28 @@
+.wrap {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.fullscreenModal {
+  top: 0;
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0;
+
+  :global(.ant-modal-body) {
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  :global(.ant-modal-content) {
+    height: 100%;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}

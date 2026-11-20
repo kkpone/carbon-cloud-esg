@@ -1,0 +1,54 @@
+@import (reference) '@src/styles/var.less';
+
+.productLcaFields {
+  > div + div {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid @solidBg;
+  }
+
+  .groupTitle {
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 3px solid @primary-color;
+    color: @text-color;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 22px;
+  }
+
+  .fieldGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+  }
+
+  .field {
+    grid-column: 1 / -1;
+    min-width: 0;
+
+    :global(.ant-formily-item-label) {
+      padding-bottom: 8px;
+      color: @text-color;
+    }
+
+    :global(.ant-input-textarea-show-count) {
+      margin-bottom: 0;
+    }
+
+    :global(.ant-input-textarea-show-count::after) {
+      color: @text-color-secondary;
+      line-height: 20px;
+    }
+  }
+
+  .halfField {
+    grid-column: auto;
+  }
+
+  @media (max-width: 600px) {
+    .fieldGrid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}

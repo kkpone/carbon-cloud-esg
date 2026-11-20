@@ -1,0 +1,67 @@
+.empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  > span {
+    color: #999ea4;
+    font-size: 14px;
+  }
+}
+.file {
+  border: 1px dashed #d2d6da;
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 16px;
+}
+.info {
+  min-width: 0;
+  flex: 1;
+  p {
+    color: #999ea4;
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  :global(.ant-btn-link) {
+    padding: 0;
+    height: auto;
+  }
+}
+.name {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  overflow-wrap: anywhere;
+  color: #04252b;
+}
+.preview {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px dashed #d2d6da;
+  overflow: hidden;
+  background: #f7f8f9;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+@media (max-width: 480px) {
+  .file {
+    padding: 12px;
+  }
+  .preview {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.readOnlyLogo {
+  border: 0;
+  padding: 0;
+  align-items: center;
+}

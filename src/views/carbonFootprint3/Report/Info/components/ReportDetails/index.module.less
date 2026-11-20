@@ -1,0 +1,186 @@
+@import '@src/styles/var.less';
+
+.card {
+  padding: 16px 16px 0;
+  background-color: @whiteBg;
+  h4 {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+.textPrimary {
+  margin-left: 16px;
+  color: @primary-color;
+  cursor: pointer;
+}
+
+.activityData {
+  margin: 17px 0 8px;
+}
+
+.emissions {
+  margin: 13px 0 8px;
+}
+
+.lifeCycleHeaderGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 12px 0 8px;
+  column-gap: 20px;
+  row-gap: 8px;
+
+  .lifeCycleHeader {
+    display: flex;
+    grid-column: span 2 / auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .lifeCycleTitle {
+    display: flex;
+    align-items: center;
+    color: @textColor2;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .lifeCycleTipIcon {
+    margin-left: 6px;
+    color: #999ea4;
+    cursor: pointer;
+  }
+
+  .lifeCycleToggle {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0;
+    color: @primary-color;
+  }
+}
+
+.analysisCard {
+  margin-top: 20px;
+  padding: 4px 20px 0;
+  border-radius: 8px;
+  background: @whiteBg;
+  > :global(.ant-tabs) > :global(.ant-tabs-nav) {
+    margin-bottom: 16px;
+  }
+  > .card {
+    padding: 4px 0 20px;
+  }
+}
+.evaluation {
+  > h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 20px;
+    color: #04252b;
+  }
+  > h4::before {
+    flex: none;
+    width: 3px;
+    height: 18px;
+    border-radius: 2px;
+    background: #0cbf9f;
+    content: '';
+  }
+  .activityData,
+  .emissions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 20px 0 12px;
+  }
+  .textPrimary {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 8px;
+    margin-left: 0;
+    color: #04252b;
+  }
+  :global(.ant-table-container) {
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+  :global(.ant-table-thead > tr > th) {
+    color: #04252b;
+    font-weight: 500;
+  }
+  :global(.ant-table-thead > tr > th::before) {
+    display: none;
+  }
+  :global(.ant-table-cell) {
+    padding: 8px 12px;
+  }
+  :global(.ant-input-number-group-wrapper) {
+    width: 100%;
+  }
+  :global(.ant-input-number) {
+    width: 100%;
+  }
+  :global(.formily-item) {
+    margin-bottom: 0;
+  }
+}
+
+.analysisCard {
+  > :global(.ant-tabs) > :global(.ant-tabs-nav) {
+    height: 50px;
+    margin-bottom: 16px;
+  }
+  :global(.ant-tabs-tab) {
+    padding: 14px 0;
+  }
+  .reportInfo > h4 {
+    display: none;
+  }
+}
+.evaluation {
+  && :global(.ant-table .ant-table-thead > tr > th),
+  && :global(.ant-table .ant-table-tbody > tr > td) {
+    padding: 8px 12px;
+  }
+  :global(.ant-table .ant-form-text) {
+    background: transparent;
+    padding: 0;
+  }
+  :global(.ant-table .ant-input),
+  :global(.ant-table .ant-select-selector),
+  :global(.ant-table .ant-input-number),
+  :global(.ant-table .ant-input-number-input) {
+    min-height: 32px;
+  }
+}
+.evaluation {
+  && :global(.ant-table .ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 4px 12px;
+  }
+}
+
+.evaluation {
+  // 表单包装器原有 20px 下边距不能再和下一模块的 24px 顶部留白叠加。
+  && > :global(.ant-formily-item) {
+    margin-bottom: 0;
+  }
+  &&& :global(.ant-table .ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 4px 12px;
+  }
+  :global(.ant-input-affix-wrapper) {
+    height: 38px;
+  }
+  :global(.ant-input-affix-wrapper .ant-input) {
+    min-height: 0;
+    height: 22px;
+  }
+}

@@ -1,0 +1,203 @@
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 5px 12px;
+  color: #04252b;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+}
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
+.label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.badge {
+  flex-shrink: 0;
+  display: block;
+  width: 20px;
+  height: 22px;
+  object-fit: contain;
+}
+.entry:hover {
+  background: #f7f8f9;
+}
+.active {
+  background: #f7f8f9;
+  font-weight: 500;
+}
+.entry:focus-visible {
+  outline: 2px solid #176b50;
+  outline-offset: 2px;
+}
+
+.welcomeRoot {
+  :global(.ant-modal-mask) {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+.welcomeModal {
+  max-width: calc(100vw - 32px);
+  :global(.ant-modal-content) {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #002f30;
+  }
+  :global(.ant-modal-close) {
+    top: 22px;
+    inset-inline-end: 22px;
+    width: 32px;
+    height: 32px;
+    color: white;
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+}
+.welcomeContent {
+  position: relative;
+  min-height: 460px;
+  color: #fff;
+}
+.welcomeArtwork {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  img {
+    position: absolute;
+    width: 113.87%;
+    height: 125.39%;
+    max-width: none;
+    left: -9.36%;
+    top: -17.39%;
+  }
+}
+.welcomeCopy {
+  position: relative;
+  padding: 40px;
+  h2 {
+    margin: 0 0 24px;
+    color: inherit;
+    font-size: 48px;
+    line-height: 56px;
+    font-weight: 600;
+  }
+  p {
+    margin: 0 0 12px;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+.welcomeLogo {
+  position: relative;
+  width: 125px;
+  height: 40px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  img {
+    position: absolute;
+    width: 111.4%;
+    height: 159.59%;
+    max-width: none;
+    left: -5.96%;
+    top: -28.18%;
+  }
+}
+.welcomePrize {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  img {
+    flex-shrink: 0;
+    object-fit: cover;
+    transform: scaleX(-1);
+  }
+  span {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 4px;
+    color: transparent;
+    background: linear-gradient(90deg, #409bf0, #2cef7b 48.244%);
+    background-clip: text;
+  }
+}
+.welcomeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 50px;
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 7px 32px;
+    border-radius: 50px;
+    color: #04252b;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    &:hover {
+      filter: brightness(1.08);
+    }
+    &:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 4px;
+    }
+  }
+}
+.joinButton {
+  background: linear-gradient(148deg, #49ed92 16.695%, #0cbf9f 83.958%);
+  font-weight: 500;
+}
+.detailsButton {
+  background: #fff;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.05);
+}
+@media (max-width: 767px) {
+  .welcomeArtwork img {
+    object-fit: cover;
+  }
+  .welcomeContent {
+    min-height: 420px;
+  }
+  .welcomeCopy {
+    padding: 32px 24px;
+    h2 {
+      font-size: 30px;
+      line-height: 42px;
+    }
+    p {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+  .welcomePrize span {
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+  .welcomeActions {
+    gap: 12px;
+    margin-top: 40px;
+    a {
+      padding-inline: 22px;
+    }
+  }
+}

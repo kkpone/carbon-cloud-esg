@@ -1,0 +1,69 @@
+.dialog:global(.ant-modal) {
+  max-width: calc(100vw - 32px);
+  color: #183b38;
+  :global(.ant-modal-content) { display: flex; flex-direction: column; max-height: calc(100dvh - 48px); padding: 0; border-radius: 16px; overflow: hidden; }
+  :global(.ant-modal-header) { flex-shrink: 0; padding: 20px 24px; margin: 0; border-bottom: 1px solid #edf0ef; }
+  :global(.ant-modal-title) { font-size: 20px; color: #183b38; }
+  :global(.ant-modal-close) { top: 18px; right: 18px; }
+  :global(.ant-modal-body) { min-height: 0; padding: 20px 24px; overflow-y: auto; }
+  :global(.ant-modal-footer) { flex-shrink: 0; padding: 16px 24px; margin: 0; border-top: 1px solid #edf0ef; }
+  :global(.ant-btn) { min-height: 36px; border-radius: 8px; }
+  :global(.ant-btn-primary) { background: #004c45; border-color: #004c45; }
+  :global(.ant-btn-primary:not(:disabled):hover) { background: #17685f; border-color: #17685f; }
+  :global(.ant-switch-checked) { background: #004c45; }
+}
+.createDialog:global(.ant-modal) {
+  :global(.ant-modal-footer) { display: flex; gap: 16px; }
+  :global(.ant-modal-footer .ant-btn) { flex: 1; height: 40px; margin: 0; }
+  :global(.ant-input), :global(.ant-select-selector) { border-radius: 8px; min-height: 38px; }
+  :global(.ant-form-item) { margin-bottom: 14px; }
+  :global(.ant-form-item-label) { padding-bottom: 6px; }
+  .billingBox :global(.ant-form-item) { margin-bottom: 0; }
+}
+.content { color: #183b38; font-size: 14px; line-height: 1.7; }
+.modalTitle, .groupName { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-right: 24px; }
+.modalTitle { font-size: 20px; font-weight: 600; }
+.countBadge, .ordinal { color: #237d70; background: #edf9f4; border-radius: 20px; padding: 2px 12px; font-size: 13px; font-weight: 400; }
+.enabledEntry { color: #17685f !important; background: #eff8f5 !important; }
+.entryStatus { display: inline-flex; align-items: center; gap: 8px; &::after { content: ''; width: 6px; height: 6px; background: currentColor; border-radius: 50%; } }
+.projectStrip { background: #f4f6f5; padding: 8px 12px; border-radius: 8px; margin-bottom: 14px; }
+.intro { padding: 12px 14px; background: #f4faf7; border: 1px solid #dcefe7; border-radius: 10px; margin-bottom: 16px; p { margin: 0; color: #4a6b64; line-height: 1.65; } }
+.toolbar, .heading, .actions, .groupActions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.toolbar { margin-bottom: 16px; }
+.heading { align-items: flex-start; h3 { margin: 0; font-size: 16px; overflow-wrap: anywhere; } }
+.groupName { flex: 1; min-width: 180px; flex-wrap: nowrap; padding: 0; }
+.ordinal { flex-shrink: 0; }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #53716a; }
+.actions { justify-content: flex-start; }
+.group { padding: 16px; border: 1px solid #e0e8e4; border-radius: 12px; margin-bottom: 12px; background: #fcfefd; }
+.groupDescription { margin: 8px 0; color: #647772; font-size: 13px; }
+.groupActions { border-top: 1px solid #e7edea; padding-top: 12px; margin-top: 14px; }
+.meta { color: #647772; margin: 8px 0; }
+.notice { color: #80602d; margin-top: 12px; }
+.empty { padding: 40px 16px; text-align: center; color: #647772; }
+.form { padding-top: 4px; }
+.error { margin: 16px 0; }
+.memberSection { margin-top: 12px; }
+.memberLabel { margin: 0 0 6px; }
+.members { display: flex; flex-wrap: wrap; gap: 6px; border: 1px solid #e6ebe8; border-radius: 8px; padding: 10px; margin-top: 6px; background: #fff;
+  > span { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border: 1px solid #e3e8e5; border-radius: 24px; font-size: 13px; }
+  small { font-size: 12px; color: #627a72; background: #f3f6f4; padding: 0 6px; border-radius: 12px; }
+  > .bot { color: #126e61; border-color: #c5e9db; background: #edfaf4; }
+}
+.memberHint { color: #647772; font-size: 13px; margin: 8px 0 0; }
+.payer { margin: 0 0 8px; }
+.billingBox { margin-top: 14px; padding: 12px; border-radius: 8px; background: #f7f9f8; :global(.ant-form-item) { margin-bottom: 0; } }
+.footerHint { margin: 12px 0 0; color: #71847e; font-size: 12px; line-height: 1.6; }
+@media (max-width: 767px) {
+  .dialog:global(.ant-modal) {
+    :global(.ant-modal-header) { padding: 20px; }
+    :global(.ant-modal-body) { padding: 20px; }
+    :global(.ant-modal-footer) { padding: 16px 20px; }
+    :global(.ant-btn) { min-height: 44px; white-space: normal; height: auto; }
+  }
+  .content { font-size: 14px; }
+  .modalTitle { gap: 8px; }
+  .group { padding: 16px; }
+  .groupActions > :global(.ant-btn) { width: 100%; }
+  .toggle { margin-top: 8px; }
+}

@@ -1,0 +1,211 @@
+@import '../../styles/analysis.less';
+
+@reportActionsHeight: 62px;
+@reportBottomGap: 20px;
+
+.wrapper {
+  .analysisControls();
+  display: flex;
+  flex-direction: column;
+  margin-bottom: @reportActionsHeight;
+  // 固定留白位于滚动视口之外，滚动过程中也不会贴住底部操作栏。
+  border-bottom: @reportBottomGap solid @analysisFill;
+  &&& {
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 0;
+  }
+  .pageTitle {
+    margin: 0;
+    padding: 16px 40px;
+    background: #fff;
+    color: @analysisText;
+    font: 500 20px / 28px @analysisFont;
+  }
+  main {
+    padding: 20px 20px 0;
+    background: @analysisFill;
+  }
+  main > .card {
+    position: relative;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff;
+  }
+  :global(.ant-formily-item-label) {
+    padding-bottom: 8px;
+  }
+  :global(.ant-formily-item-label-content) {
+    color: @analysisText;
+  }
+  :global(.report-product-table-field > .ant-formily-item-label) {
+    padding-bottom: 12px;
+  }
+  :global(.report-product-table-field .ant-form-text) {
+    background: transparent;
+    padding: 0;
+  }
+  .reportAccountList {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 38px;
+    margin-top: 8px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .reportAccountList :global(.ant-radio-group) {
+    display: inline-flex;
+    padding: 2px;
+    border-radius: 8px;
+    background: @analysisFill;
+  }
+  .reportAccountList :global(.ant-radio-button-wrapper) {
+    height: 34px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: @analysisSecondary;
+    line-height: 34px;
+  }
+  .reportAccountList :global(.ant-radio-button-wrapper::before) {
+    display: none;
+  }
+  .reportAccountList :global(.ant-radio-button-wrapper-checked) {
+    background: #fff;
+    color: @analysisText;
+    box-shadow: 0 1px 2px #0000000f;
+  }
+  .analysisTable();
+  :global(.ant-table .ant-select) {
+    min-width: 0;
+    max-width: 100%;
+  }
+  :global(.ant-table .ant-formily-item-feedback-layout-loose) {
+    margin-bottom: 0;
+  }
+}
+.formActions {
+  && {
+    height: @reportActionsHeight;
+    padding: 12px 20px;
+    border-top: 1px solid @analysisBorder;
+    box-shadow: 0 -2px 8px #00000005;
+  }
+  && :global(.ant-btn) {
+    height: 38px;
+    min-width: 76px;
+    padding: 7px 16px;
+    box-shadow: none;
+  }
+}
+.optionNodeType {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.optionNodeTypeQuick {
+  color: #3491fa;
+  background: #f0f9ff;
+}
+.optionNodeTypeProcess {
+  color: #0cbf9f;
+  background: #e6fff6;
+}
+@media (max-width: 900px) {
+  .wrapper main {
+    padding: 12px 12px 0;
+  }
+  .wrapper .pageTitle {
+    padding-inline: 24px;
+  }
+}
+
+.wrapper {
+  :global(
+      .report-product-table-field
+        > .ant-formily-item-label
+        .ant-formily-item-label-content
+    ),
+  :global(.report-product-label) {
+    width: 100%;
+    max-width: none;
+  }
+  :global(.report-product-table-field) {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 16px;
+    margin-bottom: 0;
+  }
+  :global(.report-product-table-field > .ant-formily-item-label) {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+  :global(.report-product-table-field > .ant-formily-item-control),
+  :global(
+      .report-product-table-field
+        > .ant-formily-item-control
+        > .ant-formily-item-control-content
+    ),
+  :global(
+      .report-product-table-field
+        > .ant-formily-item-control
+        > .ant-formily-item-control-content
+        > .ant-formily-item-control-content-component
+    ),
+  :global(.report-product-table-field .ant-formily-array-table) {
+    display: contents;
+  }
+  :global(
+      .report-product-table-field .ant-formily-array-table > .ant-table-wrapper
+    ) {
+    grid-area: 2 / 1 / auto / -1;
+    min-width: 0;
+  }
+  && :global(.report-product-table-field .ant-formily-array-base-addition) {
+    position: static;
+    grid-area: 1 / 2;
+    align-self: end;
+    width: auto;
+    min-width: 124px;
+    height: 38px;
+    margin: 0 0 12px;
+    padding: 7px 16px;
+    border-style: solid;
+  }
+  &&
+    :global(.report-product-table-field .ant-table .ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 4px 12px;
+  }
+}
+
+.wrapper {
+  // FormGrid 的 inline row-gap 为 8px，原来又叠加了 FormItem 的 20px margin。
+  // 本页统一由网格提供设计中的 20px 行距。
+  :global(.ant-formily-grid) {
+    row-gap: 20px !important;
+  }
+  :global(.ant-formily-grid .ant-formily-item) {
+    margin-bottom: 0;
+  }
+}
+
+// 仅修正报告页的外层高度，避免面包屑与原有 100vh 容器叠加后挤到底栏下方。
+:global(.layout__main):has(> :global(.layout__container) > .wrapper) {
+  min-height: 0;
+}
+:global(.layout__container):has(> .wrapper) {
+  min-height: 0;
+  height: auto;
+  flex: 1 1 0;
+}

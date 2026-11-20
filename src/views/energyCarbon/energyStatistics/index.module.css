@@ -1,0 +1,238 @@
+.searchCard,
+.chartCard,
+.tableCard {
+  margin-bottom: 16px;
+}
+
+.statisticsWorkspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+}
+
+.scopeTreeCard,
+.statisticsContent {
+  min-width: 0;
+}
+
+.statisticsContent {
+  padding-bottom: 32px;
+}
+
+/* 左侧树独立滚动，保证组织和边界较多时不拉长右侧查询区。 */
+.scopeTreeCard :global(.ant-card-body) {
+  padding: 12px;
+}
+
+.scopeTree {
+  max-height: 720px;
+  overflow-y: auto;
+  background: var(--ant-color-bg-container);
+}
+
+.scopeTree :global(.ant-tree-treenode) {
+  width: 100%;
+  padding: 2px 0;
+}
+
+.scopeTree :global(.ant-tree-node-content-wrapper) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.searchForm :global(.ant-form-item) {
+  margin-bottom: 0;
+  margin-inline-end: 0;
+}
+
+/* 选择产品指标后固定为两行，第二行日期和操作按钮连续排列。 */
+.intensityProductForm {
+  display: grid;
+  grid-template-columns: auto 160px minmax(0, 1fr);
+}
+
+.intensityProductForm .intensityDimensionItem {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.intensityProductForm .indicatorFilterItem {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.intensityProductForm .productFilterItem {
+  grid-column: 3;
+  grid-row: 1;
+  width: 100%;
+  max-width: 240px;
+}
+
+.intensityProductForm .intensityPeriodItem {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.intensityProductForm .intensityActionItem {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  margin-inline-start: 0;
+}
+
+.periodTypeField {
+  width: max-content;
+  min-width: 320px;
+  max-width: 100%;
+}
+
+.intensityPeriodTypeField {
+  min-width: 240px;
+}
+
+.periodTypeField :global(.ant-segmented-item-selected),
+.periodTypeField :global(.ant-segmented-item-selected:hover) {
+  color: var(--ant-color-text-light-solid);
+  background: var(--ant-color-primary);
+}
+
+.optionField {
+  width: 160px;
+  min-width: 0;
+}
+
+.indicatorFilterItem {
+  flex: 0 0 160px;
+  width: 160px;
+}
+
+.productFilterItem {
+  flex: 0 0 240px;
+  width: 240px;
+}
+
+.filterSelect {
+  width: 100%;
+}
+
+.periodField {
+  width: 220px;
+}
+
+.energyActionItem {
+  margin-inline-start: auto;
+}
+
+.consumptionActionItem {
+  margin-inline-start: auto;
+}
+
+.energyActionItem :global(.ant-form-item-control-input-content),
+.consumptionActionItem :global(.ant-form-item-control-input-content),
+.intensityActionItem :global(.ant-form-item-control-input-content) {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.intensityActionItem {
+  margin-inline-start: auto;
+}
+
+.chart {
+  /* ECharts 组件自带 300px 内联高度，统一覆盖后让三个统计页保持相同图表节奏。 */
+  height: 320px !important;
+}
+
+/* 三个统计页在内容区变窄前改为上下布局，避免左树挤压筛选项、图表和明细表。 */
+@media (max-width: 1200px) {
+  .energyStatisticsWorkspace,
+  .consumptionStatisticsWorkspace,
+  .intensityStatisticsWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .energyStatisticsWorkspace .scopeTree,
+  .consumptionStatisticsWorkspace .scopeTree,
+  .intensityStatisticsWorkspace .scopeTree {
+    max-height: 280px;
+  }
+}
+
+@media (max-width: 900px) {
+  .statisticsWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .scopeTree {
+    max-height: 280px;
+  }
+
+  /* 中等宽度改为两列三行，产品选择框保留可读宽度。 */
+  .intensityProductForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .intensityProductForm .intensityDimensionItem {
+    grid-column: 1 / 3;
+  }
+
+  .intensityProductForm .indicatorFilterItem {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .intensityProductForm .productFilterItem {
+    grid-column: 2;
+    grid-row: 2;
+    max-width: none;
+  }
+
+  .intensityProductForm .intensityPeriodItem {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .intensityProductForm .intensityActionItem {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .intensityProductForm {
+    display: flex;
+  }
+
+  .periodTypeField,
+  .intensityPeriodTypeField,
+  .optionField,
+  .indicatorFilterItem,
+  .productFilterItem,
+  .periodField {
+    width: 100%;
+  }
+
+  .periodTypeField,
+  .intensityPeriodTypeField {
+    min-width: 0;
+  }
+
+  .indicatorFilterItem,
+  .productFilterItem {
+    flex-basis: 100%;
+  }
+
+  .searchForm :global(.ant-form-item) {
+    width: 100%;
+  }
+}

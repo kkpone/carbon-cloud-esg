@@ -1,0 +1,208 @@
+@import '../styles/analysis.less';
+
+.wrapper {
+  && {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    height: 60px;
+    border-bottom: 1px solid #ebedf0;
+    flex-shrink: 0;
+    .title {
+      color: #04252b;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px; /* 140% */
+    }
+  }
+
+  .searchContent {
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.tableContent {
+  padding: 0 40px;
+}
+
+.report {
+  margin: 0 auto;
+  width: fit-content;
+  text-align: center;
+  display: flex;
+  padding: 2px 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 20px;
+  background: #ddf4f2;
+  overflow: hidden;
+  color: #04252b;
+  text-overflow: ellipsis;
+
+  /* Body 内容/@body-m */
+  font-family: 'PingFang SC';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 157.143% */
+}
+
+.template {
+  margin: 0 auto;
+  text-align: center;
+  width: fit-content;
+  overflow: hidden;
+  color: #04252b;
+  text-overflow: ellipsis;
+  font-family: 'PingFang SC';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 157.143% */
+  display: flex;
+  padding: 2px 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 20px;
+  background: #e8f6ff;
+}
+
+.draftStatus,
+.completedStatus {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid;
+  border-radius: 6px;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.draftStatus {
+  color: #547bff;
+  border-color: #547bff;
+  background: #f2f5ff;
+}
+.completedStatus {
+  color: #05a697;
+  border-color: #05a697;
+  background: #effcf9;
+}
+.wrapper .searchContent {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.tableContent :global(.ant-table-container) {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+@media (max-width: 1100px) {
+  .wrapper .searchContent,
+  .wrapper .header,
+  .tableContent {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.template[data-report-type='2'] {
+  background: #fceedf;
+}
+.template[data-report-type='3'] {
+  background: #e5e5fb;
+}
+
+.wrapper {
+  .analysisControls();
+}
+.tableContent {
+  .analysisTable();
+}
+.tableContent :global(.ant-table-expanded-row .ant-table-thead > tr > th) {
+  background: #f3fcfc;
+}
+.tableContent :global(.ant-table-expanded-row .ant-table-tbody > tr > td) {
+  color: @analysisSecondary;
+}
+.wrapper .header {
+  height: 76px;
+  border-bottom: 0;
+}
+.wrapper.wrapper {
+  row-gap: 16px;
+}
+.wrapper .searchContent > :global(.ant-form) {
+  flex: 1;
+  min-width: 0;
+}
+.report,
+.template {
+  margin-left: 0;
+  margin-right: 0;
+}
+.draftStatus,
+.completedStatus {
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 22px;
+}
+.draftStatus,
+.completedStatus {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 22px;
+}
+.draftStatus {
+  color: #3361d7;
+  border-color: #3361d7;
+  background: rgba(51, 97, 215, 0.08);
+}
+.completedStatus {
+  color: #048677;
+  border-color: #048677;
+  background: rgba(12, 191, 159, 0.08);
+}
+
+.report,
+.template {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.tableContent {
+  &&& :global(.ant-table .ant-table-tbody > tr > td) {
+    padding: 8px 20px;
+  }
+}
+
+.tableContent {
+  // 展开行不参与普通单元格的 padding，避免与 Ant Design 的嵌套表格负边距叠加。
+  &&&& :global(.ant-table-expanded-row > .ant-table-cell) {
+    padding: 0;
+    background: #fff;
+  }
+  &&&& :global(.ant-table-expanded-row-fixed) {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 0 0 48px;
+  }
+  &&&& :global(.ant-table-expanded-row .ant-table-wrapper .ant-table) {
+    margin: 0;
+  }
+  &&&& :global(.ant-table-expanded-row .ant-table-container) {
+    border: 0;
+    border-radius: 0;
+  }
+}

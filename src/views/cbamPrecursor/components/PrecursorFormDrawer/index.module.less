@@ -1,0 +1,48 @@
+.drawer {
+  :global(.ant-drawer-content) { background: #fff; }
+  :global(.ant-drawer-header) { padding: 32px 32px 0; border-bottom: 0; }
+  :global(.ant-drawer-header-title) { align-items: center; }
+  :global(.ant-drawer-body) { padding: 32px; }
+  :global(.ant-drawer-footer) { position: relative; z-index: 1; padding: 12px 32px; background: #fff; border-top: 0; box-shadow: 0 -4px 4px rgb(0 0 0 / 4%); }
+  :global(.ant-drawer-footer .ant-btn) { height: 38px; padding: 8px 24px; border-radius: 8px; box-shadow: none; }
+  :global(.ant-drawer-footer .ant-btn-primary) { background: #004541; border-color: #004541; }
+}
+.drawerTitle { color: #04252b; font-size: 24px; font-weight: 600; line-height: 32px; }
+.close { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; padding: 0; color: #747b80; font-size: 16px; background: transparent; border: 0; cursor: pointer; }
+.form { display: flex; flex-direction: column; gap: 32px; color: #04252b; }
+.section { display: flex; flex-direction: column; gap: 16px; margin: 0; h3 { margin: 0; color: #343a40; font-size: 16px; font-weight: 500; line-height: 24px; } }
+.sectionFields { display: flex; flex-direction: column; gap: 20px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.full { width: 100%; }
+.fullRow { grid-column: 1 / -1; }
+.form :global(.ant-form-item) { margin-bottom: 0; }
+.form :global(.ant-form-item-label) { padding: 0 0 8px; }
+.form :global(.ant-form-item-label > label) { height: 22px; color: #04252b; font-size: 14px; line-height: 22px; }
+.form :global(.ant-form-item-required::before) { color: #b04465 !important; }
+.form :global(.ant-input),
+.form :global(.ant-select-selector),
+.form :global(.ant-picker),
+.form :global(.ant-input-number),
+.form :global(.ant-input-number-group-addon) { min-height: 38px; border-color: #d5d7da !important; border-radius: 8px; }
+.form :global(.ant-input),
+.form :global(.ant-picker),
+.form :global(.ant-select-selector) { padding: 7px 12px !important; }
+.form :global(.ant-input-number-input) { height: 36px; padding: 7px 12px; }
+.form :global(.ant-input-number-group-addon) { padding: 0 12px; color: #04252b; background: #f7f8f9; border-radius: 0 8px 8px 0; }
+.form :global(.ant-input::placeholder),
+.form :global(.ant-input-number-input::placeholder),
+.form :global(.ant-picker-input > input::placeholder),
+.form :global(.ant-select-selection-placeholder) { color: #b5b8bb; }
+.uploadField :global(.ant-form-item-control-input) { min-height: 0; }
+.uploadTip { margin-bottom: 8px; color: #999ea4; font-size: 12px; line-height: 18px; }
+.uploadButton { height: 38px; padding: 8px 12px; color: #04252b; border-color: #d2d6da; border-radius: 8px; box-shadow: none; }
+.footer { display: flex; gap: 16px; justify-content: flex-end; }
+@media (max-width: 640px) {
+  .drawer :global(.ant-drawer-body) { padding: 24px; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .fullRow { grid-column: auto; }
+}

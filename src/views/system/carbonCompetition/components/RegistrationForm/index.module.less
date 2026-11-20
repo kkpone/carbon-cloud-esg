@@ -1,0 +1,63 @@
+.registration {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 0 24px;
+  color: #04252b;
+  h1 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: inherit;
+  }
+}
+.hint {
+  color: #999ea4;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0 0 24px;
+}
+.form {
+  :global(.ant-form-item) {
+    margin-bottom: 24px;
+  }
+  :global(.ant-input) {
+    min-height: 38px;
+  }
+  :global(.ant-input-disabled) {
+    background: #f7f8f9;
+    color: #04252b;
+    border-color: transparent;
+  }
+}
+.actions {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  :global(.ant-btn) {
+    min-height: 38px;
+    height: auto;
+    white-space: normal;
+  }
+}
+.nextAction {
+  grid-column: 2;
+}
+@media (max-width: 767px) {
+  .registration h1 {
+    font-size: 24px;
+  }
+  .actions {
+    gap: 12px;
+  }
+}
+
+.infoButton {
+  display: inline-flex;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: help;
+}

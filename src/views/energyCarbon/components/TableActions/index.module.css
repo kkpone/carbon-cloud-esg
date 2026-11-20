@@ -1,0 +1,38 @@
+.actions {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.actionItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.actionButton {
+  height: auto;
+  padding: 0;
+  line-height: 22px;
+}
+
+.divider {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  margin: 0 8px;
+  background: var(--ant-color-split);
+}
+
+.tooltipTarget {
+  display: inline-flex;
+}
+
+.moreButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: auto;
+  padding: 0;
+  line-height: 22px;
+}

@@ -1,0 +1,65 @@
+.reportPage {
+  box-sizing: border-box;
+  height: calc(100vh - 32px);
+  padding-bottom: 60px;
+  overflow-y: auto !important;
+}
+
+.versionTitle {
+  margin: 8px 0;
+}
+
+.versionISOTitle {
+  margin: 24px 0 8px;
+}
+
+.reportVersionTip {
+  margin-left: 8px;
+  color: #999ea4;
+  font-weight: 400;
+  font-size: 12px;
+
+  /* 辅助信息/Small-常规-CN */
+  font-family: 'PingFang SC';
+  font-style: normal;
+  line-height: 18px; /* 150% */
+}
+
+.reportPeriodField {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
+  min-height: 32px;
+  column-gap: 12px;
+  row-gap: 8px;
+}
+
+.reportPeriodRadio {
+  display: flex;
+  flex: none;
+  white-space: nowrap;
+
+  :global(.ant-radio-wrapper) {
+    margin-right: 12px;
+  }
+}
+
+.reportPeriodSelect {
+  flex: 1;
+  min-width: 104px;
+  max-width: 160px;
+}
+
+.reportPeriodLoading {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  column-gap: 8px;
+  color: #999ea4;
+  font-size: 14px;
+}
+
+.reportPeriodHidden {
+  display: none;
+}

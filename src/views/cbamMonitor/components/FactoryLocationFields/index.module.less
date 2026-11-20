@@ -1,0 +1,61 @@
+.label {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.iconWrapper {
+  display: inline-flex;
+}
+
+.calculate:global(.ant-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0;
+  color: #026961;
+  border: 0;
+}
+
+.calculate[disabled] {
+  color: @disabledColor;
+
+  .calculateIcon {
+    background-color: @disabledColor;
+  }
+}
+
+// 用同一 SVG 蒙版分别指定可点击和禁用颜色，避免图片透明度影响正常状态。
+.calculateIcon {
+  display: inline-block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  background-color: #026961;
+  mask: url('../../../../components/FootprintAllocation/components/TransportDistanceLabel/calculate.svg')
+    center / contain no-repeat;
+}
+
+.actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  color: #026961;
+
+  strong {
+    font-weight: 600;
+  }
+
+  :global(.ant-btn) {
+    height: auto;
+    padding: 0;
+    color: #026961;
+  }
+}

@@ -1,0 +1,20 @@
+/* 抽屉内使用标准纵向表单，字段通过 Row/Col 保持桌面端两列布局。 */
+.budgetForm {
+  :global(.ant-form-item) {
+    margin-bottom: 24px;
+  }
+}
+
+.resultList {
+  display: flex;
+  min-width: 0;
+  padding-bottom: 32px;
+}
+
+.yearPicker {
+  width: 100%;
+}
+
+.fullWidth {
+  width: 100%;
+}

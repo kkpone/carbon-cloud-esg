@@ -1,0 +1,297 @@
+.section {
+  container-type: inline-size;
+}
+.section .description {
+  margin: -20px 0 32px;
+  color: #999ea4;
+  font-size: 14px;
+  line-height: 22px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  width: 100%;
+  align-items: stretch;
+}
+.organizations {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.card {
+  padding: 20px 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+.layout h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.logos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.logoTile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 54px;
+  min-width: 0;
+  background: #f6f9fc;
+  border-radius: 8px;
+}
+.logo {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  img {
+    display: block;
+    max-width: none;
+  }
+}
+.carbonstop {
+  width: 120.589px;
+  height: 30px;
+  img {
+    width: 120.589px;
+    height: 30px;
+    object-fit: cover;
+  }
+}
+.cafeec {
+  width: 203.03px;
+  height: 28px;
+}
+.tsinghua {
+  width: 98.8px;
+  height: 38.168px;
+  mix-blend-mode: multiply;
+  img {
+    position: absolute;
+    width: 137.02%;
+    height: 109.37%;
+    left: -11.27%;
+    top: -4.69%;
+  }
+}
+.sichuan {
+  width: 163.84px;
+  height: 32px;
+  img {
+    position: absolute;
+    width: 102.37%;
+    height: 128%;
+    left: -0.63%;
+    top: -8%;
+  }
+}
+.guangdong {
+  width: 59px;
+  height: 40px;
+  img {
+    position: absolute;
+    width: 185.53%;
+    height: 100%;
+    left: -85.53%;
+    top: 0;
+  }
+}
+.cec {
+  width: 38px;
+  height: 38px;
+  mix-blend-mode: multiply;
+  img {
+    position: absolute;
+    width: 106.95%;
+    height: 106.67%;
+    left: -3.23%;
+    top: -3.33%;
+  }
+}
+.sgs {
+  width: 69.259px;
+  height: 34px;
+  img {
+    width: 69.259px;
+    height: 34px;
+  }
+}
+.tantao {
+  width: 118.985px;
+  height: 34px;
+  img {
+    width: 118.985px;
+    height: 34px;
+  }
+}
+.database {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: max-content;
+  flex-shrink: 0;
+  white-space: nowrap;
+  > img {
+    flex-shrink: 0;
+    margin-inline: 0.914px;
+  }
+  > div {
+    flex-shrink: 0;
+  }
+  strong {
+    display: block;
+    font-size: 10.5px;
+    line-height: 16.5px;
+    font-weight: 500;
+  }
+  &:lang(en) strong {
+    font-size: 7.5px;
+  }
+  span {
+    display: block;
+    margin-top: 3px;
+    font-size: 6px;
+    line-height: 7.5px;
+  }
+}
+.greenInvestment {
+  width: 31.804px;
+  height: 40px;
+  mix-blend-mode: multiply;
+  img {
+    width: 31.804px;
+    height: 40px;
+  }
+}
+.forGood {
+  width: 107.015px;
+  height: 40px;
+  img {
+    width: 107.015px;
+    height: 40px;
+  }
+}
+.tantongtong {
+  width: 94.267px;
+  height: 28px;
+  mix-blend-mode: multiply;
+  img {
+    position: absolute;
+    width: 111.85%;
+    height: 146.67%;
+    left: -5.22%;
+    top: -25.02%;
+  }
+}
+.tanjia {
+  width: 108.56px;
+  height: 26px;
+  mix-blend-mode: multiply;
+  img {
+    width: 108.56px;
+    height: 26px;
+  }
+}
+.chongqing {
+  width: 200.941px;
+  height: 28px;
+  mix-blend-mode: multiply;
+  img {
+    position: absolute;
+    width: 116.69%;
+    height: 253.33%;
+    left: -9.7%;
+    top: -80.95%;
+  }
+}
+.sief {
+  width: 76.269px;
+  height: 36px;
+  mix-blend-mode: multiply;
+  img {
+    position: absolute;
+    width: 100%;
+    height: 211.86%;
+    left: 0;
+    top: -58.1%;
+  }
+}
+.experts {
+  padding: 24px;
+  background: #f6f9fc;
+  border-radius: 12px;
+  min-width: 0;
+  section + section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+  }
+  h3 {
+    margin-bottom: 20px;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  strong,
+  span {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  strong {
+    flex-shrink: 0;
+    min-width: 42px;
+    white-space: pre;
+    color: #026961;
+    font-weight: 500;
+  }
+  span {
+    min-width: 0;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+  .orderHint {
+    margin-top: 20px;
+    color: #999ea4;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+@container (max-width: 1050px) {
+  .logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container (max-width: 520px) {
+  .logos {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .card,
+  .experts {
+    padding: 20px 16px;
+  }
+  .experts li {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .experts li span {
+    flex-basis: 100%;
+  }
+}

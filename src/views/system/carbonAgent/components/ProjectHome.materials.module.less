@@ -1,0 +1,12 @@
+.files {
+  .fileTitle { display: flex; align-items: center; gap: 8px; min-width: 0; strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+  .source { flex-shrink: 0; font-size: 12px; line-height: 20px; border-radius: 16px; background: #edf8f4; color: #347f72; padding: 0 8px; }
+  .fileActions { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .fileActions button { display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 6px; padding: 8px; background: transparent; cursor: pointer; color: #397e71; }
+  .fileActions button:hover { background: #eff8f4; }
+  .fileActions button:disabled { cursor: wait; opacity: 0.55; }
+  .fileActions .ask { border: 1px solid #d5ebe3; background: #f7fcf9; padding: 4px 8px; font-size: 13px; }
+}
+@media (max-width: 767px) {
+  .files { li { flex-wrap: wrap; min-height: 104px; height: auto; flex-basis: auto; padding: 12px 0; } .fileActions { flex-direction: row; } .fileActions button { min-height: 44px; } .fileTitle { flex-wrap: wrap; } }
+}

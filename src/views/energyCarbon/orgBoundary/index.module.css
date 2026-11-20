@@ -1,0 +1,68 @@
+.workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  width: 100%;
+  padding-bottom: 32px;
+}
+
+.treeCard,
+.contentCard {
+  min-width: 0;
+}
+
+.treeCard :global(.ant-card-body) {
+  padding: 12px;
+}
+
+.tree {
+  max-height: 600px;
+  overflow-y: auto;
+  background: var(--ant-color-bg-container);
+}
+
+.tree :global(.ant-tree-treenode) {
+  width: 100%;
+  padding: 2px 0;
+}
+
+.tree :global(.ant-tree-node-content-wrapper) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.disabledOrg {
+  color: var(--ant-color-text-disabled);
+}
+
+.contentCard :global(.ant-tabs-nav) {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .tree {
+    max-height: 280px;
+  }
+}
+
+.statisticsBoundaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.statisticsBoundarySummary {
+  color: var(--ant-color-text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: nowrap;
+}

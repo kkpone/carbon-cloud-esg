@@ -1,0 +1,15 @@
+.content { margin: 16px 0; min-width: 0; overflow-wrap: anywhere; }
+.content h3 { margin: 0 0 8px; font-size: 16px; color: #183b38; }
+.content > p { margin: 0 0 12px; color: #647772; }
+.notice { margin-bottom: 16px; }
+.sources { display: grid; gap: 8px; margin-bottom: 16px; max-height: 220px; overflow-y: auto; }
+.sources > div { padding: 10px 12px; background: #f5f8f7; border-radius: 8px; }
+.sources strong { display: block; font-size: 13px; }
+.sources p { margin: 4px 0; white-space: pre-wrap; }
+.sources small { color: #647772; }
+.actions { display: flex; justify-content: flex-end; padding-top: 8px; }
+.content :global(.ant-select) { width: 100%; min-width: 0; }
+@media (max-width: 600px) {
+  .content :global(.ant-select-selection-item), .content textarea { font-size: 16px; }
+  .actions button { width: 100%; }
+}

@@ -1,0 +1,218 @@
+/* 页面内容以筛选、指标、动态阶段和桑基图为主线，保持后台页面信息密度。 */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 32px;
+}
+
+.filterCard {
+  border: 1px solid var(--ant-color-border-secondary);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.filterItem {
+  flex: 0 1 240px;
+  min-width: 180px;
+}
+
+.filterItemWide {
+  flex: 0 1 360px;
+  width: 360px;
+  min-width: 320px;
+  max-width: 100%;
+}
+
+.orgSelect {
+  width: 100%;
+  min-width: 0;
+}
+
+.filterItemPeriod {
+  flex: 0 0 auto;
+  min-width: 246px;
+}
+
+.periodTypeGroup {
+  display: flex;
+  width: max-content;
+  min-width: 216px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.periodTypeGroup :global(.ant-radio-button-wrapper) {
+  flex: 1 0 auto;
+  min-width: max-content;
+  padding-inline: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.periodTypeGroup
+  :global(
+    .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)
+  ),
+.periodTypeGroup
+  :global(
+    .ant-radio-button-wrapper-checked:not(
+        .ant-radio-button-wrapper-disabled
+      ):hover
+  ) {
+  color: var(--ant-color-text-light-solid);
+  background: var(--ant-color-primary);
+  border-color: var(--ant-color-primary);
+}
+
+.periodTypeGroup
+  :global(
+    .ant-radio-button-wrapper-checked:not(
+        .ant-radio-button-wrapper-disabled
+      )::before
+  ),
+.periodTypeGroup
+  :global(
+    .ant-radio-button-wrapper-checked:not(
+        .ant-radio-button-wrapper-disabled
+      ):hover::before
+  ) {
+  background-color: var(--ant-color-primary);
+}
+
+.filterActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 四项指标保持同一视觉层级，移动端自动降为两列或一列。 */
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.metricCard {
+  min-width: 0;
+}
+
+.metricTitle {
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+}
+
+.stageCard {
+  overflow: hidden;
+}
+
+.stageCardTitle {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+}
+
+.stageCardOrg {
+  display: block;
+  min-width: 0;
+  max-width: min(360px, 40vw);
+  color: var(--ant-color-text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.stageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 140px 0 32px;
+  margin-bottom: 16px;
+}
+
+.stageHeaderItem {
+  display: flex;
+  flex: 0 0 0;
+  justify-content: center;
+  min-width: 0;
+}
+
+.stageTag {
+  flex: 0 0 auto;
+  max-width: clamp(48px, 9vw, 132px);
+  min-width: 0;
+  overflow: hidden;
+  margin-inline-end: 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  /* ReactECharts 默认写入 300px 内联高度，必须覆盖后才能按页面宽度自适应。 */
+  height: clamp(360px, 42vw, 560px) !important;
+}
+
+.emptyChart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(360px, 42vw, 560px);
+  color: var(--ant-color-text-secondary);
+}
+
+@media (max-width: 960px) {
+  .metricGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .filterItem,
+  .filterItemWide,
+  .filterItemPeriod {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .periodTypeGroup {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .filterActions {
+    width: 100%;
+  }
+
+  .filterActions button {
+    flex: 1;
+  }
+
+  .metricGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stageHeader {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    padding-inline: 8px;
+  }
+
+  .stageHeaderItem {
+    width: auto;
+    flex: initial;
+  }
+
+  .stageCardOrg {
+    max-width: 40vw;
+  }
+}

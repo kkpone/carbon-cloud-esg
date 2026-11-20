@@ -1,0 +1,58 @@
+.status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  margin: 16px 0 24px;
+  border-radius: 12px;
+  .copy {
+    flex: 1;
+    min-width: 0;
+  }
+  strong {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+  p {
+    margin: 8px 0 0;
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 24px;
+    overflow-wrap: anywhere;
+  }
+  img {
+    flex-shrink: 0;
+  }
+  :global(.ant-btn) {
+    flex-shrink: 0;
+    border: 0;
+    box-shadow: none;
+  }
+}
+.pending {
+  background: #fff7e8;
+  color: #f3983e;
+}
+.approved {
+  background: #ecfaf7;
+  color: #048677;
+}
+.rejected {
+  background: #fff2f1;
+  color: #cb3430;
+  p {
+    color: #04252b;
+  }
+}
+@media (max-width: 600px) {
+  .status {
+    flex-wrap: wrap;
+    .copy {
+      flex-basis: 100%;
+    }
+  }
+}

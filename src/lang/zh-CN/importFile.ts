@@ -1,0 +1,32 @@
+export default {
+  downloadTips: '请先下载导入模板，按模板填写后上传',
+  uploadTips: '仅支持 .xlsx 格式，单文件不超过 {val1}MB',
+  reupload: '重新上传',
+  history: '导入历史',
+  refresh: '刷新',
+  sourceFile: '源文件',
+  failedFile: '异常数据',
+  status: {
+    pending: '导入中',
+    imported: '导入成功',
+    failed: '导入失败',
+  },
+  columns: {
+    totalCount: '总条数',
+    successCount: '导入条数',
+    failedCount: '异常条数',
+    operator: '操作人',
+    importTime: '导入时间',
+  },
+  templateNames: {
+    lcaModel: '模型清单导入模板.xlsx',
+    bom: 'BOM导入模板.xlsx',
+    dataSet: '数据集导入模板.xlsx',
+    supplierData: '供应商数据导入模板.xlsx',
+    lifeCycleData: '生命周期数据导入模板.xlsx',
+    processList: '过程清单导入模板.xlsx',
+    emissionFactor: '排放因子导入模板.xlsx',
+  },
+  downloadFailedWithStatus: '下载失败：HTTP {val1}',
+  downloadFailed: '下载失败',
+};

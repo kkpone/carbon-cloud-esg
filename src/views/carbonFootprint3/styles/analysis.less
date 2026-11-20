@@ -1,0 +1,203 @@
+@import '@src/styles/var.less';
+
+@analysisText: #04252b;
+@analysisSecondary: #6c757d;
+@analysisMuted: #999ea4;
+@analysisBorder: #e5e7eb;
+@analysisControlBorder: #d5d7da;
+@analysisFill: #f7f8f9;
+@analysisLink: #026961;
+@analysisFont: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+// 仅用于本次报告及分析页面，不修改全站 Ant Design 主题。
+.analysisControls() {
+  color: @analysisText;
+  font-family: @analysisFont;
+  font-size: 14px;
+  line-height: 22px;
+
+  :global(.ant-btn),
+  :global(.ant-btn > span),
+  :global(.ant-select),
+  :global(.ant-select-selection-item),
+  :global(.ant-select-selection-placeholder),
+  :global(.ant-input),
+  :global(.ant-input-number),
+  :global(.ant-input-number-input),
+  :global(.ant-radio-wrapper),
+  :global(.ant-formily-item-label-content) {
+    font-family: @analysisFont;
+    font-size: 14px;
+  }
+  :global(.ant-btn) {
+    height: 38px;
+    padding: 7px 16px;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+  :global(.ant-btn-default:not(:disabled)) {
+    color: @analysisText;
+    border-color: @analysisControlBorder;
+    background: #fff;
+  }
+  :global(.ant-btn-primary:not(:disabled)) {
+    color: #fff;
+    border-color: #004541;
+    background: #004541;
+  }
+  :global(.ant-btn-link:not(:disabled)) {
+    color: @analysisLink;
+  }
+  :global(.ant-btn-text),
+  :global(.ant-btn-link) {
+    height: auto;
+    padding: 0;
+    box-shadow: none;
+  }
+  :global(.ant-input),
+  :global(.ant-input-number-input),
+  :global(.ant-select-selection-item) {
+    color: @analysisText;
+  }
+  :global(.ant-input-affix-wrapper),
+  :global(.ant-input),
+  :global(.ant-input-number),
+  :global(.ant-select-selector) {
+    border-color: @analysisControlBorder;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+  :global(.ant-input::placeholder),
+  :global(.ant-input-number-input::placeholder),
+  :global(.ant-select-selection-placeholder) {
+    color: @analysisMuted;
+  }
+  :global(.ant-input-number-group-addon) {
+    padding: 0 12px;
+    color: @analysisText;
+    background: @analysisFill;
+    border-color: @analysisBorder;
+  }
+  :global(.ant-switch) {
+    min-width: 36px;
+    height: 20px;
+    background: #d5d7da;
+  }
+  :global(.ant-switch.ant-switch-checked) {
+    background: #006e65;
+  }
+  :global(.ant-switch .ant-switch-handle) {
+    top: 2px;
+    width: 16px;
+    height: 16px;
+  }
+  :global(.ant-switch.ant-switch-checked .ant-switch-handle) {
+    inset-inline-start: calc(100% - 18px);
+  }
+  :global(.ant-tabs-tab) {
+    color: @analysisSecondary;
+  }
+  :global(.ant-tabs-tab-active .ant-tabs-tab-btn) {
+    color: @analysisText;
+    font-weight: 500;
+    text-shadow: none;
+  }
+  :global(.ant-tabs-ink-bar) {
+    background: @analysisText;
+  }
+}
+
+.analysisHeading() {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: @analysisText;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  &::before {
+    flex: none;
+    width: 3px;
+    height: 18px;
+    border-radius: 2px;
+    background: #0cbf9f;
+    content: '';
+  }
+}
+
+.analysisDialog() {
+  .analysisControls();
+  && :global(.ant-modal-content) {
+    padding: 32px;
+    border-radius: 12px;
+  }
+  && :global(.ant-modal-header) {
+    margin-bottom: 24px;
+  }
+  && :global(.ant-modal-body) {
+    padding: 0;
+  }
+  && :global(.ant-modal-title) {
+    padding-right: 24px;
+    color: @analysisText;
+    font: 600 20px / 28px @analysisFont;
+  }
+  && :global(.ant-modal-close) {
+    top: 32px;
+    right: 28px;
+  }
+  && :global(.ant-modal-footer) {
+    margin-top: 24px;
+    padding: 0;
+  }
+  && :global(.ant-modal-footer .ant-btn) {
+    min-width: 76px;
+    height: 38px;
+    border-radius: 8px;
+  }
+  && :global(.ant-modal-footer .ant-btn + .ant-btn) {
+    margin-inline-start: 16px;
+  }
+  :global(.ant-form-item-label > label) {
+    color: @analysisText;
+  }
+  @media (max-width: 600px) {
+    && :global(.ant-modal-content) {
+      padding: 24px;
+    }
+    && :global(.ant-modal-close) {
+      top: 24px;
+      right: 20px;
+    }
+  }
+}
+
+.analysisTable() {
+  && :global(.ant-table-container) {
+    overflow: hidden;
+    border: 1px solid @analysisBorder;
+    border-radius: 8px;
+  }
+  && :global(.ant-table .ant-table-thead > tr > th) {
+    height: 48px;
+    padding: 12px 20px;
+    background: @analysisFill;
+    color: @analysisText;
+    border-bottom: 1px solid @analysisBorder;
+    font: 500 14px / 22px @analysisFont;
+  }
+  && :global(.ant-table .ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 12px 20px;
+    color: @analysisText;
+    border-bottom: 1px solid @analysisBorder;
+    font: 400 14px / 22px @analysisFont;
+  }
+  && :global(.ant-table .ant-table-tbody > tr:last-child > td) {
+    border-bottom: 0;
+  }
+  :global(.ant-table-thead .ant-table-cell::before) {
+    display: none;
+  }
+}

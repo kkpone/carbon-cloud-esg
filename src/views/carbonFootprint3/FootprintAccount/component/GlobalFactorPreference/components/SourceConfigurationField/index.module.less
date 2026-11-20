@@ -1,0 +1,165 @@
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 8px;
+
+  :global(.ant-btn-link) {
+    padding: 0;
+    height: auto;
+  }
+}
+
+.label {
+  color: #04252b;
+}
+
+.configuration .heading .configureButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #026961;
+
+  :global(.ant-btn-icon) {
+    margin-inline-end: 0;
+  }
+
+  &:not(:disabled):hover {
+    color: #026961;
+  }
+
+  &.cancelConfiguration,
+  &.cancelConfiguration:not(:disabled):hover {
+    color: #fa8c16;
+  }
+
+  &:disabled {
+    color: #b8bdc3;
+  }
+}
+
+.stageTabs:global(.ant-tabs) {
+  min-width: 0;
+
+  > :global(.ant-tabs-nav) {
+    align-self: flex-start;
+    max-width: 100%;
+    margin-bottom: 12px;
+    padding: 2px;
+    border-radius: 8px;
+    background: #f7f8f9;
+
+    &::before {
+      border: 0;
+    }
+  }
+
+  :global(.ant-tabs-nav-list) {
+    width: auto;
+  }
+
+  :global(.ant-tabs-tab) {
+    flex: none;
+    justify-content: center;
+    min-width: 0;
+    min-height: 36px;
+    margin: 0;
+    padding: 7px 20px;
+    border-radius: 6px;
+    color: #6c757d;
+  }
+
+  :global(.ant-tabs-tab-btn) {
+    line-height: 22px;
+    white-space: nowrap;
+  }
+
+  :global(.ant-tabs-tab-active) {
+    border-radius: 6px;
+    background: #fff;
+    color: #04252b;
+    box-shadow: 0 1px 3px #0000000f;
+  }
+
+  :global(.ant-tabs-tab-active .ant-tabs-tab-btn) {
+    color: #04252b;
+    font-weight: 500;
+    text-shadow: none;
+  }
+
+  :global(.ant-tabs-ink-bar) {
+    display: none;
+  }
+}
+
+.stageLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.stageCount {
+  font-variant-numeric: tabular-nums;
+}
+
+.required {
+  color: #ff4d4f;
+  margin-right: 4px;
+}
+.configuration {
+  min-width: 0;
+}
+.readOnlySources {
+  margin: 0;
+  padding-left: 20px;
+  overflow-wrap: anywhere;
+}
+.transfer {
+  width: 100%;
+  :global {
+    .ant-transfer-list {
+      flex: 1;
+      min-width: 0;
+      height: 260px;
+    }
+    .ant-transfer-list-header-title {
+      max-width: 210px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .stageConfiguration .transfer {
+    flex-direction: column;
+    gap: 8px;
+
+    :global(.ant-transfer-list) {
+      flex: none;
+      width: 100%;
+    }
+
+    :global(.ant-transfer-operation) {
+      flex-direction: row;
+      justify-content: center;
+      gap: 8px;
+      margin: 0;
+
+      :global(.ant-btn) {
+        margin: 0;
+      }
+
+      :global(.anticon) {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

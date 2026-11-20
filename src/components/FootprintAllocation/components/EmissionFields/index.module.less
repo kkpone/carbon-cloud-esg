@@ -1,0 +1,535 @@
+.amountField {
+  :global(.ant-formily-item-label-content) {
+    width: 100%;
+
+    > span {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      &:has(.amountLabel:lang(en)) {
+        align-items: flex-start;
+      }
+
+      > label {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+  }
+}
+
+.amountLabel {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/** 英文长标签分成两行，保留结果完整单位，并与右侧分配控件保持同高。 */
+.amountLabel:lang(en) {
+  flex-wrap: wrap;
+  row-gap: 0;
+  min-height: 44px;
+}
+
+.consumptionTrigger {
+  margin-inline-start: auto;
+}
+
+.allocation:lang(en) .controlLabel {
+  align-items: flex-start;
+  min-height: 44px;
+}
+
+.textButton {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0;
+  color: #026961;
+  font: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/** 仅作用于单位产品消耗说明浮层，尺寸和层次来自 Figma。 */
+.consumptionPopover {
+  max-width: calc(100vw - 24px);
+
+  :global(.ant-popover-inner) {
+    box-sizing: border-box;
+    width: 260px;
+    max-width: calc(100vw - 24px);
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #49ed92;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgb(12 191 159 / 10%),
+      0 4px 16px rgb(12 191 159 / 10%);
+  }
+}
+
+.consumptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #04252b;
+  font: 14px/22px 'PingFang SC', sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.consumptionHeader {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: -4px;
+}
+
+.consumptionClose {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: -1px -4px -1px 0;
+  padding: 4px;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f7f8f9;
+  }
+}
+
+.consumptionResult {
+  padding-bottom: 8px;
+  color: #0cbf9f;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.consumptionRows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #999ea4;
+
+  > div {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    justify-content: space-between;
+
+    > span:last-child {
+      color: #343a40;
+      text-align: right;
+    }
+  }
+}
+
+.formula {
+  padding: 4px 8px;
+  color: #999ea4;
+  background: #f7f8f9;
+  border-radius: 4px;
+}
+
+.allocation {
+  min-width: 0;
+  margin-bottom: 20px;
+  color: #04252b;
+  font: 14px/22px 'PingFang SC', sans-serif;
+}
+
+.controlLabel {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 22px;
+  margin-bottom: 8px;
+}
+
+.labelWithIcon {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.controlBody {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+
+  :global(.ant-switch-small) {
+    flex-shrink: 0;
+    min-width: 36px;
+    height: 20px;
+    background: url('../../assets/switch-off.svg') center no-repeat;
+
+    &:hover:not(:disabled) {
+      background: url('../../assets/switch-off.svg') center no-repeat;
+    }
+  }
+
+  :global(.ant-switch-small.ant-switch-checked) {
+    background: url('../../assets/switch-on.svg') center no-repeat;
+
+    &:hover:not(:disabled) {
+      background: url('../../assets/switch-on.svg') center no-repeat;
+    }
+  }
+
+  :global(.ant-switch-handle),
+  :global(.ant-switch-inner) {
+    display: none;
+  }
+}
+
+.ruleSummary {
+  display: flex;
+  flex: 1;
+  flex-wrap: nowrap;
+  gap: 4px 12px;
+  align-items: center;
+  min-width: 0;
+  min-height: 38px;
+  padding: 4px 8px;
+  color: #026961;
+  font: 14px/22px 'PingFang SC', sans-serif;
+  text-align: left;
+  background: #f7f8f9;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+
+  > span {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  &:lang(en) {
+    flex-wrap: wrap;
+  }
+}
+
+.summaryLabel {
+  color: #999ea4;
+}
+
+/** 排放源分配弹框独立使用 Figma 尺寸，不影响阶段配置抽屉。 */
+.allocationPopover {
+  width: 336px;
+  max-width: calc(100vw - 24px);
+
+  :global(.ant-popover-inner) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(100vw - 24px);
+    padding: 11px;
+    color: #04252b;
+    background: #fff;
+    border: 1px solid #49ed92;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgb(12 191 159 / 10%),
+      0 4px 16px rgb(12 191 159 / 10%);
+  }
+
+}
+
+.allocationPopoverEn {
+  width: 420px;
+}
+
+.popover {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  color: #04252b;
+  font: 14px/22px 'PingFang SC', sans-serif;
+}
+
+.popoverHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 22px;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+.popoverClose {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f7f8f9;
+  }
+}
+
+.rules {
+  display: flex;
+  padding: 2px;
+  background: #f7f8f9;
+  border-radius: 8px;
+
+  > button {
+    flex: 1;
+    min-width: 0;
+    height: 34px;
+    padding: 6px 16px;
+    color: #6c757d;
+    font: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: none;
+
+    &:not(:disabled):hover {
+      color: #04252b;
+      background: #fff;
+    }
+
+    &[aria-selected='true'] {
+      color: #04252b;
+      background: #fff;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+    }
+  }
+}
+
+.popoverFooter {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 4px;
+
+  > button {
+    height: 30px;
+    padding: 3px 11px;
+    color: #04252b;
+    font: inherit;
+    background: #fff;
+    border-color: #d5d7da;
+    border-radius: 6px;
+    box-shadow: none;
+  }
+
+  > :global(.ant-btn-primary) {
+    color: #fff;
+    background: #004541;
+    border-color: #004541;
+
+    &:not(:disabled):hover {
+      color: #fff;
+      background: #026961;
+      border-color: #026961;
+    }
+  }
+}
+
+/** 新增详细信息区域独立控制折叠样式，避免继承路段标题的灰色背景。 */
+.details.details {
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  border: 0;
+  border-bottom: 1px dashed #d2d6da;
+  border-radius: 0;
+
+  > :global(.ant-collapse-item) {
+    margin: 0;
+    background: transparent;
+    border: 0;
+
+    > :global(.ant-collapse-header) {
+      gap: 8px;
+      align-items: center;
+      height: 24px !important;
+      padding: 0 !important;
+      color: #04252b !important;
+      font: 16px/24px 'PingFang SC', sans-serif;
+      background: transparent !important;
+    }
+
+    > :global(.ant-collapse-content > .ant-collapse-content-box) {
+      padding: 20px 0 0 !important;
+    }
+  }
+
+  > :global(.ant-collapse-item-active > .ant-collapse-header) {
+    color: #026961 !important;
+  }
+
+  :global(.ant-collapse-expand-icon) {
+    padding: 0 !important;
+  }
+}
+
+.detailArrow,
+.detailArrowClosed {
+  display: block;
+  flex: none;
+}
+
+.detailArrowClosed {
+  transform: rotate(-90deg);
+}
+
+// 详情固定从第一列占满整行，避免动态显隐期间被网格自动填进右列。
+.transportDetailsColumn {
+  grid-column: 1 / -1 !important;
+  min-width: 0;
+}
+
+// 标题和分隔复用排放源样式，仅消除运输字段原有的表单外边距。
+.transportDetails.transportDetails {
+  :global(.ant-formily-item) {
+    margin-bottom: 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.gasField {
+  min-width: 0;
+
+  :global(.ant-formily-item) {
+    margin-bottom: 0;
+  }
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  color: #04252b;
+  font: 14px/22px 'PingFang SC', sans-serif;
+
+  small {
+    color: #999ea4;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  :global(.ant-input),
+  :global(.ant-input-number) {
+    height: 38px;
+    padding-inline: 12px;
+    border-color: #d2d6da;
+    border-radius: 8px;
+  }
+
+  :global(.ant-input-number) {
+    padding: 0;
+  }
+
+  :global(.ant-input-number-group-wrapper) {
+    width: 100%;
+  }
+
+  :global(.ant-input-number-group > .ant-input-number) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  :global(.ant-input-number-input) {
+    height: 36px;
+    padding: 7px 12px;
+  }
+
+  :global(.ant-input-number-group-addon) {
+    padding: 0 12px;
+    color: #04252b;
+    background: #f7f8f9;
+    border-color: #d5d7da;
+    border-radius: 0 8px 8px 0;
+  }
+
+  :global(input::placeholder) {
+    color: #b5b8bb;
+  }
+}
+
+/** 只给新增地址和载重量字段设置控件尺寸，不覆盖原运输字段。 */
+.transportInput:global(.ant-input),
+.transportInput:global(.ant-input-affix-wrapper) {
+  height: 38px;
+  padding-inline: 12px;
+  border-color: #d2d6da;
+  border-radius: 8px;
+}
+
+.transportInput {
+  width: 100%;
+
+  :global(.ant-input) {
+    height: 22px;
+    min-height: 0;
+    padding: 0;
+  }
+
+  :global(.ant-input-number) {
+    height: 38px;
+    border-color: #d5d7da;
+    border-radius: 8px 0 0 8px;
+  }
+
+  :global(.ant-input-number-input) {
+    height: 36px;
+    padding: 7px 12px;
+  }
+
+  :global(.ant-input-number-group-addon) {
+    padding: 0 12px;
+    color: #04252b;
+    background: #f7f8f9;
+    border-color: #d5d7da;
+    border-radius: 0 8px 8px 0;
+  }
+}
+
+/** 数量标签与原生必填星号保持同一基线。 */
+.energyAmountLabel {
+  display: inline-flex;
+  width: calc(100% - 16px);
+  vertical-align: middle;
+}

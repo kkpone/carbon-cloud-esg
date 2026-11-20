@@ -1,0 +1,67 @@
+.label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: #04252b;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  vertical-align: middle;
+}
+
+.actions {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  color: #026961;
+  white-space: nowrap;
+
+  strong {
+    font-weight: 600;
+  }
+
+  :global(.ant-btn) {
+    height: 22px;
+    padding: 0;
+    color: #026961;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+.iconWrapper {
+  display: inline-flex;
+}
+
+.calculate:global(.ant-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0;
+  color: #026961;
+  border: 0;
+  border-radius: 2px;
+}
+
+// 独立使用属性选择器，避免嵌套在:global中导致禁用规则作用于正常按钮。
+.calculate[disabled] {
+  color: @disabledColor;
+  opacity: 1;
+
+  .calculateIcon {
+    background-color: @disabledColor;
+  }
+}
+
+// 复用原SVG形状，正常与禁用状态分别着色，不受按钮hover文字色影响。
+.calculateIcon {
+  display: inline-block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  background-color: #026961;
+  mask: url('./calculate.svg') center / contain no-repeat;
+}

@@ -1,0 +1,304 @@
+{
+  "source": "3823340497e27cc53b4068a325b339532ddfefe4",
+  "routes": [
+    {
+      "path": "/energyCarbon/carbonAssetManagement/account",
+      "file": "carbonAssetManagement/account",
+      "component": "CarbonAccountPage"
+    },
+    {
+      "path": "/energyCarbon/carbonAssetManagement/quota",
+      "file": "carbonAssetManagement/quota",
+      "component": "CarbonQuotaPage"
+    },
+    {
+      "path": "/energyCarbon/carbonAssetManagement/trade",
+      "file": "carbonAssetManagement/trade",
+      "component": "CarbonTradePage"
+    },
+    {
+      "path": "/energyCarbon/config/energyEquipment",
+      "file": "config/energyEquipment",
+      "component": "EnergyEquipmentPage"
+    },
+    {
+      "path": "/energyCarbon/config/energyList",
+      "file": "config/energyList",
+      "component": "EnergyListPage"
+    },
+    {
+      "path": "/energyCarbon/config/mainProduct",
+      "file": "config/mainProduct",
+      "component": "MainProductPage"
+    },
+    {
+      "path": "/energyCarbon/config/measuringInstrument",
+      "file": "config/measuringInstrument",
+      "component": "MeasuringInstrumentPage"
+    },
+    {
+      "path": "/energyCarbon/energyAnalysis/boundary",
+      "file": "energyAnalysis/boundary",
+      "component": "BoundaryEnergyAnalysisPage"
+    },
+    {
+      "path": "/energyCarbon/energyAnalysis/efficiency",
+      "file": "energyAnalysis/efficiency",
+      "component": "EnergyEfficiencyAnalysisPage"
+    },
+    {
+      "path": "/energyCarbon/energyAnalysis/form",
+      "file": "energyAnalysis/form",
+      "component": "EnergyFormAnalysisPage"
+    },
+    {
+      "path": "/energyCarbon/energyAnalysis/overview",
+      "file": "energyAnalysis/overview",
+      "component": "EnergyOverviewPage"
+    },
+    {
+      "path": "/energyCarbon/energyAnalysis/structure",
+      "file": "energyAnalysis/structure",
+      "component": "EnergyStructureAnalysisPage"
+    },
+    {
+      "path": "/energyCarbon/energyBudgetManagement/budget",
+      "file": "energyBudgetManagement/budget",
+      "component": "EnergyBudgetPage"
+    },
+    {
+      "path": "/energyCarbon/energyCalc/consumption",
+      "file": "energyCalc/consumption",
+      "component": "EnergyConsumptionPage"
+    },
+    {
+      "path": "/energyCarbon/energyCalc/intensity",
+      "file": "energyCalc/intensity",
+      "component": "EnergyIntensityPage"
+    },
+    {
+      "path": "/energyCarbon/energyCalc/productionFill",
+      "file": "energyCalc/productionFill",
+      "component": "ProductionDataFillPage"
+    },
+    {
+      "path": "/energyCarbon/energyCalc/productionLedger",
+      "file": "energyCalc/productionLedger",
+      "component": "ProductionLedgerPage"
+    },
+    {
+      "path": "/energyCarbon/energyConsumptionQuery/dataFill",
+      "file": "energyConsumptionQuery/dataFill",
+      "component": "EnergyConsumptionDataFillPage"
+    },
+    {
+      "path": "/energyCarbon/energyConsumptionQuery/inventory/import",
+      "file": "energyConsumptionQuery/inventory/import",
+      "component": "InventoryImportPage"
+    },
+    {
+      "path": "/energyCarbon/energyConsumptionQuery/inventory",
+      "file": "energyConsumptionQuery/inventory",
+      "component": "InventoryPage"
+    },
+    {
+      "path": "/energyCarbon/energyConsumptionQuery/ledger",
+      "file": "energyConsumptionQuery/ledger",
+      "component": "EnergyLedgerPage"
+    },
+    {
+      "path": "/energyCarbon/energyConsumptionQuery/query",
+      "file": "energyConsumptionQuery/query",
+      "component": "EnergyQueryPage"
+    },
+    {
+      "path": "/energyCarbon/energyEfficiencyBenchmark/analysis",
+      "file": "energyEfficiencyBenchmark/analysis",
+      "component": "BenchmarkAnalysisPage"
+    },
+    {
+      "path": "/energyCarbon/energyEfficiencyBenchmark/data",
+      "file": "energyEfficiencyBenchmark/data",
+      "component": "BenchmarkDataPage"
+    },
+    {
+      "path": "/energyCarbon/energyFlowAnalysis/analysis",
+      "file": "energyFlowAnalysis/analysis",
+      "component": "EnergyFlowAnalysisPage"
+    },
+    {
+      "path": "/energyCarbon/energyFlowAnalysis/setting",
+      "file": "energyFlowAnalysis/setting",
+      "component": "EnergyFlowSettingPage"
+    },
+    {
+      "path": "/energyCarbon/orgBoundary",
+      "file": "orgBoundary",
+      "component": "OrgBoundaryPage"
+    }
+  ],
+  "files": [
+    "src/views/energyCarbon/carbonAssetManagement/account/constant.ts",
+    "src/views/energyCarbon/carbonAssetManagement/account/hooks/index.ts",
+    "src/views/energyCarbon/carbonAssetManagement/account/index.module.css",
+    "src/views/energyCarbon/carbonAssetManagement/account/index.tsx",
+    "src/views/energyCarbon/carbonAssetManagement/account/services.ts",
+    "src/views/energyCarbon/carbonAssetManagement/account/types.ts",
+    "src/views/energyCarbon/carbonAssetManagement/quota/index.module.css",
+    "src/views/energyCarbon/carbonAssetManagement/quota/index.tsx",
+    "src/views/energyCarbon/carbonAssetManagement/quota/services.ts",
+    "src/views/energyCarbon/carbonAssetManagement/quota/types.ts",
+    "src/views/energyCarbon/carbonAssetManagement/trade/columns.tsx",
+    "src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeDetailDrawer/index.module.css",
+    "src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeDetailDrawer/index.tsx",
+    "src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeFormDrawer/index.module.css",
+    "src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeFormDrawer/index.tsx",
+    "src/views/energyCarbon/carbonAssetManagement/trade/constant.ts",
+    "src/views/energyCarbon/carbonAssetManagement/trade/hooks/index.ts",
+    "src/views/energyCarbon/carbonAssetManagement/trade/index.tsx",
+    "src/views/energyCarbon/carbonAssetManagement/trade/services.ts",
+    "src/views/energyCarbon/carbonAssetManagement/trade/types.ts",
+    "src/views/energyCarbon/config/energyEquipment/columns.tsx",
+    "src/views/energyCarbon/config/energyEquipment/components/EnergyEquipmentFormDrawer/index.tsx",
+    "src/views/energyCarbon/config/energyEquipment/constant.ts",
+    "src/views/energyCarbon/config/energyEquipment/hooks/index.ts",
+    "src/views/energyCarbon/config/energyEquipment/index.tsx",
+    "src/views/energyCarbon/config/energyEquipment/services.ts",
+    "src/views/energyCarbon/config/energyEquipment/types.ts",
+    "src/views/energyCarbon/config/energyList/columns.tsx",
+    "src/views/energyCarbon/config/energyList/components/EnergyFormDrawer/index.tsx",
+    "src/views/energyCarbon/config/energyList/constant.ts",
+    "src/views/energyCarbon/config/energyList/hooks/index.ts",
+    "src/views/energyCarbon/config/energyList/index.tsx",
+    "src/views/energyCarbon/config/energyList/services.ts",
+    "src/views/energyCarbon/config/energyList/types.ts",
+    "src/views/energyCarbon/config/mainProduct/columns.tsx",
+    "src/views/energyCarbon/config/mainProduct/components/ProductFormDrawer/index.tsx",
+    "src/views/energyCarbon/config/mainProduct/constant.ts",
+    "src/views/energyCarbon/config/mainProduct/hooks/index.ts",
+    "src/views/energyCarbon/config/mainProduct/index.tsx",
+    "src/views/energyCarbon/config/mainProduct/services.ts",
+    "src/views/energyCarbon/config/mainProduct/types.ts",
+    "src/views/energyCarbon/config/measuringInstrument/columns.tsx",
+    "src/views/energyCarbon/config/measuringInstrument/components/MeasuringInstrumentFormDrawer/index.tsx",
+    "src/views/energyCarbon/config/measuringInstrument/constant.ts",
+    "src/views/energyCarbon/config/measuringInstrument/hooks/index.ts",
+    "src/views/energyCarbon/config/measuringInstrument/index.tsx",
+    "src/views/energyCarbon/config/measuringInstrument/services.ts",
+    "src/views/energyCarbon/config/measuringInstrument/types.ts",
+    "src/views/energyCarbon/energyAnalysis/boundary/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/components/EfficiencyAnalysisPage/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/components/FormAnalysisResult/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/components/SinglePeriodAnalysisPage/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/constant.ts",
+    "src/views/energyCarbon/energyAnalysis/efficiency/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/form/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/hooks.ts",
+    "src/views/energyCarbon/energyAnalysis/index.module.css",
+    "src/views/energyCarbon/energyAnalysis/overview/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/services.ts",
+    "src/views/energyCarbon/energyAnalysis/structure/index.tsx",
+    "src/views/energyCarbon/energyAnalysis/types.ts",
+    "src/views/energyCarbon/energyAnalysis/utils.ts",
+    "src/views/energyCarbon/energyBudgetManagement/budget/index.module.css",
+    "src/views/energyCarbon/energyBudgetManagement/budget/index.tsx",
+    "src/views/energyCarbon/energyBudgetManagement/budget/services.ts",
+    "src/views/energyCarbon/energyBudgetManagement/budget/types.ts",
+    "src/views/energyCarbon/energyCalc/consumption/index.tsx",
+    "src/views/energyCarbon/energyCalc/intensity/index.tsx",
+    "src/views/energyCarbon/energyCalc/productionFill/columns.tsx",
+    "src/views/energyCarbon/energyCalc/productionFill/components/ProductionDataFormDrawer/index.module.css",
+    "src/views/energyCarbon/energyCalc/productionFill/components/ProductionDataFormDrawer/index.tsx",
+    "src/views/energyCarbon/energyCalc/productionFill/constant.ts",
+    "src/views/energyCarbon/energyCalc/productionFill/hooks/index.ts",
+    "src/views/energyCarbon/energyCalc/productionFill/index.tsx",
+    "src/views/energyCarbon/energyCalc/productionFill/services.ts",
+    "src/views/energyCarbon/energyCalc/productionFill/types.ts",
+    "src/views/energyCarbon/energyCalc/productionLedger/columns.tsx",
+    "src/views/energyCarbon/energyCalc/productionLedger/constant.ts",
+    "src/views/energyCarbon/energyCalc/productionLedger/hooks/index.ts",
+    "src/views/energyCarbon/energyCalc/productionLedger/index.module.css",
+    "src/views/energyCarbon/energyCalc/productionLedger/index.tsx",
+    "src/views/energyCarbon/energyCalc/productionLedger/services.ts",
+    "src/views/energyCarbon/energyCalc/productionLedger/types.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/columns.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/components/EnergyConsumptionFormDrawer/index.module.css",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/components/EnergyConsumptionFormDrawer/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/constant.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/hooks/index.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/index.module.css",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/services.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/dataFill/types.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/columns.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryFormDrawer/index.module.css",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryFormDrawer/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryImportPanel/index.module.css",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryImportPanel/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/constant.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/hooks/index.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/import/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/services.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/inventory/types.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/columns.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/constant.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/hooks/index.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/index.module.css",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/index.tsx",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/services.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/ledger/types.ts",
+    "src/views/energyCarbon/energyConsumptionQuery/query/index.tsx",
+    "src/views/energyCarbon/energyEfficiencyBenchmark/analysis/index.module.css",
+    "src/views/energyCarbon/energyEfficiencyBenchmark/analysis/index.tsx",
+    "src/views/energyCarbon/energyEfficiencyBenchmark/data/index.module.css",
+    "src/views/energyCarbon/energyEfficiencyBenchmark/data/index.tsx",
+    "src/views/energyCarbon/energyEfficiencyBenchmark/services.ts",
+    "src/views/energyCarbon/energyEfficiencyBenchmark/types.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/analysis/index.tsx",
+    "src/views/energyCarbon/energyFlowAnalysis/constant.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/hooks/index.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/index.module.css",
+    "src/views/energyCarbon/energyFlowAnalysis/services.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/setting/constant.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/setting/hooks/index.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/setting/index.module.css",
+    "src/views/energyCarbon/energyFlowAnalysis/setting/index.tsx",
+    "src/views/energyCarbon/energyFlowAnalysis/setting/services.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/setting/types.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/types.ts",
+    "src/views/energyCarbon/energyFlowAnalysis/utils.ts",
+    "src/views/energyCarbon/energyStatistics/-StatisticsPage.tsx",
+    "src/views/energyCarbon/energyStatistics/constant.ts",
+    "src/views/energyCarbon/energyStatistics/hooks.ts",
+    "src/views/energyCarbon/energyStatistics/index.module.css",
+    "src/views/energyCarbon/energyStatistics/services.ts",
+    "src/views/energyCarbon/energyStatistics/types.ts",
+    "src/views/energyCarbon/hooks/useEnergyEnum.ts",
+    "src/views/energyCarbon/hooks/useLocalizedFormErrors.ts",
+    "src/views/energyCarbon/orgBoundary/columns.tsx",
+    "src/views/energyCarbon/orgBoundary/components/BoundaryResourceSelector/index.tsx",
+    "src/views/energyCarbon/orgBoundary/components/OrgBoundaryFormDrawer/index.module.css",
+    "src/views/energyCarbon/orgBoundary/components/OrgBoundaryFormDrawer/index.tsx",
+    "src/views/energyCarbon/orgBoundary/constant.ts",
+    "src/views/energyCarbon/orgBoundary/hooks/index.ts",
+    "src/views/energyCarbon/orgBoundary/index.module.css",
+    "src/views/energyCarbon/orgBoundary/index.tsx",
+    "src/views/energyCarbon/orgBoundary/services.ts",
+    "src/views/energyCarbon/orgBoundary/types.ts",
+    "src/views/energyCarbon/utils.ts",
+    "src/views/energyCarbon/components/TableActions/TableActions.tsx",
+    "src/views/energyCarbon/components/TableActions/createColumn.tsx",
+    "src/views/energyCarbon/components/TableActions/index.module.css",
+    "src/views/energyCarbon/components/TableActions/index.tsx",
+    "src/views/energyCarbon/components/TableActions/types.ts",
+    "src/views/energyCarbon/components/TableActions/width.ts",
+    "src/views/energyCarbon/components/FormDrawerFooter/index.module.css",
+    "src/views/energyCarbon/components/FormDrawerFooter/index.tsx",
+    "src/views/energyCarbon/components/ListSearchForm/index.module.css",
+    "src/views/energyCarbon/components/ListSearchForm/index.tsx",
+    "src/views/energyCarbon/components/LeafCascader/index.module.css",
+    "src/views/energyCarbon/components/LeafCascader/index.tsx",
+    "src/views/energyCarbon/components/EnergyCarbonCategoryChart/index.tsx"
+  ]
+}

@@ -1,0 +1,30 @@
+@text: #04252b;
+@brand: #026961;
+@border: #e5e7eb;
+
+.page { min-height: 100%; box-sizing: border-box; color: @text; background: #fff; font-family: 'PingFang SC', sans-serif; }
+.header { display: flex; align-items: center; padding: 32px 40px 16px; background: #fff; h2 { margin: 0; font-size: 20px; font-weight: 500; line-height: 28px; white-space: nowrap; } }
+.layout { display: flex; min-height: 620px; padding: 0; overflow: hidden; background: #fff; border-radius: 8px; }
+.sidebar { display: flex; flex: 0 0 280px; flex-direction: column; gap: 20px; box-sizing: border-box; padding: 20px 20px 20px 40px; background: #fff; border-right: 1px solid @border; border-radius: 8px 0 0 8px; }
+.sidebarTitle { display: flex; gap: 8px; align-items: center; height: 24px; img { width: 16px; height: 16px; } strong { font-size: 16px; font-weight: 500; line-height: 24px; white-space: nowrap; } }
+.search { box-sizing: border-box; width: 220px; max-width: 100%; height: 38px; padding: 7px 11px; background: #fff; border-color: #ebedf0; border-radius: 8px; box-shadow: none; &:hover, &:focus, &:global(.ant-input-affix-wrapper-focused) { border-color: #ebedf0; box-shadow: none; } :global(.ant-input) { height: 22px; padding: 0; color: @text; font-family: 'PingFang SC', sans-serif; font-size: 14px; font-style: normal; font-weight: 400; line-height: 22px; } :global(.ant-input::placeholder) { color: #b5b8bb; } :global(.ant-input-suffix) { margin-left: 5px; } button { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; padding: 0; background: transparent; border: 0; cursor: pointer; } img { width: 16px; height: 16px; } }
+.cards { display: flex; flex-direction: column; gap: 16px; max-height: 700px; overflow: auto; }
+.card { display: flex; flex-direction: column; gap: 12px; width: 100%; padding: 12px; color: #343a40; text-align: left; background: #fff; border: 1px solid #ebedf0; border-radius: 8px; cursor: pointer; }
+.cardTitle { display: flex; gap: 8px; align-items: center; min-width: 0; i { display: flex; align-items: center; justify-content: center; width: 24px; height: 16px; color: @text; font-size: 10px; font-style: normal; font-weight: 600; line-height: 10px; border: 1px solid @text; border-radius: 8px 20px 20px 0; } strong { overflow: hidden; font-size: 14px; font-weight: 500; line-height: 22px; text-overflow: ellipsis; white-space: nowrap; } }
+.cardMeta { display: flex; align-items: center; justify-content: space-between; min-width: 0; small { max-width: 125px; padding: 4px 8px; overflow: hidden; color: #343a40; font-size: 12px; line-height: 18px; text-overflow: ellipsis; white-space: nowrap; background: #f7f8f9; border-radius: 100px; } em { color: #999ea4; font-size: 12px; font-style: normal; line-height: 18px; white-space: nowrap; } }
+.card:hover, .active { border-color: @brand; }
+.active .cardTitle { i { color: #fff; background: #048677; border-color: #048677; } strong { color: #048677; } }
+.content { flex: 1 1 auto; min-width: 0; padding: 20px 40px 20px 20px; overflow: hidden; background: #fff; border-radius: 0 8px 8px 0; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.productInfo { display: flex; gap: 8px; align-items: flex-start; strong { font-size: 18px; font-weight: 500; line-height: 26px; white-space: nowrap; } span { padding: 4px 8px; color: #343a40; font-size: 12px; line-height: 18px; white-space: nowrap; background: #f7f8f9; border-radius: 100px; } }
+.toolbarActions { display: flex; gap: 16px; align-items: center; :global(.ant-btn) { height: 38px; padding: 8px 16px; color: @text; font-size: 14px; line-height: 20px; border-color: #d5d7da; border-radius: 8px; box-shadow: none; } :global(.ant-btn-primary) { color: #fff; background: #004541; border-color: #004541; } }
+.table :global(.ant-table-container) { overflow: hidden; border: 1px solid @border; border-radius: 8px; }
+.table :global(.ant-table-thead > tr > th) { height: 48px; padding: 8px 20px; color: @text; font-size: 14px; font-weight: 500; line-height: 22px; background: #f7f8f9; border-bottom: 1px solid @border; }
+.table :global(.ant-table-tbody > tr > td) { height: 60px; padding: 8px 20px; color: #343a40; font-size: 14px; line-height: 22px; border-bottom: 1px solid @border; }
+.table :global(.ant-table-cell-fix-right) { box-shadow: -5px 0 8px rgb(0 0 0 / 5%); }
+.table :global(.ant-btn-link) { height: 22px; padding: 0; color: @brand; line-height: 22px; }
+.verificationPeriod { white-space: nowrap; }
+.table :global(.ant-pagination) { margin: 4px 0 0; }
+.table :global(.ant-pagination-item) { border: 0; }
+.table :global(.ant-pagination-item-active) { background: #f7f8f9; }
+@media (max-width: 1100px) { .header { padding-right: 20px; padding-left: 20px; } .layout { padding: 0; } .sidebar { flex-basis: 260px; padding-left: 20px; } .content { padding-right: 20px; } }

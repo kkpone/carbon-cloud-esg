@@ -1,0 +1,4 @@
+/* 能耗填报日期面板内切换年/月，筛选栏只保留日期范围框。 */
+.periodPanelHeader {
+  padding: 8px 12px;
+}

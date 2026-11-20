@@ -1,0 +1,47 @@
+@text: #04252b;
+@secondary: #6c757d;
+@brand: #026961;
+@border: #e5e7eb;
+
+.drawer {
+  :global(.ant-drawer-content) { color: @text; font-family: 'PingFang SC', sans-serif; background: #fff; backdrop-filter: blur(50px); }
+  :global(.ant-drawer-header) { padding: 32px 32px 0; border-bottom: 0; }
+  :global(.ant-drawer-header-title) { align-items: center; }
+  :global(.ant-drawer-body) { padding: 32px; }
+  :global(.ant-drawer-footer) { padding: 0 32px 32px; background: #fff; border-top: 0; }
+  :global(.ant-drawer-footer .ant-btn) { height: 38px; padding: 8px 24px; color: @text; border-color: #d5d7da; border-radius: 8px; box-shadow: none; }
+}
+.drawerTitle { display: block; color: @text; font-size: 24px; font-style: normal; font-weight: 600; line-height: 32px; }
+.close { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin: -8px; padding: 8px; background: transparent; border: 0; cursor: pointer; img { width: 16px; height: 16px; } }
+.sections { display: flex; flex-direction: column; gap: 32px; }
+.section { display: flex; flex-direction: column; gap: 16px; margin: 0; h3 { margin: 0; color: #343a40; font-size: 16px; font-style: normal; font-weight: 500; line-height: 24px; } }
+.detailTable { display: grid; overflow: hidden; border: 1px solid @border; border-radius: 8px; }
+.sourceTable,
+.verificationTable { grid-template-columns: 108px minmax(0, 1fr) 108px minmax(0, 1fr); }
+.labelCell,
+.valueCell { display: flex; align-items: center; min-width: 0; min-height: 46px; padding: 12px; overflow: hidden; font-size: 14px; font-style: normal; font-weight: 400; line-height: 22px; white-space: nowrap; border-right: 1px solid @border; border-bottom: 1px solid @border; }
+.labelCell { color: @secondary; background: #f7f8f9; }
+.valueCell { color: @text; background: #fff; span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+.detailTable > :nth-child(4n) { border-right: 0; }
+.detailTable > :nth-last-child(-n + 4) { border-bottom: 0; }
+.emissionGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.emissionCard { display: flex; flex-direction: column; gap: 4px; justify-content: center; box-sizing: border-box; min-width: 0; height: 72px; padding: 12px; overflow: hidden; background: #fff; border: 1px solid #ebedf0; border-top: 1.5px solid @brand; border-radius: 8px; span, strong { overflow: hidden; font-size: 14px; font-style: normal; font-weight: 400; line-height: 22px; text-overflow: ellipsis; white-space: nowrap; } span { color: @secondary; } strong { color: @text; } }
+.fileGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.fileCard { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 12px; overflow: hidden; background: #fff; border: 1px solid @border; border-radius: 8px; transition: border-color .2s, box-shadow .2s; &:hover { border-color: @brand; box-shadow: 0 1px 4px rgb(0 0 0 / 4%), 0 4px 16px rgb(0 0 0 / 8%); } }
+.fileCardTitle { overflow: hidden; color: @text; font-size: 14px; line-height: 22px; text-overflow: ellipsis; white-space: nowrap; }
+.fileInfo { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.fileNameRow { display: flex; gap: 8px; align-items: center; min-width: 0; img { flex: 0 0 16px; width: 16px; height: 16px; } strong { overflow: hidden; color: @text; font-size: 14px; font-weight: 500; line-height: 22px; text-overflow: ellipsis; white-space: nowrap; } }
+.fileSize { display: flex; align-items: center; font-size: 12px; line-height: 18px; white-space: nowrap; span { color: #999ea4; } strong { color: @text; font-weight: 400; } }
+.fileActions { display: flex; gap: 16px; align-items: center; a, button { display: flex; gap: 8px; align-items: center; padding: 0; color: @brand; font-size: 14px; line-height: 22px; text-decoration: none; background: transparent; border: 0; cursor: pointer; } img { width: 16px; height: 16px; } }
+.footer { display: flex; justify-content: flex-end; }
+@media (max-width: 640px) {
+  .drawer :global(.ant-drawer-body) { padding: 24px; }
+  .sourceTable,
+  .verificationTable { grid-template-columns: 96px minmax(0, 1fr); }
+  .detailTable > :nth-child(4n) { border-right: 1px solid @border; }
+  .detailTable > :nth-child(2n) { border-right: 0; }
+  .detailTable > :nth-last-child(-n + 4) { border-bottom: 1px solid @border; }
+  .detailTable > :nth-last-child(-n + 2) { border-bottom: 0; }
+  .emissionGrid,
+  .fileGrid { grid-template-columns: minmax(0, 1fr); }
+}

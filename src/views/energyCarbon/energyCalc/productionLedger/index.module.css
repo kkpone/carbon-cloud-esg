@@ -1,0 +1,43 @@
+.fullWidth {
+  width: 100%;
+}
+
+/* 数量和单位保持与生产数据填报详情一致的组合布局。 */
+.quantityGroup {
+  width: 100%;
+}
+
+.quantityInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+.quantityUnit {
+  flex: 0 0 auto;
+  min-width: 64px;
+  max-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.quantityUnit[data-unit-length='1'],
+.quantityUnit[data-unit-length='2'] {
+  width: 64px;
+}
+
+.quantityUnit[data-unit-length='3'] {
+  width: 80px;
+}
+
+.quantityUnit[data-unit-length='4'] {
+  width: 96px;
+}
+
+.quantityUnit[data-unit-length='5'] {
+  width: 112px;
+}
+
+.quantityUnit[data-unit-length='6'] {
+  width: 120px;
+}

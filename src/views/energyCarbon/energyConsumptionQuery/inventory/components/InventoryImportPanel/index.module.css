@@ -1,0 +1,17 @@
+.panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.actionSection {
+  height: 100%;
+  min-width: 0;
+}
+
+.uploadControl {
+  min-width: 0;
+  max-width: 100%;
+}

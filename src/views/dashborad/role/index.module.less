@@ -1,0 +1,64 @@
+.dataScopeIntro {
+  margin-bottom: 16px;
+}
+
+.dataScopeHelp {
+  margin: 0;
+  color: var(--text-secondary, #999ea4);
+  line-height: 22px;
+}
+
+.dataScopeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  :global(.ant-radio-wrapper) {
+    display: flex;
+    align-items: center;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    white-space: normal;
+    word-break: break-word;
+
+    > :global(.ant-radio) {
+      align-self: center;
+      top: 0;
+    }
+
+    > span:last-child {
+      flex: 1;
+      min-width: 0;
+      padding-inline-start: 12px;
+      padding-inline-end: 0;
+    }
+  }
+}
+
+.dataScopeTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--text, #343a40);
+  line-height: 22px;
+}
+
+.dataScopeDescription {
+  margin-top: 4px;
+  color: var(--text-secondary, #999ea4);
+  line-height: 22px;
+}
+
+.minimumPermission {
+  padding: 0 6px;
+  border: 1px solid #d9dce0;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 12px;
+  line-height: 20px;
+}

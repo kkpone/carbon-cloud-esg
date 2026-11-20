@@ -1,0 +1,358 @@
+@import '@src/styles/var.less';
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: inline-flex;
+  order: 1;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  justify-content: flex-end;
+  font-size: 12px;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+.globalActions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+// 局部翻译采用次按钮，hover 与键盘聚焦时使用设计中的深绿描边。
+.actions .aiButton {
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid #d5d7da;
+  border-radius: 8px;
+  background: @white;
+  box-shadow: none;
+  color: #04252b;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+
+  &:not(:disabled):hover,
+  &:not(:disabled):focus-visible {
+    border-color: #026961;
+    background: @white;
+    color: #026961;
+    font-weight: 500;
+  }
+
+  &:disabled {
+    border-color: #d5d7da;
+    background: @white;
+    color: @disabledColor;
+  }
+}
+
+.fieldTranslating {
+  border-color: #9f522b;
+  background: #fff9f2;
+  box-shadow: 0 0 0 2px rgba(159, 82, 43, 0.12);
+
+  &:hover,
+  &:focus {
+    border-color: #9f522b;
+    box-shadow: 0 0 0 2px rgba(159, 82, 43, 0.12);
+  }
+}
+
+// 语言切换保持 38px 高度，白色滑块随当前选项移动。
+.actions .languageSwitch {
+  flex-shrink: 0;
+  padding: 2px;
+  border-radius: 8px;
+  background: @lightGray;
+  color: @secondDark;
+  font-size: 14px;
+  font-weight: 400;
+
+  :global(.ant-segmented-item) {
+    border-radius: 8px;
+  }
+
+  :global(.ant-segmented-item-label) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 16px;
+    line-height: 22px;
+  }
+
+  :global(.ant-segmented-item-selected),
+  :global(.ant-segmented-thumb) {
+    border-radius: 8px;
+    background: @white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  :global(.ant-segmented-item-selected .ant-segmented-item-label) {
+    color: #04252b;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 768px) {
+  .actions {
+    flex-wrap: wrap;
+  }
+}
+
+// 全局入口复用 Figma 的分色标识，文字区域随当前语言自适应宽度。
+.globalButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 116px;
+  height: 38px;
+  padding: 0 10px 0 48px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: #026961 url('./global-background.svg') center / 100% 100%
+    no-repeat;
+  box-shadow: none;
+  color: @white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.42px;
+
+  // 同保存按钮一样在交互时轻微提亮，覆盖底图以免遮住 hover 底色。
+  &:not(:disabled):not(.translatingButton):hover,
+  &:not(:disabled):not(.translatingButton):focus-visible {
+    background: #1b7871;
+    color: @white;
+  }
+
+  &:disabled {
+    background-color: #026961;
+    color: @white;
+    opacity: 0.45;
+  }
+
+  &.translatingButton {
+    background: #9f522b;
+  }
+}
+
+.globalButtonIcon {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 49px;
+  pointer-events: none;
+}
+
+.globalIconBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.globalFold {
+  position: absolute;
+  top: 29.5px;
+  left: 38px;
+}
+
+.globalAiIcon {
+  position: absolute;
+  top: 12px;
+  left: 8px;
+}
+
+.globalLoadingIcon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 14px;
+}
+
+.globalButtonLabel {
+  white-space: nowrap;
+}
+
+// 完成状态由 Portal 追加到标题，展开标签盒子让状态留在标题旁，翻译控件单独靠右。
+:global(.ant-collapse-header-text):has(> span > .actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  > span:has(> .actions) {
+    display: contents;
+  }
+}
+
+// 有底色的折叠标题内，语言切换使用与翻译按钮一致的外描边；不改变控件尺寸。
+:global(.ant-collapse-header) .actions .languageSwitch {
+  outline: 1px solid #d5d7da;
+  outline-offset: -1px;
+}
+
+// 全局弹框按设计稿布局，任务选择和执行仍使用原有流程。
+.translationModal {
+  top: 24px;
+  padding-bottom: 24px;
+
+  // 固定弹框尺寸，窄矮视口下仅压缩内容区，标题和操作按钮不参与滚动。
+  :global(.ant-modal-content) {
+    display: flex;
+    flex-direction: column;
+    height: min(714px, calc(100dvh - 48px));
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05),
+      0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  :global(.ant-modal-header) {
+    flex-shrink: 0;
+    margin-bottom: 24px;
+  }
+
+  :global(.ant-modal-body) {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  :global(.ant-modal-title) {
+    color: #04252b;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+
+  :global(.ant-modal-close) {
+    top: 38px;
+    right: 32px;
+    width: 16px;
+    height: 16px;
+  }
+
+  :global(.ant-modal-footer) {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+
+    :global(.ant-btn) {
+      min-width: 76px;
+      height: 38px;
+      margin: 0;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: none;
+    }
+  }
+
+  :global(.ant-modal-footer .ant-btn-default) {
+    border-color: #d2d6da;
+    color: #343a40;
+  }
+
+  :global(.ant-modal-footer .ant-btn-primary:not(:disabled)) {
+    border-color: #004541;
+    background: #004541;
+    color: @white;
+
+    &:hover {
+      border-color: #1b7871;
+      background: #1b7871;
+    }
+  }
+}
+
+.translationTable {
+  overflow: auto;
+  border: 0.5px solid #e5e7eb;
+  border-radius: 8px;
+
+  :global(.ant-table) {
+    color: #04252b;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  :global(.ant-table-thead > tr > th),
+  :global(.ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 10px 20px;
+    border-bottom: 0.5px solid #e5e7eb;
+  }
+
+  :global(.ant-table-thead > tr > th) {
+    background: #f7f8f9;
+    font-weight: 500;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  :global(.ant-table-selection-column) {
+    padding-right: 12px !important;
+    padding-left: 20px !important;
+  }
+
+  :global(.ant-table-selection-column + th),
+  :global(.ant-table-selection-column + td) {
+    padding-left: 0;
+  }
+
+  :global(.ant-table-tbody > tr.ant-table-row-selected > td) {
+    background: @white;
+  }
+
+  :global(.ant-table-tbody > tr:last-child > td) {
+    border-bottom: 0;
+  }
+
+  :global(.ant-checkbox-inner) {
+    border-color: #d5d7da;
+    border-radius: 4px;
+  }
+
+  :global(
+      .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner
+    ) {
+    border: 0;
+    background: transparent url('./modal-checked.svg') center no-repeat;
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.translationStatus {
+  height: 28px;
+  margin: 0;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 20px;
+  color: #04252b;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.translatedStatus {
+  background: #ddf4f2;
+}
+
+.untranslatedStatus {
+  background: #fceedf;
+}

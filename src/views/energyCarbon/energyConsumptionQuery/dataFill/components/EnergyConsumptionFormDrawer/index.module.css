@@ -1,0 +1,26 @@
+.fullWidth {
+  width: 100%;
+}
+
+/* 数量与价值沿用统一的“数值 + 单位”组合布局。 */
+.numberGroup {
+  width: 100%;
+}
+
+.numberInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+.numberUnit {
+  flex: 0 0 96px;
+  min-width: 96px;
+  max-width: 96px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.auditOpinion {
+  margin-top: 16px;
+}

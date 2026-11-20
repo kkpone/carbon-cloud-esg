@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  gap: 12px 16px;
+  min-width: 0;
+  margin-bottom: 16px;
+}
+
+.wrapper > .form {
+  flex: 1 1 320px;
+  margin-bottom: 0;
+}
+
+.form :global(.ant-form-item) {
+  margin-inline-end: 0;
+  margin-bottom: 0;
+}
+
+.extra {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
+  max-width: 100%;
+}

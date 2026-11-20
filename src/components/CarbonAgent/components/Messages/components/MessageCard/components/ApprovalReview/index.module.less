@@ -1,0 +1,37 @@
+.review {
+  min-width: 0;
+  color: #425d52;
+  font-size: 13px;
+  line-height: 21px;
+  overflow-wrap: anywhere;
+  p {
+    margin: 0 0 12px;
+    color: #718478;
+  }
+  section + section {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #edf2ee;
+  }
+  h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  dl {
+    margin: 0;
+    > div {
+      display: grid;
+      grid-template-columns: minmax(80px, 1fr) minmax(0, 2fr);
+      gap: 12px;
+      padding: 6px 0;
+    }
+  }
+  dt {
+    color: #718478;
+  }
+  dd {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}

@@ -1,0 +1,85 @@
+.page {
+  padding: 24px;
+  background: #fff;
+  min-height: 100%;
+  min-width: 0;
+}
+
+/* 标题和长英文操作区按可用宽度换行，按钮保持完整文案。 */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.title,
+.actions {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.actions :global(.ant-space),
+.page :global(.ant-form-inline .ant-space) {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.header :global(.ant-space-item),
+.page :global(.ant-form-inline .ant-space-item) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.header :global(.ant-btn),
+.page :global(.ant-form-inline .ant-btn) {
+  max-width: 100%;
+  height: auto;
+  min-height: 32px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* 周期选项按内容分配宽度；极窄屏可横向浏览，不用省略号隐藏选项。 */
+.page :global(.ant-segmented) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.page :global(.ant-segmented .ant-segmented-group) {
+  width: max-content;
+  min-width: 100%;
+}
+
+.page :global(.ant-segmented .ant-segmented-item),
+.page :global(.ant-segmented.ant-segmented-block .ant-segmented-item) {
+  flex: 1 0 auto;
+  min-width: max-content;
+}
+
+/* 窄屏将筛选标签放在控件上方，避免长英文标签与周期按钮互相挤压。 */
+@media (max-width: 768px) {
+  .page :global(.ant-form-inline .ant-form-item) {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .page :global(.ant-form-inline .ant-form-item-row) {
+    flex-wrap: wrap;
+  }
+
+  .page :global(.ant-form-inline .ant-form-item-label) {
+    flex: 0 0 100%;
+    padding-bottom: 4px;
+    text-align: start;
+    white-space: normal;
+  }
+
+  .page :global(.ant-form-inline .ant-form-item-control) {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}

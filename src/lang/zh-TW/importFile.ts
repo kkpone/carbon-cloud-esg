@@ -1,0 +1,32 @@
+export default {
+  downloadTips: '請先下載導入模板，按模板填寫後上傳',
+  uploadTips: '僅支持 .xlsx 格式，單文件不超過 {val1}MB',
+  reupload: '重新上傳',
+  history: '導入歷史',
+  refresh: '刷新',
+  sourceFile: '源文件',
+  failedFile: '異常數據',
+  status: {
+    pending: '導入中',
+    imported: '導入成功',
+    failed: '導入失敗',
+  },
+  columns: {
+    totalCount: '總條數',
+    successCount: '導入條數',
+    failedCount: '異常條數',
+    operator: '操作人',
+    importTime: '導入時間',
+  },
+  templateNames: {
+    lcaModel: '模型清單導入模板.xlsx',
+    bom: 'BOM導入模板.xlsx',
+    dataSet: '數據集導入模板.xlsx',
+    supplierData: '供應商數據導入模板.xlsx',
+    lifeCycleData: '生命週期數據導入模板.xlsx',
+    processList: '過程清單導入模板.xlsx',
+    emissionFactor: '排放因子導入模板.xlsx',
+  },
+  downloadFailedWithStatus: '下載失敗：HTTP {val1}',
+  downloadFailed: '下載失敗',
+};

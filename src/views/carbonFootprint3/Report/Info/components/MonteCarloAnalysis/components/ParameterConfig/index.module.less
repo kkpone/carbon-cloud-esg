@@ -1,0 +1,63 @@
+@import '../../../../../../styles/analysis.less';
+.modal {
+  .analysisDialog();
+}
+.description {
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+  color: @analysisText;
+}
+.form {
+  padding-top: 0;
+}
+.defaultFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.qualityFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+}
+.preview {
+  padding: 12px;
+  border-radius: 8px;
+  background: @backgroudGray;
+}
+.preview :global(.ant-descriptions-row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.preview :global(.ant-descriptions-item) {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding-bottom: 0 !important;
+}
+.preview :global(.ant-descriptions-item-container) {
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+.preview :global(.ant-descriptions-item-label),
+.preview :global(.ant-descriptions-item-content) {
+  color: @analysisText;
+  white-space: nowrap;
+}
+.preview :global(.ant-descriptions-item-content) {
+  display: block;
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .defaultFields,
+  .qualityFields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+.form :global(.ant-tabs-nav) {
+  margin-bottom: 24px;
+}

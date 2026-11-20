@@ -1,0 +1,111 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  padding: 32px 48px;
+  background: linear-gradient(110deg, #f3fcfd, #f3faf6);
+  border-top: 1px solid #edf4f2;
+  flex-shrink: 0;
+  color: #04252b;
+  h2 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    margin: 0 0 32px;
+    color: inherit;
+  }
+}
+.contacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  h3 {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 500;
+    margin: 0 0 12px;
+    color: inherit;
+  }
+  p {
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+  }
+}
+.qr {
+  flex-shrink: 0;
+  width: 102px;
+  height: 102px;
+  border-radius: 12px;
+  border: 0.5px solid #0cbf9f;
+  background: linear-gradient(180deg, #ffffff26, #ffffff00);
+  display: grid;
+  place-items: center;
+  color: #999ea4;
+  text-align: center;
+  font-size: 12px;
+}
+.qrInner {
+  width: 78px;
+  height: 78px;
+  padding: 6px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: #fff;
+  :global(.ant-image) {
+    width: 66px;
+    height: 66px;
+    cursor: zoom-in;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+.dark {
+  background: #004541;
+  color: #fff;
+  border-color: #004541;
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 81px 0 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    background: url('../../../../../assets/images/carbonCompetition/contact-wave-3.svg')
+        center bottom / 100% 92% no-repeat,
+      url('../../../../../assets/images/carbonCompetition/contact-wave-2.svg')
+        center bottom / 100% 58% no-repeat,
+      url('../../../../../assets/images/carbonCompetition/contact-wave-1.svg')
+        center bottom / 100% 84% no-repeat,
+      url('../../../../../assets/images/carbonCompetition/contact-ribbon.svg')
+        center bottom / 100% 92% no-repeat;
+  }
+}
+@media (max-width: 1100px) {
+  .footer {
+    padding: 32px 24px;
+  }
+  .contact {
+    gap: 12px;
+    h3 {
+      font-size: 16px;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .contacts {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .footer {
+    padding: 28px 20px;
+  }
+}

@@ -1,0 +1,181 @@
+.drawer {
+  :global(.ant-drawer-header) {
+    padding: 32px 40px;
+    border-bottom: 0;
+  }
+
+  :global(.ant-drawer-title) {
+    color: #04252b;
+    font: 600 24px/32px 'PingFang SC', sans-serif;
+  }
+
+  :global(.ant-drawer-body) {
+    padding: 0 40px 32px;
+  }
+
+  :global(.ant-drawer-footer) {
+    padding: 12px 40px;
+    border-top: 0;
+    box-shadow: 0 -4px 4px 0 rgb(0 0 0 / 4%);
+  }
+
+}
+
+/** 沿用同模块 Drawer 的右侧关闭入口。 */
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  margin-right: -8px;
+  padding: 8px;
+  color: #6c757d;
+  font-size: 16px;
+  line-height: 16px;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: none;
+
+  :global(.ant-btn-icon) {
+    display: flex;
+  }
+
+  &:not(:disabled):hover {
+    background: #f7f8f9;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.heading {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+  color: #04252b;
+  font: 14px/22px 'PingFang SC', sans-serif;
+
+  strong {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+
+    &::before {
+      width: 3px;
+      height: 18px;
+      content: '';
+      background: #0cbf9f;
+      border-radius: 1.5px;
+    }
+  }
+
+  label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  :global(.ant-switch-small) {
+    min-width: 36px;
+    height: 20px;
+    line-height: 20px;
+    background: url('./assets/switch-off.svg') center no-repeat;
+
+    &:hover:not(:disabled) {
+      background: url('./assets/switch-off.svg') center no-repeat;
+    }
+  }
+
+  :global(.ant-switch-small.ant-switch-checked) {
+    background: url('./assets/switch-on.svg') center no-repeat;
+
+    &:hover:not(:disabled) {
+      background: url('./assets/switch-on.svg') center no-repeat;
+    }
+  }
+
+  :global(.ant-switch-handle),
+  :global(.ant-switch-inner) {
+    display: none;
+  }
+}
+
+.footer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+
+  :global(.ant-btn) {
+    min-width: 76px;
+    height: 38px;
+    padding: 8px 24px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #04252b;
+    background: #fff;
+    border-color: #d5d7da;
+    border-radius: 8px;
+  }
+
+  :global(.ant-btn-primary) {
+    color: #fff;
+    font-weight: 500;
+    background: #004541;
+    border-color: #004541;
+    box-shadow: none;
+  }
+}
+
+/** 与建模工具栏中的图标按钮保持同一行高和对齐基线。 */
+.trigger {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  height: 24px;
+  padding: 0;
+  color: #04252b;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: none;
+
+  :global(.ant-btn-icon) {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &:not(:disabled):hover {
+    color: #026961;
+    background: transparent;
+  }
+
+  &:disabled {
+    color: #b5b8bb;
+
+    img {
+      opacity: 0.4;
+    }
+  }
+}

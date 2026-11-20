@@ -1,0 +1,40 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="28.2486" height="18.7009" viewBox="0 0 28.2486 18.7009" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Group">
+<g id="top2-wave-left">
+<use xlink:href="#stroke0_0_22" fill="url(#paint0_linear_0_22)"/>
+<mask id="stroke1_0_22" fill="white">
+<use xlink:href="#stroke0_0_22"/>
+</mask>
+<path d="M0 2.35088C3.275 -0.474121 6.05 -0.574121 8.775 1.10088C11.525 2.80088 12.35 5.72588 15.45 7.80088C18.775 10.0509 23.225 10.1259 28 7.47588V18.7009H0V2.35088Z" stroke-width="0.5" stroke="url(#paint1_linear_0_22)" mask="url(#stroke1_0_22)"/>
+</g>
+<g id="top2-wave-right">
+<use xlink:href="#stroke2_0_22" fill="url(#paint2_linear_0_22)"/>
+<mask id="stroke3_0_22" fill="white">
+<use xlink:href="#stroke2_0_22"/>
+</mask>
+<path d="M15.7236 3.7259C18.0736 1.7759 21.0236 2.5509 23.6486 3.8259C25.6986 4.8259 27.0236 5.9759 28.2486 7.5509V18.7009H18.4986C18.9486 15.3759 19.1486 12.7009 17.7486 10.2009C16.3986 7.7509 14.3236 5.6759 15.7236 3.7259Z" stroke-width="0.5" stroke="url(#paint3_linear_0_22)" mask="url(#stroke3_0_22)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_22" x1="14" y1="-0.299121" x2="14" y2="17.4509" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.29"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_22" x1="14" y1="0" x2="14" y2="18.8086" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.72" stop-color="white" stop-opacity="0.9"/>
+<stop offset="1" stop-color="white" stop-opacity="0.56"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_22" x1="13.9986" y1="-0.299096" x2="13.9986" y2="17.4509" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.29"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint3_linear_0_22" x1="21.7532" y1="2.54492" x2="21.7532" y2="18.7939" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.72" stop-color="white" stop-opacity="0.9"/>
+<stop offset="1" stop-color="white" stop-opacity="0.56"/>
+</linearGradient>
+<path id="stroke0_0_22" d="M0 2.35088C3.275 -0.474121 6.05 -0.574121 8.775 1.10088C11.525 2.80088 12.35 5.72588 15.45 7.80088C18.775 10.0509 23.225 10.1259 28 7.47588V18.7009H0V2.35088Z"/>
+<path id="stroke2_0_22" d="M15.7236 3.7259C18.0736 1.7759 21.0236 2.5509 23.6486 3.8259C25.6986 4.8259 27.0236 5.9759 28.2486 7.5509V18.7009H18.4986C18.9486 15.3759 19.1486 12.7009 17.7486 10.2009C16.3986 7.7509 14.3236 5.6759 15.7236 3.7259Z"/>
+</defs>
+</svg>

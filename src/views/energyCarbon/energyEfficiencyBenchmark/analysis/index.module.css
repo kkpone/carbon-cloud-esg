@@ -1,0 +1,238 @@
+.workspace {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.orgCard {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 160px);
+  overflow: auto;
+}
+
+.orgTree {
+  min-width: 0;
+}
+
+.orgTree :global(.ant-tree-treenode) {
+  width: 100%;
+  min-width: 0;
+}
+
+.orgTree :global(.ant-tree-node-content-wrapper) {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.orgTreeNodeTitle {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  display: grid;
+  min-width: 0;
+  gap: 16px;
+}
+
+.filterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.filterRow :global(.ant-form-item),
+.filterActions :global(.ant-form-item) {
+  margin: 0;
+}
+
+.periodType {
+  width: max-content;
+  min-width: 216px;
+  max-width: 100%;
+}
+
+/* 统计维度的选中态与能碳其他统计页保持一致。 */
+.periodType :global(.ant-segmented-item-selected),
+.periodType :global(.ant-segmented-item-selected:hover) {
+  color: var(--ant-color-text-light-solid);
+  background: var(--ant-color-primary);
+}
+
+.periodDate {
+  width: 140px;
+}
+
+.optionItem {
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.optionGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.metricsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metricRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.metricRow :global(.ant-checkbox-wrapper) {
+  flex: 0 0 auto;
+  width: max-content;
+  max-width: 100%;
+}
+
+.optionItem :global(.ant-form-item-row) {
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.optionItem :global(.ant-form-item-control) {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+}
+
+.optionItem :global(.ant-form-item-control-input),
+.optionItem :global(.ant-form-item-control-input-content) {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+/* 指标和对标对象使用按钮式多选，选中状态沿用主题主色并保持长文本完整。 */
+.optionGroup :global(.ant-checkbox-wrapper) {
+  margin: 0;
+  padding: 7px 12px;
+  border: 1px solid var(--ant-color-border);
+  border-radius: 6px;
+  background: var(--ant-color-bg-container);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.optionGroup
+  :global(.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover) {
+  color: var(--ant-color-text);
+  border-color: var(--ant-color-border);
+  background: var(--ant-color-bg-container);
+}
+
+.optionGroup :global(.ant-checkbox-wrapper-checked) {
+  color: var(--ant-color-text-light-solid);
+  border-color: var(--ant-color-text);
+  background: var(--ant-color-text);
+}
+
+.optionGroup
+  :global(
+    .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover
+  ) {
+  color: var(--ant-color-text-light-solid);
+  border-color: var(--ant-color-text);
+  background: var(--ant-color-text);
+}
+
+.optionGroup :global(.ant-checkbox-wrapper-disabled) {
+  cursor: not-allowed;
+  color: var(--ant-color-text-disabled);
+  background: var(--ant-color-fill-tertiary);
+}
+
+.optionGroup :global(.ant-checkbox) {
+  position: absolute;
+  opacity: 0;
+}
+
+.optionGroup :global(.ant-checkbox-wrapper:focus-within) {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 2px;
+}
+
+.filterActions {
+  display: flex;
+}
+
+.resultList {
+  display: flex;
+  min-width: 0;
+  padding-bottom: 32px;
+}
+
+.chartGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .orgCard {
+    position: static;
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .filterRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filterRow :global(.ant-form-item),
+  .periodType,
+  .periodDate,
+  .optionItem,
+  .optionGroup {
+    width: 100%;
+  }
+
+  .periodType {
+    min-width: 0;
+  }
+
+  .optionItem :global(.ant-form-item-row) {
+    flex-wrap: wrap;
+  }
+
+  .optionItem :global(.ant-form-item-control) {
+    flex-basis: 100%;
+  }
+
+  .chartGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

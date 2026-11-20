@@ -1,0 +1,35 @@
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 钢铁、水泥及铝冶炼新算法的长标签按两行预留高度，使同一行输入框对齐。 */
+.alignedDetailRow :global(.ant-form-item-label) {
+  min-height: 52px;
+}
+
+.alignedDetailRow :global(.ant-input-number) {
+  width: 100%;
+}
+
+.detailCard {
+  padding: 16px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: 8px;
+}
+
+.detailCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.viewResults {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}

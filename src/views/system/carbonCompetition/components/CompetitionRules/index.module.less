@@ -1,0 +1,215 @@
+.modal {
+  max-width: calc(100vw - 48px);
+  padding-bottom: 0;
+  :global(.ant-modal-content) {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 80px);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(17, 46, 40, 0.04),
+      0 20px 60px -8px rgba(20, 61, 50, 0.13);
+  }
+  :global(.ant-modal-header) {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 28px 40px;
+    border-bottom: 1px solid #e7efec;
+    background: transparent;
+  }
+  :global(.ant-modal-body) {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  :global(.ant-modal-footer) {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    margin: 0;
+    padding: 16px 24px;
+    background: #fff;
+    box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.04);
+    :global(.ant-btn) {
+      width: 350px;
+      max-width: 100%;
+      min-height: 38px;
+      height: auto;
+      padding: 7px 16px;
+      border-radius: 8px;
+      background: #004541;
+      border-color: #004541;
+      font-size: 14px;
+      line-height: 22px;
+      white-space: normal;
+      &:not(:disabled):hover {
+        background: #026961;
+        border-color: #026961;
+      }
+      &:disabled {
+        background: #f5f5f5;
+        border-color: #d2d6da;
+        color: #999ea4;
+      }
+    }
+  }
+}
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  h2 {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    color: #143b3b;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 34px;
+    overflow-wrap: anywhere;
+  }
+  button {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    margin: -8px;
+    padding: 8px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    &:hover {
+      background: rgba(4, 37, 43, 0.04);
+    }
+    &:focus-visible {
+      outline: 2px solid #026961;
+      outline-offset: 2px;
+    }
+  }
+}
+.decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  img {
+    position: absolute;
+    max-width: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(155, 221, 201, 0.6),
+      transparent
+    );
+  }
+}
+.mint {
+  left: -200px;
+  top: -190px;
+}
+.cyan {
+  right: -220px;
+  top: -190px;
+}
+.grass {
+  left: calc(50% - 230px);
+  top: -240px;
+}
+.modal .content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 40px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #6c757d;
+  font-size: 16px;
+  line-height: 30px;
+  overflow-wrap: anywhere;
+  h3 {
+    margin: 0 0 10px;
+    color: #04252b;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+  p {
+    font-size: 16px;
+    margin: 0;
+    text-align: justify;
+  }
+  strong {
+    color: #026961;
+    font-weight: 500;
+  }
+}
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.awards {
+  margin-top: 20px;
+  h4 {
+    margin: 16px 0 8px;
+    color: #143b3b;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+.scheduleNote {
+  font-size: 14px;
+}
+.supplement p {
+  white-space: pre-wrap;
+}
+@media (max-width: 767px) {
+  .modal {
+    max-width: calc(100vw - 24px);
+    :global(.ant-modal-content) {
+      max-height: calc(100dvh - 32px);
+      border-radius: 16px;
+    }
+    :global(.ant-modal-header) {
+      padding: 20px;
+    }
+    :global(.ant-modal-footer) {
+      padding: 12px 20px;
+    }
+  }
+  .heading {
+    gap: 16px;
+    h2 {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+  .modal .content {
+    padding: 24px 20px;
+    font-size: 14px;
+    line-height: 26px;
+    p {
+      font-size: 14px;
+    }
+    h3 {
+      font-size: 17px;
+      line-height: 26px;
+    }
+  }
+}

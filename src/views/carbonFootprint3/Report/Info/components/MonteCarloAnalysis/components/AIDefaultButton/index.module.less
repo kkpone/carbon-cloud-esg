@@ -1,0 +1,63 @@
+.button {
+  &&&& {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    height: 38px;
+    min-width: 140px;
+    overflow: hidden;
+    padding: 0 12px 0 56px;
+    border: 0;
+    border-radius: 8px;
+    background: #026961;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0.42px;
+  }
+  &&&&:disabled {
+    opacity: 0.5;
+    color: #fff;
+    background: #026961;
+  }
+  &&&&:global(.ant-btn-loading) {
+    padding-left: 12px;
+    gap: 8px;
+  }
+  &&&& > .label {
+    color: #fff;
+    font-family: 'HarmonyOS_Sans_Regular', 'PingFang SC', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0.42px;
+    white-space: nowrap;
+  }
+}
+.artwork {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 38px;
+  pointer-events: none;
+}
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.mark {
+  display: block;
+  position: absolute;
+  top: 10.872px;
+  left: 8.605px;
+  width: 24.9px;
+  height: 14.943px;
+  img {
+    display: block;
+  }
+}

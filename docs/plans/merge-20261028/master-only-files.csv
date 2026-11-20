@@ -1,0 +1,368 @@
+path,group,kind,suggested_action,note,status
+.oxlintrc.json,.oxlintrc.json,tooling,keep,oxlint 门禁配置（D3）,pending
+.oxlintrc.lint-staged.json,.oxlintrc.lint-staged.json,tooling,keep,oxlint 门禁配置（D3）,pending
+.vscode/extensions.json,.vscode/extensions.json,tooling,keep,oxlint 门禁配置（D3）,pending
+docs/plans/V4.3.3-TASK08-factor-description-handoff.md,docs/plans/V4.3.3-TASK08-factor-description-handoff.md,docs_tests,keep,文档/回归用例,pending
+docs/plans/V4.3.3-frontend-copy-exact-baseline.json,docs/plans/V4.3.3-frontend-copy-exact-baseline.json,docs_tests,keep,文档/回归用例,pending
+docs/plans/V4.3.3-ui-guidelines-review.md,docs/plans/V4.3.3-ui-guidelines-review.md,docs_tests,keep,文档/回归用例,pending
+public/supply-dashboard/active-supplier.svg,public/supply-dashboard/active-supplier.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+public/supply-dashboard/enterprise-data.svg,public/supply-dashboard/enterprise-data.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+public/supply-dashboard/footprint-data.svg,public/supply-dashboard/footprint-data.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+public/supply-dashboard/questionnaire.svg,public/supply-dashboard/questionnaire.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+public/supply-dashboard/supplier-expand.svg,public/supply-dashboard/supplier-expand.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+public/supply-dashboard/supplier-search.svg,public/supply-dashboard/supplier-search.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+public/supply-dashboard/supplier-select.svg,public/supply-dashboard/supplier-select.svg,asset,keep_and_wire,供应链看板/移动端静态资源,pending
+scripts/test-product-account-emission-fields.cjs,scripts/test-product-account-emission-fields.cjs,tooling,keep,无网络回归脚本,pending
+src/assets/icon/cbam-menu-logo.svg,src/assets/icon,asset,keep_and_wire,CBAM 菜单图标,pending
+src/assets/images/mobileLanding/agent-arrow.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/agent-earth.png,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/carbon-agent-logo.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/carbon-cloud-logo.png,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/feature-accounting.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/feature-ai.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/feature-certification.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/feature-data.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/hero-contours.svg,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/assets/images/mobileLanding/platform-preview.png,src/assets/images,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/components/CarbonAgent/api.ts,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/approvals.ts,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/add.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/assistant.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/chevron.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/modeling-add.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/modeling-assistant.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/modeling-chevron.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/modeling-send-disabled.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/assets/send.svg,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/AgentForm/components/Fields/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/AgentForm/components/Fields/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/AgentForm/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/AgentForm/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Composer/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Composer/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/MessageCard/components/ApprovalReview/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/MessageCard/components/ApprovalReview/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/MessageCard/components/ModelingReview/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/MessageCard/components/ModelingReview/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/MessageCard/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/MessageCard/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/ToolCalls/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/components/ToolCalls/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Messages/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/ModelingEntry/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/ModelingEntry/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Records/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/Records/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/ResizeHandle/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/components/ResizeHandle/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/context.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/forms.ts,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/index.module.less,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/index.tsx,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/protocol.ts,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/useModelNavigation.ts,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/CarbonAgent/useObjectKeys.ts,src/components/CarbonAgent,legacy_agent,review,按 D2 收敛到 agent 实现，收敛完成前仅 cloud 侧临时使用,pending
+src/components/FilePreviewModal/components/OfficePreview/index.module.less,src/components/FilePreviewModal,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/FilePreviewModal/components/OfficePreview/index.tsx,src/components/FilePreviewModal,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/FilePreviewModal/index.module.less,src/components/FilePreviewModal,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/FilePreviewModal/index.tsx,src/components/FilePreviewModal,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/FilePreviewModal/types.ts,src/components/FilePreviewModal,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/FilePreviewModal/utils.ts,src/components/FilePreviewModal,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/SavedFactorManager/index.module.less,src/components/SavedFactorManager,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/SavedFactorManager/index.tsx,src/components/SavedFactorManager,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/SearchFactor/preferenceContext.ts,src/components/SearchFactor,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/components/SearchFactor/useFactorPreferenceStage.ts,src/components/SearchFactor,component,review,与 feat-agent 同名实现比对后再合并调用点,pending
+src/lang/en-US/cbamPrecursor.ts,src/lang/en-US,misc,review,,pending
+src/lang/en-US/common.ts,src/lang/en-US,misc,review,,pending
+src/lang/en-US/energyCarbon.ts,src/lang/en-US,misc,review,,pending
+src/lang/en-US/energyCarbonAnalysis.ts,src/lang/en-US,misc,review,,pending
+src/lang/en-US/energyCarbonAssets.ts,src/lang/en-US,misc,review,,pending
+src/lang/en-US/energyCarbonConfig.ts,src/lang/en-US,misc,review,,pending
+src/lang/en-US/importFile.ts,src/lang/en-US,misc,review,,pending
+src/lang/zh-CN/cbamPrecursor.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-CN/common.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-CN/energyCarbon.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-CN/energyCarbonAnalysis.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-CN/energyCarbonAssets.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-CN/energyCarbonConfig.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-CN/importFile.ts,src/lang/zh-CN,misc,review,,pending
+src/lang/zh-TW/cbamPrecursor.ts,src/lang/zh-TW,misc,review,,pending
+src/lang/zh-TW/common.ts,src/lang/zh-TW,misc,review,,pending
+src/lang/zh-TW/energyCarbon.ts,src/lang/zh-TW,misc,review,,pending
+src/lang/zh-TW/energyCarbonAnalysis.ts,src/lang/zh-TW,misc,review,,pending
+src/lang/zh-TW/energyCarbonAssets.ts,src/lang/zh-TW,misc,review,,pending
+src/lang/zh-TW/energyCarbonConfig.ts,src/lang/zh-TW,misc,review,,pending
+src/lang/zh-TW/importFile.ts,src/lang/zh-TW,misc,review,,pending
+src/router/products/energyCarbon.tsx,src/router/products,route,keep_and_wire,能碳路由注册,pending
+src/router/utils/cbamMonitor.ts,src/router/utils,route,keep_and_wire,CBAM 监测路由助手,pending
+src/utils/observeGraphResize.ts,src/utils/observeGraphResize.ts,util,review,与 feat-agent 同名实现比对,pending
+src/views/CCDB/Home/components/DataSupport/index.module.less,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/CCDB/Home/components/DataSupport/index.tsx,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/CCDB/Home/components/FactorUpdateNotice/index.module.less,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/CCDB/Home/components/FactorUpdateNotice/index.tsx,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/CCDB/Home/components/UpdateHistoryDrawer/index.module.less,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/CCDB/Home/components/UpdateHistoryDrawer/index.tsx,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/CCDB/Home/updateService.ts,src/views/CCDB,new_module,keep_and_wire,CCDB 因子更新公告/数据支持（scope: cloud）,pending
+src/views/Certification/carbonFootprintCertification/certificationProject/component/ApplayCertification/components/SiteMaterial/empty.svg,src/views/Certification,shared_view,review,现场认证材料，随 P3 一起处理,pending
+src/views/Certification/carbonFootprintCertification/certificationProject/component/ApplayCertification/components/SiteMaterial/index.module.less,src/views/Certification,shared_view,review,现场认证材料，随 P3 一起处理,pending
+src/views/Certification/carbonFootprintCertification/certificationProject/component/ApplayCertification/components/SiteMaterial/index.tsx,src/views/Certification,shared_view,review,现场认证材料，随 P3 一起处理,pending
+src/views/Certification/carbonFootprintCertification/certificationProject/component/ApplayCertification/components/SiteMaterial/service.ts,src/views/Certification,shared_view,review,现场认证材料，随 P3 一起处理,pending
+src/views/carbonFootprint3/FootprintAccount/component/BatchCreateModel/modeling-tip-icon.svg,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/GlobalFactorPreference/components/SortableTransferItem/index.module.less,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/GlobalFactorPreference/components/SortableTransferItem/index.tsx,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/GlobalFactorPreference/components/SourceConfigurationField/index.module.less,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/GlobalFactorPreference/components/SourceConfigurationField/index.tsx,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/GlobalFactorPreference/configuration.ts,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/components/BatchProcessingTip/index.module.less,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/component/components/BatchProcessingTip/index.tsx,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/components/EmbeddedModal/index.module.less,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/components/EmbeddedModal/index.tsx,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/components/ProductCategoryTab/index.module.less,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/FootprintAccount/components/ProductCategoryTab/index.tsx,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/components/LcaInformation/index.module.less,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/carbonFootprint3/components/LcaInformation/index.tsx,src/views/carbonFootprint3,shared_view,review,新增子模块（因子偏好/LCA 信息/EmbeddedModal 等），需与调用点一起接线,pending
+src/views/cbam/ReportForm/index.module.less,src/views/cbam,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/add-factory.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/archived.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/editing.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/effective.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/empty-search.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/monitor-plan.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/assets/plan-total.svg,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamMonitor/index.tsx,src/views/cbamMonitor,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamOperationReport/ReportInfo/components/ReportOverview/index.module.less,src/views/cbamOperationReport,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamOperationReport/ReportInfo/components/ReportOverview/index.tsx,src/views/cbamOperationReport,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamOperationReport/components/EvidenceManager/index.tsx,src/views/cbamOperationReport,shared_view,review,CBAM 结构差异，随 P3 一起处理,pending
+src/views/cbamOverview/components/EmissionChart/index.module.less,src/views/cbamOverview,new_module,keep_and_wire,CBAM 数据概览（scope: cloud）,pending
+src/views/cbamOverview/components/EmissionChart/index.tsx,src/views/cbamOverview,new_module,keep_and_wire,CBAM 数据概览（scope: cloud）,pending
+src/views/cbamOverview/index.module.less,src/views/cbamOverview,new_module,keep_and_wire,CBAM 数据概览（scope: cloud）,pending
+src/views/cbamOverview/index.tsx,src/views/cbamOverview,new_module,keep_and_wire,CBAM 数据概览（scope: cloud）,pending
+src/views/cbamOverview/service.ts,src/views/cbamOverview,new_module,keep_and_wire,CBAM 数据概览（scope: cloud）,pending
+src/views/cbamOverview/types.ts,src/views/cbamOverview,new_module,keep_and_wire,CBAM 数据概览（scope: cloud）,pending
+src/views/cbamPrecursor/assets/category.svg,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/assets/detail-file-view.svg,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/assets/modal-close.svg,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/components/HiddenPrecursorModal/index.module.less,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/components/HiddenPrecursorModal/index.tsx,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/components/PrecursorDetailDrawer/index.module.less,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/components/PrecursorDetailDrawer/index.tsx,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/components/PrecursorFormDrawer/index.module.less,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/components/PrecursorFormDrawer/index.tsx,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/index.module.less,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/index.tsx,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/service.ts,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/cbamPrecursor/types.ts,src/views/cbamPrecursor,new_module,keep_and_wire,CBAM 前体（scope: cloud）,pending
+src/views/components/CarbonFootprintModel/components/EmissionSourceDrawer/components/ModalEmissionSourceTable/index.module.less,src/views/components,shared_view,review,旧组件目录，确认是否已被 feat-agent 迁移,pending
+src/views/components/CarbonFootprintModel/components/EmissionSourceDrawer/components/ModalEmissionSourceTable/index.tsx,src/views/components,shared_view,review,旧组件目录，确认是否已被 feat-agent 迁移,pending
+src/views/components/CarbonFootprintModel/components/EmissionSourceDrawer/index.tsx,src/views/components,shared_view,review,旧组件目录，确认是否已被 feat-agent 迁移,pending
+src/views/components/CarbonFootprintModel/emissionDescriptionContext.ts,src/views/components,shared_view,review,旧组件目录，确认是否已被 feat-agent 迁移,pending
+src/views/components/CarbonFootprintModel/type.ts,src/views/components,shared_view,review,旧组件目录，确认是否已被 feat-agent 迁移,pending
+src/views/dashborad/downloadManage/index.module.less,src/views/dashborad,new_module,keep_and_wire,下载管理（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/account/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/account/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/account/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/account/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/account/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/account/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/quota/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/quota/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/quota/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/quota/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeDetailDrawer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeDetailDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeFormDrawer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/components/CarbonTradeFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/carbonAssetManagement/trade/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/AuthButton/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/EnergyCarbonCategoryChart/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/EnergyQueryProvider/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/FileUpload/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/FileUpload/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/FormDrawerFooter/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/FormDrawerFooter/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/ImportFileModal/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/ImportFileModal/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/ImportFileModal/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/ImportFileModal/util.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/LeafCascader/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/LeafCascader/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/ListSearchForm/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/ListSearchForm/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/PageContainer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/PageContainer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/TableActions/TableActions.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/TableActions/createColumn.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/TableActions/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/TableActions/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/TableActions/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/components/TableActions/width.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/components/EnergyEquipmentFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyEquipment/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/components/EnergyFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/energyList/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/components/ProductFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/mainProduct/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/components/MeasuringInstrumentFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/config/measuringInstrument/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/boundary/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/components/EfficiencyAnalysisPage/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/components/FormAnalysisResult/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/components/SinglePeriodAnalysisPage/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/efficiency/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/form/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/hooks.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/overview/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/structure/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyAnalysis/utils.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyBudgetManagement/budget/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyBudgetManagement/budget/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyBudgetManagement/budget/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyBudgetManagement/budget/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/consumption/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/intensity/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/components/ProductionDataFormDrawer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/components/ProductionDataFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionFill/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyCalc/productionLedger/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/components/EnergyConsumptionFormDrawer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/components/EnergyConsumptionFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/dataFill/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryFormDrawer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryImportPanel/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/components/InventoryImportPanel/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/import/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/inventory/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/ledger/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyConsumptionQuery/query/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyEfficiencyBenchmark/analysis/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyEfficiencyBenchmark/analysis/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyEfficiencyBenchmark/data/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyEfficiencyBenchmark/data/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyEfficiencyBenchmark/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyEfficiencyBenchmark/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/analysis/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/setting/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/setting/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/setting/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/setting/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/setting/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/setting/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyFlowAnalysis/utils.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyStatistics/-StatisticsPage.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyStatistics/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyStatistics/hooks.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyStatistics/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyStatistics/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/energyStatistics/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useEnergyEnum.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useEnergyLocale.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useEnergyNavigation.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useEnergyOrgTree.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useEnergyPermissions.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useEnergyUnits.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/hooks/useLocalizedFormErrors.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/migration-source.json,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/columns.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/components/BoundaryResourceSelector/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/components/OrgBoundaryFormDrawer/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/components/OrgBoundaryFormDrawer/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/constant.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/hooks/index.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/index.module.css,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/index.tsx,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/services.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/orgBoundary/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/antdStatic.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/cascaderLeaf.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/config.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/confirmDelete.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/files.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/request.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/tableColumn.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/types.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/platform/utils.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/energyCarbon/utils.ts,src/views/energyCarbon,new_module,keep_and_wire,能碳平台（scope: cloud）,pending
+src/views/enterpriseCarbonAccount2/carbonDischarge/accountReport/service.ts,src/views/enterpriseCarbonAccount2,misc,review,,pending
+src/views/mobileLanding/index.module.less,src/views/mobileLanding,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/views/mobileLanding/index.tsx,src/views/mobileLanding,new_module,keep_and_wire,移动端落地页（scope: cloud，按视口触发）,pending
+src/views/supplyChain/Dashboard/index.module.less,src/views/supplyChain,new_module,keep_and_wire,供应链看板（scope: cloud）,pending
+src/views/supplyChain/Dashboard/index.tsx,src/views/supplyChain,new_module,keep_and_wire,供应链看板（scope: cloud）,pending
+src/views/supplyChain/Dashboard/service.ts,src/views/supplyChain,new_module,keep_and_wire,供应链看板（scope: cloud）,pending
+src/views/supplyChain/Dashboard/type.ts,src/views/supplyChain,new_module,keep_and_wire,供应链看板（scope: cloud）,pending
+src/views/supplyChain/Management/SupplierPanel.module.less,src/views/supplyChain,misc,review,,pending
+src/views/supplyChain/Management/SupplierPanel.tsx,src/views/supplyChain,misc,review,,pending
+src/views/supplyChain/Management/assets/basic-info-expand.svg,src/views/supplyChain,misc,review,,pending
+src/views/work/components/AgentBanner/index.module.less,src/views/work,cross_link,keep_and_wire,云端工作台 → agent 入口，链接需按 deploy mode 生成,pending
+src/views/work/components/AgentBanner/index.tsx,src/views/work,cross_link,keep_and_wire,云端工作台 → agent 入口，链接需按 deploy mode 生成,pending
+tests/carbon-agent/README.md,tests/carbon-agent/README.md,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/browser.fixture.tsx,tests/carbon-agent/browser.fixture.tsx,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/fixture-stubs.tsx,tests/carbon-agent/fixture-stubs.tsx,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/i18n.test-helper.cjs,tests/carbon-agent/i18n.test-helper.cjs,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/i18n.test.cjs,tests/carbon-agent/i18n.test.cjs,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/protocol.test.cjs,tests/carbon-agent/protocol.test.cjs,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/rsbuild.fixture.ts,tests/carbon-agent/rsbuild.fixture.ts,docs_tests,keep,文档/回归用例,pending
+tests/carbon-agent/ui-scenarios.ts,tests/carbon-agent/ui-scenarios.ts,docs_tests,keep,文档/回归用例,pending

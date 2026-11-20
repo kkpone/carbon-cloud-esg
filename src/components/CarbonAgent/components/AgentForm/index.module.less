@@ -1,0 +1,70 @@
+.form {
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 14px 0;
+  padding: 4px;
+  border: 1px solid #e6ece9;
+  border-radius: 12px;
+  background: #f5f7f6;
+}
+.header {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 8px;
+  strong {
+    flex: 1;
+    min-width: 0;
+    color: #284e40;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    overflow-wrap: anywhere;
+  }
+}
+.status {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #e9f3ee;
+  color: #628173;
+  font-size: 12px;
+  line-height: 22px;
+}
+.panel {
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+  padding: 14px 12px;
+  border: 1px solid #e5ece8;
+  border-radius: 10px;
+  background: #fff;
+}
+.description {
+  margin: 0;
+  color: #718478;
+  font-size: 13px;
+  line-height: 21px;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #edf2ee;
+  :global(.ant-btn) {
+    min-height: 36px;
+    height: auto;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 13px;
+    white-space: normal;
+  }
+}
+@container (max-width: 400px) {
+  .actions :global(.ant-btn) {
+    flex: 1;
+  }
+}

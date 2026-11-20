@@ -1,0 +1,103 @@
+.workspace {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  width: 100%;
+}
+
+.treeCard,
+.contentCard {
+  min-width: 0;
+}
+
+.treeCard :global(.ant-card-body) {
+  padding: 12px;
+}
+
+.tree {
+  max-height: 680px;
+  overflow-y: auto;
+  background: var(--ant-color-bg-container);
+}
+
+.tree :global(.ant-tree-treenode) {
+  width: 100%;
+  padding: 2px 0;
+}
+
+.tree :global(.ant-tree-node-content-wrapper) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.disabledOrg {
+  color: var(--ant-color-text-disabled);
+}
+
+/* 六个配置阶段按行展示，保持标题、开关和选择器的横向对齐。 */
+.stageRail {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(156px, 220px) minmax(240px, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 88px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+.stage:last-child {
+  border-bottom: 0;
+}
+
+.stageHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.stageTitle {
+  color: var(--ant-color-text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.stageField {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.fixedResults {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 1000px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .tree {
+    max-height: 280px;
+  }
+}
+
+@media (max-width: 720px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stageField,
+  .fixedResults {
+    grid-column: auto;
+  }
+}

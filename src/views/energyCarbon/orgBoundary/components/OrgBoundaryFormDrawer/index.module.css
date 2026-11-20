@@ -1,0 +1,36 @@
+.form {
+  width: 100%;
+}
+
+.controlFullWidth {
+  width: 100%;
+}
+
+.sectionBlock {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  margin-bottom: 16px;
+  color: var(--ant-color-text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.resourceBlock {
+  margin-bottom: 20px;
+}
+
+.resourceTitle {
+  margin-bottom: 8px;
+  color: var(--ant-color-text-secondary);
+  font-weight: 500;
+}
+
+.resourceTable :global(.ant-table-cell) {
+  vertical-align: middle;
+}
+
+.addResourceButton {
+  margin-top: 8px;
+}

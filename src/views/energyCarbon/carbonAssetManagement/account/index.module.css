@@ -1,0 +1,79 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.toolbarLabel {
+  flex: none;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.orgSelector {
+  width: 320px;
+}
+
+.summaryTable {
+  margin-bottom: 16px;
+}
+
+.organizationGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* 组织卡片是详情入口，保留现有卡片密度并补充键盘焦点反馈。 */
+.organizationCard {
+  cursor: pointer;
+}
+
+.organizationCard:focus-visible {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 2px;
+}
+
+.organizationValues {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.balanceLabel {
+  margin-bottom: 4px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.balanceValue {
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 20px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.accountDetail {
+  padding-top: 4px;
+}
+
+.accountDetailOrg {
+  margin-bottom: 12px;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+@media (max-width: 1100px) {
+  .organizationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .organizationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .orgSelector {
+    width: 100%;
+  }
+}

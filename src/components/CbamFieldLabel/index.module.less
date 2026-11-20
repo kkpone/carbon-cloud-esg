@@ -1,0 +1,25 @@
+.icon {
+  margin-left: 6px;
+  color: #8c8c8c;
+  font-size: 14px;
+  cursor: help;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-width: 0;
+  vertical-align: middle;
+
+  .icon {
+    flex-shrink: 0;
+  }
+}
+
+.labelText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

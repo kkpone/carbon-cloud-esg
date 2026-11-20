@@ -1,0 +1,23 @@
+@import url('@styles/var.less');
+
+.wrapper {
+  padding: 0 16px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  :global(.ant-input-number) {
+    width: 100%;
+  }
+
+  :global(.ant-input-number-disabled) {
+    color: @text-color;
+    background-color: #f5f6f7;
+  }
+}
+
+.infoWrapper {
+  height: auto;
+  min-height: 32px;
+  gap: 16px;
+  padding-left: 0;
+}

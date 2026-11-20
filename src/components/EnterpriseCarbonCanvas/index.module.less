@@ -1,0 +1,774 @@
+@import '@src/styles/var.less';
+
+.canvasView {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+}
+
+.canvasWorkspace {
+  position: relative;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background: radial-gradient(
+        circle,
+        rgba(210, 214, 218, 0.65) 1px,
+        transparent 1px
+      )
+      0 0 / 10px 10px,
+    #f7f8f9;
+  padding: 24px;
+}
+
+.canvasControls {
+  position: absolute;
+  z-index: 4;
+  top: 24px;
+  right: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  pointer-events: none;
+}
+
+.canvasControlCard {
+  min-width: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  border: 0.5px solid #ebedf0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 6.5px 12px;
+  pointer-events: auto;
+
+  :global {
+    .ant-checkbox-wrapper {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #04252b;
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+    }
+
+    .ant-checkbox-wrapper > span:not(.ant-checkbox) {
+      padding: 0;
+    }
+
+    .ant-checkbox + span {
+      padding-inline-start: 0;
+      padding-inline-end: 0;
+    }
+
+    .ant-checkbox-wrapper::after {
+      display: none;
+    }
+
+    .ant-checkbox {
+      top: 0;
+      flex: 0 0 16px;
+    }
+
+    .ant-checkbox-inner {
+      width: 16px;
+      height: 16px;
+      border-color: #d5d7da;
+      border-radius: 4px;
+    }
+
+    .ant-checkbox-checked .ant-checkbox-inner {
+      border-color: #026961;
+      background-color: #026961;
+    }
+
+    .ant-checkbox-checked::after {
+      border-color: #026961;
+    }
+
+    .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+      .ant-checkbox-inner,
+    .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
+      border-color: #026961;
+    }
+  }
+}
+
+.canvasIncompleteControl {
+  justify-self: flex-start;
+}
+
+.canvasCategoryControl {
+  justify-self: flex-end;
+  gap: 12px;
+}
+
+.canvasCategoryArrow {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+
+  img {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+
+  &:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid rgba(2, 105, 97, 0.35);
+    outline-offset: 2px;
+  }
+}
+
+.canvasCategoryArrowPrev {
+  transform: rotate(180deg);
+}
+
+.canvasLegend {
+  display: inline-grid;
+  grid-template-columns: repeat(3, max-content);
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.canvasLegendIso {
+  display: inline-flex;
+  grid-template-columns: none;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  max-inline-size: min(360px, 48vw);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  :global {
+    .ant-checkbox-wrapper {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+.canvasGraphShell {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+}
+
+.canvasGraphContainer {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+
+.canvasNodeCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-top: 3px solid var(--enterprise-carbon-node-color, #026961);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.06);
+  color: #343a40;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI',
+    sans-serif;
+  overflow: visible;
+  pointer-events: auto;
+}
+
+.canvasNodeCardSource {
+  border-top: 0;
+  cursor: pointer;
+}
+
+.canvasNodeCardAddable {
+  cursor: default;
+}
+
+.canvasNodeCardAddable:hover,
+.canvasNodeCardAddable:focus-within {
+  z-index: 5;
+  border: 1px solid var(--enterprise-carbon-node-color, #026961);
+  border-top: 3px solid var(--enterprise-carbon-node-color, #026961);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.canvasNodeCardSource:hover,
+.canvasNodeCardSource:focus-within {
+  z-index: 100;
+}
+
+.canvasNodeCardError {
+  border: 1px solid #d93f63;
+  background: #fff5f7;
+}
+
+.canvasNodeInner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+
+.canvasNodeCardOrg .canvasNodeInner {
+  justify-content: center;
+  gap: 12px;
+}
+
+.canvasNodeHeader {
+  min-width: 0;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.canvasNodeTaskCheckbox {
+  appearance: none;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  margin: 1px;
+  border: 1px solid #d5d7da;
+  border-radius: 4px;
+  flex: 0 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  cursor: pointer;
+  padding: 0;
+}
+
+.canvasNodeTaskCheckbox:hover,
+.canvasNodeTaskCheckbox:focus-visible {
+  border-color: #026961;
+}
+
+.canvasNodeTaskCheckbox:focus-visible {
+  outline: 2px solid rgba(2, 105, 97, 0.28);
+  outline-offset: 1px;
+}
+
+.canvasNodeTaskCheckbox:disabled {
+  border-color: #d5d7da;
+  background: #f7f8f9;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.canvasNodeTaskCheckboxSelected {
+  border-color: #026961;
+  background: #026961
+    url('@/assets/images/carbonAgent/icons/task-checkbox-check.svg')
+    center / 9.6px 6.6px no-repeat;
+}
+
+.canvasNodeOrgIcon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  display: block;
+}
+
+.canvasNodeHeaderIcon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  display: block;
+}
+
+.canvasNodeFileButton {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 4px;
+  flex: 0 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.canvasNodeFileButton:hover,
+.canvasNodeFileButton:focus-visible {
+  background: #f7f8f9;
+}
+
+.canvasNodeHeaderIconFlipX {
+  transform: rotate(180deg) scaleY(-1);
+}
+
+.canvasNodeTitle {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  color: #343a40;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canvasNodeTitleOrg {
+  color: #343a40;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.canvasNodeProductFootprintTag {
+  height: 18px;
+  margin-left: auto;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  color: #048677;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  background: #ddf4f2;
+  border-radius: 10px;
+}
+
+.canvasNodeProgress {
+  flex: 0 0 auto;
+  color: #999ea4;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.canvasNodeMetric {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.canvasNodeMetricOrg {
+  gap: 8px;
+}
+
+.canvasNodeMetricLabel {
+  flex: 0 0 auto;
+  color: #04252b;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.canvasNodeValue,
+.canvasNodeValueOrg {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canvasNodeValue {
+  color: #343a40;
+  font-family: 'HarmonyOS Sans SC', -apple-system, BlinkMacSystemFont,
+    'PingFang SC', 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.canvasNodeValueOrg {
+  color: #026961;
+  font-family: 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont,
+    'PingFang SC', 'Segoe UI', sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.canvasNodeUnit {
+  flex: 0 0 auto;
+  color: #999ea4;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.canvasNodeMoreWrap {
+  position: relative;
+  z-index: 101;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+
+.canvasNodeMore {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.canvasNodeMore:hover,
+.canvasNodeMore:focus-visible {
+  background: #f7f8f9;
+}
+
+.canvasNodeMoreIcon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.canvasNodeMoreMenu {
+  position: absolute;
+  z-index: 102;
+  top: 20px;
+  right: -4px;
+  width: 88px;
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  padding: 4px;
+}
+
+.canvasNodeMoreWrap:hover .canvasNodeMoreMenu,
+.canvasNodeMoreWrap:focus-within .canvasNodeMoreMenu {
+  z-index: 999;
+  display: flex;
+}
+
+.canvasNodeMoreMenuItem {
+  width: 80px;
+  height: 36px;
+  border: 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  color: #04252b;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 0 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.canvasNodeMoreMenuItem:hover,
+.canvasNodeMoreMenuItem:focus-visible {
+  background: #f7f8f9;
+}
+
+.canvasNodeAdd {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: -10px;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transform: translateX(-50%);
+}
+
+.canvasNodeCardAddable:hover .canvasNodeAdd,
+.canvasNodeCardAddable:focus-within .canvasNodeAdd {
+  display: inline-flex;
+}
+
+.canvasNodeAdd:focus-visible {
+  outline: 2px solid rgba(2, 105, 97, 0.24);
+  outline-offset: 2px;
+}
+
+.canvasNodeAddIcon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  display: block;
+}
+
+.canvasNodeAddWrap {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  bottom: -10px;
+  width: 20px;
+  height: 20px;
+  display: none;
+  line-height: 0;
+  transform: translateX(-50%);
+
+  .canvasNodeAdd {
+    position: static;
+    display: inline-flex;
+    transform: none;
+  }
+}
+
+.canvasNodeCardAddable:hover .canvasNodeAddWrap,
+.canvasNodeCardAddable:focus-within .canvasNodeAddWrap {
+  display: block;
+}
+
+.canvasNodeAddMenu {
+  position: absolute;
+  z-index: 10;
+  top: 24px;
+  left: 50%;
+  display: none;
+  min-width: 136px;
+  padding: 4px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  transform: translateX(-50%) scale(var(--enterprise-carbon-menu-scale, 1));
+  transform-origin: top center;
+}
+
+.canvasNodeAddWrap:focus-within .canvasNodeAddMenu {
+  display: block;
+}
+
+.canvasNodeAddMenuItem {
+  width: 100%;
+  padding: 5px 12px;
+  color: #343a40;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: left;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.canvasNodeAddMenuItem:hover,
+.canvasNodeAddMenuItem:focus-visible {
+  background: #f7f8f9;
+  color: #026961;
+  outline: none;
+}
+
+.canvasNodeCollapse {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  right: -40px;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -12px;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.canvasNodeCollapseIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  transform: rotate(90deg);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.canvasNodeCollapseIconHover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.canvasNodeCollapse:hover .canvasNodeCollapseIconDefault {
+  opacity: 0;
+}
+
+.canvasNodeCollapse:hover .canvasNodeCollapseIconHover {
+  opacity: 1;
+}
+
+.canvasNodeCollapseIconCollapsed {
+  transform: rotate(-90deg);
+}
+
+.canvasState,
+.canvasLoadingMask {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvasState {
+  pointer-events: none;
+}
+
+.canvasLoadingMask {
+  background: rgba(247, 248, 249, 0.62);
+}
+
+.canvasValidationHint {
+  position: absolute;
+  z-index: 2;
+  top: 76px;
+  right: 24px;
+  color: #d93f63;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.canvasZoomControls {
+  position: absolute;
+  z-index: 2;
+  right: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.canvasOriginalViewButton,
+.canvasZoomGroup {
+  height: 36px;
+  box-sizing: border-box;
+  border: 0.5px solid #ebedf0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.canvasOriginalViewButton {
+  border-radius: 4px;
+  color: #6c757d;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 0 12px;
+}
+
+.canvasZoomGroup {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.canvasZoomButton {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.canvasZoomButton img {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.canvasZoomText {
+  min-width: 56px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+}
+
+
+.emissionDrawer :global(.ant-drawer-body) {
+  padding: 0;
+  overflow-y: auto;
+}
+
+.emissionDrawer :global(.ant-drawer-header) {
+  height: 96px;
+  padding: 32px 40px;
+  border-bottom: 0;
+  background: #fff;
+}
+
+.emissionDrawer :global(.ant-drawer-title) {
+  color: #04252b;
+  font-family: 'PingFang SC';
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.emissionDrawer :global(.enterprise-carbon-account-v222) {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding-bottom: @GlobaFormActionsHeight + 16px;
+}

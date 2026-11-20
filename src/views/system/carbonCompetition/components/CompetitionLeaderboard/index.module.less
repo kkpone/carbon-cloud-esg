@@ -1,0 +1,295 @@
+.page {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: #04252b;
+  background: #fff;
+  min-width: 0;
+  container-type: inline-size;
+}
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 500;
+    color: inherit;
+  }
+}
+.summaries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #0cbf9f14;
+  > span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 24px;
+    flex-wrap: wrap;
+  }
+  img {
+    margin-right: 8px;
+  }
+  strong {
+    color: #0cbf9f;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.page .search {
+  width: 280px;
+  height: 38px;
+  flex-shrink: 0;
+}
+.loading {
+  display: grid;
+  place-items: center;
+  min-height: 218px;
+}
+.podium {
+  display: grid;
+  grid-template-columns: 338.67fr 399.63fr 338.67fr;
+  align-items: end;
+  width: 100%;
+  max-width: 1140px;
+  margin: -4px auto -4px;
+  padding: 0 29px 14px;
+  background: url('../../../../../assets/images/carbonCompetition/leader-shadow.svg')
+    center bottom / 100% auto no-repeat;
+}
+.podiumCard {
+  position: relative;
+  min-width: 0;
+  color: #c68d27;
+}
+.podiumContent {
+  position: absolute;
+  top: 10%;
+  left: 11%;
+  right: 11%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1;
+  p {
+    margin: 0;
+  }
+}
+.winnerName {
+  max-width: 100%;
+  padding-right: 28px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #04252b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.points {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  strong {
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  span {
+    color: #04252b;
+    font-size: 14px;
+  }
+}
+.winnerDetail {
+  color: #6c757d;
+  font-size: 12px;
+  line-height: 22px;
+  overflow-wrap: anywhere;
+}
+.trophy {
+  position: absolute;
+  right: 10%;
+  bottom: 23%;
+  width: 60px;
+  height: 60px;
+  opacity: 0.6;
+  overflow: hidden;
+  img {
+    position: absolute;
+    width: 133.97%;
+    height: 133.97%;
+    max-width: none;
+    top: -16.99%;
+    left: -16.99%;
+  }
+}
+.place1 {
+  z-index: 2;
+  .podiumContent {
+    gap: 19px;
+  }
+  .winnerName {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .points strong {
+    font-size: 38px;
+    line-height: 38px;
+  }
+  .trophy {
+    width: 80px;
+    height: 80px;
+  }
+}
+.place2 {
+  color: #537dac;
+}
+.place3 {
+  color: #c86c39;
+}
+.page .table {
+  :global(.ant-table-container) {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  :global(.ant-table.ant-table-small .ant-table-thead > tr > th),
+  :global(.ant-table.ant-table-small .ant-table-tbody > tr > td) {
+    height: 48px;
+    padding: 3px 20px;
+    border-bottom-color: #f7f8f9;
+    overflow-wrap: anywhere;
+  }
+  :global(.ant-table.ant-table-small .ant-table-thead > tr > th) {
+    background: #f7f8f9;
+    font-weight: 500;
+  }
+}
+.coinValue {
+  color: #026961;
+  font-weight: 500;
+}
+.ownRow {
+  background: #f4fbfa;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: -8px;
+  > span {
+    color: #999ea4;
+    flex-shrink: 0;
+  }
+}
+.footnote {
+  font-size: 12px;
+  line-height: 20px;
+  color: #999ea4;
+  p {
+    margin: 4px 0 0;
+  }
+}
+@container (min-width: 600px) and (max-width: 1000px) {
+  .podium {
+    overflow-x: auto;
+    grid-template-columns: 304px 358px 304px;
+    padding: 0 0 14px;
+  }
+  .podiumContent {
+    gap: 8px;
+  }
+  .place1 .podiumContent {
+    gap: 12px;
+  }
+  .winnerName {
+    font-size: 13px;
+  }
+  .winnerDetail {
+    font-size: 11px;
+  }
+}
+@media (max-width: 767px) {
+  .page {
+    padding: 24px 16px;
+    gap: 20px;
+  }
+  .titleRow {
+    align-items: flex-start;
+  }
+  .titleRow h1 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .summaries {
+    gap: 12px;
+  }
+  .summary {
+    width: 100%;
+    justify-content: space-between;
+    padding: 8px 12px;
+  }
+  .controls {
+    flex-wrap: wrap;
+  }
+  .page .search {
+    width: 100%;
+  }
+  .podium {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    background: none;
+  }
+  .podiumCard {
+    width: 100%;
+    max-width: 340px;
+  }
+  .place1 {
+    order: -1;
+    max-width: 400px;
+  }
+  .place1 .podiumContent {
+    gap: 12px;
+  }
+  .place1 .winnerName {
+    font-size: 16px;
+  }
+  .place1 .points strong {
+    font-size: 32px;
+    line-height: 32px;
+  }
+  .pagination {
+    flex-wrap: wrap;
+  }
+}

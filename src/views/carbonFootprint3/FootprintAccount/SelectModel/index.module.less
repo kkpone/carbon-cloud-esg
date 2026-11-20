@@ -1,0 +1,377 @@
+.businessAccountSelectModelMain {
+  .searchTitleMain {
+    height: 60px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ebedf0ff;
+
+    .searchTitle {
+      position: absolute;
+      left: 24px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+  :global(.ant-menu-title-content) {
+    font-size: 14px;
+  }
+
+  :global(.ant-menu-item-selected .ant-menu-title-content) {
+    font-weight: 600;
+  }
+}
+
+.selectModelDiv {
+  .selectModelMain {
+    padding-left: 24px;
+    height: 64px;
+    line-height: 64px;
+    text-align: left;
+    background: #f7f8f9;
+    border-radius: 8px !important;
+
+    .selectModelTitle {
+      font-size: 16px;
+    }
+  }
+
+  :global {
+    .ant-modal-content {
+      background: #f7f8f9;
+      padding: 24px !important;
+    }
+    .ant-modal-header {
+      background: #f7f8f9;
+    }
+  }
+
+  .selectModelContent {
+    .businessMain {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      .businessBtn {
+        height: 32px;
+        display: flex;
+        align-items: center;
+      }
+      .businessBtnIcon {
+        width: 16px;
+        height: auto;
+      }
+    }
+
+    .splitLine {
+      margin-top: 16px;
+      margin-bottom: 12px;
+      height: 1px;
+      background: #ebedf0;
+    }
+    .selectFiltrMain {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+
+      .typeFiltr {
+        display: flex;
+        column-gap: 16px;
+      }
+      .everyType {
+        color: #6c757d;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+          color: #0cbf9f;
+        }
+      }
+      .everyTypeActive {
+        font-weight: 500;
+        color: #343a40;
+        &:hover {
+          color: #343a40;
+        }
+      }
+    }
+  }
+
+  .selectModelData {
+    width: 100%;
+    height: 540px;
+    position: relative;
+    margin-top: 12px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    overflow-x: hidden;
+    display: grid;
+    grid-gap: 24px;
+    padding-bottom: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-content: start;
+
+    .addAcount {
+      height: 160px;
+      border-radius: 4px;
+      box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.08);
+      background: #fff;
+      text-align: center;
+      padding-top: 55px;
+      cursor: pointer;
+      color: #6c757d;
+      &:hover {
+        color: #0cbf9f;
+      }
+
+      .addAcountIcon {
+        display: block;
+        font-size: 20px;
+      }
+
+      .addAcountText {
+        margin-top: 16px;
+      }
+    }
+
+    .everyList {
+      position: relative;
+      min-width: 0;
+      padding: 20px 24px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--line-border-2, #ebedf0);
+      &:hover,
+      &:focus-within {
+        border-color: #026961;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.04),
+          0 1px 10px 0 rgba(0, 0, 0, 0.08);
+
+        .setBtnMain {
+          opacity: 1;
+        }
+
+        .listIntro {
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.6) 0%,
+            rgba(255, 255, 255, 0.6) 100%
+          );
+        }
+      }
+
+      .modelNameRow {
+        display: flex;
+        column-gap: 8px;
+        align-items: center;
+      }
+
+      .listNameIcon {
+        font-size: 14px;
+        color: #026961;
+      }
+
+      .listNameText {
+        color: #343a40;
+        font-weight: 500;
+        flex: 1;
+        width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .listDetail {
+        margin-top: 16px;
+        margin-bottom: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        .detail {
+          display: flex;
+          padding: 2px 6px;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          color: #999ea4;
+          border-radius: 2px;
+          background: #f7f8f9;
+        }
+      }
+
+      .listIntro {
+        font-size: 12px;
+        color: #999ea4;
+        line-height: 18px;
+        display: -webkit-box; /* 用于老版本的 WebKit 内核浏览器 */
+        -webkit-line-clamp: 2; /* 设置显示的行数 */
+        -webkit-box-orient: vertical; /* 设置或检索伸缩盒对象的子元素的排列方式 */
+        overflow: hidden; /* 隐藏超出的内容 */
+        text-overflow: ellipsis; /* 超出部分显示省略号 */
+        line-height: 18px; /* 确保行高适配，根据实际需求设置 */
+      }
+
+      .setBtnMain {
+        position: absolute;
+        left: 24px;
+        bottom: 20px;
+        right: 24px;
+        display: flex;
+        gap: 12px;
+        opacity: 0; /* 默认隐藏 */
+        transition: opacity 0.3s ease;
+
+        .preview {
+          width: 84px;
+          flex-shrink: 0;
+        }
+
+        .btnUse {
+          flex: 1;
+          min-width: 0;
+        }
+      }
+    }
+  }
+
+  .intro {
+    font-size: 12px;
+    color: #999ea4;
+    margin-top: 16px;
+    display: -webkit-box; /* 用于老版本的 WebKit 内核浏览器 */
+    -webkit-line-clamp: 2; /* 设置显示的行数 */
+    -webkit-box-orient: vertical; /* 设置或检索伸缩盒对象的子元素的排列方式 */
+    overflow: hidden; /* 隐藏超出的内容 */
+    text-overflow: ellipsis; /* 超出部分显示省略号 */
+    line-height: 18px; /* 确保行高适配，根据实际需求设置 */
+  }
+
+  :global {
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .selectModelData {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 860px) {
+    .selectModelData {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .selectModelData {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .selectFiltrMain > div {
+      max-width: 100%;
+    }
+
+    .selectFiltrMain :global(.ant-input-affix-wrapper) {
+      max-width: 100%;
+    }
+  }
+
+  @media (hover: none) {
+    .selectModelData .everyList .setBtnMain {
+      position: static;
+      margin-top: 16px;
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .selectModelData .everyList .setBtnMain {
+      transition: none;
+    }
+  }
+}
+
+.modelInfoMain {
+  width: 90vw !important;
+  position: relative;
+
+  .modelInfoSubBtn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 1;
+  }
+
+  :global {
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+}
+
+.selectModelDiv.embedded {
+  container-type: inline-size;
+  .selectModelContent .businessMain {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    .businessBtn {
+      flex: none;
+      border-radius: 8px;
+    }
+  }
+  .selectModelData {
+    height: auto;
+    overflow: visible;
+    gap: 12px;
+    padding-bottom: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    .everyList {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      .listNameText {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        line-height: 22px;
+      }
+      .listDetail {
+        margin: 0;
+        gap: 6px;
+      }
+      .detail {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+      .setBtnMain {
+        position: static;
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid #edf1ef;
+        opacity: 1;
+        gap: 8px;
+        :global(.ant-btn) {
+          height: 34px;
+          border-radius: 8px;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+@container (max-width: 760px) {
+  .selectModelDiv.embedded .selectModelData {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container (max-width: 480px) {
+  .selectModelDiv.embedded .selectModelData {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

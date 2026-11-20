@@ -1,0 +1,86 @@
+.tool {
+  color: #568475;
+  & + & {
+    margin-top: 12px;
+  }
+  &[data-status='FAILED'] {
+    color: #ba574c;
+    .toolStatus {
+      background: #fff1ee;
+    }
+  }
+  &[data-status='ENDED'] {
+    color: #8b9892;
+  }
+  p {
+    margin: 6px 0 0 24px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #986258;
+  }
+}
+.toolLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 22px;
+  > :global(.anticon) {
+    flex: none;
+  }
+}
+.toolTitle {
+  flex: 1;
+  min-width: 0;
+  color: #425d52;
+  font-size: 13px;
+}
+.toolStatus {
+  flex: none;
+  font-size: 11px;
+  line-height: 20px;
+  padding: 0 7px;
+  border-radius: 5px;
+  background: #edf3ef;
+}
+
+.summary {
+  cursor: pointer;
+  list-style: none;
+  border-radius: 4px;
+  &::-webkit-details-marker {
+    display: none;
+  }
+  &:hover {
+    background: #edf3ef;
+  }
+  &:focus-visible {
+    outline: 2px solid #008f80;
+    outline-offset: 3px;
+  }
+}
+.count {
+  color: #6c8278;
+  font-size: 12px;
+  font-weight: 400;
+}
+.chevron {
+  font-size: 10px;
+  transition: transform 0.15s ease;
+}
+.tool[open] > .summary .chevron {
+  transform: rotate(90deg);
+}
+.calls {
+  margin: 10px 0 0 7px;
+  padding-left: 14px;
+  border-left: 1px solid #dce7e1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .toolLine :global(.anticon-spin) {
+    animation: none;
+  }
+  .chevron {
+    transition: none;
+  }
+}

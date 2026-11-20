@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+:global(.layout--side-bar):has(.noOuterScrollPage),
+:global(.layout__container):has(.noOuterScrollPage) {
+  min-height: 0;
+  overflow-y: hidden;
+}
