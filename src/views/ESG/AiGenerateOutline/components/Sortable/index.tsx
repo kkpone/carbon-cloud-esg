@@ -453,6 +453,7 @@ const NestedTree: FC<{
 
   const treeRef = useRef<OutlineSectionNode[]>([]);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const hydratedInitialRef = useRef(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -466,7 +467,8 @@ const NestedTree: FC<{
   }, [treeData, onSectionsChange]);
 
   useEffect(() => {
-    if (initialSections?.length && !loading) {
+    if (initialSections?.length && !loading && !hydratedInitialRef.current) {
+      hydratedInitialRef.current = true;
       setTreeData(initialSections);
       if (reportInfo?.reportName && !reportName) {
         setReportName(reportInfo.reportName);
@@ -477,11 +479,12 @@ const NestedTree: FC<{
   useEffect(() => {
     if (!outline) {
       if (loading) {
+        hydratedInitialRef.current = false;
         setTreeData([]);
       }
       return;
     }
-    const baseExisting = treeRef.current.length
+    const baseExisting = !loading && treeRef.current.length
       ? treeRef.current
       : initialSections || [];
     const parsedTree = parseMarkdownToTree(outline, baseExisting);
@@ -490,7 +493,8 @@ const NestedTree: FC<{
     if (parsedTree[0]?.title) {
       setReportName(parsedTree[0].title);
     }
-  }, [outline, initialSections, loading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [outline, loading]);
 
   useEffect(() => () => {
     if (saveTimerRef.current) {
