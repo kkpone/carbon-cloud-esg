@@ -19,6 +19,7 @@ import { useLocation } from 'react-router-dom';
 import { LocaleContext } from '@/components/LocaleProvider';
 import { useMobile } from '@/hooks/use-mobile';
 import { RouteMaps } from '@/router/route-paths';
+import { ESG_HIDDEN_AGENT_PREFIXES } from '@/views/ESG/routeUtils';
 import { RouteMapsCorbonFootprint3 } from '@/router/route-paths/corbonFootprint3';
 import { getToken } from '@/utils/cookie';
 import { FootprintAccountInfoUrlStatus } from '@/views/carbonFootprint3/FootprintAccount/constant';
@@ -50,7 +51,7 @@ const hiddenPaths = [
   '/403',
   '/500',
   '/error404',
-  '/ESG/aiGenerateDetail',
+  ...ESG_HIDDEN_AGENT_PREFIXES,
   '/carbonFootprint3/footprintAccount/shareAccountLogin',
   '/carbonFootprint3/footprintAccount/share',
   '/enterpriseCarbonAccounting/share',

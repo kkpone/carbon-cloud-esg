@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import classNames from 'classnames';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { AppendixFile } from '@/components/Appendix/File';
 import { AppendixLink } from '@/components/Appendix/Link';
@@ -32,6 +32,7 @@ import { getReportList, postCreateReport } from './service';
 import { getTaskPeriodList } from '../FillManagement/service';
 import { getFrameList } from '../components/IndicatorSystemModal/service';
 import { ReportCard } from '../components/ReportCard';
+import { resolveEsgRoute } from '../routeUtils';
 import { IndicatorSystem } from '../type';
 
 export interface IAiGenerateHomeProps {}
@@ -50,7 +51,7 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
   const [treeData] = useFrameOrgTreeData();
 
   const [indicatorOptions, setIndicatorOptions] = useState<
-    { label: string; value: string; type: string }[]
+    { label: string; value: string | number; type?: string }[]
   >([]);
   const [indicatorValue, setIndicatorValue] = useState<number | string>();
   const [standards, setStandards] = useState<number[]>([]);
@@ -87,6 +88,7 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
   }, [treeData]);
 
   const history = useHistory();
+  const location = useLocation();
 
   const [createLoading, setCreateLoading] = useState(false);
 
@@ -102,38 +104,46 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
 
   const createReport = async () => {
     setCreateLoading(true);
-    const result = await postCreateReport({
-      orgId: Number(orgId[orgId.length - 1]),
-      orgName,
-      userContent,
-      period: year.toString(),
-      indicatorType,
-      standardIds: standards.join(','),
-      referFiles: appendix
-        .filter(item => item.type === 'file')
-        .map(item => ({
-          name: item.value.showName,
-          url: item.value.fileUrl || '',
-        })),
-      referLink: appendix
-        .filter(item => item.type === 'link')
-        .map(item => item.value.showName),
-      referText: appendix
-        .filter(item => item.type === 'text')
-        .map(item => item.value.showName),
-      indicatorFiles:
-        indicatorType === 0
-          ? undefined
-          : {
-              name: indicator[0].label,
-              url: indicator[0].value,
-            },
-      frameId: indicatorType === 0 ? indicator[0]?.value : undefined,
-    }).finally(() => {
-      setCreateLoading(false);
-    });
+    try {
+      const result = await postCreateReport({
+        orgId: Number(orgId[orgId.length - 1]),
+        orgName,
+        userContent,
+        period: year.toString(),
+        indicatorType,
+        standardIds: standards.join(','),
+        referFiles: appendix
+          .filter(item => item.type === 'file')
+          .map(item => ({
+            name: item.value.showName,
+            url: item.value.fileUrl || '',
+          })),
+        referLink: appendix
+          .filter(item => item.type === 'link')
+          .map(item => item.value.showName),
+        referText: appendix
+          .filter(item => item.type === 'text')
+          .map(item => item.value.showName),
+        indicatorFiles:
+          indicatorType === 0
+            ? undefined
+            : {
+                name: indicator[0].label,
+                url: indicator[0].value,
+              },
+        frameId: indicatorType === 0 ? indicator[0]?.value : undefined,
+      });
 
-    history.push(`${RouteMaps.ESGAiGenerateOutline}?id=${result.data.data}`);
+      if (result?.data?.data) {
+        history.push(
+          `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${result.data.data}`,
+        );
+      }
+    } catch {
+      // 错误提示已由请求拦截器统一处理，保持当前页面状态避免异常退出
+    } finally {
+      setCreateLoading(false);
+    }
   };
 
   const enable =
@@ -180,6 +190,7 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
         value: matchedTask.id,
         label: matchedTask.name,
       });
+      setIndicatorValue(matchedTask.id);
     }
     setIndicatorOptions(newIndicatorOptions);
   };
@@ -198,6 +209,13 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
       setYear(Number(matchedTask.period));
       setIndicatorOptions([{ value: matchedTask.id, label: matchedTask.name }]);
       setIndicatorValue(matchedTask.id);
+      return;
+    }
+    const defaultTask = taskList.find(
+      taskPeriod => year === Number(taskPeriod.period),
+    );
+    if (defaultTask) {
+      setIndicatorOptions([{ value: defaultTask.id, label: defaultTask.name }]);
     }
   });
 
@@ -547,7 +565,14 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
                 {reportList.length > 4 && (
                   <div
                     className={styles.more}
-                    onClick={() => history.push(RouteMaps.ESGAiGenerateList)}
+                    onClick={() =>
+                      history.push(
+                        resolveEsgRoute(
+                          RouteMaps.ESGAiGenerateList,
+                          location.pathname,
+                        ),
+                      )
+                    }
                   >
                     {`${I18N.components.viewMore} `}
                     <svg

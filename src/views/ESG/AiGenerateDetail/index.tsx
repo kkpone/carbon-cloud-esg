@@ -18,6 +18,7 @@ import { FullscreenModal } from '@/components/FullscreenModal';
 import { IconAlibaba } from '@/components/iconfont';
 import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
 import { RouteMaps } from '@/router/route-paths';
+import { Toast } from '@/utils';
 
 import styles from './index.module.less';
 import { postDownloadReport, postEditReport } from './service';
@@ -28,6 +29,7 @@ import {
 } from '../AiGenerateOutline/promptUtils';
 import { ReportDetailsType, getReportInfo } from '../AiGenerateOutline/service';
 import { RatingModal } from '../MsciRatingList/components/RatingModal';
+import { resolveEsgRoute } from '../routeUtils';
 
 const { useToken } = theme;
 
@@ -57,10 +59,11 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
 
   const downloadReport = async () => {
     setDownloading(true);
-    await editorRef.current?.submitReport?.();
-    const result = await postDownloadReport({ id: Number(id) });
-
     try {
+      await editorRef.current?.submitReport?.().catch(() => {
+        // 保存接口受限或失败时仍允许导出已生成报告
+      });
+      const result = await postDownloadReport({ id: Number(id) });
       const { reportUrl } = result.data.data;
       // 通过 fetch 获取文件内容为 Blob
       const response = await fetch(reportUrl);
@@ -68,7 +71,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
       // 使用 Blob 保存文件，确保文件名生效
       saveAs(blob, `${reportName}.docx`);
     } catch {
-      // 下载失败，已通过 finally 设置 loading 状态
+      // 错误提示已由请求拦截器统一处理
     } finally {
       setDownloading(false);
     }
@@ -84,7 +87,9 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
       history.goBack();
     } else {
       // 如果没有历史记录（直接打开链接），跳转到首页
-      history.push(RouteMaps.ESGAiGenerateHome);
+      history.push(
+        resolveEsgRoute(RouteMaps.ESGAiGenerateHome, location.pathname),
+      );
     }
   };
 
@@ -114,24 +119,32 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
     setSyncToHocuspocus(true);
     cancelRequest.current = new AbortController();
     canScroll.current = true;
-    await streamFetch({
-      url: `${process.env.REACT_APP_API_URL}/esg/frameReport/aiEsgGenerate`,
-      data: {
-        reportId: numericId,
-        promptConfig: effectivePromptConfig,
-        outlineSections: effectiveSections,
-      },
-      onMessage: e => {
-        setReportContent(pre => `${pre}${e}`);
+    try {
+      await streamFetch({
+        url: `${process.env.REACT_APP_API_URL}/esg/frameReport/aiEsgGenerate`,
+        data: {
+          reportId: numericId,
+          promptConfig: effectivePromptConfig,
+          outlineSections: effectiveSections,
+        },
+        onMessage: e => {
+          setReportContent(pre => `${pre}${e}`);
 
-        if (canScroll.current) {
-          run();
-        }
-      },
-      abortCtrl: cancelRequest.current,
-    }).finally(() => {
+          if (canScroll.current) {
+            run();
+          }
+        },
+        abortCtrl: cancelRequest.current,
+      });
+    } catch (err: any) {
+      const errMsg =
+        err?.message?.msg ||
+        (typeof err?.message === 'string' ? err.message : '') ||
+        I18N.utils.notHavePermission;
+      Toast('warn', errMsg);
+    } finally {
       setSyncToHocuspocus(false);
-    });
+    }
   };
 
   useUnmount(() => {

@@ -2,17 +2,19 @@ import I18N from '@src/lang/I18N';
 import { FC, useState } from 'react';
 import styles from './index.module.less';
 import { IconAlibaba } from '@/components/iconfont';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { RouteMaps } from '@/router/route-paths';
 import { useRequest } from 'ahooks';
 import { getReportList } from '../AiGenerateHome/service';
 import { ReportCard } from '../components/ReportCard';
+import { resolveEsgRoute } from '../routeUtils';
 import { Input, Select, Spin } from 'antd';
 
 export interface IAiGenerateListProps {}
 
 export const AiGenerateList: FC<IAiGenerateListProps> = () => {
   const history = useHistory();
+  const location = useLocation();
   const [name, setName] = useState('');
   const [searchName, setSearchName] = useState('');
   const [status, setStatus] = useState<0 | 1 | 4>(4);
@@ -38,7 +40,11 @@ export const AiGenerateList: FC<IAiGenerateListProps> = () => {
       <div className={styles.header}>
         <div
           className={styles.back}
-          onClick={() => history.push(RouteMaps.ESGAiGenerateHome)}
+          onClick={() =>
+            history.push(
+              resolveEsgRoute(RouteMaps.ESGAiGenerateHome, location.pathname),
+            )
+          }
         >
           <IconAlibaba type='icon-a-icon_return' />
         </div>

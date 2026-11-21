@@ -250,8 +250,8 @@ axios.interceptors.response.use(
       return Promise.reject(response);
     }
 
-    // 403 访问受限，授权过期
-    if (responseCode === 403 || responseCode === 401) {
+    // 401 授权过期，执行登出；403 为接口权限不足，提示而不退出登录
+    if (responseCode === 401) {
       const routePathname = stripLocalePrefixFromPathname(location.pathname);
 
       if (
@@ -270,6 +270,12 @@ axios.interceptors.response.use(
       //   },
       //   code: responseCode,
       // });
+      return Promise.reject(response);
+    }
+    if (responseCode === 403) {
+      if (!silentResponseError) {
+        Toast('warn', response?.data?.msg || I18N.utils.notHavePermission);
+      }
       return Promise.reject(response);
     }
     if (responseCode === 201) {

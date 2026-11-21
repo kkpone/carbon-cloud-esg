@@ -10,6 +10,9 @@ import { streamFetch } from '@/api/streamFetch';
 import { checkPermissions } from '@/components/Permission/utils';
 import { IconAlibaba } from '@/components/iconfont';
 import { RouteMaps } from '@/router/route-paths';
+import { Toast } from '@/utils';
+
+import { resolveEsgRoute } from '../routeUtils';
 
 import { PromptConfigModal } from './components/PromptConfigModal';
 import NestedSortableList from './components/Sortable';
@@ -74,27 +77,35 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
     setLoading(true);
     canScroll.current = true;
     abortCtrl.current = new AbortController();
-    await streamFetch({
-      url: `${process.env.REACT_APP_API_URL}/esg/frameReport/aiEsgOutlineCreate`,
-      data: {
-        reportId: Number(id),
-      },
-      onMessage: e => {
-        setOutline(pre => `${pre}${e}`);
-        if (canScroll.current) {
-          if (scrollTimerRef.current) {
-            clearTimeout(scrollTimerRef.current);
+    try {
+      await streamFetch({
+        url: `${process.env.REACT_APP_API_URL}/esg/frameReport/aiEsgOutlineCreate`,
+        data: {
+          reportId: Number(id),
+        },
+        onMessage: e => {
+          setOutline(pre => `${pre}${e}`);
+          if (canScroll.current) {
+            if (scrollTimerRef.current) {
+              clearTimeout(scrollTimerRef.current);
+            }
+            scrollTimerRef.current = setTimeout(() => {
+              bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }, 32 * 4);
           }
-          scrollTimerRef.current = setTimeout(() => {
-            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-          }, 32 * 4);
-        }
-      },
-      abortCtrl: abortCtrl.current,
-    }).finally(() => {
+        },
+        abortCtrl: abortCtrl.current,
+      });
+    } catch (err: any) {
+      const errMsg =
+        err?.message?.msg ||
+        (typeof err?.message === 'string' ? err.message : '') ||
+        I18N.utils.notHavePermission;
+      Toast('warn', errMsg);
+    } finally {
       setLoading(false);
       fileStatusRun();
-    });
+    }
   };
 
   useEffect(() => {
@@ -158,21 +169,25 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
     }
     const numericId = Number(id);
     saveStoredPromptConfig(numericId, nextConfig);
-    await postEditOutline({
-      id: numericId,
-      outline:
-        convertTreeToMarkdown([
-          {
-            id: 'root',
-            title: reportName || reportInfo?.reportName || '',
-            attachments: [],
-            indicators: [],
-            children: sections,
-          },
-        ]) || outline,
-      outlineSections: sections,
-      promptConfig: nextConfig,
-    });
+    try {
+      await postEditOutline({
+        id: numericId,
+        outline:
+          convertTreeToMarkdown([
+            {
+              id: 'root',
+              title: reportName || reportInfo?.reportName || '',
+              attachments: [],
+              indicators: [],
+              children: sections,
+            },
+          ]) || outline,
+        outlineSections: sections,
+        promptConfig: nextConfig,
+      });
+    } catch {
+      // 本地 sessionStorage 已保存配置，避免接口权限受限时阻塞交互
+    }
   };
 
   const generate = async () => {
@@ -197,7 +212,9 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
         // continue navigation even if optional backend fields are ignored
       });
     }
-    history.replace(`${RouteMaps.ESGAiGenerateDetail}?id=${id}`);
+    history.replace(
+      `${resolveEsgRoute(RouteMaps.ESGAiGenerateDetail, location.pathname)}?id=${id}`,
+    );
   };
 
   return (
@@ -207,7 +224,9 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
         <div
           className={styles.icon}
           onClick={() => {
-            history.push(RouteMaps.ESGAiGenerateHome);
+            history.push(
+              resolveEsgRoute(RouteMaps.ESGAiGenerateHome, location.pathname),
+            );
           }}
         >
           <IconAlibaba type='icon-a-icon_return' />

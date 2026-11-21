@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useMobile } from '@/hooks/use-mobile';
 import { RouteMaps } from '@/router/route-paths';
 import { RouteMapsCorbonFootprint3 } from '@/router/route-paths/corbonFootprint3';
+import { ESG_HIDDEN_AGENT_PREFIXES } from '@/views/ESG/routeUtils';
 
 import AICarbonFloating from './AICarbonFloating';
 // import { checkPermissions } from '../Permission/utils';
@@ -17,7 +18,7 @@ const HIDDEN_PATHS = [
   '/404',
   '/403',
   '/500',
-  '/ESG/aiGenerateDetail',
+  ...ESG_HIDDEN_AGENT_PREFIXES,
   '/carbonFootprint3/footprintAccount/shareAccountLogin',
   '/carbonFootprint3/footprintAccount/share',
   /** 碳足迹核算详情（左侧自带 AI 对话，隐藏悬浮小碳） */

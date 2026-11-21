@@ -3,11 +3,12 @@ import { FC } from 'react';
 import styles from './index.module.less';
 import { App, Dropdown, MenuProps } from 'antd';
 import { delReport, ReportData } from '../../AiGenerateHome/service';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { RouteMaps } from '@/router/route-paths';
 import bgPng from './bg.png';
 import classNames from 'classnames';
 import { checkPermissions } from '@/components/Permission/utils';
+import { resolveEsgRoute } from '../../routeUtils';
 
 function formatDateString(isoString: string) {
   const date = new Date(isoString);
@@ -33,6 +34,7 @@ export const ReportCard: FC<IReportCardProps> = props => {
   const { modal } = App.useApp();
 
   const history = useHistory();
+  const location = useLocation();
 
   const items: (id: number, reportName: string) => MenuProps['items'] = (
     id: number,
@@ -61,9 +63,13 @@ export const ReportCard: FC<IReportCardProps> = props => {
 
   const jumpTo = (id: number, status: 0 | 1) => {
     if (status === 0) {
-      history.push(`${RouteMaps.ESGAiGenerateOutline}?id=${id}`);
+      history.push(
+        `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${id}`,
+      );
     } else if (status === 1) {
-      history.push(`${RouteMaps.ESGAiGenerateDetail}?id=${id}`);
+      history.push(
+        `${resolveEsgRoute(RouteMaps.ESGAiGenerateDetail, location.pathname)}?id=${id}`,
+      );
     }
   };
   return (

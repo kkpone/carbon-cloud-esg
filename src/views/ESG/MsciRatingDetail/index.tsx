@@ -27,6 +27,7 @@ import {
   transformMsciRatingDetailData,
 } from './service';
 import { RatingModal } from '../MsciRatingList/components/RatingModal';
+import { resolveEsgRoute } from '../routeUtils';
 import {
   extractIndustryData,
   getIndustryData,
@@ -430,7 +431,10 @@ export const MsciRatingDetail: FC<IMsciRatingDetailProps> = () => {
                               onClick={e => {
                                 e.stopPropagation();
                                 history.push({
-                                  pathname: RouteMaps.ESGAiGenerateDetail,
+                                  pathname: resolveEsgRoute(
+                                    RouteMaps.ESGAiGenerateDetail,
+                                    location.pathname,
+                                  ),
                                   search: `?id=${ratingData.esgReportId}`,
                                 });
                               }}

@@ -7,7 +7,7 @@ import { Button, Input, Select, Table, TableColumnsType, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { debounce, isNil } from 'lodash-es';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import ExpandIcon from '@/components/ExpandIcon';
 import { IconFont } from '@/components/LcaIconFont';
@@ -27,6 +27,7 @@ import {
 } from '../constant';
 import { Indicator, IndicatorSystem } from '../type';
 import { isGroupIndicator, isModelIndicator } from '../utils';
+import { resolveEsgRoute } from '../routeUtils';
 
 const Summary: FC = () => {
   const [taskPeriodList, setTaskPeriodList] = useState<IndicatorSystem[]>([]);
@@ -57,6 +58,7 @@ const Summary: FC = () => {
   >([]);
 
   const history = useHistory();
+  const location = useLocation();
 
   const frameId = taskPeriod?.id;
 
@@ -373,7 +375,10 @@ const Summary: FC = () => {
               type='primary'
               onClick={() => {
                 history.push({
-                  pathname: RouteMaps.ESGAiGenerateHome,
+                  pathname: resolveEsgRoute(
+                    RouteMaps.ESGAiGenerateHome,
+                    location.pathname,
+                  ),
                   search: `?taskId=${taskPeriod.id}`,
                 });
               }}
