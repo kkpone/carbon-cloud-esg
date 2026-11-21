@@ -355,7 +355,7 @@ export const SimpleEditor = React.forwardRef(function SimpleEditor(
   }, [editor, editReport]);
 
   React.useEffect(() => {
-    if (props.provider.isSynced) {
+    const applyInitialContent = () => {
       try {
         if (
           !syncToHocuspocus &&
@@ -367,24 +367,31 @@ export const SimpleEditor = React.forwardRef(function SimpleEditor(
       } catch (error) {
         console.error(error);
       }
+    };
+
+    if (props.provider.isSynced) {
+      applyInitialContent();
     }
 
-    props.provider.on('synced', function sssss() {
+    const onSynced = () => {
       if (props.provider.isSynced) {
-        try {
-          if (
-            !syncToHocuspocus &&
-            props.reportContent &&
-            !editor?.storage.markdown.getMarkdown()
-          ) {
-            editor?.commands.setContent(props.reportContent);
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        applyInitialContent();
       }
-    });
-  }, [props.provider, editor]);
+    };
+    props.provider.on('synced', onSynced);
+
+    // 协同服务未连接时兜底渲染接口已保存的 reportContent，避免正文空白
+    const fallbackTimer = setTimeout(() => {
+      if (!props.provider.isSynced) {
+        applyInitialContent();
+      }
+    }, 1500);
+
+    return () => {
+      clearTimeout(fallbackTimer);
+      props.provider.off('synced', onSynced);
+    };
+  }, [props.provider, editor, props.reportContent, syncToHocuspocus]);
 
   React.useEffect(() => {
     if (!props.reportContent || !syncToHocuspocus) {
