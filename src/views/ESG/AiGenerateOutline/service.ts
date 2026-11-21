@@ -82,22 +82,24 @@ export const postEditOutline = (data: {
   outline: string;
   outlineSections?: OutlineSectionNode[];
   promptConfig?: ReportPromptConfig;
-}) =>
+}, options?: { silentResponseError?: boolean }) =>
   request<{ data: ReportDetailsType }>({
     url: '/esg/frameReport/esgOutlineEdit',
     data,
     method: 'POST',
+    ...options,
   });
 
 export const postEsgAnalyzeFilesExtractImages = (data: {
   reportId: number;
   sectionId?: string;
   referFiles?: ReportReferFile[];
-}) =>
+}, options?: { silentResponseError?: boolean }) =>
   request<{ data: ReportDetailsType }>({
     url: '/esg/frameReport/esgAnalyzeFilesExtractImages',
     data,
     method: 'POST',
+    ...options,
   });
 
 export const getFileStatus = (params: { reportId: number }) =>

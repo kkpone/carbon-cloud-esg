@@ -303,4 +303,8 @@ export default {
   saveOutlineFailed: '大綱保存失敗，請重試',
   hasReportValue: '有填報值',
   allIndicatorsFilter: '全部指標',
+  mockModeLabel: '演示模擬模式',
+  mockModeTooltip: '開啟後在後端無權限或離線時本地模擬生成大綱、報告正文與導出流程',
+  mockFallbackNotice: '當前賬號無後端寫入權限，已自動切換至本地模擬流程',
+  mockExportSuccess: '已通過本地模擬導出報告文件',
 };

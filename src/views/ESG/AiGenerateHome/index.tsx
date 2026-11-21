@@ -22,7 +22,7 @@ import { AppendixText } from '@/components/Appendix/Text';
 import { checkPermissions } from '@/components/Permission/utils';
 import { IconAlibaba } from '@/components/iconfont';
 import { RouteMaps } from '@/router/route-paths';
-import { getYear, uuid } from '@/utils';
+import { getYear, Toast, uuid } from '@/utils';
 import { useFrameOrgTreeData } from '@/views/dashborad/organization/components/hooks';
 
 import { UploadData } from './components/UploadData';
@@ -32,6 +32,13 @@ import { getReportList, postCreateReport } from './service';
 import { getTaskPeriodList } from '../FillManagement/service';
 import { getFrameList } from '../components/IndicatorSystemModal/service';
 import { ReportCard } from '../components/ReportCard';
+import {
+  createMockReport,
+  getMockReportList,
+  isEsgMockModeEnabled,
+  isPermissionOrUnavailableError,
+  MockCreateReportPayload,
+} from '../mockReportService';
 import { resolveEsgRoute } from '../routeUtils';
 import { IndicatorSystem } from '../type';
 
@@ -70,7 +77,17 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
 
   const { data: reportListData, run, loading } = useRequest(getReportList);
 
-  const reportList = reportListData?.data.rows || [];
+  const reportList = useMemo(() => {
+    const remoteRows = reportListData?.data.rows || [];
+    const mockRows = getMockReportList();
+    const merged = [...mockRows];
+    remoteRows.forEach(item => {
+      if (!merged.some(mock => mock.id === item.id)) {
+        merged.push(item);
+      }
+    });
+    return merged;
+  }, [reportListData]);
 
   // const fileAppendixLength = useMemo(
   //   () => appendix.filter(item => item.type === 'file').length,
@@ -104,34 +121,44 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
 
   const createReport = async () => {
     setCreateLoading(true);
+    const payload: MockCreateReportPayload = {
+      orgId: Number(orgId[orgId.length - 1]),
+      orgName,
+      userContent,
+      period: year.toString(),
+      indicatorType,
+      standardIds: standards.join(','),
+      referFiles: appendix
+        .filter(item => item.type === 'file')
+        .map(item => ({
+          name: item.value.showName,
+          url: item.value.fileUrl || '',
+        })),
+      referLink: appendix
+        .filter(item => item.type === 'link')
+        .map(item => item.value.showName),
+      referText: appendix
+        .filter(item => item.type === 'text')
+        .map(item => item.value.showName),
+      indicatorFiles:
+        indicatorType === 0
+          ? undefined
+          : {
+              name: indicator[0].label,
+              url: String(indicator[0].value),
+            },
+      frameId: indicatorType === 0 ? indicator[0]?.value : undefined,
+    };
     try {
-      const result = await postCreateReport({
-        orgId: Number(orgId[orgId.length - 1]),
-        orgName,
-        userContent,
-        period: year.toString(),
-        indicatorType,
-        standardIds: standards.join(','),
-        referFiles: appendix
-          .filter(item => item.type === 'file')
-          .map(item => ({
-            name: item.value.showName,
-            url: item.value.fileUrl || '',
-          })),
-        referLink: appendix
-          .filter(item => item.type === 'link')
-          .map(item => item.value.showName),
-        referText: appendix
-          .filter(item => item.type === 'text')
-          .map(item => item.value.showName),
-        indicatorFiles:
-          indicatorType === 0
-            ? undefined
-            : {
-                name: indicator[0].label,
-                url: indicator[0].value,
-              },
-        frameId: indicatorType === 0 ? indicator[0]?.value : undefined,
+      if (isEsgMockModeEnabled()) {
+        const mockId = createMockReport(payload);
+        history.push(
+          `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${mockId}`,
+        );
+        return;
+      }
+      const result = await postCreateReport(payload, {
+        silentResponseError: true,
       });
 
       if (result?.data?.data) {
@@ -139,8 +166,19 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
           `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${result.data.data}`,
         );
       }
-    } catch {
-      // 错误提示已由请求拦截器统一处理，保持当前页面状态避免异常退出
+    } catch (error) {
+      if (isPermissionOrUnavailableError(error)) {
+        const mockId = createMockReport(payload);
+        Toast('info', I18N.esg.mockFallbackNotice);
+        history.push(
+          `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${mockId}`,
+        );
+      } else {
+        const errMsg =
+          (error as { data?: { msg?: string } })?.data?.msg ||
+          I18N.utils.notHavePermission;
+        Toast('warn', errMsg);
+      }
     } finally {
       setCreateLoading(false);
     }

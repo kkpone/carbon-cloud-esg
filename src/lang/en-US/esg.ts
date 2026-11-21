@@ -323,4 +323,10 @@ export default {
   saveOutlineFailed: 'Failed to save outline, please retry',
   hasReportValue: 'With Value',
   allIndicatorsFilter: 'All Indicators',
+  mockModeLabel: 'Demo Simulation Mode',
+  mockModeTooltip:
+    'Simulate outline generation, report drafting, and file export locally when backend write permission is unavailable',
+  mockFallbackNotice:
+    'Backend write permission unavailable; switched to local simulation mode',
+  mockExportSuccess: 'Report exported via local simulation',
 };

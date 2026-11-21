@@ -8,6 +8,11 @@ import { RouteMaps } from '@/router/route-paths';
 import bgPng from './bg.png';
 import classNames from 'classnames';
 import { checkPermissions } from '@/components/Permission/utils';
+import {
+  deleteMockReport,
+  isMockReportId,
+  isPermissionOrUnavailableError,
+} from '../../mockReportService';
 import { resolveEsgRoute } from '../../routeUtils';
 
 function formatDateString(isoString: string) {
@@ -51,9 +56,20 @@ export const ReportCard: FC<IReportCardProps> = props => {
             val1: reportName,
           }),
           onOk: async () => {
-            await delReport({
-              id,
-            });
+            if (isMockReportId(id)) {
+              deleteMockReport(id);
+              run();
+              return;
+            }
+            try {
+              await delReport({ id }, { silentResponseError: true });
+            } catch (error) {
+              if (isPermissionOrUnavailableError(error)) {
+                deleteMockReport(id);
+              } else {
+                throw error;
+              }
+            }
             run();
           },
         });

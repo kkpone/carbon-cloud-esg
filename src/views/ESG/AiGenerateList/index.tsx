@@ -1,5 +1,5 @@
 import I18N from '@src/lang/I18N';
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import styles from './index.module.less';
 import { IconAlibaba } from '@/components/iconfont';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { RouteMaps } from '@/router/route-paths';
 import { useRequest } from 'ahooks';
 import { getReportList } from '../AiGenerateHome/service';
 import { ReportCard } from '../components/ReportCard';
+import { getMockReportList } from '../mockReportService';
 import { resolveEsgRoute } from '../routeUtils';
 import { Input, Select, Spin } from 'antd';
 
@@ -34,7 +35,23 @@ export const AiGenerateList: FC<IAiGenerateListProps> = () => {
     },
   );
 
-  const reportList = reportListData?.data.rows || [];
+  const reportList = useMemo(() => {
+    const remoteRows = reportListData?.data.rows || [];
+    const mockRows = getMockReportList().filter(item => {
+      const matchesName =
+        !searchName ||
+        item.reportName.toLowerCase().includes(searchName.toLowerCase());
+      const matchesState = status === 4 || item.state === status;
+      return matchesName && matchesState;
+    });
+    const merged = [...mockRows];
+    remoteRows.forEach(item => {
+      if (!merged.some(mock => mock.id === item.id)) {
+        merged.push(item);
+      }
+    });
+    return merged;
+  }, [reportListData, searchName, status]);
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>

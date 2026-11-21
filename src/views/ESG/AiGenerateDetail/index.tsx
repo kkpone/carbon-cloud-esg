@@ -29,6 +29,15 @@ import {
 } from '../AiGenerateOutline/promptUtils';
 import { ReportDetailsType, getReportInfo } from '../AiGenerateOutline/service';
 import { RatingModal } from '../MsciRatingList/components/RatingModal';
+import {
+  exportMarkdownAsDocFile,
+  getMockReportInfo,
+  isEsgMockModeEnabled,
+  isMockReportId,
+  isPermissionOrUnavailableError,
+  saveMockReportContent,
+  streamMockReport,
+} from '../mockReportService';
 import { resolveEsgRoute } from '../routeUtils';
 
 const { useToken } = theme;
@@ -45,6 +54,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
 
   const [reportName, setReportName] = useState('');
   const [reportContent, setReportContent] = useState('');
+  const [reportInfo, setReportInfo] = useState<ReportDetailsType>();
   const [syncToHocuspocus, setSyncToHocuspocus] = useState(false);
 
   const [socket, setSocket] = useState<HocuspocusProviderWebsocket | null>(
@@ -60,18 +70,39 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
   const downloadReport = async () => {
     setDownloading(true);
     try {
-      await editorRef.current?.submitReport?.().catch(() => {
-        // 保存接口受限或失败时仍允许导出已生成报告
-      });
-      const result = await postDownloadReport({ id: Number(id) });
+      await editorRef.current?.submitReport?.().catch(() => {});
+      const numericId = Number(id);
+      if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
+        const blob = exportMarkdownAsDocFile(
+          reportName || 'ESGReport',
+          reportContent || reportInfo?.reportContent || '',
+        );
+        saveAs(blob, `${reportName || 'ESGReport'}.docx`);
+        Toast('success', I18N.esg.mockExportSuccess);
+        return;
+      }
+      const result = await postDownloadReport(
+        { id: numericId },
+        { silentResponseError: true },
+      );
       const { reportUrl } = result.data.data;
-      // 通过 fetch 获取文件内容为 Blob
       const response = await fetch(reportUrl);
       const blob = await response.blob();
-      // 使用 Blob 保存文件，确保文件名生效
-      saveAs(blob, `${reportName}.docx`);
-    } catch {
-      // 错误提示已由请求拦截器统一处理
+      saveAs(blob, `${reportName || 'ESGReport'}.docx`);
+    } catch (error) {
+      if (isPermissionOrUnavailableError(error)) {
+        const blob = exportMarkdownAsDocFile(
+          reportName || 'ESGReport',
+          reportContent || reportInfo?.reportContent || '',
+        );
+        saveAs(blob, `${reportName || 'ESGReport'}.docx`);
+        Toast('success', I18N.esg.mockExportSuccess);
+      } else {
+        const errMsg =
+          (error as { data?: { msg?: string } })?.data?.msg ||
+          I18N.utils.notHavePermission;
+        Toast('warn', errMsg);
+      }
     } finally {
       setDownloading(false);
     }
@@ -119,7 +150,24 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
     setSyncToHocuspocus(true);
     cancelRequest.current = new AbortController();
     canScroll.current = true;
+    const onStreamMessage = (e: string) => {
+      setReportContent(pre => pre + e);
+      if (canScroll.current) {
+        run();
+      }
+    };
     try {
+      if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
+        await streamMockReport({
+          reportId: numericId,
+          reportInfo: info,
+          sections: effectiveSections,
+          promptConfig: effectivePromptConfig,
+          onMessage: onStreamMessage,
+          abortCtrl: cancelRequest.current,
+        });
+        return;
+      }
       await streamFetch({
         url: `${process.env.REACT_APP_API_URL}/esg/frameReport/aiEsgGenerate`,
         data: {
@@ -127,21 +175,27 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
           promptConfig: effectivePromptConfig,
           outlineSections: effectiveSections,
         },
-        onMessage: e => {
-          setReportContent(pre => `${pre}${e}`);
-
-          if (canScroll.current) {
-            run();
-          }
-        },
+        onMessage: onStreamMessage,
         abortCtrl: cancelRequest.current,
       });
     } catch (err: any) {
-      const errMsg =
-        err?.message?.msg ||
-        (typeof err?.message === 'string' ? err.message : '') ||
-        I18N.utils.notHavePermission;
-      Toast('warn', errMsg);
+      if (isPermissionOrUnavailableError(err)) {
+        Toast('info', I18N.esg.mockFallbackNotice);
+        await streamMockReport({
+          reportId: numericId,
+          reportInfo: info,
+          sections: effectiveSections,
+          promptConfig: effectivePromptConfig,
+          onMessage: onStreamMessage,
+          abortCtrl: cancelRequest.current,
+        });
+      } else {
+        const errMsg =
+          err?.message?.msg ||
+          (typeof err?.message === 'string' ? err.message : '') ||
+          I18N.utils.notHavePermission;
+        Toast('warn', errMsg);
+      }
     } finally {
       setSyncToHocuspocus(false);
     }
@@ -153,10 +207,19 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
 
   useMount(async () => {
     if (id) {
-      const result = await getReportInfo({
-        id: Number(id),
-      });
-      const info = result.data.data;
+      const numericId = Number(id);
+      const mockInfo = getMockReportInfo(numericId);
+      let info: ReportDetailsType | undefined = mockInfo || undefined;
+      if (!info) {
+        const result = await getReportInfo({
+          id: numericId,
+        });
+        info = result.data.data;
+      }
+      if (!info) {
+        return;
+      }
+      setReportInfo(info);
       setReportName(info.reportName);
       if (!info.reportContent) {
         generateReport(info);
@@ -205,10 +268,31 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
 
   const editReport = async (reportStr: string) => {
     if (!id) return;
-    await postEditReport({
-      id: Number(id),
-      reportContent: reportStr,
-    });
+    const numericId = Number(id);
+    setReportContent(reportStr);
+    if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
+      saveMockReportContent({
+        id: numericId,
+        reportContent: reportStr,
+        fallbackInfo: reportInfo,
+      });
+      return;
+    }
+    try {
+      await postEditReport(
+        {
+          id: numericId,
+          reportContent: reportStr,
+        },
+        { silentResponseError: true },
+      );
+    } catch {
+      saveMockReportContent({
+        id: numericId,
+        reportContent: reportStr,
+        fallbackInfo: reportInfo,
+      });
+    }
   };
 
   return (

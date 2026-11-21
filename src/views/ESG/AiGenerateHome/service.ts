@@ -21,6 +21,7 @@ type OrgReportData = {
     name: string; // 附件名称
     url: string; // 附件地址
   };
+  frameId?: number | string;
   standardIds: string; // 参考标准ids
   referFiles: ReferFile[];
   referLink: string[];
@@ -29,11 +30,15 @@ type OrgReportData = {
   userContent?: string;
 };
 
-export const postCreateReport = (data: OrgReportData) =>
+export const postCreateReport = (
+  data: OrgReportData,
+  options?: { silentResponseError?: boolean },
+) =>
   request<{ data: number }>({
     url: '/esg/frameReport/add',
     data,
     method: 'POST',
+    ...options,
   });
 
 // ESGReport.ts
@@ -83,10 +88,14 @@ export const getReportList = (params: {
     method: 'GET',
   });
 
-export const delReport = (params: { id: number }) =>
+export const delReport = (
+  params: { id: number },
+  options?: { silentResponseError?: boolean },
+) =>
   request<{ rows: ReportData[] }>({
     url: `/esg/frameReport/${params.id}`,
     method: 'DELETE',
+    ...options,
   });
 
 export const exportTempData = () =>

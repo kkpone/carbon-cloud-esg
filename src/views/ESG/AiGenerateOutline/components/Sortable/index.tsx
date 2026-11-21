@@ -26,13 +26,18 @@ import classNames from 'classnames';
 import { isNil } from 'lodash-es';
 import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Toast, uuid } from '@/utils';
+import { uuid } from '@/utils';
 
 import { convertTreeToMarkdown } from './convertTreeToMarkdown';
 import handleSvg from './image/handle.svg';
 import styles from './index.module.less';
 import { parseMarkdownToTree } from './parseMarkdownToTree';
 import { saveStoredOutlineSections } from '../../promptUtils';
+import {
+  isEsgMockModeEnabled,
+  isMockReportId,
+  saveMockOutline,
+} from '../../../mockReportService';
 import {
   OutlineSectionNode,
   ReportDetailsType,
@@ -501,27 +506,47 @@ const NestedTree: FC<{
       return;
     }
     saveStoredOutlineSections(id, nextTree);
+    const nextOutlineMd = convertTreeToMarkdown([
+      {
+        id: 'root',
+        title: nextReportName || reportInfo?.reportName || '',
+        attachments: [],
+        indicators: [],
+        children: nextTree,
+      },
+    ]);
     if (saveTimerRef.current) {
       clearTimeout(saveTimerRef.current);
     }
     saveTimerRef.current = setTimeout(async () => {
-      try {
-        await postEditOutline({
+      if (isEsgMockModeEnabled() || isMockReportId(id)) {
+        saveMockOutline({
           id,
-          outline: convertTreeToMarkdown([
-            {
-              id: 'root',
-              title: nextReportName || reportInfo?.reportName || '',
-              attachments: [],
-              indicators: [],
-              children: nextTree,
-            },
-          ]),
+          outline: nextOutlineMd,
           outlineSections: nextTree,
           promptConfig,
+          fallbackInfo: reportInfo,
         });
+        return;
+      }
+      try {
+        await postEditOutline(
+          {
+            id,
+            outline: nextOutlineMd,
+            outlineSections: nextTree,
+            promptConfig,
+          },
+          { silentResponseError: true },
+        );
       } catch {
-        Toast('error', I18N.esg.saveOutlineFailed);
+        saveMockOutline({
+          id,
+          outline: nextOutlineMd,
+          outlineSections: nextTree,
+          promptConfig,
+          fallbackInfo: reportInfo,
+        });
       }
     }, 400);
   };
@@ -648,13 +673,18 @@ const NestedTree: FC<{
       .filter(att => att.type === 'file' && att.url)
       .map(att => ({ name: att.name, url: att.url! }));
     if (fileRefs.length > 0) {
-      postEsgAnalyzeFilesExtractImages({
-        reportId: id,
-        sectionId,
-        referFiles: fileRefs,
-      }).catch(() => {
-        // keep UI responsive even if background image extraction fails
-      });
+      if (!isEsgMockModeEnabled() && !isMockReportId(id)) {
+        postEsgAnalyzeFilesExtractImages(
+          {
+            reportId: id,
+            sectionId,
+            referFiles: fileRefs,
+          },
+          { silentResponseError: true },
+        ).catch(() => {
+          // keep UI responsive even if background image extraction fails
+        });
+      }
     }
   };
 

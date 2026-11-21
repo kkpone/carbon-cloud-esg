@@ -303,4 +303,8 @@ export default {
   saveOutlineFailed: '大纲保存失败，请重试',
   hasReportValue: '有填报值',
   allIndicatorsFilter: '全部指标',
+  mockModeLabel: '演示模拟模式',
+  mockModeTooltip: '开启后在后端无权限或离线时本地模拟生成大纲、报告正文与导出流程',
+  mockFallbackNotice: '当前账号无后端写入权限，已自动切换至本地模拟流程',
+  mockExportSuccess: '已通过本地模拟导出报告文件',
 };

@@ -13,6 +13,14 @@ import { RouteMaps } from '@/router/route-paths';
 import { Toast } from '@/utils';
 
 import { resolveEsgRoute } from '../routeUtils';
+import {
+  getMockReportInfo,
+  isEsgMockModeEnabled,
+  isMockReportId,
+  isPermissionOrUnavailableError,
+  saveMockOutline,
+  streamMockOutline,
+} from '../mockReportService';
 
 import { PromptConfigModal } from './components/PromptConfigModal';
 import NestedSortableList from './components/Sortable';
@@ -77,34 +85,55 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
     setLoading(true);
     canScroll.current = true;
     abortCtrl.current = new AbortController();
+    const numericId = Number(id);
+    const onStreamMessage = (e: string) => {
+      setOutline(pre => pre + e);
+      if (canScroll.current) {
+        if (scrollTimerRef.current) {
+          clearTimeout(scrollTimerRef.current);
+        }
+        scrollTimerRef.current = setTimeout(() => {
+          bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 32 * 4);
+      }
+    };
     try {
+      if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
+        await streamMockOutline({
+          reportId: numericId,
+          onMessage: onStreamMessage,
+          abortCtrl: abortCtrl.current,
+        });
+        return;
+      }
       await streamFetch({
         url: `${process.env.REACT_APP_API_URL}/esg/frameReport/aiEsgOutlineCreate`,
         data: {
-          reportId: Number(id),
+          reportId: numericId,
         },
-        onMessage: e => {
-          setOutline(pre => `${pre}${e}`);
-          if (canScroll.current) {
-            if (scrollTimerRef.current) {
-              clearTimeout(scrollTimerRef.current);
-            }
-            scrollTimerRef.current = setTimeout(() => {
-              bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-            }, 32 * 4);
-          }
-        },
+        onMessage: onStreamMessage,
         abortCtrl: abortCtrl.current,
       });
     } catch (err: any) {
-      const errMsg =
-        err?.message?.msg ||
-        (typeof err?.message === 'string' ? err.message : '') ||
-        I18N.utils.notHavePermission;
-      Toast('warn', errMsg);
+      if (isPermissionOrUnavailableError(err)) {
+        Toast('info', I18N.esg.mockFallbackNotice);
+        await streamMockOutline({
+          reportId: numericId,
+          onMessage: onStreamMessage,
+          abortCtrl: abortCtrl.current,
+        });
+      } else {
+        const errMsg =
+          err?.message?.msg ||
+          (typeof err?.message === 'string' ? err.message : '') ||
+          I18N.utils.notHavePermission;
+        Toast('warn', errMsg);
+      }
     } finally {
       setLoading(false);
-      fileStatusRun();
+      if (!isEsgMockModeEnabled() && !isMockReportId(numericId)) {
+        fileStatusRun();
+      }
     }
   };
 
@@ -124,10 +153,17 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
   useMount(async () => {
     if (id) {
       const numericId = Number(id);
-      const result = await getReportInfo({
-        id: numericId,
-      });
-      const info = result.data.data;
+      const mockInfo = getMockReportInfo(numericId);
+      let info: ReportDetailsType | undefined = mockInfo || undefined;
+      if (!info) {
+        const result = await getReportInfo({
+          id: numericId,
+        });
+        info = result.data.data;
+      }
+      if (!info) {
+        return;
+      }
       setReportInfo(info);
       setReportName(info.reportName);
       const storedPrompt = getStoredPromptConfig(numericId);
@@ -147,9 +183,12 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
       }
       if (!info.outline || info.outline.length === 0) {
         createOutline();
-        postEsgAnalyzeFilesExtractImages({
-          reportId: numericId,
-        });
+        if (!isEsgMockModeEnabled() && !isMockReportId(numericId)) {
+          postEsgAnalyzeFilesExtractImages(
+            { reportId: numericId },
+            { silentResponseError: true },
+          ).catch(() => {});
+        }
       } else {
         setOutline(info.outline);
       }
@@ -169,24 +208,44 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
     }
     const numericId = Number(id);
     saveStoredPromptConfig(numericId, nextConfig);
-    try {
-      await postEditOutline({
+    const nextOutlineMd =
+      convertTreeToMarkdown([
+        {
+          id: 'root',
+          title: reportName || reportInfo?.reportName || '',
+          attachments: [],
+          indicators: [],
+          children: sections,
+        },
+      ]) || outline;
+    if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
+      saveMockOutline({
         id: numericId,
-        outline:
-          convertTreeToMarkdown([
-            {
-              id: 'root',
-              title: reportName || reportInfo?.reportName || '',
-              attachments: [],
-              indicators: [],
-              children: sections,
-            },
-          ]) || outline,
+        outline: nextOutlineMd,
         outlineSections: sections,
         promptConfig: nextConfig,
+        fallbackInfo: reportInfo,
       });
+      return;
+    }
+    try {
+      await postEditOutline(
+        {
+          id: numericId,
+          outline: nextOutlineMd,
+          outlineSections: sections,
+          promptConfig: nextConfig,
+        },
+        { silentResponseError: true },
+      );
     } catch {
-      // 本地 sessionStorage 已保存配置，避免接口权限受限时阻塞交互
+      saveMockOutline({
+        id: numericId,
+        outline: nextOutlineMd,
+        outlineSections: sections,
+        promptConfig: nextConfig,
+        fallbackInfo: reportInfo,
+      });
     }
   };
 
@@ -194,23 +253,43 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
     if (id) {
       const numericId = Number(id);
       saveStoredPromptConfig(numericId, promptConfig);
-      await postEditOutline({
-        id: numericId,
-        outline:
-          convertTreeToMarkdown([
-            {
-              id: 'root',
-              title: reportName || reportInfo?.reportName || '',
-              attachments: [],
-              indicators: [],
-              children: sections,
-            },
-          ]) || outline,
-        outlineSections: sections,
-        promptConfig,
-      }).catch(() => {
-        // continue navigation even if optional backend fields are ignored
-      });
+      const nextOutlineMd =
+        convertTreeToMarkdown([
+          {
+            id: 'root',
+            title: reportName || reportInfo?.reportName || '',
+            attachments: [],
+            indicators: [],
+            children: sections,
+          },
+        ]) || outline;
+      if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
+        saveMockOutline({
+          id: numericId,
+          outline: nextOutlineMd,
+          outlineSections: sections,
+          promptConfig,
+          fallbackInfo: reportInfo,
+        });
+      } else {
+        await postEditOutline(
+          {
+            id: numericId,
+            outline: nextOutlineMd,
+            outlineSections: sections,
+            promptConfig,
+          },
+          { silentResponseError: true },
+        ).catch(() => {
+          saveMockOutline({
+            id: numericId,
+            outline: nextOutlineMd,
+            outlineSections: sections,
+            promptConfig,
+            fallbackInfo: reportInfo,
+          });
+        });
+      }
     }
     history.replace(
       `${resolveEsgRoute(RouteMaps.ESGAiGenerateDetail, location.pathname)}?id=${id}`,
