@@ -3,10 +3,9 @@ import { Button, Empty, Pagination, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import classNames from 'classnames';
 
-import { FollowButton } from '../../../../components';
 import { displayUnit } from '../../../../data';
 import { CompanyAvatar, stockCodes } from '../../../../FollowCompany';
-import type { IndustryTopItem } from '../../../../types';
+import type { Company, IndustryTopItem } from '../../../../types';
 import { formatEmissionValue } from '../../utils';
 import style from './index.module.less';
 
@@ -14,10 +13,13 @@ type IndustryTopTableProps = {
   items: IndustryTopItem[];
   page: number;
   pageSize: number;
-  isPreview?: boolean;
   openingId?: string;
+  followingId?: string;
+  isFollowed: (company: Company) => boolean;
+  isFollowPending: (company: Company) => boolean;
   onPageChange: (nextPage: number) => void;
   onOpenCompany: (item: IndustryTopItem) => void;
+  onToggleFollow: (item: IndustryTopItem) => void;
 };
 
 const scope2BasisLabel = (basis?: 'market' | 'location' | 'unknown' | null) => {
@@ -32,10 +34,13 @@ const IndustryTopTable = ({
   items,
   page,
   pageSize,
-  isPreview = false,
   openingId = '',
+  followingId = '',
+  isFollowed,
+  isFollowPending,
   onPageChange,
   onOpenCompany,
+  onToggleFollow,
 }: IndustryTopTableProps) => {
   const t = I18N.enterpriseData;
   const pagedItems = items.slice((page - 1) * pageSize, page * pageSize);
@@ -202,25 +207,34 @@ const IndustryTopTable = ({
       key: 'actions',
       width: 150,
       fixed: 'right',
-      render: (_, item) => (
-        <div className={style.actions}>
-          <Button
-            type='link'
-            loading={openingId === item.company.companyId}
-            disabled={
-              Boolean(openingId) && openingId !== item.company.companyId
-            }
-            onClick={() => onOpenCompany(item)}
-          >
-            {t.viewShort}
-          </Button>
-          <FollowButton
-            companyId={item.company.companyId}
-            disabled={isPreview}
-            appearance='link'
-          />
-        </div>
-      ),
+      render: (_, item) => {
+        const followed = isFollowed(item.company);
+        const followBusy = isFollowPending(item.company);
+        return (
+          <div className={style.actions}>
+            <Button
+              type='link'
+              loading={openingId === item.company.companyId}
+              disabled={
+                Boolean(openingId) && openingId !== item.company.companyId
+              }
+              onClick={() => onOpenCompany(item)}
+            >
+              {t.viewShort}
+            </Button>
+            <Button
+              type='link'
+              loading={followBusy}
+              disabled={
+                Boolean(followingId) && followingId !== item.company.companyId
+              }
+              onClick={() => onToggleFollow(item)}
+            >
+              {followed ? t.unfollow : t.follow}
+            </Button>
+          </div>
+        );
+      },
     },
   ];
 

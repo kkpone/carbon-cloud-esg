@@ -2,9 +2,8 @@ import I18N from '@src/lang/I18N';
 import { Button, Empty, Pagination, Tag } from 'antd';
 import classNames from 'classnames';
 
-import { FollowButton } from '../../../../components';
 import { stockCodes } from '../../../../FollowCompany';
-import type { IndustryTopItem } from '../../../../types';
+import type { Company, IndustryTopItem } from '../../../../types';
 import { formatEmissionValue } from '../../utils';
 import style from './index.module.less';
 
@@ -12,20 +11,26 @@ type IndustryTopMobileListProps = {
   items: IndustryTopItem[];
   page: number;
   pageSize: number;
-  isPreview?: boolean;
   openingId?: string;
+  followingId?: string;
+  isFollowed: (company: Company) => boolean;
+  isFollowPending: (company: Company) => boolean;
   onPageChange: (nextPage: number) => void;
   onOpenCompany: (item: IndustryTopItem) => void;
+  onToggleFollow: (item: IndustryTopItem) => void;
 };
 
 const IndustryTopMobileList = ({
   items,
   page,
   pageSize,
-  isPreview = false,
   openingId = '',
+  followingId = '',
+  isFollowed,
+  isFollowPending,
   onPageChange,
   onOpenCompany,
+  onToggleFollow,
 }: IndustryTopMobileListProps) => {
   const t = I18N.enterpriseData;
   const pagedItems = items.slice((page - 1) * pageSize, page * pageSize);
@@ -104,11 +109,17 @@ const IndustryTopMobileList = ({
                 >
                   {t.viewShort}
                 </Button>
-                <FollowButton
-                  companyId={item.company.companyId}
-                  disabled={isPreview}
-                  appearance='link'
-                />
+                <Button
+                  type='link'
+                  loading={isFollowPending(item.company)}
+                  disabled={
+                    Boolean(followingId) &&
+                    followingId !== item.company.companyId
+                  }
+                  onClick={() => onToggleFollow(item)}
+                >
+                  {isFollowed(item.company) ? t.unfollow : t.follow}
+                </Button>
               </div>
             </article>
           );
