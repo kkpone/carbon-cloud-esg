@@ -132,6 +132,7 @@ export default {
   industryTopMenu: '行业碳榜',
   followedSectionTitle: '已关注的企业',
   viewMoreFollowed: '查看更多',
+  backToEnterpriseHome: '返回企业碳数据',
   followLimitExceeded: '已达关注上限（最多 {limit} 家），请取消部分关注后重试',
   followCompanyNotFound: '暂未在企业库中匹配到该企业，无法关注',
   industryTopTitle: '行业 Top100 企业碳数据',

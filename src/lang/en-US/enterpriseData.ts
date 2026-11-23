@@ -139,6 +139,7 @@ export default {
   industryTopMenu: 'Industry Top 100',
   followedSectionTitle: 'Followed enterprises',
   viewMoreFollowed: 'View more',
+  backToEnterpriseHome: 'Back to enterprise carbon data',
   followLimitExceeded:
     'Follow limit reached (up to {limit} enterprises). Unfollow one before adding another.',
   followCompanyNotFound:

@@ -1,3 +1,4 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
 import { useQuery } from '@tanstack/react-query';
 import { Alert, Button, Input, Modal, Pagination, Table, Tooltip } from 'antd';
@@ -235,17 +236,20 @@ export const FollowPage = ({
   return (
     <div className={followStyle.page}>
       <header className={followStyle.header}>
-        {onBack ? (
-          <nav aria-label={t.breadcrumb} className={followStyle.breadcrumb}>
-            <Button type='text' onClick={onBack}>
-              {t.industryTopBackToRanking}
+        <div className={followStyle.headerLeft}>
+          {onBack ? (
+            <Button
+              type='default'
+              className={followStyle.backButton}
+              icon={<ArrowLeftOutlined />}
+              aria-label={t.backToEnterpriseHome}
+              onClick={onBack}
+            >
+              {t.backToEnterpriseHome}
             </Button>
-            <span aria-hidden='true'>/</span>
-            <h1>{t.title}</h1>
-          </nav>
-        ) : (
+          ) : null}
           <h1>{t.title}</h1>
-        )}
+        </div>
         <div className={followStyle.headerActions}>
           <Button icon={<Icon src={addIcon} />} onClick={() => setAdding(true)}>
             {t.add}
