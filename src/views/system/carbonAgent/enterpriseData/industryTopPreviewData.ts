@@ -1,12 +1,13 @@
 import type {
   CarbonData,
   IndustryCode,
+  IndustryFilterValue,
   IndustryOverview,
   IndustryTopItem,
   IndustryTopListResponse,
   Metric,
 } from './types';
-import { TOP_INDUSTRIES } from './industries';
+import { ALL_INDUSTRIES_VALUE, TOP_INDUSTRIES } from './industries';
 
 type SeedCompany = {
   id: string;
@@ -1000,11 +1001,22 @@ export const buildIndustryTopPreviewOverviews = (): IndustryOverview[] =>
   });
 
 export const buildIndustryTopPreviewList = (
-  industryCode: IndustryCode,
+  industryCode: IndustryFilterValue = ALL_INDUSTRIES_VALUE,
   year = PREVIEW_YEARS[0],
 ): IndustryTopListResponse => {
   const activeYear = PREVIEW_YEARS.includes(year) ? year : PREVIEW_YEARS[0];
-  const records = buildPreviewItems(industryCode, activeYear);
+  const records =
+    industryCode === ALL_INDUSTRIES_VALUE
+      ? TOP_INDUSTRIES.flatMap(({ code }) =>
+          buildPreviewItems(code, activeYear),
+        )
+          .sort(
+            (a, b) =>
+              Number(b.revenueBillionCny || 0) -
+              Number(a.revenueBillionCny || 0),
+          )
+          .map((item, index) => ({ ...item, rank: index + 1 }))
+      : buildPreviewItems(industryCode, activeYear);
   const disclosedCount = records.filter(item => item.summary.disclosed).length;
   return {
     industryCode,
@@ -1013,7 +1025,10 @@ export const buildIndustryTopPreviewList = (
     updatedAt: PREVIEW_UPDATED_AT,
     total: records.length,
     disclosedCount,
-    medianEmissions: INDUSTRY_SEEDS[industryCode].medianEmissions,
+    medianEmissions:
+      industryCode === ALL_INDUSTRIES_VALUE
+        ? null
+        : INDUSTRY_SEEDS[industryCode].medianEmissions,
     medianUnit: 'tCO2e',
     records,
     isPreview: true,

@@ -16,6 +16,8 @@ export type IndustryCode =
   | 'building_materials'
   | 'nonferrous_metals';
 
+export type IndustryFilterValue = 'all' | IndustryCode;
+
 export type IndustryTopRankBy =
   | 'revenue'
   | 'marketCap'
@@ -59,7 +61,7 @@ export type IndustryTopItem = {
 };
 
 export type IndustryTopListResponse = {
-  industryCode: IndustryCode;
+  industryCode: IndustryFilterValue;
   year: string;
   availableYears: string[];
   updatedAt?: string | null;

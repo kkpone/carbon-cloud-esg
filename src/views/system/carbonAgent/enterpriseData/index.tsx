@@ -67,7 +67,7 @@ const EnterpriseDataPage = () => {
           onOpenCompany={(targetId, targetIndustry, targetYear) =>
             navigate('enterpriseDetail', {
               companyId: targetId,
-              industry: targetIndustry,
+              industry: targetIndustry === 'all' ? undefined : targetIndustry,
               year: targetYear,
               from: 'industryTop',
             })

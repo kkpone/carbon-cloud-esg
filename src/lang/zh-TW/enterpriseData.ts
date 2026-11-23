@@ -136,6 +136,8 @@ export default {
   followLimitExceeded: '已達關注上限（最多 {limit} 家），請取消部分關注後重試',
   followCompanyNotFound: '暫未在企業庫中匹配到該企業，無法關注',
   industryTopTitle: '行業 Top100 企業碳數據',
+  industryTopIndustryFilterLabel: '行業篩選',
+  industryTopIndustryAll: '全部行業',
   industryTopSubtitle:
     '展示 10 大行業已公開披露碳數據的前 100 家企業（覆蓋國內 A 股、港股、中概股及非上市企業）',
   industryTopUpdatedAt: '快照更新時間：{time}',

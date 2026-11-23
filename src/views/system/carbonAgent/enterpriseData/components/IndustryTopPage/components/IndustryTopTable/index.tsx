@@ -70,6 +70,7 @@ const IndustryTopTable = ({
         const code = stockCodes(item.company);
         const subtitle = [
           code !== '—' ? code : '',
+          item.company.industryCategory || '',
           item.company.registeredRegion || '',
         ]
           .filter(Boolean)

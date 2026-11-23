@@ -26,7 +26,7 @@ import type {
   EnterpriseReport,
   EnterpriseResult,
   Entitlement,
-  IndustryCode,
+  IndustryFilterValue,
   IndustryOverview,
   IndustryTopListResponse,
   IndustryTopRankBy,
@@ -447,7 +447,7 @@ export const fetchIndustryTopOverviews = async (
 
 export const fetchIndustryTopList = async (
   params: {
-    industryCode: IndustryCode;
+    industryCode?: IndustryFilterValue;
     year?: string;
     rankBy?: IndustryTopRankBy;
     listingType?: ListingFilter;
@@ -455,18 +455,22 @@ export const fetchIndustryTopList = async (
   },
   signal?: AbortSignal,
 ): Promise<IndustryTopListResponse> => {
+  const industryCode = params.industryCode || 'all';
   try {
     return await call<IndustryTopListResponse>(
       '/industry-top/list',
       'POST',
       isIndustryTopListResponse,
-      params,
+      {
+        ...params,
+        ...(industryCode === 'all' ? {} : { industryCode }),
+      },
       signal,
     );
   } catch (error) {
     if (signal?.aborted) throw error;
     if (isEndpointUnavailable(error) || !record(error).response) {
-      return buildIndustryTopPreviewList(params.industryCode, params.year);
+      return buildIndustryTopPreviewList(industryCode, params.year);
     }
     throw error;
   }

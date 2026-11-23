@@ -50,7 +50,7 @@ export const TOP_INDUSTRIES: IndustryConfig[] = [
   },
 ];
 
-export const DEFAULT_INDUSTRY_CODE: IndustryCode = 'automotive';
+export const ALL_INDUSTRIES_VALUE = 'all' as const;
 
 export const isIndustryCode = (value?: string | null): value is IndustryCode =>
   TOP_INDUSTRIES.some(item => item.code === value);

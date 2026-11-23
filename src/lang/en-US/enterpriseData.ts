@@ -145,6 +145,8 @@ export default {
   followCompanyNotFound:
     'Enterprise not found in the database and cannot be followed yet',
   industryTopTitle: 'Industry Top 100 Carbon Data',
+  industryTopIndustryFilterLabel: 'Industry',
+  industryTopIndustryAll: 'All industries',
   industryTopSubtitle:
     'Top 100 enterprises with disclosed carbon data across 10 key industries (China A-share, HK-listed, US-listed Chinese and unlisted enterprises)',
   industryTopUpdatedAt: 'Snapshot updated: {time}',

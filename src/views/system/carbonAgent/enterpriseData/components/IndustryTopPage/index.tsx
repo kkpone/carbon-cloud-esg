@@ -6,22 +6,24 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import searchIcon from '../../assets/search.svg';
 import { ErrorState, Loading } from '../../components';
-import { DEFAULT_INDUSTRY_CODE, isIndustryCode } from '../../industries';
+import {
+  ALL_INDUSTRIES_VALUE,
+  isIndustryCode,
+  TOP_INDUSTRIES,
+} from '../../industries';
 import {
   fetchCandidates,
   fetchIndustryTopList,
-  fetchIndustryTopOverviews,
   isLocalDevMockFollowEnabled,
 } from '../../service';
 import { useEnterpriseData } from '../../state';
 import type {
   Company,
-  IndustryCode,
+  IndustryFilterValue,
   IndustryTopItem,
   IndustryTopRankBy,
   ListingFilter,
 } from '../../types';
-import IndustryTabs from './components/IndustryTabs';
 import IndustryTopMobileList from './components/IndustryTopMobileList';
 import IndustryTopTable from './components/IndustryTopTable';
 import FollowedPreviewSection from './components/FollowedPreviewSection';
@@ -33,10 +35,13 @@ type IndustryTopPageProps = {
   yearParam?: string;
   onOpenFollows: () => void;
   onCompare: () => void;
-  onParamsChange: (next: { industry: IndustryCode; year?: string }) => void;
+  onParamsChange: (next: {
+    industry?: IndustryFilterValue;
+    year?: string;
+  }) => void;
   onOpenCompany: (
     companyId: string,
-    industry: IndustryCode,
+    industry: IndustryFilterValue,
     year?: string,
   ) => void;
 };
@@ -54,9 +59,9 @@ const IndustryTopPage = ({
   const state = useEnterpriseData();
   const isMobile = useMobile();
   const t = I18N.enterpriseData;
-  const activeIndustry: IndustryCode = isIndustryCode(industryParam)
+  const activeIndustry: IndustryFilterValue = isIndustryCode(industryParam)
     ? industryParam
-    : DEFAULT_INDUSTRY_CODE;
+    : ALL_INDUSTRIES_VALUE;
 
   const [keyword, setKeyword] = useState('');
   const [rankBy, setRankBy] = useState<IndustryTopRankBy>('revenue');
@@ -65,14 +70,6 @@ const IndustryTopPage = ({
   const [openingId, setOpeningId] = useState('');
   const [followingId, setFollowingId] = useState('');
   const resolvedCompanyIdMapRef = useRef<Map<string, string>>(new Map());
-
-  const overviewsQuery = useQuery({
-    queryKey: ['enterpriseData', state.scope, 'industryTopOverviews'],
-    queryFn: ({ signal }) => fetchIndustryTopOverviews(signal),
-    enabled: state.enabled,
-    retry: false,
-    staleTime: 60000,
-  });
 
   const listQuery = useQuery({
     queryKey: [
@@ -120,12 +117,20 @@ const IndustryTopPage = ({
     return t.industryTopRankBasisRevenue;
   }, [rankBy, t]);
 
-  const handleIndustrySelect = (nextIndustry: IndustryCode) => {
-    onParamsChange({ industry: nextIndustry, year: yearParam });
+  const handleIndustrySelect = (nextIndustry: IndustryFilterValue) => {
+    onParamsChange({
+      industry:
+        nextIndustry === ALL_INDUSTRIES_VALUE ? undefined : nextIndustry,
+      year: yearParam,
+    });
   };
 
   const handleYearChange = (nextYear: string) => {
-    onParamsChange({ industry: activeIndustry, year: nextYear });
+    onParamsChange({
+      industry:
+        activeIndustry === ALL_INDUSTRIES_VALUE ? undefined : activeIndustry,
+      year: nextYear,
+    });
   };
 
   const findExactCompany = (records: Company[], target: Company) => {
@@ -270,7 +275,7 @@ const IndustryTopPage = ({
   return (
     <div className={style.page}>
       <header className={style.header}>
-        <h1>{t.industryTopTitle}</h1>
+        <h1>{t.enterpriseMenu}</h1>
         <div className={style.headerMeta}>
           <span>{rankBasisText}</span>
           {listQuery.data?.updatedAt ? (
@@ -290,11 +295,6 @@ const IndustryTopPage = ({
         <div className={style.subHeader}>
           <p>{t.industryTopSubtitle}</p>
         </div>
-        <IndustryTabs
-          activeIndustry={activeIndustry}
-          overviews={overviewsQuery.data?.items || []}
-          onSelect={handleIndustrySelect}
-        />
         {isPreview ? (
           <Alert
             className={style.banner}
@@ -313,6 +313,22 @@ const IndustryTopPage = ({
               aria-label={t.industryTopSearchPlaceholder}
               value={keyword}
               onChange={event => setKeyword(event.target.value)}
+            />
+            <Select<IndustryFilterValue>
+              className={style.industrySelect}
+              aria-label={t.industryTopIndustryFilterLabel}
+              value={activeIndustry}
+              options={[
+                {
+                  value: ALL_INDUSTRIES_VALUE,
+                  label: t.industryTopIndustryAll,
+                },
+                ...TOP_INDUSTRIES.map(industry => ({
+                  value: industry.code,
+                  label: industry.getLabel(),
+                })),
+              ]}
+              onChange={handleIndustrySelect}
             />
             {availableYears.length ? (
               <Select

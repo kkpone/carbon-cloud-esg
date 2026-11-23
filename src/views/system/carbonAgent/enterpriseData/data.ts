@@ -6,14 +6,14 @@ import type {
   EnterpriseConfirmation,
   EnterpriseFollow,
   EnterpriseReport,
-  IndustryCode,
+  IndustryFilterValue,
   IndustryOverview,
   IndustryTopItem,
   IndustryTopListResponse,
   Metric,
   MetricKey,
 } from './types';
-import { isIndustryCode } from './industries';
+import { ALL_INDUSTRIES_VALUE, isIndustryCode } from './industries';
 
 export const record = (value: unknown): Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -245,7 +245,7 @@ export const enterpriseSearch = (
   params: {
     companyId?: string;
     resultId?: string;
-    industry?: IndustryCode | string;
+    industry?: IndustryFilterValue | string;
     year?: string;
     from?: string;
   } = {},
@@ -323,7 +323,8 @@ export const isIndustryTopListResponse = (
   const item = record(value);
   return (
     typeof item.industryCode === 'string' &&
-    isIndustryCode(item.industryCode) &&
+    (item.industryCode === ALL_INDUSTRIES_VALUE ||
+      isIndustryCode(item.industryCode)) &&
     typeof item.year === 'string' &&
     stringArray(item.availableYears) &&
     Number.isInteger(item.total) &&
