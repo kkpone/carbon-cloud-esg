@@ -11,6 +11,7 @@ import {
   fetchCandidates,
   fetchIndustryTopList,
   fetchIndustryTopOverviews,
+  isLocalDevMockFollowEnabled,
 } from '../../service';
 import { useEnterpriseData } from '../../state';
 import type {
@@ -220,12 +221,23 @@ const IndustryTopPage = ({
     }
     setFollowingId(company.companyId);
     try {
-      const targetId = await resolveBackendCompanyId(company);
+      let targetId: string | null = null;
+      try {
+        targetId = await resolveBackendCompanyId(company);
+      } catch {
+        targetId = null;
+      }
+      if (!targetId && isLocalDevMockFollowEnabled()) {
+        targetId = company.companyId;
+      }
       if (!targetId) {
         message.warning(t.followCompanyNotFound);
         return;
       }
-      await state.mutateFollow(targetId, true);
+      await state.mutateFollow(targetId, true, {
+        ...company,
+        companyId: targetId,
+      });
     } catch {
       message.error(t.requestFailed);
     } finally {

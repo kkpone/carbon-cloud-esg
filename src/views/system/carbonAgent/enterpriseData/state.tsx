@@ -20,7 +20,11 @@ import {
   fetchFollows,
   setFollow,
 } from './service';
-import type { EnterpriseConfirmation, EnterpriseFollow } from './types';
+import type {
+  Company,
+  EnterpriseConfirmation,
+  EnterpriseFollow,
+} from './types';
 
 type ProviderProps = {
   children: ReactNode;
@@ -85,12 +89,16 @@ const useEnterpriseStore = (
     ]);
     return results.every(result => !result.isError);
   };
-  const mutateFollow = async (companyId: string, next: boolean) => {
+  const mutateFollow = async (
+    companyId: string,
+    next: boolean,
+    company?: Company,
+  ) => {
     if (!enabled || pendingRef.current.has(companyId)) return;
     pendingRef.current.add(companyId);
     setPending([...pendingRef.current]);
     try {
-      await setFollow(companyId, next);
+      await setFollow(companyId, next, company);
       if (!alive.current) return;
       if (!next) {
         client.setQueryData<EnterpriseFollow[]>([...key, 'follows'], current =>

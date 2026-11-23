@@ -13,6 +13,7 @@ import {
   buildIndustryTopPreviewList,
   buildIndustryTopPreviewOverviews,
   buildPreviewCarbonData,
+  findPreviewCompanyById,
   isPreviewCompanyId,
 } from './industryTopPreviewData';
 import type {
@@ -34,6 +35,62 @@ import type {
 
 const prefix = '/ai/agent/enterprise-data';
 const invalid = () => new Error(I18N.enterpriseData.invalidResponse);
+const isLocalDev = process.env.NODE_ENV === 'development';
+const DEV_MOCK_ENTITLEMENT: Entitlement = { followLimit: 5, compareLimit: 3 };
+const DEV_FOLLOWS_STORAGE_KEY = 'carbon-agent-dev-mock-follows';
+
+const readDevMockFollows = (): EnterpriseFollow[] => {
+  if (!isLocalDev || typeof window === 'undefined') return [];
+  try {
+    const raw = window.localStorage.getItem(DEV_FOLLOWS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (item): item is EnterpriseFollow =>
+        typeof record(item).enterpriseId === 'string' &&
+        typeof record(item).companyJson === 'string',
+    );
+  } catch {
+    return [];
+  }
+};
+
+const writeDevMockFollows = (items: EnterpriseFollow[]) => {
+  if (!isLocalDev || typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(DEV_FOLLOWS_STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    // 本地存储不可用时跳过持久化，不阻断页面交互。
+  }
+};
+
+const hydrateFollows = (follows: EnterpriseFollow[]): EnterpriseFollow[] =>
+  follows.map(follow => {
+    let company: Company | undefined;
+    try {
+      const parsed: unknown = JSON.parse(follow.companyJson);
+      if (isCompany(parsed)) {
+        company = { ...parsed, companyId: follow.enterpriseId };
+      }
+    } catch {
+      // 保留损坏的关注记录及取消入口，不能用空列表隐藏数据问题。
+    }
+    return { ...follow, company };
+  });
+
+const mergeDevMockFollows = (remote: EnterpriseFollow[]) => {
+  if (!isLocalDev) return remote;
+  const local = hydrateFollows(readDevMockFollows());
+  const map = new Map<string, EnterpriseFollow>();
+  remote.forEach(item => map.set(item.enterpriseId, item));
+  local.forEach(item => {
+    if (!map.has(item.enterpriseId)) map.set(item.enterpriseId, item);
+  });
+  return [...map.values()];
+};
+
+export const isLocalDevMockFollowEnabled = () => isLocalDev;
 
 export const unwrapEnterpriseResponse = <T>(
   body: unknown,
@@ -129,22 +186,35 @@ export const isEnterpriseResult = (value: unknown) => {
   );
 };
 
-export const fetchEntitlement = (signal?: AbortSignal) =>
-  call<Entitlement>(
+export const fetchEntitlement = async (
+  signal?: AbortSignal,
+): Promise<Entitlement> => {
+  const data = await call<Entitlement>(
     '/entitlement',
     'GET',
     value => {
-      const data = record(value);
+      const item = record(value);
       return (
-        Number.isInteger(data.followLimit) &&
-        Number(data.followLimit) >= 0 &&
-        Number.isInteger(data.compareLimit) &&
-        Number(data.compareLimit) >= 0
+        Number.isInteger(item.followLimit) &&
+        Number(item.followLimit) >= 0 &&
+        Number.isInteger(item.compareLimit) &&
+        Number(item.compareLimit) >= 0
       );
     },
     undefined,
     signal,
   );
+  if (isLocalDev && (data.followLimit <= 0 || data.compareLimit < 2)) {
+    return {
+      followLimit: Math.max(data.followLimit, DEV_MOCK_ENTITLEMENT.followLimit),
+      compareLimit: Math.max(
+        data.compareLimit,
+        DEV_MOCK_ENTITLEMENT.compareLimit,
+      ),
+    };
+  }
+  return data;
+};
 
 export const fetchFollows = async (signal?: AbortSignal) => {
   const follows = await call<EnterpriseFollow[]>(
@@ -160,26 +230,97 @@ export const fetchFollows = async (signal?: AbortSignal) => {
     undefined,
     signal,
   );
-  return follows.map(follow => {
-    let company: Company | undefined;
-    try {
-      const parsed: unknown = JSON.parse(follow.companyJson);
-      if (isCompany(parsed))
-        company = { ...parsed, companyId: follow.enterpriseId };
-    } catch {
-      // 保留损坏的关注记录及取消入口，不能用空列表隐藏数据问题。
-    }
-    return { ...follow, company };
-  });
+  return mergeDevMockFollows(hydrateFollows(follows));
 };
 
-export const setFollow = (companyId: string, followed: boolean) =>
-  call<null>(
-    followed ? '/follow' : '/unfollow',
-    'POST',
-    value => value === null,
-    { companyId },
-  );
+const buildFallbackCompany = (
+  companyId: string,
+  company?: Company,
+): Company => {
+  if (company) return { ...company, companyId };
+  const preview = findPreviewCompanyById(companyId);
+  if (preview) {
+    const item = preview.company;
+    return {
+      companyId,
+      name: item.name,
+      shortName: item.shortName,
+      industryCategory: preview.category,
+      registeredRegion: item.region,
+      labels: item.labels,
+      securities: item.code
+        ? [{ marketCode: item.market ?? null, code: item.code }]
+        : [],
+    };
+  }
+  return { companyId, name: companyId };
+};
+
+export const setFollow = async (
+  companyId: string,
+  followed: boolean,
+  company?: Company,
+): Promise<null> => {
+  if (isLocalDev && isPreviewCompanyId(companyId)) {
+    const current = readDevMockFollows();
+    if (followed) {
+      if (!current.some(item => item.enterpriseId === companyId)) {
+        const target = buildFallbackCompany(companyId, company);
+        writeDevMockFollows([
+          ...current,
+          {
+            enterpriseId: companyId,
+            companyJson: JSON.stringify(target),
+            followTime: new Date().toISOString(),
+          },
+        ]);
+      }
+    } else {
+      writeDevMockFollows(
+        current.filter(item => item.enterpriseId !== companyId),
+      );
+    }
+    return null;
+  }
+  try {
+    const result = await call<null>(
+      followed ? '/follow' : '/unfollow',
+      'POST',
+      value => value === null,
+      { companyId },
+    );
+    if (isLocalDev && !followed) {
+      const current = readDevMockFollows();
+      if (current.some(item => item.enterpriseId === companyId)) {
+        writeDevMockFollows(
+          current.filter(item => item.enterpriseId !== companyId),
+        );
+      }
+    }
+    return result;
+  } catch (error) {
+    if (!isLocalDev) throw error;
+    const current = readDevMockFollows();
+    if (followed) {
+      if (!current.some(item => item.enterpriseId === companyId)) {
+        const target = buildFallbackCompany(companyId, company);
+        writeDevMockFollows([
+          ...current,
+          {
+            enterpriseId: companyId,
+            companyJson: JSON.stringify(target),
+            followTime: new Date().toISOString(),
+          },
+        ]);
+      }
+    } else {
+      writeDevMockFollows(
+        current.filter(item => item.enterpriseId !== companyId),
+      );
+    }
+    return null;
+  }
+};
 export const fetchCandidates = (
   keyword: string,
   pageNum = 1,
