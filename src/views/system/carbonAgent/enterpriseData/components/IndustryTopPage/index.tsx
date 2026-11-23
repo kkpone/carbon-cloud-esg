@@ -21,8 +21,6 @@ import type {
   Company,
   IndustryFilterValue,
   IndustryTopItem,
-  IndustryTopRankBy,
-  ListingFilter,
 } from '../../types';
 import IndustryTopMobileList from './components/IndustryTopMobileList';
 import IndustryTopTable from './components/IndustryTopTable';
@@ -64,8 +62,6 @@ const IndustryTopPage = ({
     : ALL_INDUSTRIES_VALUE;
 
   const [keyword, setKeyword] = useState('');
-  const [rankBy, setRankBy] = useState<IndustryTopRankBy>('revenue');
-  const [listingFilter, setListingFilter] = useState<ListingFilter>('all');
   const [page, setPage] = useState(1);
   const [openingId, setOpeningId] = useState('');
   const [followingId, setFollowingId] = useState('');
@@ -94,42 +90,24 @@ const IndustryTopPage = ({
 
   useEffect(() => {
     setPage(1);
-  }, [activeIndustry, yearParam, keyword, rankBy, listingFilter]);
+  }, [activeIndustry, yearParam, keyword]);
 
   const activeYear = listQuery.data?.year || yearParam || '';
-  const availableYears = listQuery.data?.availableYears || [];
   const isPreview = Boolean(listQuery.data?.isPreview);
 
   const filteredItems = useMemo(
     () =>
       filterAndSortTopItems(listQuery.data?.records || [], {
         keyword,
-        listingFilter,
-        rankBy,
       }),
-    [listQuery.data?.records, keyword, listingFilter, rankBy],
+    [listQuery.data?.records, keyword],
   );
-
-  const rankBasisText = useMemo(() => {
-    if (rankBy === 'marketCap') return t.industryTopRankBasisMarketCap;
-    if (rankBy === 'totalEmissions') return t.industryTopRankBasisEmissions;
-    if (rankBy === 'intensity') return t.industryTopRankBasisIntensity;
-    return t.industryTopRankBasisRevenue;
-  }, [rankBy, t]);
 
   const handleIndustrySelect = (nextIndustry: IndustryFilterValue) => {
     onParamsChange({
       industry:
         nextIndustry === ALL_INDUSTRIES_VALUE ? undefined : nextIndustry,
       year: yearParam,
-    });
-  };
-
-  const handleYearChange = (nextYear: string) => {
-    onParamsChange({
-      industry:
-        activeIndustry === ALL_INDUSTRIES_VALUE ? undefined : activeIndustry,
-      year: nextYear,
     });
   };
 
@@ -277,7 +255,7 @@ const IndustryTopPage = ({
       <header className={style.header}>
         <h1>{t.enterpriseMenu}</h1>
         <div className={style.headerMeta}>
-          <span>{rankBasisText}</span>
+          <span>{t.industryTopRankBasisRevenue}</span>
           {listQuery.data?.updatedAt ? (
             <span>
               {I18N.template(t.industryTopUpdatedAt, {
@@ -329,44 +307,6 @@ const IndustryTopPage = ({
                 })),
               ]}
               onChange={handleIndustrySelect}
-            />
-            {availableYears.length ? (
-              <Select
-                className={style.select}
-                aria-label={t.industryTopYearLabel}
-                value={activeYear}
-                options={availableYears.map(year => ({
-                  label: year,
-                  value: year,
-                }))}
-                onChange={handleYearChange}
-              />
-            ) : null}
-            <Select<IndustryTopRankBy>
-              className={style.select}
-              aria-label={t.industryTopRankByLabel}
-              value={rankBy}
-              options={[
-                { value: 'revenue', label: t.industryTopRankByRevenue },
-                { value: 'marketCap', label: t.industryTopRankByMarketCap },
-                {
-                  value: 'totalEmissions',
-                  label: t.industryTopRankByEmissions,
-                },
-                { value: 'intensity', label: t.industryTopRankByIntensity },
-              ]}
-              onChange={setRankBy}
-            />
-            <Select<ListingFilter>
-              className={style.select}
-              aria-label={t.industryTopListingFilterLabel}
-              value={listingFilter}
-              options={[
-                { value: 'all', label: t.industryTopListingAll },
-                { value: 'listed', label: t.industryTopListingListed },
-                { value: 'unlisted', label: t.industryTopListingUnlisted },
-              ]}
-              onChange={setListingFilter}
             />
           </div>
         </div>
