@@ -93,6 +93,7 @@ export type AgentSectionKey =
   | 'productFootprint'
   | 'enterpriseCarbon'
   | 'enterpriseFollows'
+  | 'enterpriseIndustryTop'
   | 'enterpriseDetail'
   | 'enterpriseCompare'
   | 'esg'

@@ -10,10 +10,12 @@ import style from './Pages.module.less';
 
 export const PageHeader = ({
   title,
+  backLabel,
   onBack,
   actions,
 }: {
   title: string;
+  backLabel?: string;
   onBack: () => void;
   actions?: ReactNode;
 }) => (
@@ -23,7 +25,7 @@ export const PageHeader = ({
       className={style.breadcrumb}
     >
       <Button type='text' onClick={onBack}>
-        {I18N.enterpriseData.title}
+        {backLabel || I18N.enterpriseData.title}
       </Button>
       <span aria-hidden='true'>/</span>
       <h1 title={title}>{title}</h1>

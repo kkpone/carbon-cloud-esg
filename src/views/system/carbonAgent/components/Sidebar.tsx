@@ -2172,6 +2172,27 @@ const Sidebar = ({
               <span className={style.navText}>{I18N.enterpriseData.title}</span>
             </button>
 
+            <button
+              className={classNames(style.navItem, {
+                [style.activeNavSubItem]:
+                  activeSection === 'enterpriseIndustryTop',
+              })}
+              type='button'
+              aria-current={
+                activeSection === 'enterpriseIndustryTop' ? 'page' : undefined
+              }
+              aria-label={I18N.enterpriseData.industryTopMenu}
+              title={
+                collapsed ? I18N.enterpriseData.industryTopMenu : undefined
+              }
+              onClick={() => onSelectSection('enterpriseIndustryTop')}
+            >
+              <Icon src={icons.enterpriseCarbonIcon} />
+              <span className={style.navText}>
+                {I18N.enterpriseData.industryTopMenu}
+              </span>
+            </button>
+
             <CompetitionEntry collapsed={collapsed} />
 
             {collapsed ? (

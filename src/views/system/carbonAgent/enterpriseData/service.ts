@@ -1,7 +1,18 @@
 import { request } from '@src/api/request';
 import I18N from '@src/lang/I18N';
 
-import { isCarbonData, isCompany, isReport, record } from './data';
+import {
+  isCarbonData,
+  isCompany,
+  isIndustryOverview,
+  isIndustryTopListResponse,
+  isReport,
+  record,
+} from './data';
+import {
+  buildIndustryTopPreviewList,
+  buildIndustryTopPreviewOverviews,
+} from './industryTopPreviewData';
 import type {
   Analysis,
   CarbonData,
@@ -12,6 +23,11 @@ import type {
   EnterpriseReport,
   EnterpriseResult,
   Entitlement,
+  IndustryCode,
+  IndustryOverview,
+  IndustryTopListResponse,
+  IndustryTopRankBy,
+  ListingFilter,
 } from './types';
 
 const prefix = '/ai/agent/enterprise-data';
@@ -251,4 +267,60 @@ export const refreshReport = async (
     pageNum += 1;
   }
   return undefined;
+};
+
+const isEndpointUnavailable = (error: unknown) => {
+  const status = Number(
+    record(record(error).response).status ?? record(error).status,
+  );
+  return status === 404 || status === 405 || status === 501;
+};
+
+export const fetchIndustryTopOverviews = async (
+  signal?: AbortSignal,
+): Promise<{ items: IndustryOverview[]; isPreview: boolean }> => {
+  try {
+    const items = await call<IndustryOverview[]>(
+      '/industry-top/industries',
+      'GET',
+      value => Array.isArray(value) && value.every(isIndustryOverview),
+      undefined,
+      signal,
+    );
+    return { items, isPreview: false };
+  } catch (error) {
+    if (signal?.aborted) throw error;
+    if (isEndpointUnavailable(error) || !record(error).response) {
+      return { items: buildIndustryTopPreviewOverviews(), isPreview: true };
+    }
+    throw error;
+  }
+};
+
+export const fetchIndustryTopList = async (
+  params: {
+    industryCode: IndustryCode;
+    year?: string;
+    rankBy?: IndustryTopRankBy;
+    listingType?: ListingFilter;
+    disclosedOnly?: boolean;
+    keyword?: string;
+  },
+  signal?: AbortSignal,
+): Promise<IndustryTopListResponse> => {
+  try {
+    return await call<IndustryTopListResponse>(
+      '/industry-top/list',
+      'POST',
+      isIndustryTopListResponse,
+      params,
+      signal,
+    );
+  } catch (error) {
+    if (signal?.aborted) throw error;
+    if (isEndpointUnavailable(error) || !record(error).response) {
+      return buildIndustryTopPreviewList(params.industryCode, params.year);
+    }
+    throw error;
+  }
 };

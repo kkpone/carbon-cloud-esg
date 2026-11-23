@@ -87,9 +87,11 @@ export const CompanyProfile = ({ company }: { company: Company }) => {
 
 export const DetailPage = ({
   companyId,
+  backLabel,
   onBack,
 }: {
   companyId: string;
+  backLabel?: string;
   onBack: () => void;
 }) => {
   const state = useEnterpriseData();
@@ -130,7 +132,11 @@ export const DetailPage = ({
   if (!companyId) return <ErrorState error={t.detailsUnavailable} />;
   return (
     <div className={style.page}>
-      <PageHeader title={currentCompany?.name || t.basic} onBack={onBack} />
+      <PageHeader
+        title={currentCompany?.name || t.basic}
+        backLabel={backLabel}
+        onBack={onBack}
+      />
       {state.follows.isError || state.entitlement.isError ? (
         <div className={style.notice}>
           <ErrorState error={t.limitsFailed} onRetry={() => state.refresh()} />

@@ -6,9 +6,14 @@ import type {
   EnterpriseConfirmation,
   EnterpriseFollow,
   EnterpriseReport,
+  IndustryCode,
+  IndustryOverview,
+  IndustryTopItem,
+  IndustryTopListResponse,
   Metric,
   MetricKey,
 } from './types';
+import { isIndustryCode } from './industries';
 
 export const record = (value: unknown): Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -219,24 +224,43 @@ export const safeReportUrl = (value?: string | null) => {
 };
 
 export const isEnterpriseSection = (section: string) =>
-  ['enterpriseFollows', 'enterpriseDetail', 'enterpriseCompare'].includes(
-    section,
-  );
+  [
+    'enterpriseFollows',
+    'enterpriseIndustryTop',
+    'enterpriseDetail',
+    'enterpriseCompare',
+  ].includes(section);
 
 export const clearEnterpriseNavigationParams = (search: URLSearchParams) => {
   search.delete('companyId');
   search.delete('resultId');
+  search.delete('industry');
+  search.delete('year');
+  search.delete('from');
 };
 
 export const enterpriseSearch = (
   currentSearch: string,
   section: string,
-  params: { companyId?: string; resultId?: string } = {},
+  params: {
+    companyId?: string;
+    resultId?: string;
+    industry?: IndustryCode | string;
+    year?: string;
+    from?: string;
+  } = {},
 ) => {
   const search = new URLSearchParams(currentSearch);
-  ['sessionId', 'projectId', 'companyId', 'resultId', 'shareAuth'].forEach(
-    key => search.delete(key),
-  );
+  [
+    'sessionId',
+    'projectId',
+    'companyId',
+    'resultId',
+    'shareAuth',
+    'industry',
+    'year',
+    'from',
+  ].forEach(key => search.delete(key));
   // 业务预览参数属于原会话，不携带到独立数据页。
   [...search.keys()]
     .filter(key => key.startsWith('preview'))
@@ -244,7 +268,72 @@ export const enterpriseSearch = (
   search.set('section', section);
   if (params.companyId) search.set('companyId', params.companyId);
   if (params.resultId) search.set('resultId', params.resultId);
+  if (params.industry) search.set('industry', params.industry);
+  if (params.year) search.set('year', params.year);
+  if (params.from) search.set('from', params.from);
   return `?${search.toString()}`;
+};
+
+export const isIndustryOverview = (
+  value: unknown,
+): value is IndustryOverview => {
+  const item = record(value);
+  return (
+    typeof item.industryCode === 'string' &&
+    isIndustryCode(item.industryCode) &&
+    Number.isInteger(item.companyCount) &&
+    Number(item.companyCount) >= 0 &&
+    Number.isInteger(item.disclosedCount) &&
+    Number(item.disclosedCount) >= 0 &&
+    typeof item.latestYear === 'string' &&
+    stringArray(item.availableYears) &&
+    optionalStrings(item, ['medianEmissions', 'medianUnit', 'updatedAt'])
+  );
+};
+
+export const isIndustryTopItem = (value: unknown): value is IndustryTopItem => {
+  const item = record(value);
+  const summary = record(item.summary);
+  return (
+    Number.isInteger(item.rank) &&
+    Number(item.rank) >= 1 &&
+    typeof item.industryCode === 'string' &&
+    isIndustryCode(item.industryCode) &&
+    isCompany(item.company) &&
+    typeof item.listed === 'boolean' &&
+    optionalStrings(item, ['revenueBillionCny', 'marketCapBillionCny']) &&
+    typeof summary.year === 'string' &&
+    typeof summary.disclosed === 'boolean' &&
+    optionalStrings(summary, [
+      'totalEmissions',
+      'scope1',
+      'scope2',
+      'scope2Basis',
+      'scope3',
+      'intensity',
+      'unit',
+      'intensityUnit',
+    ])
+  );
+};
+
+export const isIndustryTopListResponse = (
+  value: unknown,
+): value is IndustryTopListResponse => {
+  const item = record(value);
+  return (
+    typeof item.industryCode === 'string' &&
+    isIndustryCode(item.industryCode) &&
+    typeof item.year === 'string' &&
+    stringArray(item.availableYears) &&
+    Number.isInteger(item.total) &&
+    Number(item.total) >= 0 &&
+    Number.isInteger(item.disclosedCount) &&
+    Number(item.disclosedCount) >= 0 &&
+    optionalStrings(item, ['updatedAt', 'medianEmissions', 'medianUnit']) &&
+    Array.isArray(item.records) &&
+    item.records.every(isIndustryTopItem)
+  );
 };
 
 export const normalizeEnterpriseCardPayload = (

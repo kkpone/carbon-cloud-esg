@@ -5927,6 +5927,10 @@ const CarbonAgent = () => {
     ? I18N.carbonAgent.accountingManagement
     : !conversationStarted && activeSection === 'factorLibrary'
     ? I18N.ccdb.libraryMenu
+    : !conversationStarted && activeSection === 'enterpriseIndustryTop'
+    ? I18N.enterpriseData.industryTopMenu
+    : !conversationStarted && activeSection === 'enterpriseFollows'
+    ? I18N.enterpriseData.title
     : !conversationStarted && activeSection === 'history'
     ? I18N.carbonAgent.historyConversations
     : !conversationStarted && activeSection === 'cbamFiles'

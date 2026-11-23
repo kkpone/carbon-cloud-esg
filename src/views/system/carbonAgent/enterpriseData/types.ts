@@ -1,7 +1,75 @@
 export type EnterpriseSection =
   | 'enterpriseFollows'
+  | 'enterpriseIndustryTop'
   | 'enterpriseDetail'
   | 'enterpriseCompare';
+
+export type IndustryCode =
+  | 'automotive'
+  | 'battery_storage'
+  | 'textile_apparel'
+  | 'food_beverage'
+  | 'consumer_electronics'
+  | 'chemicals_new_materials'
+  | 'packaging_logistics'
+  | 'finance'
+  | 'building_materials'
+  | 'nonferrous_metals';
+
+export type IndustryTopRankBy =
+  | 'revenue'
+  | 'marketCap'
+  | 'totalEmissions'
+  | 'intensity';
+
+export type ListingFilter = 'all' | 'listed' | 'unlisted';
+
+export type IndustryOverview = {
+  industryCode: IndustryCode;
+  companyCount: number;
+  disclosedCount: number;
+  latestYear: string;
+  availableYears: string[];
+  medianEmissions?: string | null;
+  medianUnit?: string | null;
+  updatedAt?: string | null;
+};
+
+export type IndustryTopCarbonSummary = {
+  year: string;
+  disclosed: boolean;
+  totalEmissions?: string | null;
+  scope1?: string | null;
+  scope2?: string | null;
+  scope2Basis?: 'market' | 'location' | 'unknown' | null;
+  scope3?: string | null;
+  intensity?: string | null;
+  unit?: string | null;
+  intensityUnit?: string | null;
+};
+
+export type IndustryTopItem = {
+  rank: number;
+  industryCode: IndustryCode;
+  company: Company;
+  listed: boolean;
+  revenueBillionCny?: string | null;
+  marketCapBillionCny?: string | null;
+  summary: IndustryTopCarbonSummary;
+};
+
+export type IndustryTopListResponse = {
+  industryCode: IndustryCode;
+  year: string;
+  availableYears: string[];
+  updatedAt?: string | null;
+  total: number;
+  disclosedCount: number;
+  medianEmissions?: string | null;
+  medianUnit?: string | null;
+  records: IndustryTopItem[];
+  isPreview?: boolean;
+};
 
 export type Company = {
   companyId: string;
