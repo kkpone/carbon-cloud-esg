@@ -137,6 +137,8 @@ export default {
 
   enterpriseMenu: 'Enterprise carbon data',
   industryTopMenu: 'Industry Top 100',
+  followedSectionTitle: 'Followed enterprises',
+  viewMoreFollowed: 'View more',
   industryTopTitle: 'Industry Top 100 Carbon Data',
   industryTopSubtitle:
     'Top 100 enterprises with disclosed carbon data across 10 key industries (China A-share, HK-listed, US-listed Chinese and unlisted enterprises)',

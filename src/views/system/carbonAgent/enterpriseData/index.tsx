@@ -61,7 +61,8 @@ const EnterpriseDataPage = () => {
         <IndustryTopPage
           industryParam={industry}
           yearParam={year}
-          onSwitchTab={next => navigate(next)}
+          onOpenFollows={() => navigate('enterpriseFollows')}
+          onCompare={() => navigate('enterpriseCompare')}
           onParamsChange={next => navigate('enterpriseIndustryTop', next, true)}
           onOpenCompany={(targetId, targetIndustry, targetYear) =>
             navigate('enterpriseDetail', {
@@ -75,7 +76,7 @@ const EnterpriseDataPage = () => {
       ) : (
         <FollowPage
           onCompare={() => navigate('enterpriseCompare')}
-          onSwitchTab={next => navigate(next)}
+          onBack={() => navigate('enterpriseIndustryTop')}
         />
       )}
     </div>

@@ -2167,7 +2167,7 @@ const Sidebar = ({
               type='button'
               aria-label={I18N.enterpriseData.enterpriseMenu}
               title={collapsed ? I18N.enterpriseData.enterpriseMenu : undefined}
-              onClick={() => onSelectSection('enterpriseFollows')}
+              onClick={() => onSelectSection('enterpriseIndustryTop')}
             >
               <Icon src={icons.enterpriseFollowIcon} />
               <span className={style.navText}>

@@ -32,8 +32,6 @@ import { isComparisonCountAllowed } from './data';
 import { fetchCandidates } from './service';
 import { useEnterpriseData } from './state';
 import type { Company, EnterpriseFollow } from './types';
-import EnterpriseSectionTabs from './components/EnterpriseSectionTabs';
-import type { EnterpriseHubTab } from './components/EnterpriseSectionTabs';
 import style from './index.module.less';
 
 const Icon = ({ src }: { src: string }) => (
@@ -189,10 +187,10 @@ export const AddEnterprise = ({ onClose }: { onClose: () => void }) => {
 
 export const FollowPage = ({
   onCompare,
-  onSwitchTab,
+  onBack,
 }: {
   onCompare: () => void;
-  onSwitchTab: (next: EnterpriseHubTab) => void;
+  onBack?: () => void;
 }) => {
   const state = useEnterpriseData();
   const [adding, setAdding] = useState(false);
@@ -237,10 +235,17 @@ export const FollowPage = ({
   return (
     <div className={followStyle.page}>
       <header className={followStyle.header}>
-        <EnterpriseSectionTabs
-          active='enterpriseFollows'
-          onChange={onSwitchTab}
-        />
+        {onBack ? (
+          <nav aria-label={t.breadcrumb} className={followStyle.breadcrumb}>
+            <Button type='text' onClick={onBack}>
+              {t.industryTopBackToRanking}
+            </Button>
+            <span aria-hidden='true'>/</span>
+            <h1>{t.title}</h1>
+          </nav>
+        ) : (
+          <h1>{t.title}</h1>
+        )}
         <div className={followStyle.headerActions}>
           <Button icon={<Icon src={addIcon} />} onClick={() => setAdding(true)}>
             {t.add}

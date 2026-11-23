@@ -23,15 +23,15 @@ import type {
 import IndustryTabs from './components/IndustryTabs';
 import IndustryTopMobileList from './components/IndustryTopMobileList';
 import IndustryTopTable from './components/IndustryTopTable';
-import EnterpriseSectionTabs from '../EnterpriseSectionTabs';
-import type { EnterpriseHubTab } from '../EnterpriseSectionTabs';
+import FollowedPreviewSection from './components/FollowedPreviewSection';
 import style from './index.module.less';
 import { filterAndSortTopItems } from './utils';
 
 type IndustryTopPageProps = {
   industryParam?: string;
   yearParam?: string;
-  onSwitchTab: (next: EnterpriseHubTab) => void;
+  onOpenFollows: () => void;
+  onCompare: () => void;
   onParamsChange: (next: { industry: IndustryCode; year?: string }) => void;
   onOpenCompany: (
     companyId: string,
@@ -45,7 +45,8 @@ const PAGE_SIZE = 20;
 const IndustryTopPage = ({
   industryParam,
   yearParam,
-  onSwitchTab,
+  onOpenFollows,
+  onCompare,
   onParamsChange,
   onOpenCompany,
 }: IndustryTopPageProps) => {
@@ -166,10 +167,7 @@ const IndustryTopPage = ({
   return (
     <div className={style.page}>
       <header className={style.header}>
-        <EnterpriseSectionTabs
-          active='enterpriseIndustryTop'
-          onChange={onSwitchTab}
-        />
+        <h1>{t.industryTopTitle}</h1>
         <div className={style.headerMeta}>
           <span>{rankBasisText}</span>
           {listQuery.data?.updatedAt ? (
@@ -182,6 +180,10 @@ const IndustryTopPage = ({
         </div>
       </header>
       <div className={style.body}>
+        <FollowedPreviewSection
+          onOpenMore={onOpenFollows}
+          onCompare={onCompare}
+        />
         <div className={style.subHeader}>
           <p>{t.industryTopSubtitle}</p>
         </div>

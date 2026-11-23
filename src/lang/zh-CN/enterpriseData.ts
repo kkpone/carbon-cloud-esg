@@ -130,6 +130,8 @@ export default {
 
   enterpriseMenu: '企业碳数据',
   industryTopMenu: '行业碳榜',
+  followedSectionTitle: '已关注的企业',
+  viewMoreFollowed: '查看更多',
   industryTopTitle: '行业 Top100 企业碳数据',
   industryTopSubtitle:
     '展示 10 大行业已公开披露碳数据的前 100 家企业（覆盖国内 A 股、港股、中概股及非上市企业）',
