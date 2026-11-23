@@ -139,7 +139,7 @@ export default {
   industryTopMenu: 'Industry Top 100',
   industryTopTitle: 'Industry Top 100 Carbon Data',
   industryTopSubtitle:
-    'Covers China A-share, HK-listed, US-listed Chinese and major unlisted enterprises ranked by revenue with disclosed carbon data',
+    'Top 100 enterprises with disclosed carbon data across 10 key industries (China A-share, HK-listed, US-listed Chinese and unlisted enterprises)',
   industryTopUpdatedAt: 'Snapshot updated: {time}',
   industryTopRankBasisRevenue:
     'Basis: Latest annual revenue (converted to CNY)',

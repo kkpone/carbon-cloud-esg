@@ -1,8 +1,8 @@
 import { useMobile } from '@/hooks/use-mobile';
 import I18N from '@src/lang/I18N';
 import { useQuery } from '@tanstack/react-query';
-import { Alert, Input, Select, Switch } from 'antd';
-import { useEffect, useId, useMemo, useState } from 'react';
+import { Alert, Input, Select } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 
 import searchIcon from '../../assets/search.svg';
 import { ErrorState, Loading } from '../../components';
@@ -20,7 +20,6 @@ import type {
   IndustryTopRankBy,
   ListingFilter,
 } from '../../types';
-import IndustrySummaryCards from './components/IndustrySummaryCards';
 import IndustryTabs from './components/IndustryTabs';
 import IndustryTopMobileList from './components/IndustryTopMobileList';
 import IndustryTopTable from './components/IndustryTopTable';
@@ -60,10 +59,8 @@ const IndustryTopPage = ({
   const [keyword, setKeyword] = useState('');
   const [rankBy, setRankBy] = useState<IndustryTopRankBy>('revenue');
   const [listingFilter, setListingFilter] = useState<ListingFilter>('all');
-  const [disclosedOnly, setDisclosedOnly] = useState(false);
   const [page, setPage] = useState(1);
   const [openingId, setOpeningId] = useState('');
-  const disclosedSwitchId = useId();
 
   const overviewsQuery = useQuery({
     queryKey: ['enterpriseData', state.scope, 'industryTopOverviews'],
@@ -96,14 +93,7 @@ const IndustryTopPage = ({
 
   useEffect(() => {
     setPage(1);
-  }, [
-    activeIndustry,
-    yearParam,
-    keyword,
-    rankBy,
-    listingFilter,
-    disclosedOnly,
-  ]);
+  }, [activeIndustry, yearParam, keyword, rankBy, listingFilter]);
 
   const activeYear = listQuery.data?.year || yearParam || '';
   const availableYears = listQuery.data?.availableYears || [];
@@ -114,10 +104,9 @@ const IndustryTopPage = ({
       filterAndSortTopItems(listQuery.data?.records || [], {
         keyword,
         listingFilter,
-        disclosedOnly,
         rankBy,
       }),
-    [listQuery.data?.records, keyword, listingFilter, disclosedOnly, rankBy],
+    [listQuery.data?.records, keyword, listingFilter, rankBy],
   );
 
   const rankBasisText = useMemo(() => {
@@ -209,14 +198,6 @@ const IndustryTopPage = ({
             message={t.industryTopPreviewBanner}
           />
         ) : null}
-        {listQuery.data ? (
-          <IndustrySummaryCards
-            total={listQuery.data.total}
-            disclosedCount={listQuery.data.disclosedCount}
-            medianEmissions={listQuery.data.medianEmissions}
-            medianUnit={listQuery.data.medianUnit}
-          />
-        ) : null}
         <div className={style.toolbar}>
           <div className={style.filtersLeft}>
             <Input
@@ -266,19 +247,6 @@ const IndustryTopPage = ({
               ]}
               onChange={setListingFilter}
             />
-          </div>
-          <div className={style.filtersRight}>
-            <div className={style.disclosedToggle}>
-              <Switch
-                id={disclosedSwitchId}
-                size='small'
-                checked={disclosedOnly}
-                onChange={setDisclosedOnly}
-              />
-              <label htmlFor={disclosedSwitchId}>
-                {t.industryTopDisclosedOnly}
-              </label>
-            </div>
           </div>
         </div>
         <div className={style.tableCard}>

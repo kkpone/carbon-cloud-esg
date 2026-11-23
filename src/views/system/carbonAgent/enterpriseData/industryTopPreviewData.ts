@@ -950,7 +950,8 @@ const buildPreviewItems = (
     if (!Number.isFinite(parsed)) return value;
     return String(Math.round(parsed * yearOffset));
   };
-  return seed.companies.map((item, index) => ({
+  const disclosedCompanies = seed.companies.filter(item => item.disclosed);
+  return disclosedCompanies.map((item, index) => ({
     rank: index + 1,
     industryCode,
     listed: item.listed,
@@ -988,7 +989,7 @@ export const buildIndustryTopPreviewOverviews = (): IndustryOverview[] =>
     const disclosedCount = seed.companies.filter(item => item.disclosed).length;
     return {
       industryCode: code,
-      companyCount: seed.companies.length,
+      companyCount: disclosedCount,
       disclosedCount,
       latestYear: PREVIEW_YEARS[0],
       availableYears: PREVIEW_YEARS,

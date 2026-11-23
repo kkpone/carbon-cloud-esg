@@ -132,7 +132,7 @@ export default {
   industryTopMenu: '行业碳榜',
   industryTopTitle: '行业 Top100 企业碳数据',
   industryTopSubtitle:
-    '覆盖国内 A 股、港股、中概股及非上市头部企业，按营业收入排序并汇总公开披露碳数据',
+    '展示 10 大行业已公开披露碳数据的前 100 家企业（覆盖国内 A 股、港股、中概股及非上市企业）',
   industryTopUpdatedAt: '快照更新时间：{time}',
   industryTopRankBasisRevenue: '口径：最新年报营业收入（统一折算人民币）',
   industryTopRankBasisMarketCap: '口径：最新总市值（上市企业）',

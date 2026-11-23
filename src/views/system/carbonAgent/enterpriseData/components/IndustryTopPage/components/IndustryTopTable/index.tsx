@@ -198,23 +198,6 @@ const IndustryTopTable = ({
       ),
     },
     {
-      title: t.industryTopColDisclosure,
-      key: 'disclosed',
-      width: 100,
-      render: (_, item) => (
-        <Tag
-          className={classNames(
-            style.entityTag,
-            item.summary.disclosed ? style.disclosedTag : style.undisclosedTag,
-          )}
-        >
-          {item.summary.disclosed
-            ? t.industryTopDisclosed
-            : t.industryTopUndisclosed}
-        </Tag>
-      ),
-    },
-    {
       title: t.actions,
       key: 'actions',
       width: 150,
@@ -249,7 +232,7 @@ const IndustryTopTable = ({
         columns={columns}
         dataSource={pagedItems}
         pagination={false}
-        scroll={{ x: 1622 }}
+        scroll={{ x: 1522 }}
         locale={{
           emptyText: (
             <Empty

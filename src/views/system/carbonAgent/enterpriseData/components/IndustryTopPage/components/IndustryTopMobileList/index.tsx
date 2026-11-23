@@ -69,11 +69,6 @@ const IndustryTopMobileList = ({
                         ? t.industryTopListedTag
                         : t.industryTopUnlistedTag}
                     </Tag>
-                    <Tag>
-                      {item.summary.disclosed
-                        ? t.industryTopDisclosed
-                        : t.industryTopUndisclosed}
-                    </Tag>
                     {code !== '—' ? <span>{code}</span> : null}
                   </div>
                 </div>

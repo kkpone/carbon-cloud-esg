@@ -310,7 +310,6 @@ export const fetchIndustryTopList = async (
     year?: string;
     rankBy?: IndustryTopRankBy;
     listingType?: ListingFilter;
-    disclosedOnly?: boolean;
     keyword?: string;
   },
   signal?: AbortSignal,

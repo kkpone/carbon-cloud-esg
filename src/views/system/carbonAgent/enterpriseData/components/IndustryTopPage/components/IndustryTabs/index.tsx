@@ -40,9 +40,8 @@ const IndustryTabs = ({
             <span className={style.tabName}>{label}</span>
             <span className={style.tabMeta}>
               {overview
-                ? I18N.template(t.industryTopDisclosedCount, {
-                    disclosed: overview.disclosedCount,
-                    total: overview.companyCount,
+                ? I18N.template(t.industryTopCompanyCount, {
+                    count: overview.companyCount,
                   })
                 : '—'}
             </span>

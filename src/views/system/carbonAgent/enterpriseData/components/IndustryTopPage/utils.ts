@@ -22,7 +22,6 @@ export const filterAndSortTopItems = (
   options: {
     keyword: string;
     listingFilter: ListingFilter;
-    disclosedOnly: boolean;
     rankBy: IndustryTopRankBy;
   },
 ): IndustryTopItem[] => {
@@ -30,7 +29,6 @@ export const filterAndSortTopItems = (
   const filtered = records.filter(item => {
     if (options.listingFilter === 'listed' && !item.listed) return false;
     if (options.listingFilter === 'unlisted' && item.listed) return false;
-    if (options.disclosedOnly && !item.summary.disclosed) return false;
     if (!query) return true;
     const { company } = item;
     return [
