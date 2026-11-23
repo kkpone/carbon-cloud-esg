@@ -1,6 +1,5 @@
 import I18N from '@src/lang/I18N';
 import { Button, Empty, Pagination, Tag } from 'antd';
-import classNames from 'classnames';
 
 import { stockCodes } from '../../../../FollowCompany';
 import type { Company, IndustryTopItem } from '../../../../types';
@@ -52,13 +51,6 @@ const IndustryTopMobileList = ({
           return (
             <article key={item.company.companyId} className={style.card}>
               <div className={style.cardHeader}>
-                <span
-                  className={classNames(style.rank, {
-                    [style.rankTopThree]: item.rank <= 3,
-                  })}
-                >
-                  {item.rank}
-                </span>
                 <div className={style.identity}>
                   <button
                     type='button'

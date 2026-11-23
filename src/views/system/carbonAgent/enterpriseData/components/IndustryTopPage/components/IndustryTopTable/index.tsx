@@ -47,21 +47,6 @@ const IndustryTopTable = ({
 
   const columns: ColumnsType<IndustryTopItem> = [
     {
-      title: t.industryTopColRank,
-      key: 'rank',
-      width: 72,
-      fixed: 'left',
-      render: (_, item) => (
-        <span
-          className={classNames(style.rankBadge, {
-            [style.rankTopThree]: item.rank <= 3,
-          })}
-        >
-          {item.rank}
-        </span>
-      ),
-    },
-    {
       title: t.company,
       key: 'company',
       width: 240,
@@ -247,7 +232,7 @@ const IndustryTopTable = ({
         columns={columns}
         dataSource={pagedItems}
         pagination={false}
-        scroll={{ x: 1522 }}
+        scroll={{ x: 1450 }}
         locale={{
           emptyText: (
             <Empty
