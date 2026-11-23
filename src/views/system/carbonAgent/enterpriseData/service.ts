@@ -1,5 +1,7 @@
 import { request } from '@src/api/request';
 import I18N from '@src/lang/I18N';
+import { SET_COMPANY_USER_INFO } from '@src/store/actionTypes';
+import { getLoginStorage } from '@src/utils/feishuSession';
 
 import {
   isCarbonData,
@@ -35,12 +37,39 @@ import type {
 
 const prefix = '/ai/agent/enterprise-data';
 const invalid = () => new Error(I18N.enterpriseData.invalidResponse);
-const isLocalDev = process.env.NODE_ENV === 'development';
+const MOCK_QUOTA_PHONE = '18602353734';
 const DEV_MOCK_ENTITLEMENT: Entitlement = { followLimit: 5, compareLimit: 3 };
 const DEV_FOLLOWS_STORAGE_KEY = 'carbon-agent-dev-mock-follows';
 
+const isMockQuotaAccount = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  try {
+    const raw = getLoginStorage().getItem(SET_COMPANY_USER_INFO);
+    if (!raw) return false;
+    const parsed = record(JSON.parse(raw));
+    const userInfo = record(parsed.userInfo);
+    const user = record(userInfo.user);
+    const candidates = [
+      userInfo.mobile,
+      userInfo.username,
+      user.userName,
+      user.employPhone,
+    ];
+    return candidates.some(
+      value => typeof value === 'string' && value.trim() === MOCK_QUOTA_PHONE,
+    );
+  } catch {
+    return false;
+  }
+};
+
+export const isLocalDevMockFollowEnabled = () =>
+  process.env.NODE_ENV === 'development' || isMockQuotaAccount();
+
 const readDevMockFollows = (): EnterpriseFollow[] => {
-  if (!isLocalDev || typeof window === 'undefined') return [];
+  if (!isLocalDevMockFollowEnabled() || typeof window === 'undefined') {
+    return [];
+  }
   try {
     const raw = window.localStorage.getItem(DEV_FOLLOWS_STORAGE_KEY);
     if (!raw) return [];
@@ -57,7 +86,7 @@ const readDevMockFollows = (): EnterpriseFollow[] => {
 };
 
 const writeDevMockFollows = (items: EnterpriseFollow[]) => {
-  if (!isLocalDev || typeof window === 'undefined') return;
+  if (!isLocalDevMockFollowEnabled() || typeof window === 'undefined') return;
   try {
     window.localStorage.setItem(DEV_FOLLOWS_STORAGE_KEY, JSON.stringify(items));
   } catch {
@@ -80,7 +109,7 @@ const hydrateFollows = (follows: EnterpriseFollow[]): EnterpriseFollow[] =>
   });
 
 const mergeDevMockFollows = (remote: EnterpriseFollow[]) => {
-  if (!isLocalDev) return remote;
+  if (!isLocalDevMockFollowEnabled()) return remote;
   const local = hydrateFollows(readDevMockFollows());
   const map = new Map<string, EnterpriseFollow>();
   remote.forEach(item => map.set(item.enterpriseId, item));
@@ -89,8 +118,6 @@ const mergeDevMockFollows = (remote: EnterpriseFollow[]) => {
   });
   return [...map.values()];
 };
-
-export const isLocalDevMockFollowEnabled = () => isLocalDev;
 
 export const unwrapEnterpriseResponse = <T>(
   body: unknown,
@@ -204,7 +231,10 @@ export const fetchEntitlement = async (
     undefined,
     signal,
   );
-  if (isLocalDev && (data.followLimit <= 0 || data.compareLimit < 2)) {
+  if (
+    isLocalDevMockFollowEnabled() &&
+    (data.followLimit <= 0 || data.compareLimit < 2)
+  ) {
     return {
       followLimit: Math.max(data.followLimit, DEV_MOCK_ENTITLEMENT.followLimit),
       compareLimit: Math.max(
@@ -261,7 +291,8 @@ export const setFollow = async (
   followed: boolean,
   company?: Company,
 ): Promise<null> => {
-  if (isLocalDev && isPreviewCompanyId(companyId)) {
+  const mockEnabled = isLocalDevMockFollowEnabled();
+  if (mockEnabled && isPreviewCompanyId(companyId)) {
     const current = readDevMockFollows();
     if (followed) {
       if (!current.some(item => item.enterpriseId === companyId)) {
@@ -289,7 +320,7 @@ export const setFollow = async (
       value => value === null,
       { companyId },
     );
-    if (isLocalDev && !followed) {
+    if (mockEnabled && !followed) {
       const current = readDevMockFollows();
       if (current.some(item => item.enterpriseId === companyId)) {
         writeDevMockFollows(
@@ -299,7 +330,7 @@ export const setFollow = async (
     }
     return result;
   } catch (error) {
-    if (!isLocalDev) throw error;
+    if (!mockEnabled) throw error;
     const current = readDevMockFollows();
     if (followed) {
       if (!current.some(item => item.enterpriseId === companyId)) {
