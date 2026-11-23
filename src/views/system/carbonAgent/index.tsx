@@ -1,5 +1,8 @@
 import { mergeToolEvent, isTerminalTool } from './toolEvents';
-import { materialAttachmentRequest, normalizeMaterialReference } from './materialReference';
+import {
+  materialAttachmentRequest,
+  normalizeMaterialReference,
+} from './materialReference';
 import { MaterialReferenceError } from './materialReferenceError';
 import {
   WorkspaceProvider,
@@ -3572,7 +3575,12 @@ const getAttachmentFilePayload = (
 ): AgentFilePayload[] =>
   attachments.flatMap(attachment =>
     attachment.fileId
-      ? [materialAttachmentRequest({ ...attachment, fileId: attachment.fileId })]
+      ? [
+          materialAttachmentRequest({
+            ...attachment,
+            fileId: attachment.fileId,
+          }),
+        ]
       : [],
   );
 
@@ -3613,8 +3621,11 @@ const normalizeSubmissionAttachments = (
       name,
       assetId: getScalarValue(attachmentRecord.assetId) || undefined,
       projectId: getScalarValue(attachmentRecord.projectId) || undefined,
-      analysisJobId: getScalarValue(attachmentRecord.analysisJobId) || undefined,
-      materialAnalysis: normalizeMaterialReference(attachmentRecord.materialAnalysis),
+      analysisJobId:
+        getScalarValue(attachmentRecord.analysisJobId) || undefined,
+      materialAnalysis: normalizeMaterialReference(
+        attachmentRecord.materialAnalysis,
+      ),
     };
 
     if (fileId) {
@@ -3651,11 +3662,16 @@ const normalizeOutgoingFiles = (files: unknown): AgentFilePayload[] =>
           getScalarValue(file);
 
         // 两次请求整理均保留用户指定的解析任务，不用最新版本替换，也不上传显示元数据。
-        return fileId ? [materialAttachmentRequest({
-          fileId,
-          assetId: getScalarValue(fileRecord.assetId) || undefined,
-          analysisJobId: getScalarValue(fileRecord.analysisJobId) || undefined,
-        })] : [];
+        return fileId
+          ? [
+              materialAttachmentRequest({
+                fileId,
+                assetId: getScalarValue(fileRecord.assetId) || undefined,
+                analysisJobId:
+                  getScalarValue(fileRecord.analysisJobId) || undefined,
+              }),
+            ]
+          : [];
       })
     : [];
 
@@ -5928,9 +5944,9 @@ const CarbonAgent = () => {
     : !conversationStarted && activeSection === 'factorLibrary'
     ? I18N.ccdb.libraryMenu
     : !conversationStarted && activeSection === 'enterpriseIndustryTop'
-    ? I18N.enterpriseData.industryTopMenu
+    ? I18N.enterpriseData.enterpriseMenu
     : !conversationStarted && activeSection === 'enterpriseFollows'
-    ? I18N.enterpriseData.title
+    ? I18N.enterpriseData.enterpriseMenu
     : !conversationStarted && activeSection === 'history'
     ? I18N.carbonAgent.historyConversations
     : !conversationStarted && activeSection === 'cbamFiles'
@@ -10669,20 +10685,32 @@ const CarbonAgent = () => {
       }
 
       if (error instanceof MaterialReferenceError) {
-        const hint = error.code === 'MATERIAL_VERSION_CHANGED'
-          ? I18N.feishuCollection.referenceOriginalChanged
-          : I18N.feishuCollection.referenceUnavailable;
+        const hint =
+          error.code === 'MATERIAL_VERSION_CHANGED'
+            ? I18N.feishuCollection.referenceOriginalChanged
+            : I18N.feishuCollection.referenceUnavailable;
         antdMessage.warning(hint);
         // 拒绝发生在受理前，保留输入和固定选择供用户修改；不发起自动重试。
         setMessage(current => current || trimmedMessage);
-        setComposerAttachments(current => current.length ? current : submissionAttachments.map((file, index) => ({
-          ...file, id: `rejected_material_${index}`, status: 'done' as const,
-          size: file.size || 0, type: file.type || '',
-        })));
-        setAnswerCards([{
-          card: { eventType: 'error', message: hint }, cardType: 'error',
-          messageId: 'material_reference_rejected', orderNo: 10,
-        }]);
+        setComposerAttachments(current =>
+          current.length
+            ? current
+            : submissionAttachments.map((file, index) => ({
+                ...file,
+                id: `rejected_material_${index}`,
+                status: 'done' as const,
+                size: file.size || 0,
+                type: file.type || '',
+              })),
+        );
+        setAnswerCards([
+          {
+            card: { eventType: 'error', message: hint },
+            cardType: 'error',
+            messageId: 'material_reference_rejected',
+            orderNo: 10,
+          },
+        ]);
         return;
       }
 
@@ -10861,9 +10889,15 @@ const CarbonAgent = () => {
     attachments: AgentChatAttachment[] = [],
   ) => {
     // 固定解析引用重发时保留原定位；失效版本交由服务端拒绝，不悄悄改用原件或最新版。
-    submitConversationMessage(attachments.some(file => file.analysisJobId)
-      ? { message: nextMessage, attachments, files: getAttachmentFilePayload(attachments) }
-      : nextMessage);
+    submitConversationMessage(
+      attachments.some(file => file.analysisJobId)
+        ? {
+            message: nextMessage,
+            attachments,
+            files: getAttachmentFilePayload(attachments),
+          }
+        : nextMessage,
+    );
   };
 
   const handleShareConversation = () => {

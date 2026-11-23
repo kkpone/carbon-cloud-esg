@@ -18,12 +18,15 @@ import IndustrySummaryCards from './components/IndustrySummaryCards';
 import IndustryTabs from './components/IndustryTabs';
 import IndustryTopMobileList from './components/IndustryTopMobileList';
 import IndustryTopTable from './components/IndustryTopTable';
+import EnterpriseSectionTabs from '../EnterpriseSectionTabs';
+import type { EnterpriseHubTab } from '../EnterpriseSectionTabs';
 import style from './index.module.less';
 import { filterAndSortTopItems } from './utils';
 
 type IndustryTopPageProps = {
   industryParam?: string;
   yearParam?: string;
+  onSwitchTab: (next: EnterpriseHubTab) => void;
   onParamsChange: (next: { industry: IndustryCode; year?: string }) => void;
   onOpenCompany: (
     companyId: string,
@@ -37,6 +40,7 @@ const PAGE_SIZE = 20;
 const IndustryTopPage = ({
   industryParam,
   yearParam,
+  onSwitchTab,
   onParamsChange,
   onOpenCompany,
 }: IndustryTopPageProps) => {
@@ -132,10 +136,10 @@ const IndustryTopPage = ({
   return (
     <div className={style.page}>
       <header className={style.header}>
-        <div className={style.heading}>
-          <h1>{t.industryTopTitle}</h1>
-          <p>{t.industryTopSubtitle}</p>
-        </div>
+        <EnterpriseSectionTabs
+          active='enterpriseIndustryTop'
+          onChange={onSwitchTab}
+        />
         <div className={style.headerMeta}>
           <span>{rankBasisText}</span>
           {listQuery.data?.updatedAt ? (
@@ -148,6 +152,9 @@ const IndustryTopPage = ({
         </div>
       </header>
       <div className={style.body}>
+        <div className={style.subHeader}>
+          <p>{t.industryTopSubtitle}</p>
+        </div>
         <IndustryTabs
           activeIndustry={activeIndustry}
           overviews={overviewsQuery.data?.items || []}

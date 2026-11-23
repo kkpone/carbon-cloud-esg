@@ -135,6 +135,7 @@ export default {
   refreshFailed:
     'The operation succeeded, but refreshing the list failed. Please retry.',
 
+  enterpriseMenu: 'Enterprise carbon data',
   industryTopMenu: 'Industry Top 100',
   industryTopTitle: 'Industry Top 100 Carbon Data',
   industryTopSubtitle:

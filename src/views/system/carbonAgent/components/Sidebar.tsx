@@ -2159,37 +2159,19 @@ const Sidebar = ({
               className={classNames(style.navItem, {
                 [style.activeNavSubItem]: [
                   'enterpriseFollows',
+                  'enterpriseIndustryTop',
                   'enterpriseDetail',
                   'enterpriseCompare',
                 ].includes(activeSection),
               })}
               type='button'
-              aria-label={I18N.enterpriseData.title}
-              title={collapsed ? I18N.enterpriseData.title : undefined}
+              aria-label={I18N.enterpriseData.enterpriseMenu}
+              title={collapsed ? I18N.enterpriseData.enterpriseMenu : undefined}
               onClick={() => onSelectSection('enterpriseFollows')}
             >
               <Icon src={icons.enterpriseFollowIcon} />
-              <span className={style.navText}>{I18N.enterpriseData.title}</span>
-            </button>
-
-            <button
-              className={classNames(style.navItem, {
-                [style.activeNavSubItem]:
-                  activeSection === 'enterpriseIndustryTop',
-              })}
-              type='button'
-              aria-current={
-                activeSection === 'enterpriseIndustryTop' ? 'page' : undefined
-              }
-              aria-label={I18N.enterpriseData.industryTopMenu}
-              title={
-                collapsed ? I18N.enterpriseData.industryTopMenu : undefined
-              }
-              onClick={() => onSelectSection('enterpriseIndustryTop')}
-            >
-              <Icon src={icons.enterpriseCarbonIcon} />
               <span className={style.navText}>
-                {I18N.enterpriseData.industryTopMenu}
+                {I18N.enterpriseData.enterpriseMenu}
               </span>
             </button>
 

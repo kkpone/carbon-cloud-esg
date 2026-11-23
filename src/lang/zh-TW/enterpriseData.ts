@@ -128,6 +128,7 @@ export default {
   detailsUnavailable: '缺少企業標識',
   refreshFailed: '操作已完成，但列表刷新失敗，請重試',
 
+  enterpriseMenu: '企業碳數據',
   industryTopMenu: '行業碳榜',
   industryTopTitle: '行業 Top100 企業碳數據',
   industryTopSubtitle:
