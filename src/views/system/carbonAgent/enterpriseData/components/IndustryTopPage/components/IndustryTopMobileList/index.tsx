@@ -13,8 +13,9 @@ type IndustryTopMobileListProps = {
   page: number;
   pageSize: number;
   isPreview?: boolean;
+  openingId?: string;
   onPageChange: (nextPage: number) => void;
-  onOpenCompany: (companyId: string) => void;
+  onOpenCompany: (item: IndustryTopItem) => void;
 };
 
 const IndustryTopMobileList = ({
@@ -22,6 +23,7 @@ const IndustryTopMobileList = ({
   page,
   pageSize,
   isPreview = false,
+  openingId = '',
   onPageChange,
   onOpenCompany,
 }: IndustryTopMobileListProps) => {
@@ -56,8 +58,8 @@ const IndustryTopMobileList = ({
                   <button
                     type='button'
                     className={style.nameButton}
-                    disabled={isPreview}
-                    onClick={() => onOpenCompany(item.company.companyId)}
+                    disabled={Boolean(openingId)}
+                    onClick={() => onOpenCompany(item)}
                   >
                     {item.company.shortName || item.company.name}
                   </button>
@@ -99,8 +101,11 @@ const IndustryTopMobileList = ({
               <div className={style.cardFooter}>
                 <Button
                   type='link'
-                  disabled={isPreview}
-                  onClick={() => onOpenCompany(item.company.companyId)}
+                  loading={openingId === item.company.companyId}
+                  disabled={
+                    Boolean(openingId) && openingId !== item.company.companyId
+                  }
+                  onClick={() => onOpenCompany(item)}
                 >
                   {t.viewShort}
                 </Button>

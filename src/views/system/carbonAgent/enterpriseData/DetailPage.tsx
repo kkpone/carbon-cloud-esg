@@ -11,6 +11,7 @@ import followStyle from './FollowPage.module.less';
 import { ErrorState, FollowButton, Loading } from './components';
 import { formatDecimal, formatFormerNames } from './data';
 import { PageHeader } from './PageLayout';
+import { isPreviewCompanyId } from './industryTopPreviewData';
 import { fetchCarbonData } from './service';
 import { useEnterpriseData } from './state';
 import type { Company } from './types';
@@ -58,6 +59,7 @@ export const CompanyProfile = ({ company }: { company: Company }) => {
             <h2>{company.name}</h2>
             <FollowButton
               companyId={company.companyId}
+              disabled={isPreviewCompanyId(company.companyId)}
               appearance='star'
               className={followStyle.followAction}
             />

@@ -1,8 +1,10 @@
 import type {
+  CarbonData,
   IndustryCode,
   IndustryOverview,
   IndustryTopItem,
   IndustryTopListResponse,
+  Metric,
 } from './types';
 import { TOP_INDUSTRIES } from './industries';
 
@@ -1014,5 +1016,136 @@ export const buildIndustryTopPreviewList = (
     medianUnit: 'tCO2e',
     records,
     isPreview: true,
+  };
+};
+
+export const isPreviewCompanyId = (companyId?: string | null) =>
+  Boolean(companyId && companyId.startsWith('preview-'));
+
+export const findPreviewCompanyById = (companyId: string) => {
+  const entry = TOP_INDUSTRIES.map(({ code }) => {
+    const seed = INDUSTRY_SEEDS[code];
+    const company = seed.companies.find(item => item.id === companyId);
+    return company
+      ? { industryCode: code, category: seed.category, company }
+      : null;
+  }).find(Boolean);
+  return entry || null;
+};
+
+export const buildPreviewCarbonData = (
+  companyId: string,
+  years?: string[],
+): CarbonData | null => {
+  const found = findPreviewCompanyById(companyId);
+  if (!found) return null;
+  const { category, company } = found;
+  const activeYears = years?.length
+    ? years.filter(year => PREVIEW_YEARS.includes(year))
+    : PREVIEW_YEARS;
+  const resolvedYears = activeYears.length ? activeYears : PREVIEW_YEARS;
+
+  const metrics: Metric[] = [];
+  if (company.disclosed) {
+    resolvedYears.forEach(year => {
+      const offset = year === '2023' ? 0.96 : year === '2022' ? 0.91 : 1;
+      const scale = (raw?: string) => {
+        if (!raw) return null;
+        const parsed = Number(raw);
+        if (!Number.isFinite(parsed)) return raw;
+        return String(Math.round(parsed * offset));
+      };
+      const scaleDecimal = (raw?: string) => {
+        if (!raw) return null;
+        const parsed = Number(raw);
+        if (!Number.isFinite(parsed)) return raw;
+        return (parsed * offset).toFixed(2);
+      };
+      const scope2Name =
+        company.scope2Basis === 'market'
+          ? '范围二碳排放量（市场法）'
+          : company.scope2Basis === 'location'
+          ? '范围二碳排放量（位置法）'
+          : '范围二碳排放量';
+      if (company.total) {
+        metrics.push({
+          indicatorCode: 'PREVIEW_TOTAL_EMISSIONS',
+          name: '温室气体排放总量（范围一+范围二）',
+          categoryCode: 'EMISSIONS',
+          categoryName: '碳排放量',
+          marketCode: company.market || null,
+          unit: 'tCO2e',
+          statisticalPeriod: year,
+          valueNumeric: scale(company.total),
+        });
+      }
+      if (company.scope1) {
+        metrics.push({
+          indicatorCode: 'PREVIEW_SCOPE_1',
+          name: '范围一碳排放量',
+          categoryCode: 'EMISSIONS',
+          categoryName: '碳排放量',
+          marketCode: company.market || null,
+          unit: 'tCO2e',
+          statisticalPeriod: year,
+          valueNumeric: scale(company.scope1),
+        });
+      }
+      if (company.scope2) {
+        metrics.push({
+          indicatorCode: 'PREVIEW_SCOPE_2',
+          name: scope2Name,
+          categoryCode: 'EMISSIONS',
+          categoryName: '碳排放量',
+          marketCode: company.market || null,
+          unit: 'tCO2e',
+          statisticalPeriod: year,
+          valueNumeric: scale(company.scope2),
+        });
+      }
+      if (company.scope3) {
+        metrics.push({
+          indicatorCode: 'PREVIEW_SCOPE_3',
+          name: '范围三碳排放量',
+          categoryCode: 'EMISSIONS',
+          categoryName: '碳排放量',
+          marketCode: company.market || null,
+          unit: 'tCO2e',
+          statisticalPeriod: year,
+          valueNumeric: scale(company.scope3),
+        });
+      }
+      if (company.intensity) {
+        metrics.push({
+          indicatorCode: 'PREVIEW_INTENSITY',
+          name: '单位营收碳排放强度',
+          categoryCode: 'INTENSITY',
+          categoryName: '碳排放强度',
+          marketCode: company.market || null,
+          unit: 'tCO2e/百万元',
+          currency: 'CNY',
+          statisticalPeriod: year,
+          valueNumeric: scaleDecimal(company.intensity),
+        });
+      }
+    });
+  }
+
+  return {
+    company: {
+      companyId: company.id,
+      name: company.name,
+      shortName: company.shortName,
+      industryCategory: category,
+      registeredRegion: company.region,
+      labels: company.labels,
+      securities: company.code
+        ? [{ marketCode: company.market ?? null, code: company.code }]
+        : [],
+    },
+    years: resolvedYears,
+    availableYears: PREVIEW_YEARS,
+    metrics,
+    sources: [],
   };
 };

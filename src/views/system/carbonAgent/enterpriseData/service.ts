@@ -12,6 +12,8 @@ import {
 import {
   buildIndustryTopPreviewList,
   buildIndustryTopPreviewOverviews,
+  buildPreviewCarbonData,
+  isPreviewCompanyId,
 } from './industryTopPreviewData';
 import type {
   Analysis,
@@ -190,18 +192,23 @@ export const fetchCandidates = (
     { keyword, pageNum, pageSize: 20 },
     signal,
   );
-export const fetchCarbonData = (
+export const fetchCarbonData = async (
   companyId: string,
   years?: string[],
   signal?: AbortSignal,
-) =>
-  call<CarbonData>(
+): Promise<CarbonData> => {
+  if (isPreviewCompanyId(companyId)) {
+    const preview = buildPreviewCarbonData(companyId, years);
+    if (preview) return preview;
+  }
+  return call<CarbonData>(
     '/data',
     'POST',
     isCarbonData,
     { companyId, ...(years ? { years } : {}) },
     signal,
   );
+};
 export const fetchReports = (
   companyId: string,
   pageNum = 1,

@@ -7,10 +7,16 @@ import { useEffect, useId, useMemo, useState } from 'react';
 import searchIcon from '../../assets/search.svg';
 import { ErrorState, Loading } from '../../components';
 import { DEFAULT_INDUSTRY_CODE, isIndustryCode } from '../../industries';
-import { fetchIndustryTopList, fetchIndustryTopOverviews } from '../../service';
+import {
+  fetchCandidates,
+  fetchIndustryTopList,
+  fetchIndustryTopOverviews,
+} from '../../service';
 import { useEnterpriseData } from '../../state';
 import type {
+  Company,
   IndustryCode,
+  IndustryTopItem,
   IndustryTopRankBy,
   ListingFilter,
 } from '../../types';
@@ -56,6 +62,7 @@ const IndustryTopPage = ({
   const [listingFilter, setListingFilter] = useState<ListingFilter>('all');
   const [disclosedOnly, setDisclosedOnly] = useState(false);
   const [page, setPage] = useState(1);
+  const [openingId, setOpeningId] = useState('');
   const disclosedSwitchId = useId();
 
   const overviewsQuery = useQuery({
@@ -128,9 +135,43 @@ const IndustryTopPage = ({
     onParamsChange({ industry: activeIndustry, year: nextYear });
   };
 
-  const handleOpenCompany = (companyId: string) => {
-    if (isPreview) return;
-    onOpenCompany(companyId, activeIndustry, activeYear || undefined);
+  const findExactCompany = (records: Company[], target: Company) => {
+    const targetCodes = new Set(
+      (target.securities || []).map(item => item.code.toUpperCase()),
+    );
+    return (
+      records.find(
+        item =>
+          item.name === target.name ||
+          (target.shortName && item.shortName === target.shortName) ||
+          (item.securities || []).some(security =>
+            targetCodes.has(security.code.toUpperCase()),
+          ),
+      ) || records[0]
+    );
+  };
+
+  const handleOpenCompany = async (item: IndustryTopItem) => {
+    const { company } = item;
+    if (!isPreview) {
+      onOpenCompany(company.companyId, activeIndustry, activeYear || undefined);
+      return;
+    }
+    if (openingId) return;
+    setOpeningId(company.companyId);
+    try {
+      const result = await fetchCandidates(company.name, 1);
+      const matched = findExactCompany(result.records, company);
+      onOpenCompany(
+        matched ? matched.companyId : company.companyId,
+        activeIndustry,
+        activeYear || undefined,
+      );
+    } catch {
+      onOpenCompany(company.companyId, activeIndustry, activeYear || undefined);
+    } finally {
+      setOpeningId('');
+    }
   };
 
   return (
@@ -254,6 +295,7 @@ const IndustryTopPage = ({
               page={page}
               pageSize={PAGE_SIZE}
               isPreview={isPreview}
+              openingId={openingId}
               onPageChange={setPage}
               onOpenCompany={handleOpenCompany}
             />
@@ -263,6 +305,7 @@ const IndustryTopPage = ({
               page={page}
               pageSize={PAGE_SIZE}
               isPreview={isPreview}
+              openingId={openingId}
               onPageChange={setPage}
               onOpenCompany={handleOpenCompany}
             />

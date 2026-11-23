@@ -15,8 +15,9 @@ type IndustryTopTableProps = {
   page: number;
   pageSize: number;
   isPreview?: boolean;
+  openingId?: string;
   onPageChange: (nextPage: number) => void;
-  onOpenCompany: (companyId: string) => void;
+  onOpenCompany: (item: IndustryTopItem) => void;
 };
 
 const scope2BasisLabel = (basis?: 'market' | 'location' | 'unknown' | null) => {
@@ -32,6 +33,7 @@ const IndustryTopTable = ({
   page,
   pageSize,
   isPreview = false,
+  openingId = '',
   onPageChange,
   onOpenCompany,
 }: IndustryTopTableProps) => {
@@ -75,8 +77,8 @@ const IndustryTopTable = ({
                 type='button'
                 className={style.companyLink}
                 title={item.company.name}
-                disabled={isPreview}
-                onClick={() => onOpenCompany(item.company.companyId)}
+                disabled={Boolean(openingId)}
+                onClick={() => onOpenCompany(item)}
               >
                 {item.company.shortName || item.company.name}
               </button>
@@ -221,8 +223,11 @@ const IndustryTopTable = ({
         <div className={style.actions}>
           <Button
             type='link'
-            disabled={isPreview}
-            onClick={() => onOpenCompany(item.company.companyId)}
+            loading={openingId === item.company.companyId}
+            disabled={
+              Boolean(openingId) && openingId !== item.company.companyId
+            }
+            onClick={() => onOpenCompany(item)}
           >
             {t.viewShort}
           </Button>
