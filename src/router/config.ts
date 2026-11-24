@@ -616,7 +616,6 @@ const routes: Routes[] = [
   },
   {
     path: RouteMaps.carbonAgentZeroRetentionAgreement,
-    scope: 'agent',
     auth: false,
     meta: {
       title: I18N.agentTeam.securityAgreementPageTitle,

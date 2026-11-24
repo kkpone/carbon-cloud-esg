@@ -31,7 +31,6 @@ import navmonitor from './assets/nav-monitor.svg';
 import navoverview from './assets/nav-overview.svg';
 import navprofile from './assets/nav-profile.svg';
 import navquota from './assets/nav-quota.svg';
-import navsecurity from './assets/security.svg';
 import workspaceOrg from './assets/workspace-org.svg';
 import { AGENT_PATH, TEAM_PATH, dateText } from './helpers';
 import { teamText } from './i18n';
@@ -163,7 +162,6 @@ const TeamContent = () => {
             'members-group',
             'quota-group',
             'profile-group',
-            'security-group',
             'monitor-group',
             'audit-group',
           ]}
@@ -205,13 +203,10 @@ const TeamContent = () => {
                     key: 'profile-group',
                     icon: navIcon(navprofile),
                     label: teamText('companySettings'),
-                    children: [item('profile', teamText('menuCompany'))],
-                  },
-                  {
-                    key: 'security-group',
-                    icon: navIcon(navsecurity),
-                    label: teamText('securityManagement'),
-                    children: [item('security')],
+                    children: [
+                      item('profile', teamText('menuCompany')),
+                      item('security'),
+                    ],
                   },
                   {
                     key: 'monitor-group',

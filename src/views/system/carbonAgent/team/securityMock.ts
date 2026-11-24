@@ -1,5 +1,6 @@
 import { SET_COMPANY_USER_INFO } from '@src/store/actionTypes';
 import { getLoginStorage } from '@src/utils/feishuSession';
+import { errorCode } from './errors';
 
 import type {
   DesensitizationWord,
@@ -85,13 +86,31 @@ const nowBeijingText = () =>
     .replace('T', ' ');
 
 export const isSecurityApiUnavailable = (error: unknown): boolean => {
+  // Never mask real business / permission / auth errors as mock fallback.
+  const bizCode = errorCode(error);
+  if (bizCode) return false;
   const err = error as {
-    response?: { status?: number; data?: { code?: number } };
+    response?: { status?: number; data?: { code?: number; msg?: string } };
+    data?: { code?: number; msg?: string };
     status?: number;
+    code?: number | string;
   };
   const status = err?.response?.status ?? err?.status;
-  const code = err?.response?.data?.code;
-  return status === 404 || status === 405 || status === 501 || code === 404;
+  const body = err?.response?.data ?? err?.data;
+  const code =
+    body?.code ?? (typeof err?.code === 'number' ? err.code : undefined);
+  if (status === 401 || status === 403 || code === 401 || code === 403) {
+    return false;
+  }
+  return (
+    status === 404 ||
+    status === 405 ||
+    status === 501 ||
+    code === 404 ||
+    code === 405 ||
+    code === 501 ||
+    code === 500
+  );
 };
 
 export const getMockSecurityConfig = (): SecurityConfig => readStore().config;

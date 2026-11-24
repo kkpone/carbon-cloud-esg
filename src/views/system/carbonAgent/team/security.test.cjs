@@ -28,6 +28,17 @@ function loadTs(filename, mocks = {}) {
 }
 
 const helpers = loadTs(path.join(__dirname, 'securityHelpers.ts'));
+const errors = loadTs(path.join(__dirname, 'errors.ts'), {
+  './i18n': { teamText: key => key },
+  '@src/lang/createI18nLabelMap': loadTs(
+    path.resolve(__dirname, '../../../../lang/createI18nLabelMap.ts'),
+  ),
+});
+const securityMock = loadTs(path.join(__dirname, 'securityMock.ts'), {
+  '@src/store/actionTypes': { SET_COMPANY_USER_INFO: 'SET_COMPANY_USER_INFO' },
+  '@src/utils/feishuSession': { getLoginStorage: () => ({ getItem: () => null }) },
+  './errors': errors,
+});
 
 test('zero-retention agreement path preserves optional region query param', () => {
   assert.equal(
@@ -145,4 +156,41 @@ test('agentTeam zh-CN and en-US keys and placeholders remain aligned after secur
     assert.ok(!/[\u3400-\u9fff]/.test(en[key]), key);
     assert.deepEqual(vars(en[key]), vars(zh[key]), key);
   }
+});
+
+test('security API fallback triggers on gateway unimplemented 404/500 responses but preserves auth and AGENT_* errors', () => {
+  assert.equal(
+    securityMock.isSecurityApiUnavailable({
+      status: 200,
+      data: { code: 500, msg: '内部服务器错误' },
+    }),
+    true,
+  );
+  assert.equal(
+    securityMock.isSecurityApiUnavailable({
+      response: { status: 404, data: { code: 404 } },
+    }),
+    true,
+  );
+  assert.equal(
+    securityMock.isSecurityApiUnavailable({
+      status: 200,
+      data: { code: 403, msg: 'AGENT_TEAM_MANAGEMENT_FORBIDDEN' },
+    }),
+    false,
+  );
+  assert.equal(
+    securityMock.isSecurityApiUnavailable({
+      status: 200,
+      data: { code: 401, msg: 'Unauthorized' },
+    }),
+    false,
+  );
+  assert.equal(
+    securityMock.isSecurityApiUnavailable({
+      status: 200,
+      data: { code: 500, msg: 'AGENT_SECURITY_WORD_DUPLICATE' },
+    }),
+    false,
+  );
 });
