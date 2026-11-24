@@ -1,9 +1,9 @@
 import { SafetyCertificateOutlined } from '@ant-design/icons';
+import { useTitle } from 'ahooks';
 import { Button } from 'antd';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { useTitle } from '@/hooks';
 import { teamText } from '@/views/system/carbonAgent/team/i18n';
 
 import style from './index.module.less';

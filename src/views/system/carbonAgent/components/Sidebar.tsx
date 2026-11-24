@@ -2429,11 +2429,14 @@ const Sidebar = ({
                     className={classNames(
                       style.badge,
                       PLAN_BADGE_TONE_CLASS_MAP[planTone],
+                      securityModeActive && sidebarStyles.badgeWithSecurity,
                     )}
                   >
-                    {mobile && !authenticated
-                      ? I18N.carbonAgent.guestLoginBenefits
-                      : planName}
+                    <span className={sidebarStyles.planText}>
+                      {mobile && !authenticated
+                        ? I18N.carbonAgent.guestLoginBenefits
+                        : planName}
+                    </span>
                     {securityModeActive ? (
                       <span
                         className={sidebarStyles.securityTag}
