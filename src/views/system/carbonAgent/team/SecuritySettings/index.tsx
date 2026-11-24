@@ -101,30 +101,34 @@ export const SecuritySettings = () => {
           />
         </section>
 
-        {!config.enabled ? (
+        {config.enabled ? (
+          <>
+            <ModelRegionCard
+              disabled={false}
+              saving={saving}
+              value={config.modelRegion}
+              onChange={modelRegion => updateConfig({ modelRegion })}
+            />
+
+            <DesensitizationWordList disabled={false} />
+
+            <SharePolicyCard
+              allowSessionShare={config.allowSessionShare}
+              disabled={false}
+              saving={saving}
+              onChange={allowSessionShare =>
+                updateConfig({ allowSessionShare })
+              }
+            />
+          </>
+        ) : (
           <Alert
             className={style.disabledAlert}
             type='info'
             showIcon
             message={teamText('securityModeDisabledNotice')}
           />
-        ) : null}
-
-        <ModelRegionCard
-          disabled={!config.enabled}
-          saving={saving}
-          value={config.modelRegion}
-          onChange={modelRegion => updateConfig({ modelRegion })}
-        />
-
-        <DesensitizationWordList disabled={!config.enabled} />
-
-        <SharePolicyCard
-          allowSessionShare={config.allowSessionShare}
-          disabled={!config.enabled}
-          saving={saving}
-          onChange={allowSessionShare => updateConfig({ allowSessionShare })}
-        />
+        )}
       </QueryState>
     </div>
   );

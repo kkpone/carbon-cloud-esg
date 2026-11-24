@@ -641,7 +641,7 @@ export default {
   securityModeEnabledTag: 'Protected',
   securityModeDisabledTag: 'Off',
   securityModeDisabledNotice:
-    'Security mode is currently off. Turn it on to activate the model region, desensitization rules and sharing policy below. Existing settings are preserved.',
+    'Security mode is currently off. Turn it on to configure model service regions, enterprise desensitization word lists and session sharing controls. Existing settings are preserved.',
   securityModeToggleEnableTitle: 'Enable enterprise security mode?',
   securityModeToggleEnableContent:
     'Your configured model region, enterprise desensitization word list and session sharing policy will take effect immediately for all team members, and a security badge will appear in Agent.',

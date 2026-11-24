@@ -594,7 +594,7 @@ export default {
   securityModeEnabledTag: '保护中',
   securityModeDisabledTag: '未开启',
   securityModeDisabledNotice:
-    '安全模式未开启。开启后以下模型区域、企业脱敏词表和会话分享策略将立即生效，原配置均会保留。',
+    '安全模式未开启。开启后可配置模型服务区域、企业脱敏词表和会话分享管控，已有配置会保留并立即生效。',
   securityModeToggleEnableTitle: '确认开启企业安全模式？',
   securityModeToggleEnableContent:
     '开启后，当前已配置的模型区域、企业脱敏词表和会话分享策略将立即对团队全部成员生效，并在 Agent 前台展示安全保护标识。',
