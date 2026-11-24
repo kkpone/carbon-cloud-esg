@@ -3,6 +3,16 @@ import type { RequestOptions } from '@src/api/types';
 
 import { errorCode } from './errors';
 import { teamText } from './i18n';
+import {
+  createMockDesensitizationWords,
+  deleteMockDesensitizationWord,
+  getMockDesensitizationWords,
+  getMockSecurityConfig,
+  hydrateWorkspaceSecurity,
+  isSecurityApiUnavailable,
+  saveMockSecurityConfig,
+  updateMockDesensitizationWord,
+} from './securityMock';
 import type {
   Workspace,
   Summary,
@@ -97,8 +107,12 @@ export const teamRequest = async <T>(
 export const teamApi = {
   workspaces: (signal?: AbortSignal) =>
     teamRequest<Workspace[]>('/management/agent/workspaces', { signal }),
-  access: (signal?: AbortSignal) =>
-    teamRequest<Workspace>('/management/agent/workspace-access', { signal }),
+  access: async (signal?: AbortSignal) =>
+    hydrateWorkspaceSecurity(
+      await teamRequest<Workspace>('/management/agent/workspace-access', {
+        signal,
+      }),
+    ),
   summary: () => teamRequest<Summary>(`${root}/summary`),
   profile: () => teamRequest<Profile>(`${root}/profile`),
   saveProfile: (data: { companyName: string; contactEmail: string }) =>
@@ -239,41 +253,90 @@ export const teamApi = {
     teamRequest<Page<Audit>>(`${root}/audit`, { params }),
   auditExport: (params: DateFilter) =>
     teamRequest<Audit[]>(`${root}/audit/export`, { params }),
-  securityConfig: () => teamRequest<SecurityConfig>(`${root}/security/config`),
-  saveSecurityConfig: (data: SecurityConfigUpdate) =>
-    teamRequest<SecurityConfig>(`${root}/security/config`, {
-      method: 'PUT',
-      data,
-    }),
-  desensitizationWords: (params: {
+  securityConfig: async () => {
+    try {
+      return await teamRequest<SecurityConfig>(`${root}/security/config`);
+    } catch (error) {
+      if (isSecurityApiUnavailable(error)) return getMockSecurityConfig();
+      throw error;
+    }
+  },
+  saveSecurityConfig: async (data: SecurityConfigUpdate) => {
+    try {
+      return await teamRequest<SecurityConfig>(`${root}/security/config`, {
+        method: 'PUT',
+        data,
+      });
+    } catch (error) {
+      if (isSecurityApiUnavailable(error)) return saveMockSecurityConfig(data);
+      throw error;
+    }
+  },
+  desensitizationWords: async (params: {
     keyword?: string;
     enabled?: boolean;
     pageNum?: number;
     pageSize?: number;
-  }) =>
-    teamRequest<Page<DesensitizationWord>>(
-      `${root}/security/desensitization-words`,
-      { params },
-    ),
-  createDesensitizationWords: (items: DesensitizationWordInput[]) =>
-    teamRequest<DesensitizationWord[]>(
-      `${root}/security/desensitization-words`,
-      {
-        method: 'POST',
-        data: { items },
-      },
-    ),
-  updateDesensitizationWord: (id: string, data: DesensitizationWordInput) =>
-    teamRequest<DesensitizationWord>(
-      `${root}/security/desensitization-words/${encodeURIComponent(id)}`,
-      {
-        method: 'PUT',
-        data,
-      },
-    ),
-  deleteDesensitizationWord: (id: string) =>
-    teamRequest<void>(
-      `${root}/security/desensitization-words/${encodeURIComponent(id)}`,
-      { method: 'DELETE' },
-    ),
+  }) => {
+    try {
+      return await teamRequest<Page<DesensitizationWord>>(
+        `${root}/security/desensitization-words`,
+        { params },
+      );
+    } catch (error) {
+      if (isSecurityApiUnavailable(error)) {
+        return getMockDesensitizationWords(params);
+      }
+      throw error;
+    }
+  },
+  createDesensitizationWords: async (items: DesensitizationWordInput[]) => {
+    try {
+      return await teamRequest<DesensitizationWord[]>(
+        `${root}/security/desensitization-words`,
+        {
+          method: 'POST',
+          data: { items },
+        },
+      );
+    } catch (error) {
+      if (isSecurityApiUnavailable(error)) {
+        return createMockDesensitizationWords(items);
+      }
+      throw error;
+    }
+  },
+  updateDesensitizationWord: async (
+    id: string,
+    data: DesensitizationWordInput,
+  ) => {
+    try {
+      return await teamRequest<DesensitizationWord>(
+        `${root}/security/desensitization-words/${encodeURIComponent(id)}`,
+        {
+          method: 'PUT',
+          data,
+        },
+      );
+    } catch (error) {
+      if (isSecurityApiUnavailable(error)) {
+        return updateMockDesensitizationWord(id, data);
+      }
+      throw error;
+    }
+  },
+  deleteDesensitizationWord: async (id: string) => {
+    try {
+      return await teamRequest<void>(
+        `${root}/security/desensitization-words/${encodeURIComponent(id)}`,
+        { method: 'DELETE' },
+      );
+    } catch (error) {
+      if (isSecurityApiUnavailable(error)) {
+        deleteMockDesensitizationWord(id);
+        return;
+      }
+      throw error;
+    }
+  },
 };
