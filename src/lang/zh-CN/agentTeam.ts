@@ -584,4 +584,120 @@ export default {
   valueToValue: '{value0} 至 {value1}',
   valueDaysFromEntitlementActivation: '自权益生效起 {value0} 天',
   noExpiry: '长期有效',
+  securityManagement: '安全管理',
+  securitySettings: '安全设置',
+  securitySettingsDescription:
+    '开启企业安全模式后，可配置模型服务区域、企业脱敏词表与会话分享权限，全团队即时生效。',
+  securityModeTitle: '企业安全模式',
+  securityModeDescription:
+    '开启后，团队成员的对话将严格按企业安全策略执行，并在 Agent 前台展示安全保护标识。',
+  securityModeEnabledTag: '保护中',
+  securityModeDisabledTag: '未开启',
+  securityModeDisabledNotice:
+    '安全模式未开启。开启后以下模型区域、企业脱敏词表和会话分享策略将立即生效，原配置均会保留。',
+  securityModeToggleEnableTitle: '确认开启企业安全模式？',
+  securityModeToggleEnableContent:
+    '开启后，当前已配置的模型区域、企业脱敏词表和会话分享策略将立即对团队全部成员生效，并在 Agent 前台展示安全保护标识。',
+  securityModeToggleDisableTitle: '确认关闭企业安全模式？',
+  securityModeToggleDisableContent:
+    '关闭后，安全模式策略与 Agent 前台安全标识将立即停用，已保存的词表和配置会保留以便后续重新开启。',
+  securityConfigSaved: '安全设置已更新',
+  securityModelSectionTitle: '模型服务区域',
+  securityModelSectionDescription:
+    '选择团队会话使用的模型通道。所有通道均承诺输入输出数据零训练、零留存。',
+  securityModelDomesticTitle: '国内模型',
+  securityModelDomesticDesc:
+    '数据境内处理不出境，满足中国境内数据安全与合规监管要求。',
+  securityModelOverseasTitle: '国外模型',
+  securityModelOverseasDesc:
+    '接入国际合规模型通道，适合跨国业务或多语种复杂碳核算场景。',
+  securityZeroRetentionAgreement: '《零训练与数据留存协议》',
+  securityViewAgreement: '查看协议',
+  securityDesensitizationSectionTitle: '企业脱敏词表',
+  securityDesensitizationSectionDescription:
+    '在发送给模型前自动对命中的企业敏感词进行脱敏替换，防止核心商业信息暴露。',
+  securityWordCountSummary: '已配置 {value0} / {value1} 条',
+  securitySearchWords: '搜索敏感词、替换词或分类',
+  securityAddWord: '新增脱敏词',
+  securityBatchAddWords: '批量添加',
+  securityExportWords: '导出 CSV',
+  securityWordColumn: '敏感词原文',
+  securityReplacementColumn: '脱敏替换占位符',
+  securityReplacementAuto: '系统自动生成占位符',
+  securityCategoryColumn: '分类',
+  securityCategoryCompany: '企业名称',
+  securityCategoryCustomer: '客户 / 供应商',
+  securityCategoryProject: '项目 / 产品代号',
+  securityCategoryCustom: '自定义',
+  securityWordStatusColumn: '状态',
+  securityWordUpdatedAtColumn: '更新时间',
+  securityEditWord: '编辑脱敏词',
+  securityDeleteWord: '删除',
+  securityDeleteWordConfirm: '确定删除敏感词「{value0}」吗？',
+  securityWordPlaceholder:
+    '例如：内部项目代号、企业全称、关键客户名（2～100 字）',
+  securityReplacementPlaceholder: '留空由系统自动分配，例如 [企业脱敏词_1]',
+  securityWordRequired: '请输入 2～100 个字符的敏感词原文',
+  securityWordSaved: '脱敏词已保存',
+  securityWordDeleted: '脱敏词已删除',
+  securityWordAddedCount: '已添加 {value0} 条脱敏词',
+  securityBatchInputLabel: '批量录入敏感词（每行一条）',
+  securityBatchInputHint:
+    '支持每行一条敏感词，也可使用逗号或 Tab 分隔「敏感词, 替换占位符, 分类」，单次最多添加 {value0} 条。',
+  securityBatchInputPlaceholder:
+    '星辰碳核项目\n华东精密制造有限公司, [核心客户A], 客户 / 供应商',
+  securityBatchValidationSummary:
+    '将导入 {value0} 条有效词条（跳过重复 {value1} 条、格式无效 {value2} 条）',
+  securityBatchEmptyWarning: '请至少输入一条有效脱敏词',
+  securityBatchLimitWarning: '单次最多添加 {value0} 条脱敏词',
+  securityWordsEmpty: '暂未配置企业脱敏词',
+  securityShareSectionTitle: '会话分享管控',
+  securityShareSectionDescription:
+    '控制团队成员是否允许将 Agent 会话生成外部只读分享链接。',
+  securityShareSwitchLabel: '允许成员分享会话',
+  securityShareEnabledHint:
+    '已允许分享：团队成员可生成会话分享链接，请提醒成员注意业务数据合规。',
+  securityShareDisabledHint:
+    '已禁止分享：Agent 前台会话分享入口已禁用，防止团队对话数据通过外链扩散。',
+  securityShareDisabledError: '管理员已在安全设置中禁止分享会话',
+  securityWordDuplicateError: '该敏感词已存在，请勿重复添加',
+  securityWordInvalidError: '敏感词格式无效，请输入 2～100 个字符',
+  securityWordLimitExceededError: '企业脱敏词数量已达上限',
+  securityBannerTitle: '安全模式已开启',
+  securityBannerRegionDomestic: '国内模型',
+  securityBannerRegionOverseas: '国外模型',
+  securityBannerDesensitizationActive: '企业脱敏已生效（{value0} 条）',
+  securityBannerDesensitizationReady: '企业脱敏已就绪',
+  securityBannerShareAllowed: '允许会话分享',
+  securityBannerShareBlocked: '已禁止会话分享',
+  securityBannerPopoverTitle: '企业安全模式保护中',
+  securityBannerPopoverSubtitle: '您的团队会话受企业级零训练与数据安全策略保护',
+  securityBannerModelLabel: '模型通道',
+  securityBannerDesensitizationLabel: '企业脱敏',
+  securityBannerShareLabel: '会话分享',
+  securityBannerGoSettings: '前往安全设置',
+  securityComposerHint: '企业安全模式保护中 · 零训练留存',
+  securityShareDisabledTooltip: '管理员已在企业安全设置中关闭会话分享',
+  securityAgreementPageTitle: '零训练与数据留存协议',
+  securityAgreementSubtitle: 'Carbon Agent 企业安全模式数据安全与隐私承诺',
+  securityAgreementUpdatedAt: '更新日期：2026 年 11 月',
+  securityAgreementCurrentRegion: '当前查看模型区域：{value0}',
+  securityAgreementBackButton: '关闭页面',
+  securityAgreementSection1Title: '一、零模型训练承诺',
+  securityAgreementSection1Body:
+    '开启企业安全模式后，您的团队在 Carbon Agent 中提交的全部对话输入、上传附件、碳核算数据及模型输出，均仅用于完成当前会话响应与企业授权业务处理，绝不用于任何基础大模型或微调模型的训练、再训练或公共数据集构建。',
+  securityAgreementSection2Title: '二、数据零留存机制',
+  securityAgreementSection2Body:
+    '在模型推理调用链路中，第三方及自研模型推理节点不留存对话明文与提示词日志（Zero Data Retention）。会话历史仅在您所属企业隔离的业务存储空间内按权限保存，支持管理员集中审计与管控。',
+  securityAgreementSection3Title: '三、国内模型与国外模型区域说明',
+  securityAgreementSection3Domestic:
+    '国内模型：推理与计算全链路部署于中国境内合规机房，数据不出境，符合国内数据安全及个人信息保护相关法规要求。',
+  securityAgreementSection3Overseas:
+    '国外模型：通过企业级加密专线接入国际合规模型服务端点，并同样签署零训练与零推理留存（ZDR）条款，适用于跨国业务及多语种核算场景。',
+  securityAgreementSection4Title: '四、企业脱敏与分享管控联动',
+  securityAgreementSection4Body:
+    '企业管理员配置脱敏词表后，系统将在请求进入模型推理前对敏感词进行脱敏替换；当管理员关闭会话分享开关时，团队成员无法生成对外只读分享链接，降低企业敏感信息外泄风险。',
+  securityAgreementSection5Title: '五、协议生效与联系我们',
+  securityAgreementSection5Body:
+    '本协议在企业管理员开启安全模式并选择对应模型区域后立即生效。如需获取正式盖章版数据安全附录（DPA）或合规审计材料，请联系碳阻迹企业服务团队：mail@carbonstop.com。',
 };

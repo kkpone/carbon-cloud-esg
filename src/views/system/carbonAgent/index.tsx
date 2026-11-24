@@ -9,7 +9,12 @@ import {
   WorkspaceNotice,
   useWorkspace,
 } from './team/workspace';
-import { reasonText } from './team/errors';
+import { errorCode, errorText, reasonText } from './team/errors';
+import { teamText } from './team/i18n';
+import {
+  canShareWorkspaceConversation,
+  isSecurityModeActive,
+} from './team/securityHelpers';
 /**
  * @file Carbon Agent 独立页，负责会话和各业务预览目标的顶层编排。
  */
@@ -147,6 +152,7 @@ import ProjectTasksEntry from './components/ProjectTasksEntry';
 import ReviewCertificationModals, {
   type ThirdPartyCertificationType,
 } from './components/ReviewCertificationModals';
+import SecurityModeBadge from './components/SecurityModeBadge';
 import Sidebar from './components/Sidebar';
 import EnterpriseCarbonCertificationModal from './components/enterpriseCarbonCertification/EnterpriseCarbonCertificationModal';
 import { ENTERPRISE_CARBON_CERTIFICATION_PAGE_TYPE } from './components/enterpriseCarbonCertification/constants';
@@ -4261,8 +4267,19 @@ const getMobileVisualViewportHeightValue = (isAndroid = false) => {
 };
 
 const CarbonAgent = () => {
-  const { access: workspaceAccess, personal: personalWorkspace } =
-    useWorkspace();
+  const {
+    access: workspaceAccess,
+    personal: personalWorkspace,
+    refresh: refreshWorkspace,
+  } = useWorkspace();
+  const securityModeActive =
+    !isShareMode && isSecurityModeActive(workspaceAccess);
+  const canShareConversation = canShareWorkspaceConversation(
+    personalWorkspace,
+    workspaceAccess,
+  );
+  const shareBlockedBySecurity =
+    !personalWorkspace && securityModeActive && !canShareConversation;
   const { factorId = '', shareId = '' } = useParams<{
     factorId?: string;
     shareId?: string;
@@ -5799,10 +5816,13 @@ const CarbonAgent = () => {
     conversationStarted &&
     !desktopPreviewVisible;
   const showPreviewClosedActions =
-    showDesktopClosedShareButton || showPreviewOpenButton;
+    ((canShareConversation || shareBlockedBySecurity) &&
+      showDesktopClosedShareButton) ||
+    showPreviewOpenButton;
   const shareConversationDisabled =
     shareCreating ||
     projectConversationReadonly ||
+    !canShareConversation ||
     !activeConversationSessionId;
   const composerUploadAvailable =
     !conversationReadonly &&
@@ -10901,7 +10921,12 @@ const CarbonAgent = () => {
   };
 
   const handleShareConversation = () => {
-    if (!personalWorkspace) return;
+    if (!canShareConversation) {
+      if (shareBlockedBySecurity) {
+        antdMessage.warning(teamText('securityShareDisabledError'));
+      }
+      return;
+    }
     if (!requireLogin() || projectConversationReadonly) {
       return;
     }
@@ -10941,6 +10966,11 @@ const CarbonAgent = () => {
       .catch(error => {
         if (error instanceof ClipboardCopyError) {
           antdMessage.warning(I18N.carbonAgent.shareCopyFailed);
+          return;
+        }
+        if (errorCode(error) === 'AGENT_SECURITY_SHARE_DISABLED') {
+          antdMessage.warning(errorText(error));
+          refreshWorkspace();
         }
       })
       .finally(() => setShareCreating(false));
@@ -11070,7 +11100,9 @@ const CarbonAgent = () => {
               getProjectSectionKey(activeConversationProjectId),
             ),
           onShare:
-            projectConversationReadonly || desktopPreviewVisible
+            projectConversationReadonly ||
+            desktopPreviewVisible ||
+            !canShareConversation
               ? undefined
               : handleShareConversation,
         }
@@ -11207,6 +11239,7 @@ const CarbonAgent = () => {
           })}
         >
           <WorkspaceNotice />
+          {!isShareMode ? <SecurityModeBadge /> : null}
           {conversationStarted ? (
             <div
               ref={conversationWorkspaceRef}
@@ -11336,7 +11369,7 @@ const CarbonAgent = () => {
                 }
                 onRetryMessage={handleRetryMessage}
                 onShare={
-                  !conversationReadonly && personalWorkspace && isMobile
+                  !conversationReadonly && canShareConversation && isMobile
                     ? handleShareConversation
                     : undefined
                 }
@@ -11348,8 +11381,16 @@ const CarbonAgent = () => {
               />
               {showPreviewClosedActions ? (
                 <div className={style.previewClosedActions}>
-                  {personalWorkspace && showDesktopClosedShareButton ? (
-                    <Tooltip title={I18N.carbonAgent.share} placement='bottom'>
+                  {(canShareConversation || shareBlockedBySecurity) &&
+                  showDesktopClosedShareButton ? (
+                    <Tooltip
+                      title={
+                        shareBlockedBySecurity
+                          ? teamText('securityShareDisabledTooltip')
+                          : I18N.carbonAgent.share
+                      }
+                      placement='bottom'
+                    >
                       <button
                         className={classNames(
                           style.previewShareButton,
@@ -11516,7 +11557,7 @@ const CarbonAgent = () => {
                     onResizeBy={handlePreviewResizeBy}
                     onResizeStart={handlePreviewResizeStart}
                     onShare={
-                      personalWorkspace &&
+                      canShareConversation &&
                       !conversationReadonly &&
                       desktopPreviewVisible
                         ? handleShareConversation

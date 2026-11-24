@@ -631,4 +631,129 @@ export default {
   valueDaysFromEntitlementActivation:
     '{value0} days from entitlement activation',
   noExpiry: 'No expiry',
+  securityManagement: 'Security',
+  securitySettings: 'Security settings',
+  securitySettingsDescription:
+    'Enable enterprise security mode to configure model regions, custom desensitization word lists and session sharing controls for the entire team.',
+  securityModeTitle: 'Enterprise security mode',
+  securityModeDescription:
+    'When enabled, all team conversations follow your security policy and display a security badge in Carbon Agent.',
+  securityModeEnabledTag: 'Protected',
+  securityModeDisabledTag: 'Off',
+  securityModeDisabledNotice:
+    'Security mode is currently off. Turn it on to activate the model region, desensitization rules and sharing policy below. Existing settings are preserved.',
+  securityModeToggleEnableTitle: 'Enable enterprise security mode?',
+  securityModeToggleEnableContent:
+    'Your configured model region, enterprise desensitization word list and session sharing policy will take effect immediately for all team members, and a security badge will appear in Agent.',
+  securityModeToggleDisableTitle: 'Disable enterprise security mode?',
+  securityModeToggleDisableContent:
+    'Security mode protections and the Agent security badge will be turned off immediately. Your saved word list and preferences will remain stored.',
+  securityConfigSaved: 'Security settings updated',
+  securityModelSectionTitle: 'Model service region',
+  securityModelSectionDescription:
+    'Choose the model routing region for team conversations. Both options enforce zero training and zero inference retention.',
+  securityModelDomesticTitle: 'Domestic models',
+  securityModelDomesticDesc:
+    'Data stays within mainland China for local data residency and regulatory compliance.',
+  securityModelOverseasTitle: 'Overseas models',
+  securityModelOverseasDesc:
+    'Routes through compliant international model endpoints for global operations and multilingual accounting workflows.',
+  securityZeroRetentionAgreement: 'Zero Training & Data Retention Agreement',
+  securityViewAgreement: 'View agreement',
+  securityDesensitizationSectionTitle: 'Enterprise desensitization word list',
+  securityDesensitizationSectionDescription:
+    'Automatically mask matching enterprise terms before requests reach the model to protect confidential business information.',
+  securityWordCountSummary: '{value0} / {value1} terms configured',
+  securitySearchWords: 'Search sensitive terms, replacements or categories',
+  securityAddWord: 'Add term',
+  securityBatchAddWords: 'Batch add',
+  securityExportWords: 'Export CSV',
+  securityWordColumn: 'Sensitive term',
+  securityReplacementColumn: 'Replacement placeholder',
+  securityReplacementAuto: 'Auto-generated placeholder',
+  securityCategoryColumn: 'Category',
+  securityCategoryCompany: 'Company name',
+  securityCategoryCustomer: 'Customer / Supplier',
+  securityCategoryProject: 'Project / Product code',
+  securityCategoryCustom: 'Custom',
+  securityWordStatusColumn: 'Status',
+  securityWordUpdatedAtColumn: 'Updated at',
+  securityEditWord: 'Edit term',
+  securityDeleteWord: 'Delete',
+  securityDeleteWordConfirm: 'Delete sensitive term "{value0}"?',
+  securityWordPlaceholder:
+    'e.g. internal project code, legal entity name, key customer (2–100 chars)',
+  securityReplacementPlaceholder:
+    'Leave blank for auto-assigned placeholder, e.g. [MASK_1]',
+  securityWordRequired: 'Enter a sensitive term of 2–100 characters',
+  securityWordSaved: 'Desensitization term saved',
+  securityWordDeleted: 'Desensitization term deleted',
+  securityWordAddedCount: 'Added {value0} desensitization terms',
+  securityBatchInputLabel: 'Batch enter terms (one per line)',
+  securityBatchInputHint:
+    'Enter one term per line, or separate "term, replacement, category" with commas or tabs. Up to {value0} terms per batch.',
+  securityBatchInputPlaceholder:
+    'Project Starlight\nAcme Precision Manufacturing, [Key Customer A], Customer / Supplier',
+  securityBatchValidationSummary:
+    '{value0} valid terms ready ({value1} duplicates, {value2} invalid skipped)',
+  securityBatchEmptyWarning: 'Enter at least one valid desensitization term',
+  securityBatchLimitWarning: 'Add up to {value0} terms at a time',
+  securityWordsEmpty: 'No enterprise desensitization terms configured yet',
+  securityShareSectionTitle: 'Session sharing control',
+  securityShareSectionDescription:
+    'Control whether team members can generate read-only external share links for Agent conversations.',
+  securityShareSwitchLabel: 'Allow members to share conversations',
+  securityShareEnabledHint:
+    'Sharing is allowed: team members can create external share links. Remind members to follow data compliance guidelines.',
+  securityShareDisabledHint:
+    'Sharing is disabled: conversation share actions are locked in Agent to prevent external data leakage.',
+  securityShareDisabledError:
+    'Conversation sharing has been disabled by your team administrator',
+  securityWordDuplicateError: 'This sensitive term already exists',
+  securityWordInvalidError: 'Invalid term format. Enter 2–100 characters.',
+  securityWordLimitExceededError:
+    'Enterprise desensitization word list limit reached',
+  securityBannerTitle: 'Security mode active',
+  securityBannerRegionDomestic: 'Domestic models',
+  securityBannerRegionOverseas: 'Overseas models',
+  securityBannerDesensitizationActive:
+    'Desensitization active ({value0} terms)',
+  securityBannerDesensitizationReady: 'Desensitization ready',
+  securityBannerShareAllowed: 'Sharing allowed',
+  securityBannerShareBlocked: 'Sharing disabled',
+  securityBannerPopoverTitle: 'Enterprise security mode active',
+  securityBannerPopoverSubtitle:
+    'Your team conversations are protected by zero-training and enterprise security controls',
+  securityBannerModelLabel: 'Model region',
+  securityBannerDesensitizationLabel: 'Desensitization',
+  securityBannerShareLabel: 'Session sharing',
+  securityBannerGoSettings: 'Open security settings',
+  securityComposerHint:
+    'Enterprise security mode active · Zero training & retention',
+  securityShareDisabledTooltip:
+    'Conversation sharing is disabled in enterprise security settings',
+  securityAgreementPageTitle: 'Zero Training & Data Retention Agreement',
+  securityAgreementSubtitle:
+    'Carbon Agent Enterprise Security Mode Data Protection Commitment',
+  securityAgreementUpdatedAt: 'Last updated: November 2026',
+  securityAgreementCurrentRegion: 'Viewing model region: {value0}',
+  securityAgreementBackButton: 'Close page',
+  securityAgreementSection1Title: '1. Zero Model Training Commitment',
+  securityAgreementSection1Body:
+    'When Enterprise Security Mode is enabled, all prompts, uploaded attachments, carbon accounting data and model outputs submitted by your team in Carbon Agent are used solely to deliver your session response and authorized business operations. They are never used to train, fine-tune or improve foundation models or shared datasets.',
+  securityAgreementSection2Title: '2. Zero Data Retention (ZDR) for Inference',
+  securityAgreementSection2Body:
+    'Across the model inference pipeline, both first-party and third-party inference endpoints operate under Zero Data Retention terms and do not store prompt payloads or inference logs. Conversation history is stored exclusively inside your isolated enterprise workspace under administrator access and audit controls.',
+  securityAgreementSection3Title: '3. Domestic vs. Overseas Model Regions',
+  securityAgreementSection3Domestic:
+    'Domestic models: Inference and processing run entirely within compliant mainland China data centers so data remains inside the territory.',
+  securityAgreementSection3Overseas:
+    'Overseas models: Requests route over encrypted enterprise channels to compliant international model endpoints covered by Zero Training and Zero Data Retention terms.',
+  securityAgreementSection4Title:
+    '4. Enterprise Desensitization & Sharing Controls',
+  securityAgreementSection4Body:
+    'When administrators configure an enterprise desensitization word list, matching sensitive terms are masked before inference. When session sharing is turned off, team members cannot generate external read-only share links.',
+  securityAgreementSection5Title: '5. Effective Date & Contact',
+  securityAgreementSection5Body:
+    'This commitment takes effect immediately upon enabling Enterprise Security Mode and selecting a model region. For a signed Data Processing Addendum (DPA) or compliance documentation, contact Carbonstop enterprise support at mail@carbonstop.com.',
 };

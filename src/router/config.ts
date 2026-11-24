@@ -615,6 +615,15 @@ const routes: Routes[] = [
     component: lazy(() => import('../views/agreement/index')),
   },
   {
+    path: RouteMaps.carbonAgentZeroRetentionAgreement,
+    scope: 'agent',
+    auth: false,
+    meta: {
+      title: I18N.agentTeam.securityAgreementPageTitle,
+    },
+    component: lazy(() => import('../views/agreement/ZeroRetentionAgreement')),
+  },
+  {
     path: '/',
     component: lazy(() => import('../layout/index')),
     meta: {

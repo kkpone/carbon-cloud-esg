@@ -20,6 +20,7 @@ import { Members } from './Members';
 import { Points } from './Points';
 import { Purchase } from './Purchase';
 import { AuditPage, ExecutionsPage, Overview, Profile } from './Reports';
+import { SecuritySettings } from './SecuritySettings';
 import { teamApi } from './api';
 import { errorCode } from './errors';
 import logo from './assets/logo.svg';
@@ -30,6 +31,7 @@ import navmonitor from './assets/nav-monitor.svg';
 import navoverview from './assets/nav-overview.svg';
 import navprofile from './assets/nav-profile.svg';
 import navquota from './assets/nav-quota.svg';
+import navsecurity from './assets/security.svg';
 import workspaceOrg from './assets/workspace-org.svg';
 import { AGENT_PATH, TEAM_PATH, dateText } from './helpers';
 import { teamText } from './i18n';
@@ -48,6 +50,7 @@ const pages = createI18nLabelMap({
   points: () => teamText('pointsManagement'),
   finance: () => teamText('orders'),
   profile: () => teamText('companyInformation'),
+  security: () => teamText('securitySettings'),
   executions: () => teamText('executionOverview'),
   audit: () => teamText('auditLogs'),
   purchase: () => teamText('teamPurchase'),
@@ -60,6 +63,7 @@ const pageComponents = {
   points: Points,
   finance: Finance,
   profile: Profile,
+  security: SecuritySettings,
   executions: ExecutionsPage,
   audit: AuditPage,
   purchase: Purchase,
@@ -159,6 +163,7 @@ const TeamContent = () => {
             'members-group',
             'quota-group',
             'profile-group',
+            'security-group',
             'monitor-group',
             'audit-group',
           ]}
@@ -201,6 +206,12 @@ const TeamContent = () => {
                     icon: navIcon(navprofile),
                     label: teamText('companySettings'),
                     children: [item('profile', teamText('menuCompany'))],
+                  },
+                  {
+                    key: 'security-group',
+                    icon: navIcon(navsecurity),
+                    label: teamText('securityManagement'),
+                    children: [item('security')],
                   },
                   {
                     key: 'monitor-group',

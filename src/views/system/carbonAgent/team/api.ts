@@ -27,6 +27,10 @@ import type {
   Executions,
   Audit,
   DateFilter,
+  SecurityConfig,
+  SecurityConfigUpdate,
+  DesensitizationWord,
+  DesensitizationWordInput,
 } from './types';
 import { parseMonitorJson } from '../monitor/json';
 
@@ -235,4 +239,41 @@ export const teamApi = {
     teamRequest<Page<Audit>>(`${root}/audit`, { params }),
   auditExport: (params: DateFilter) =>
     teamRequest<Audit[]>(`${root}/audit/export`, { params }),
+  securityConfig: () => teamRequest<SecurityConfig>(`${root}/security/config`),
+  saveSecurityConfig: (data: SecurityConfigUpdate) =>
+    teamRequest<SecurityConfig>(`${root}/security/config`, {
+      method: 'PUT',
+      data,
+    }),
+  desensitizationWords: (params: {
+    keyword?: string;
+    enabled?: boolean;
+    pageNum?: number;
+    pageSize?: number;
+  }) =>
+    teamRequest<Page<DesensitizationWord>>(
+      `${root}/security/desensitization-words`,
+      { params },
+    ),
+  createDesensitizationWords: (items: DesensitizationWordInput[]) =>
+    teamRequest<DesensitizationWord[]>(
+      `${root}/security/desensitization-words`,
+      {
+        method: 'POST',
+        data: { items },
+      },
+    ),
+  updateDesensitizationWord: (id: string, data: DesensitizationWordInput) =>
+    teamRequest<DesensitizationWord>(
+      `${root}/security/desensitization-words/${encodeURIComponent(id)}`,
+      {
+        method: 'PUT',
+        data,
+      },
+    ),
+  deleteDesensitizationWord: (id: string) =>
+    teamRequest<void>(
+      `${root}/security/desensitization-words/${encodeURIComponent(id)}`,
+      { method: 'DELETE' },
+    ),
 };

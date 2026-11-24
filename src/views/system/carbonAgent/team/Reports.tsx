@@ -689,6 +689,7 @@ const sources: Record<string, string> = createI18nLabelMap({
   POINTS: () => teamText('pointsManagement'),
   SYSTEM: () => teamText('systemTasks'),
   FINANCE: () => teamText('financeManagement'),
+  SECURITY: () => teamText('securitySettings'),
 });
 const sourceLabel = (value: string) => {
   if (sources[value]) return sources[value];
@@ -698,6 +699,7 @@ const sourceLabel = (value: string) => {
     return teamText('pointsManagement');
   if (/\/finance/.test(value)) return teamText('financeManagement');
   if (/\/profile/.test(value)) return teamText('companyInformation');
+  if (/\/security/.test(value)) return teamText('securitySettings');
   if (/\/orders|\/quotes/.test(value)) return teamText('teamSubscriptions');
   return teamText('teamManagement');
 };

@@ -195,6 +195,7 @@ test('unopened-team managers land on OPEN configuration; normal teams and member
     './Purchase': { Purchase: () => React.createElement('p', null, 'purchase-configuration') },
     './Reports': { Overview: () => React.createElement('p', null, 'overview'),
       AuditPage: () => null, ExecutionsPage: () => null, Profile: () => null },
+    './SecuritySettings': { SecuritySettings: () => React.createElement('p', null, 'security-settings') },
     './api': { teamApi: {} },
     './helpers': { AGENT_PATH: '/system/carbonAgent', TEAM_PATH: base, dateText: () => '' },
     './team.module.less': {},
@@ -225,6 +226,7 @@ test('unopened-team managers land on OPEN configuration; normal teams and member
   for (const suffix of ['overview', 'members', 'seats', 'finance', 'purchase?action=RENEW', 'purchase?action=EXPAND']) {
     assert.ok(!render(`${base}/${suffix}`).includes('youDoNotHavePermissionToManage'), suffix);
   }
+  assert.ok(render(`${base}/security`).includes('security-settings'));
   summaryError = { data: { reasonCode: 'AGENT_TEAM_MANAGEMENT_FORBIDDEN' } };
   assert.ok(render(`${base}/purchase?action=RENEW`).includes('youDoNotHavePermissionToManage'));
   summaryError = undefined;

@@ -40,6 +40,7 @@ export enum RouteMaps {
   'carbonAgentProjectInvite' = '/agent/project/invite/:inviteCode',
   'carbonAgentShare' = '/share/agent/:shareId',
   'carbonAgentFactor' = '/factors/:factorId',
+  'carbonAgentZeroRetentionAgreement' = '/agreement/zero-retention',
   /** 工作台 */
   'workIndex' = '/work/index',
   'workArticleDetail' = '/work/articleDetail',

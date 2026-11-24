@@ -98,6 +98,13 @@ const reasons: Record<string, string> = createI18nLabelMap({
     teamText('theExportExceeds10000RecordsNarrow'),
   AGENT_EXPORT_DATA_CHANGED: () =>
     teamText('theDataChangedDuringExportRefreshAnd'),
+  AGENT_SECURITY_SHARE_DISABLED: () => teamText('securityShareDisabledError'),
+  AGENT_SECURITY_WORD_DUPLICATE: () => teamText('securityWordDuplicateError'),
+  AGENT_SECURITY_WORD_INVALID: () => teamText('securityWordInvalidError'),
+  AGENT_SECURITY_WORD_LIMIT_EXCEEDED: () =>
+    teamText('securityWordLimitExceededError'),
+  AGENT_SECURITY_CONFIG_CONFLICT: () =>
+    teamText('theDataHasChangedRefreshAndConfirm'),
 });
 export const reasonText = (code?: string) =>
   (code && reasons[code]) ||

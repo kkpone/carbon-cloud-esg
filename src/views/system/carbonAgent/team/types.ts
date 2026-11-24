@@ -5,6 +5,43 @@ export type Page<T> = {
   total: number;
   rows: T[];
 };
+export type SecurityModelRegion = 'DOMESTIC' | 'OVERSEAS';
+export type WorkspaceSecurityPolicy = {
+  enabled: boolean;
+  modelRegion?: SecurityModelRegion;
+  desensitizationEnabled?: boolean;
+  desensitizationWordCount?: number;
+  allowSessionShare: boolean;
+};
+export type SecurityConfig = {
+  enabled: boolean;
+  modelRegion: SecurityModelRegion;
+  allowSessionShare: boolean;
+  version: number;
+  updateTime?: string;
+  updatedByName?: string;
+};
+export type SecurityConfigUpdate = {
+  enabled: boolean;
+  modelRegion: SecurityModelRegion;
+  allowSessionShare: boolean;
+  version: number;
+};
+export type DesensitizationWord = {
+  id: Id;
+  word: string;
+  replacement?: string;
+  category?: string;
+  enabled: boolean;
+  updateTime?: string;
+  updatedByName?: string;
+};
+export type DesensitizationWordInput = {
+  word: string;
+  replacement?: string;
+  category?: string;
+  enabled?: boolean;
+};
 export type Workspace = {
   companyId: Id;
   companyName: string;
@@ -15,6 +52,7 @@ export type Workspace = {
   canManage: boolean;
   canUseAi: boolean;
   aiReasonCode?: string;
+  security?: WorkspaceSecurityPolicy;
 };
 export type Summary = {
   companyId: Id;

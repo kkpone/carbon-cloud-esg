@@ -70,9 +70,11 @@ import {
   type AgentUserPoints,
 } from '../service';
 import { WorkspaceMenu } from '../team/WorkspaceMenu';
+import securityBadgeIcon from '../team/assets/security.svg';
 import teamManagementIcon from '../team/assets/team-management.svg';
 import { TEAM_PATH, requestKey } from '../team/helpers';
 import { teamText } from '../team/i18n';
+import { isSecurityModeActive } from '../team/securityHelpers';
 import { useWorkspace } from '../team/workspace';
 
 const EMPTY_CONVERSATIONS: AgentConversation[] = [];
@@ -1235,6 +1237,7 @@ const Sidebar = ({
     : authenticated
     ? userPoints?.planName || I18N.carbonAgent.trialPlan
     : I18N.carbonAgent.availableAfterLogin;
+  const securityModeActive = isSecurityModeActive(access);
   const planTone = getPlanTone(userPoints?.planCode, planName);
   const availablePoints =
     personal && authenticated && typeof userPoints?.availablePoints === 'number'
@@ -2389,10 +2392,15 @@ const Sidebar = ({
             }
             title={
               collapsed
-                ? I18N.template(I18N.carbonAgent.profileNamePlanDot, {
-                    val1: workspaceName,
-                    val2: planName,
-                  })
+                ? [
+                    I18N.template(I18N.carbonAgent.profileNamePlanDot, {
+                      val1: workspaceName,
+                      val2: planName,
+                    }),
+                    securityModeActive ? teamText('securityBannerTitle') : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')
                 : undefined
             }
             onMouseEnter={() => {
@@ -2426,6 +2434,19 @@ const Sidebar = ({
                     {mobile && !authenticated
                       ? I18N.carbonAgent.guestLoginBenefits
                       : planName}
+                    {securityModeActive ? (
+                      <span
+                        className={sidebarStyles.securityTag}
+                        title={teamText('securityBannerTitle')}
+                      >
+                        <img
+                          className={sidebarStyles.securityTagIcon}
+                          src={securityBadgeIcon}
+                          alt=''
+                        />
+                        <span>{teamText('securityModeEnabledTag')}</span>
+                      </span>
+                    ) : null}
                   </span>
                 </span>
                 <Icon className={style.profileMore} src={icons.chevronIcon} />
