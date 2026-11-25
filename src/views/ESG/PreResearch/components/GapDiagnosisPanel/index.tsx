@@ -88,16 +88,18 @@ export const GapDiagnosisPanel: FC<IGapDiagnosisPanelProps> = ({
     const nextItem: GapDiagnosisItem = {
       gap_id: `GAP-E-${String(nextIndex).padStart(2, '0')}`,
       esg_pillar: 'E',
-      topic_name: '新增合规诊断议题',
+      topic_name: I18N.esg.preResearchDefaultGapTopic,
       standard_source: project.standards[0] || 'GRI Standards',
-      requirement_type: '建议披露',
-      requirement_detail: '请填写具体披露要求（原子项）',
+      requirement_type: I18N.esg.preResearchDefaultGapReqType,
+      requirement_detail: I18N.esg.preResearchDefaultGapReqDetail,
       client_status: 'missing',
-      evidence_ref: '上年报告未提及',
-      gap_description: '待补充差距分析',
+      evidence_ref: I18N.esg.preResearchDefaultGapEvidence,
+      gap_description: I18N.esg.preResearchDefaultGapDesc,
       priority: 'P1',
-      action_suggestion: '访谈对应部门补充台账与制度依据',
-      owner_dept: project.departments[0]?.deptName || 'EHS安环部',
+      action_suggestion: I18N.esg.preResearchDefaultGapAction,
+      owner_dept:
+        project.departments[0]?.deptName ||
+        I18N.esg.preResearchDefaultDeptOwnerFallback,
       selectedForInterview: true,
     };
     onChange([nextItem, ...items]);

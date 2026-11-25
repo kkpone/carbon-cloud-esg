@@ -236,12 +236,12 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
         .slice(-3)}`,
       target_dept: activeDept,
       stage_group: 'actions_gap_closure',
-      esg_topic: '补充访谈议题',
+      esg_topic: I18N.esg.preResearchDefaultQuestionTopic,
       priority_level: 'P1',
-      question_origin: '顾问手动补充访谈要点',
-      main_question: '请补充本年度重点推进的管理举措与量化成果。',
-      follow_up_prompts: ['具体覆盖范围及同比变化如何？'],
-      expected_materials: ['对应台账或制度支撑文件'],
+      question_origin: I18N.esg.preResearchDefaultQuestionOrigin,
+      main_question: I18N.esg.preResearchDefaultQuestionMain,
+      follow_up_prompts: [I18N.esg.preResearchDefaultQuestionFollowUp],
+      expected_materials: [I18N.esg.preResearchDefaultQuestionMaterial],
     };
     onChange([...project.interviewQuestions, nextItem]);
   };
@@ -256,7 +256,20 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
       q => q.question_id === String(over.id),
     );
     if (oldIdx !== -1 && newIdx !== -1) {
-      onChange(arrayMove(project.interviewQuestions, oldIdx, newIdx));
+      const activeItem = project.interviewQuestions[oldIdx];
+      const overItem = project.interviewQuestions[newIdx];
+      const moved = arrayMove(project.interviewQuestions, oldIdx, newIdx);
+      if (activeItem.stage_group !== overItem.stage_group) {
+        onChange(
+          moved.map(q =>
+            q.question_id === activeItem.question_id
+              ? { ...q, stage_group: overItem.stage_group }
+              : q,
+          ),
+        );
+        return;
+      }
+      onChange(moved);
     }
   };
 
@@ -337,21 +350,21 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <SortableContext
-            items={deptQuestions.map(q => q.question_id)}
-            strategy={verticalListSortingStrategy}
-          >
-            <div className={styles.stageSections}>
-              {STAGE_ORDER.map(stage => {
-                const stageList = deptQuestions.filter(
-                  q => q.stage_group === stage,
-                );
-                if (stageList.length === 0) return null;
-                return (
-                  <div key={stage} className={styles.stageGroup}>
-                    <div className={styles.stageHeader}>
-                      {getStageTitle(stage)}
-                    </div>
+          <div className={styles.stageSections}>
+            {STAGE_ORDER.map(stage => {
+              const stageList = deptQuestions.filter(
+                q => q.stage_group === stage,
+              );
+              if (stageList.length === 0) return null;
+              return (
+                <div key={stage} className={styles.stageGroup}>
+                  <div className={styles.stageHeader}>
+                    {getStageTitle(stage)}
+                  </div>
+                  <SortableContext
+                    items={stageList.map(q => q.question_id)}
+                    strategy={verticalListSortingStrategy}
+                  >
                     <div className={styles.cardStack}>
                       {stageList.map(item => (
                         <SortableQuestionCard
@@ -362,11 +375,11 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
                         />
                       ))}
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </SortableContext>
+                  </SortableContext>
+                </div>
+              );
+            })}
+          </div>
         </DndContext>
       </div>
     </div>

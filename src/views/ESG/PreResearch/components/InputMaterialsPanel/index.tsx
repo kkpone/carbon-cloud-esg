@@ -16,6 +16,7 @@ import {
   DEFAULT_RATING_OPTIONS,
   DEFAULT_STANDARD_OPTIONS,
 } from '../../mockService';
+import { isEsgMockModeEnabled } from '../../../mockReportService';
 import {
   DepartmentDutyItem,
   EsgPillar,
@@ -40,7 +41,9 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
   generating,
 }) => {
   const [newPeerName, setNewPeerName] = useState('');
-  const [newPeerTag, setNewPeerTag] = useState('直接竞对·A股');
+  const [newPeerTag, setNewPeerTag] = useState(
+    I18N.esg.preResearchDefaultPeerTag,
+  );
   const [newPeerRating, setNewPeerRating] = useState('');
 
   const updateField = <K extends keyof PreResearchProject>(
@@ -56,13 +59,9 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
   const appendSelfMaterial = (name: string, url?: string, size?: number) => {
     const lower = name.toLowerCase();
     let category: UploadedMaterialItem['category'] = 'esg_report';
-    if (lower.includes('年报') || lower.includes('annual')) {
+    if (lower.includes('annual') || /\b20\d{2}.*report/i.test(name)) {
       category = 'annual_report';
-    } else if (
-      lower.includes('职责') ||
-      lower.includes('架构') ||
-      lower.includes('.xls')
-    ) {
+    } else if (lower.includes('org') || lower.includes('.xls')) {
       category = 'org_doc';
     }
     const item: UploadedMaterialItem = {
@@ -80,10 +79,10 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
     const nextDept: DepartmentDutyItem = {
       id: `dept-${uuid().slice(0, 6)}`,
       deptCode: `D${project.departments.length + 1}`,
-      deptName: '新受访部门',
+      deptName: I18N.esg.preResearchDefaultDeptName,
       pillars: ['S'],
-      topics: ['业务合规与ESG支撑'],
-      dutySummary: '负责补充对应ESG制度与台账数据',
+      topics: [I18N.esg.preResearchDefaultDeptTopic],
+      dutySummary: I18N.esg.preResearchDefaultDeptDuty,
     };
     updateField('departments', [...project.departments, nextDept]);
   };
@@ -96,8 +95,8 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
     const peer: PeerCompanyItem = {
       id: `peer-${uuid().slice(0, 6)}`,
       name: newPeerName.trim(),
-      tag: newPeerTag.trim() || '同业对标',
-      listingMarket: 'A股',
+      tag: newPeerTag.trim() || I18N.esg.preResearchDefaultPeerTagFallback,
+      listingMarket: I18N.esg.preResearchDefaultPeerMarket,
       ratingSummary: newPeerRating.trim() || '-',
     };
     updateField('peers', [...project.peers, peer]);
@@ -195,7 +194,7 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
                 process.env.REACT_APP_API_URL || ''
               }/file/file/uploadImg`}
               beforeUpload={file => {
-                if (!process.env.REACT_APP_API_URL) {
+                if (isEsgMockModeEnabled() || !process.env.REACT_APP_API_URL) {
                   appendSelfMaterial(file.name, undefined, file.size);
                   return false;
                 }

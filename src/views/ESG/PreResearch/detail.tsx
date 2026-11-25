@@ -5,7 +5,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
-import { Button, Spin, Tabs, Tag } from 'antd';
+import { Button, Empty, Spin, Tabs, Tag } from 'antd';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
@@ -46,15 +46,21 @@ export const PreResearchDetail: FC = () => {
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [activeTab, setActiveTab] = useState('materials');
-  const [project, setProject] = useState<PreResearchProject>(() =>
-    createDefaultSampleProject(),
-  );
+  const [project, setProject] = useState<PreResearchProject | null>(() => {
+    const local = id ? getLocalPreResearchById(id) : undefined;
+    if (local) return local;
+    return id === 'pr-sample-9001' ? createDefaultSampleProject() : null;
+  });
 
   const loadProject = useCallback(async () => {
     setLoading(true);
-    const local = getLocalPreResearchById(id);
+    const local = id ? getLocalPreResearchById(id) : undefined;
     if (local) {
       setProject(local);
+    } else if (id === 'pr-sample-9001') {
+      setProject(createDefaultSampleProject());
+    } else {
+      setProject(null);
     }
     if (!isEsgMockModeEnabled() && id) {
       try {
@@ -87,11 +93,13 @@ export const PreResearchDetail: FC = () => {
   }, []);
 
   const handleSaveManual = async () => {
+    if (!project) return;
     await persistProject(project);
     Toast('success', I18N.esg.preResearchSavedTip);
   };
 
   const handleGenerateGap = async () => {
+    if (!project) return;
     setGenerating(true);
     try {
       let nextGaps = buildGeneratedGaps(project);
@@ -115,6 +123,7 @@ export const PreResearchDetail: FC = () => {
   };
 
   const handleGenerateBenchmark = async () => {
+    if (!project) return;
     setGenerating(true);
     try {
       let bm = buildGeneratedBenchmarks(project);
@@ -139,6 +148,7 @@ export const PreResearchDetail: FC = () => {
   };
 
   const handleGenerateInterview = async () => {
+    if (!project) return;
     setGenerating(true);
     try {
       let nextQuestions = buildGeneratedInterviews(project);
@@ -162,14 +172,37 @@ export const PreResearchDetail: FC = () => {
   };
 
   const handleGenerateAll = async () => {
+    if (!project) return;
     setGenerating(true);
     try {
-      const gapItems = buildGeneratedGaps(project);
-      const bm = buildGeneratedBenchmarks(project);
-      const interviewQuestions = buildGeneratedInterviews({
+      let gapItems = buildGeneratedGaps(project);
+      let bm = buildGeneratedBenchmarks(project);
+      let interviewQuestions = buildGeneratedInterviews({
         ...project,
         gapItems,
       });
+      if (!isEsgMockModeEnabled()) {
+        const [gapRes, bmRes, ivRes] = await Promise.all([
+          generatePreResearchGapApi(project.id, {
+            silentResponseError: true,
+          }).catch(() => null),
+          generatePreResearchBenchmarkApi(project.id, {
+            silentResponseError: true,
+          }).catch(() => null),
+          generatePreResearchInterviewApi(project.id, {
+            silentResponseError: true,
+          }).catch(() => null),
+        ]);
+        if (gapRes?.data?.data?.length) {
+          gapItems = gapRes.data.data;
+        }
+        if (bmRes?.data?.data?.benchmarkRows?.length) {
+          bm = bmRes.data.data;
+        }
+        if (ivRes?.data?.data?.length) {
+          interviewQuestions = ivRes.data.data;
+        }
+      }
       await persistProject({
         ...project,
         status: 'completed',
@@ -186,21 +219,36 @@ export const PreResearchDetail: FC = () => {
   };
 
   const handleSendToReport = () => {
+    if (!project) return;
     const p0Gaps = project.gapItems
       .filter(g => g.priority === 'P0' || g.selectedForInterview)
-      .map(g => `${g.gap_id} ${g.topic_name}：${g.action_suggestion}`);
+      .map(g => `${g.gap_id} ${g.topic_name}: ${g.action_suggestion}`);
     const adoptedCases = project.highlightCases
       .filter(c => c.adoptedForReport)
-      .map(c => `专题借鉴《${c.title}》（参考${c.peerName}）`);
+      .map(c =>
+        I18N.template(I18N.esg.preResearchHandoffCaseItem, {
+          val1: c.title,
+          val2: c.peerName,
+        }),
+      );
     const expectedMaterials = Array.from(
       new Set(project.interviewQuestions.flatMap(q => q.expected_materials)),
     ).slice(0, 12);
     const summaryNote = [
-      `【阶段一调研结论带入】${project.companyName} ${project.period}年度`,
-      `1. 核心差距补齐重点（${p0Gaps.length}项）：`,
+      I18N.template(I18N.esg.preResearchHandoffTitle, {
+        val1: project.companyName,
+        val2: project.period,
+      }),
+      I18N.template(I18N.esg.preResearchHandoffGaps, {
+        val1: p0Gaps.length,
+      }),
       ...p0Gaps.slice(0, 8),
-      `2. 拟借鉴同业专题：${adoptedCases.join('；') || '无'}`,
-      `3. 待收集关键底稿清单：${expectedMaterials.join('、')}`,
+      I18N.template(I18N.esg.preResearchHandoffCases, {
+        val1: adoptedCases.join('; ') || '-',
+      }),
+      I18N.template(I18N.esg.preResearchHandoffMaterials, {
+        val1: expectedMaterials.join(', '),
+      }),
     ].join('\n');
     try {
       window.sessionStorage.setItem(
@@ -218,6 +266,35 @@ export const PreResearchDetail: FC = () => {
       resolveEsgRoute(RouteMaps.ESGAiGenerateHome, location.pathname),
     );
   };
+
+  if (!loading && !project) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.body}>
+          <Empty description={I18N.esg.preResearchNotFound}>
+            <Button
+              type='primary'
+              onClick={() =>
+                history.push(
+                  resolveEsgRoute(RouteMaps.ESGPreResearch, location.pathname),
+                )
+              }
+            >
+              {I18N.esg.preResearchBackToList}
+            </Button>
+          </Empty>
+        </div>
+      </div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <div className={styles.wrapper}>
+        <Spin spinning />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>

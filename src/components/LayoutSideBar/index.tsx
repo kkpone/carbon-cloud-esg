@@ -50,6 +50,15 @@ const MENU_ACTIVE_PATH_MAP: Partial<Record<string, string>> = {
 };
 
 const getActiveMenuPath = (pathname: string) => {
+  if (pathname.startsWith('/ESG/preResearch/')) {
+    return RouteMaps.ESGPreResearch;
+  }
+  if (pathname.startsWith('/ESG2/preResearch/')) {
+    return '/ESG2/preResearch';
+  }
+  if (pathname.startsWith('/esg2/preResearch/')) {
+    return '/esg2/preResearch';
+  }
   if (pathname.startsWith(`${RouteMaps.cbamReport}/`)) {
     return RouteMaps.cbamReport;
   }

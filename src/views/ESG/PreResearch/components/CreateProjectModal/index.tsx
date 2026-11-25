@@ -78,7 +78,7 @@ export const CreateProjectModal: FC<ICreateProjectModalProps> = ({
         layout='vertical'
         initialValues={{
           period: String(new Date().getFullYear() - 1),
-          listingType: 'A股上市公司（上交所主板）',
+          listingType: I18N.esg.preResearchListingAShare,
           standards: [DEFAULT_STANDARD_OPTIONS[0], DEFAULT_STANDARD_OPTIONS[2]],
           ratings: [DEFAULT_RATING_OPTIONS[0], DEFAULT_RATING_OPTIONS[2]],
         }}
@@ -96,7 +96,7 @@ export const CreateProjectModal: FC<ICreateProjectModalProps> = ({
               if (!curName) {
                 form.setFieldValue(
                   'projectName',
-                  `${e.target.value} ${period} ESG Stage 1`,
+                  `${e.target.value} ${period} ${I18N.esg.preResearchProjectNameSuffix}`,
                 );
               }
             }}
@@ -130,14 +130,20 @@ export const CreateProjectModal: FC<ICreateProjectModalProps> = ({
             <Select
               options={[
                 {
-                  label: 'A-Share (SSE / SZSE)',
-                  value: 'A股上市公司（上交所主板）',
+                  label: I18N.esg.preResearchListingAShare,
+                  value: I18N.esg.preResearchListingAShare,
                 },
-                { label: 'HKEX Listed', value: '港股上市公司（HKEX）' },
-                { label: 'A+H Dual Listed', value: 'A+H股两地上市公司' },
                 {
-                  label: 'Non-listed / Supply Chain',
-                  value: '非上市 / 供应链出海企业',
+                  label: I18N.esg.preResearchListingHkex,
+                  value: I18N.esg.preResearchListingHkex,
+                },
+                {
+                  label: I18N.esg.preResearchListingDual,
+                  value: I18N.esg.preResearchListingDual,
+                },
+                {
+                  label: I18N.esg.preResearchListingNonListed,
+                  value: I18N.esg.preResearchListingNonListed,
                 },
               ]}
             />
