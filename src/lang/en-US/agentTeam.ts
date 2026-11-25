@@ -683,6 +683,10 @@ export default {
   securityDeleteWordConfirm: 'Delete sensitive term "{value0}"?',
   securityWordPlaceholder:
     'e.g. internal project code, legal entity name, key customer (2–100 chars)',
+  securityWordEnterPlaceholder:
+    'Enter a sensitive term and press Enter to add (2–100 chars)',
+  securityWordEnterHelper:
+    'Press Enter to add a term. Click the close icon on a tag or press Backspace to remove the last term.',
   securityReplacementPlaceholder:
     'Leave blank for auto-assigned placeholder, e.g. [MASK_1]',
   securityWordRequired: 'Enter a sensitive term of 2–100 characters',

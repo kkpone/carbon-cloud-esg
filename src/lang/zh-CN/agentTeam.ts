@@ -636,6 +636,9 @@ export default {
   securityDeleteWordConfirm: '确定删除敏感词「{value0}」吗？',
   securityWordPlaceholder:
     '例如：内部项目代号、企业全称、关键客户名（2～100 字）',
+  securityWordEnterPlaceholder: '输入企业敏感词后按回车添加（2～100 字）',
+  securityWordEnterHelper:
+    '按 Enter 添加词条，点击词条右侧关闭图标或按 Backspace 删除最后一个词条。',
   securityReplacementPlaceholder: '留空由系统自动分配，例如 [企业脱敏词_1]',
   securityWordRequired: '请输入 2～100 个字符的敏感词原文',
   securityWordSaved: '脱敏词已保存',
