@@ -312,7 +312,7 @@ export default {
   chapterLevelTag: '章节',
   subsectionLevelTag: '小节',
   sectionPathLabel: '所属路径',
-  quickUploadFile: '上传依据文件',
+  quickUploadFile: '上传文件',
   inheritedEvidenceTip:
     '已继承上级章节 {val1} 份依据文件，也可在本小节单独上传专属文件覆盖补充',
   inheritedEvidenceCount: '继承上级 {val1} 份依据',

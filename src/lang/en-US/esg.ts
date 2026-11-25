@@ -332,7 +332,7 @@ export default {
   chapterLevelTag: 'Chapter',
   subsectionLevelTag: 'Subsection',
   sectionPathLabel: 'Outline Path',
-  quickUploadFile: 'Upload Evidence File',
+  quickUploadFile: 'Upload File',
   inheritedEvidenceTip:
     'Inherits {val1} evidence file(s) from parent chapter; you can also upload subsection-specific files here.',
   inheritedEvidenceCount: 'Inherits {val1} parent file(s)',

@@ -1,7 +1,6 @@
 import {
   BarChartOutlined,
   DeleteOutlined,
-  PaperClipOutlined,
   PlusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
@@ -52,7 +51,6 @@ import {
   postEditOutline,
   postEsgAnalyzeFilesExtractImages,
 } from '../../service';
-import { SectionAttachmentModal } from '../SectionAttachmentModal';
 import { SectionIndicatorModal } from '../SectionIndicatorModal';
 
 let preScrollTop = 0;
@@ -67,38 +65,6 @@ const getWritingTemplateShortLabel = (
   if (template === 'four_pillar') return I18N.esg.writingTemplateFourPillar;
   if (template === 'star_case') return I18N.esg.writingTemplateStarCase;
   return '';
-};
-
-const findNodeContextById = (
-  nodes: OutlineSectionNode[],
-  targetId: string,
-  ancestors: OutlineSectionNode[] = [],
-): {
-  node: OutlineSectionNode;
-  depth: number;
-  path: string;
-  inheritedAttachments: SectionAttachment[];
-} | null => {
-  for (const node of nodes) {
-    if (node.id === targetId) {
-      return {
-        node,
-        depth: ancestors.length,
-        path: [...ancestors.map(a => a.title), node.title].join(' / '),
-        inheritedAttachments: ancestors.flatMap(a => a.attachments || []),
-      };
-    }
-    if (node.children?.length) {
-      const found = findNodeContextById(node.children, targetId, [
-        ...ancestors,
-        node,
-      ]);
-      if (found) {
-        return found;
-      }
-    }
-  }
-  return null;
 };
 
 const findNodeById = (
@@ -186,7 +152,6 @@ const TreeNodeItem: FC<{
   onEditTitle: (id: string, newTitle: string) => void;
   onEditDescription: (id: string, newDescription: string) => void;
   onOpenIndicatorModal: (node: OutlineSectionNode) => void;
-  onOpenAttachmentModal: (node: OutlineSectionNode) => void;
   onQuickAppendFile: (sectionId: string, attachment: SectionAttachment) => void;
   onRemoveIndicator: (sectionId: string, indicatorId: string | number) => void;
   onRemoveAttachment: (sectionId: string, index: number) => void;
@@ -201,7 +166,6 @@ const TreeNodeItem: FC<{
   onEditTitle,
   onEditDescription,
   onOpenIndicatorModal,
-  onOpenAttachmentModal,
   onQuickAppendFile,
   onRemoveIndicator,
   onRemoveAttachment,
@@ -486,14 +450,6 @@ const TreeNodeItem: FC<{
                       <span>{I18N.esg.quickUploadFile}</span>
                     </button>
                   </Upload>
-                  <button
-                    type='button'
-                    className={styles.bindingBtn}
-                    onClick={() => onOpenAttachmentModal(node)}
-                  >
-                    <PaperClipOutlined />
-                    <span>{I18N.esg.sectionAttachments}</span>
-                  </button>
                 </>
               )}
             </div>
@@ -545,7 +501,6 @@ const TreeNodeItem: FC<{
                   onEditDescription={onEditDescription}
                   onDelete={onDelete}
                   onOpenIndicatorModal={onOpenIndicatorModal}
-                  onOpenAttachmentModal={onOpenAttachmentModal}
                   onQuickAppendFile={onQuickAppendFile}
                   onRemoveIndicator={onRemoveIndicator}
                   onRemoveAttachment={onRemoveAttachment}
@@ -586,9 +541,6 @@ const NestedTree: FC<{
   const [treeData, setTreeData] = useState<OutlineSectionNode[]>([]);
   const [reportName, setReportName] = useState('');
   const [indicatorModalSectionId, setIndicatorModalSectionId] = useState<
-    string | null
-  >(null);
-  const [attachmentModalSectionId, setAttachmentModalSectionId] = useState<
     string | null
   >(null);
 
@@ -803,45 +755,6 @@ const NestedTree: FC<{
     );
   };
 
-  const onUpdateSectionAttachments = (
-    sectionId: string,
-    payload: {
-      attachments: SectionAttachment[];
-      sectionPrompt: string;
-      writingTemplate: SectionWritingTemplate;
-    },
-  ) => {
-    commitTreeUpdate(prev =>
-      updateTreeNodes(prev, node =>
-        node.id === sectionId
-          ? {
-              ...node,
-              attachments: payload.attachments,
-              sectionPrompt: payload.sectionPrompt,
-              writingTemplate: payload.writingTemplate,
-            }
-          : node,
-      ),
-    );
-    const fileRefs = payload.attachments
-      .filter(att => att.type === 'file' && att.url)
-      .map(att => ({ name: att.name, url: att.url! }));
-    if (fileRefs.length > 0) {
-      if (!isEsgMockModeEnabled() && !isMockReportId(id)) {
-        postEsgAnalyzeFilesExtractImages(
-          {
-            reportId: id,
-            sectionId,
-            referFiles: fileRefs,
-          },
-          { silentResponseError: true },
-        ).catch(() => {
-          // keep UI responsive even if background image extraction fails
-        });
-      }
-    }
-  };
-
   const onQuickAppendFile = (
     sectionId: string,
     attachment: SectionAttachment,
@@ -899,15 +812,6 @@ const NestedTree: FC<{
         : null,
     [treeData, indicatorModalSectionId],
   );
-
-  const attachmentModalContext = useMemo(
-    () =>
-      attachmentModalSectionId
-        ? findNodeContextById(treeData, attachmentModalSectionId)
-        : null,
-    [treeData, attachmentModalSectionId],
-  );
-  const attachmentModalSection = attachmentModalContext?.node || null;
 
   return (
     <div
@@ -970,9 +874,6 @@ const NestedTree: FC<{
                 onOpenIndicatorModal={target =>
                   setIndicatorModalSectionId(target.id)
                 }
-                onOpenAttachmentModal={target =>
-                  setAttachmentModalSectionId(target.id)
-                }
                 onQuickAppendFile={onQuickAppendFile}
                 onRemoveIndicator={onRemoveIndicator}
                 onRemoveAttachment={onRemoveAttachment}
@@ -998,27 +899,6 @@ const NestedTree: FC<{
         onConfirm={indicators => {
           if (indicatorModalSection) {
             onUpdateSectionIndicators(indicatorModalSection.id, indicators);
-          }
-        }}
-      />
-      <SectionAttachmentModal
-        open={!!attachmentModalSection}
-        sectionTitle={attachmentModalSection?.title || ''}
-        sectionPath={attachmentModalContext?.path}
-        sectionDepth={attachmentModalContext?.depth || 0}
-        value={attachmentModalSection?.attachments || []}
-        inheritedAttachments={
-          attachmentModalContext?.inheritedAttachments || []
-        }
-        sectionPrompt={attachmentModalSection?.sectionPrompt}
-        writingTemplate={attachmentModalSection?.writingTemplate}
-        globalReferFiles={reportInfo?.referFiles}
-        globalReferLinks={reportInfo?.referLink}
-        globalReferTexts={reportInfo?.referText}
-        onCancel={() => setAttachmentModalSectionId(null)}
-        onConfirm={payload => {
-          if (attachmentModalSection) {
-            onUpdateSectionAttachments(attachmentModalSection.id, payload);
           }
         }}
       />
