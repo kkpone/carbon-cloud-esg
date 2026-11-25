@@ -28,6 +28,7 @@ import { convertTreeToMarkdown } from './components/Sortable/convertTreeToMarkdo
 import styles from './index.module.less';
 import {
   DEFAULT_REPORT_PROMPT_CONFIG,
+  buildReportSystemPrompt,
   getStoredOutlineSections,
   getStoredPromptConfig,
   mergePromptConfig,
@@ -197,17 +198,28 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
 
   const history = useHistory();
 
-  const handleSectionsChange = useCallback((nextSections: OutlineSectionNode[]) => {
-    setSections(nextSections);
-  }, []);
+  const handleSectionsChange = useCallback(
+    (nextSections: OutlineSectionNode[]) => {
+      setSections(nextSections);
+    },
+    [],
+  );
 
   const handlePromptConfirm = async (nextConfig: ReportPromptConfig) => {
-    setPromptConfig(nextConfig);
+    const enrichedConfig: ReportPromptConfig = {
+      ...nextConfig,
+      systemPrompt: buildReportSystemPrompt({
+        reportInfo,
+        sections,
+        config: nextConfig,
+      }),
+    };
+    setPromptConfig(enrichedConfig);
     if (!id) {
       return;
     }
     const numericId = Number(id);
-    saveStoredPromptConfig(numericId, nextConfig);
+    saveStoredPromptConfig(numericId, enrichedConfig);
     const nextOutlineMd =
       convertTreeToMarkdown([
         {
@@ -223,7 +235,7 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
         id: numericId,
         outline: nextOutlineMd,
         outlineSections: sections,
-        promptConfig: nextConfig,
+        promptConfig: enrichedConfig,
         fallbackInfo: reportInfo,
       });
       return;
@@ -234,7 +246,7 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
           id: numericId,
           outline: nextOutlineMd,
           outlineSections: sections,
-          promptConfig: nextConfig,
+          promptConfig: enrichedConfig,
         },
         { silentResponseError: true },
       );
@@ -243,7 +255,7 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
         id: numericId,
         outline: nextOutlineMd,
         outlineSections: sections,
-        promptConfig: nextConfig,
+        promptConfig: enrichedConfig,
         fallbackInfo: reportInfo,
       });
     }
@@ -252,7 +264,16 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
   const generate = async () => {
     if (id) {
       const numericId = Number(id);
-      saveStoredPromptConfig(numericId, promptConfig);
+      const finalPromptConfig: ReportPromptConfig = {
+        ...promptConfig,
+        systemPrompt: buildReportSystemPrompt({
+          reportInfo,
+          sections,
+          config: promptConfig,
+        }),
+      };
+      setPromptConfig(finalPromptConfig);
+      saveStoredPromptConfig(numericId, finalPromptConfig);
       const nextOutlineMd =
         convertTreeToMarkdown([
           {
@@ -268,7 +289,7 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
           id: numericId,
           outline: nextOutlineMd,
           outlineSections: sections,
-          promptConfig,
+          promptConfig: finalPromptConfig,
           fallbackInfo: reportInfo,
         });
       } else {
@@ -277,7 +298,7 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
             id: numericId,
             outline: nextOutlineMd,
             outlineSections: sections,
-            promptConfig,
+            promptConfig: finalPromptConfig,
           },
           { silentResponseError: true },
         ).catch(() => {
@@ -285,14 +306,17 @@ export const AiGenerateOutline: FC<IAiGenerateOutlineProps> = () => {
             id: numericId,
             outline: nextOutlineMd,
             outlineSections: sections,
-            promptConfig,
+            promptConfig: finalPromptConfig,
             fallbackInfo: reportInfo,
           });
         });
       }
     }
     history.replace(
-      `${resolveEsgRoute(RouteMaps.ESGAiGenerateDetail, location.pathname)}?id=${id}`,
+      `${resolveEsgRoute(
+        RouteMaps.ESGAiGenerateDetail,
+        location.pathname,
+      )}?id=${id}`,
     );
   };
 

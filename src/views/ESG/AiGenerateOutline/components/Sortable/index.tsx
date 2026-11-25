@@ -4,6 +4,7 @@ import {
   PaperClipOutlined,
   PlusCircleOutlined,
   PlusOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
 import {
   DndContext,
@@ -21,18 +22,21 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import I18N from '@src/lang/I18N';
-import { Input, Spin, Tag, Tooltip } from 'antd';
+import { Input, Spin, Tag, Tooltip, Upload } from 'antd';
 import classNames from 'classnames';
 import { isNil } from 'lodash-es';
 import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from 'react';
 
-import { uuid } from '@/utils';
+import { Toast, uuid } from '@/utils';
 
 import { convertTreeToMarkdown } from './convertTreeToMarkdown';
 import handleSvg from './image/handle.svg';
 import styles from './index.module.less';
 import { parseMarkdownToTree } from './parseMarkdownToTree';
-import { saveStoredOutlineSections } from '../../promptUtils';
+import {
+  inferMaterialCategoryFromName,
+  saveStoredOutlineSections,
+} from '../../promptUtils';
 import {
   isEsgMockModeEnabled,
   isMockReportId,
@@ -44,6 +48,7 @@ import {
   ReportPromptConfig,
   SectionAttachment,
   SectionIndicatorRef,
+  SectionWritingTemplate,
   postEditOutline,
   postEsgAnalyzeFilesExtractImages,
 } from '../../service';
@@ -51,6 +56,50 @@ import { SectionAttachmentModal } from '../SectionAttachmentModal';
 import { SectionIndicatorModal } from '../SectionIndicatorModal';
 
 let preScrollTop = 0;
+
+const QUICK_UPLOAD_ACCEPT =
+  '.png,.jpg,.jpeg,.xlsx,.xls,.doc,.docx,.pdf,.PNG,.JPG,.JPEG,.XLSX,.XLS,.DOC,.DOCX,.PDF';
+
+const getWritingTemplateShortLabel = (
+  template?: SectionWritingTemplate,
+): string => {
+  if (template === 'five_step') return I18N.esg.writingTemplateFiveStep;
+  if (template === 'four_pillar') return I18N.esg.writingTemplateFourPillar;
+  if (template === 'star_case') return I18N.esg.writingTemplateStarCase;
+  return '';
+};
+
+const findNodeContextById = (
+  nodes: OutlineSectionNode[],
+  targetId: string,
+  ancestors: OutlineSectionNode[] = [],
+): {
+  node: OutlineSectionNode;
+  depth: number;
+  path: string;
+  inheritedAttachments: SectionAttachment[];
+} | null => {
+  for (const node of nodes) {
+    if (node.id === targetId) {
+      return {
+        node,
+        depth: ancestors.length,
+        path: [...ancestors.map(a => a.title), node.title].join(' / '),
+        inheritedAttachments: ancestors.flatMap(a => a.attachments || []),
+      };
+    }
+    if (node.children?.length) {
+      const found = findNodeContextById(node.children, targetId, [
+        ...ancestors,
+        node,
+      ]);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+};
 
 const findNodeById = (
   nodes: OutlineSectionNode[],
@@ -130,6 +179,7 @@ const formatIndicatorTag = (item: SectionIndicatorRef) => {
 const TreeNodeItem: FC<{
   node: OutlineSectionNode;
   depth: number;
+  inheritedAttachmentCount: number;
   disabled: boolean;
   onAddChild: (parentId: string) => void;
   onDelete: (id: string) => void;
@@ -137,12 +187,14 @@ const TreeNodeItem: FC<{
   onEditDescription: (id: string, newDescription: string) => void;
   onOpenIndicatorModal: (node: OutlineSectionNode) => void;
   onOpenAttachmentModal: (node: OutlineSectionNode) => void;
+  onQuickAppendFile: (sectionId: string, attachment: SectionAttachment) => void;
   onRemoveIndicator: (sectionId: string, indicatorId: string | number) => void;
   onRemoveAttachment: (sectionId: string, index: number) => void;
   onReorderSiblings: (activeId: string, overId: string) => void;
 }> = ({
   node,
   depth,
+  inheritedAttachmentCount,
   disabled,
   onAddChild,
   onDelete,
@@ -150,6 +202,7 @@ const TreeNodeItem: FC<{
   onEditDescription,
   onOpenIndicatorModal,
   onOpenAttachmentModal,
+  onQuickAppendFile,
   onRemoveIndicator,
   onRemoveAttachment,
   onReorderSiblings,
@@ -175,6 +228,7 @@ const TreeNodeItem: FC<{
   const [descriptionValue, setDescriptionValue] = useState(
     node.description || '',
   );
+  const [quickUploading, setQuickUploading] = useState(false);
 
   useEffect(() => {
     setTitleValue(node.title);
@@ -192,6 +246,7 @@ const TreeNodeItem: FC<{
 
   const indicators = node.indicators || [];
   const attachments = node.attachments || [];
+  const templateBadge = getWritingTemplateShortLabel(node.writingTemplate);
 
   const handleChildDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -248,26 +303,37 @@ const TreeNodeItem: FC<{
           })}
         >
           <div className={styles.inputsWrapper}>
-            <Input
-              value={titleValue}
-              className={styles.titleInput}
-              variant='borderless'
-              disabled={disabled}
-              onChange={e => setTitleValue(e.target.value)}
-              onFocus={() => setTitleFocus(true)}
-              onBlur={e => {
-                setTimeout(() => setTitleFocus(false), 32);
-                const nextTitle = e.target.value;
-                onEditTitle(node.id, nextTitle);
-                if (
-                  !nextTitle.trim() &&
-                  !descriptionValue.trim() &&
-                  !node.children?.length
-                ) {
-                  onDelete(node.id);
-                }
-              }}
-            />
+            <div className={styles.titleRow}>
+              <span
+                className={classNames(styles.levelBadge, {
+                  [styles.levelBadgeSub]: depth > 0,
+                })}
+              >
+                {depth === 0
+                  ? I18N.esg.chapterLevelTag
+                  : I18N.esg.subsectionLevelTag}
+              </span>
+              <Input
+                value={titleValue}
+                className={styles.titleInput}
+                variant='borderless'
+                disabled={disabled}
+                onChange={e => setTitleValue(e.target.value)}
+                onFocus={() => setTitleFocus(true)}
+                onBlur={e => {
+                  setTimeout(() => setTitleFocus(false), 32);
+                  const nextTitle = e.target.value;
+                  onEditTitle(node.id, nextTitle);
+                  if (
+                    !nextTitle.trim() &&
+                    !descriptionValue.trim() &&
+                    !node.children?.length
+                  ) {
+                    onDelete(node.id);
+                  }
+                }}
+              />
+            </div>
             {(!!descriptionValue.length || titleFocus || descriptionFocus) && (
               <div
                 className={classNames({
@@ -307,6 +373,20 @@ const TreeNodeItem: FC<{
               </div>
             )}
             <div className={styles.bindingBar}>
+              {templateBadge && (
+                <Tag className={styles.bindingTag} color='purple'>
+                  <span>{templateBadge}</span>
+                </Tag>
+              )}
+              {attachments.length === 0 && inheritedAttachmentCount > 0 && (
+                <Tag className={styles.bindingTag} color='default'>
+                  <span>
+                    {I18N.template(I18N.esg.inheritedEvidenceCount, {
+                      val1: inheritedAttachmentCount,
+                    })}
+                  </span>
+                </Tag>
+              )}
               {indicators.map(ind => (
                 <Tag
                   key={String(ind.indicatorId)}
@@ -349,6 +429,63 @@ const TreeNodeItem: FC<{
                     <BarChartOutlined />
                     <span>{I18N.esg.bindIndicators}</span>
                   </button>
+                  <Upload
+                    name='file'
+                    multiple
+                    showUploadList={false}
+                    accept={QUICK_UPLOAD_ACCEPT}
+                    action={`${
+                      process.env.REACT_APP_API_URL || ''
+                    }/file/file/uploadImg`}
+                    beforeUpload={uploadFile => {
+                      if (uploadFile.size > 50 * 1024 * 1024) {
+                        Toast(
+                          'error',
+                          I18N.enterpriseCarbonAccount2.fileMaximumNot2,
+                        );
+                        return Upload.LIST_IGNORE;
+                      }
+                      return true;
+                    }}
+                    onChange={({ file }) => {
+                      if (file.status === 'uploading') {
+                        setQuickUploading(true);
+                        return;
+                      }
+                      setQuickUploading(false);
+                      if (file.status === 'done') {
+                        const fileUrl = (file.response as { data?: string })
+                          ?.data;
+                        const fileName =
+                          file.originFileObj?.name || file.name || '';
+                        if (fileUrl && fileName) {
+                          onQuickAppendFile(node.id, {
+                            id: uuid(),
+                            type: 'file',
+                            name: fileName,
+                            url: fileUrl,
+                            fileSize: `${((file.size || 0) / 1024).toFixed(
+                              2,
+                            )} KB`,
+                            category: inferMaterialCategoryFromName(fileName),
+                          });
+                        } else {
+                          Toast('error', I18N.components.uploadFailedPlease);
+                        }
+                      } else if (file.status === 'error') {
+                        Toast('error', I18N.components.uploadFailedPlease);
+                      }
+                    }}
+                  >
+                    <button
+                      type='button'
+                      className={styles.bindingBtn}
+                      disabled={quickUploading}
+                    >
+                      <UploadOutlined />
+                      <span>{I18N.esg.quickUploadFile}</span>
+                    </button>
+                  </Upload>
                   <button
                     type='button'
                     className={styles.bindingBtn}
@@ -399,6 +536,9 @@ const TreeNodeItem: FC<{
                   key={child.id}
                   node={child}
                   depth={depth + 1}
+                  inheritedAttachmentCount={
+                    inheritedAttachmentCount + attachments.length
+                  }
                   disabled={disabled}
                   onAddChild={onAddChild}
                   onEditTitle={onEditTitle}
@@ -406,6 +546,7 @@ const TreeNodeItem: FC<{
                   onDelete={onDelete}
                   onOpenIndicatorModal={onOpenIndicatorModal}
                   onOpenAttachmentModal={onOpenAttachmentModal}
+                  onQuickAppendFile={onQuickAppendFile}
                   onRemoveIndicator={onRemoveIndicator}
                   onRemoveAttachment={onRemoveAttachment}
                   onReorderSiblings={onReorderSiblings}
@@ -484,9 +625,10 @@ const NestedTree: FC<{
       }
       return;
     }
-    const baseExisting = !loading && treeRef.current.length
-      ? treeRef.current
-      : initialSections || [];
+    const baseExisting =
+      !loading && treeRef.current.length
+        ? treeRef.current
+        : initialSections || [];
     const parsedTree = parseMarkdownToTree(outline, baseExisting);
     const nextChildren = parsedTree[0]?.children || [];
     setTreeData(nextChildren);
@@ -496,11 +638,14 @@ const NestedTree: FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [outline, loading]);
 
-  useEffect(() => () => {
-    if (saveTimerRef.current) {
-      clearTimeout(saveTimerRef.current);
-    }
-  }, []);
+  useEffect(
+    () => () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
+    },
+    [],
+  );
 
   const persistOutline = (
     nextTree: OutlineSectionNode[],
@@ -660,7 +805,11 @@ const NestedTree: FC<{
 
   const onUpdateSectionAttachments = (
     sectionId: string,
-    payload: { attachments: SectionAttachment[]; sectionPrompt: string },
+    payload: {
+      attachments: SectionAttachment[];
+      sectionPrompt: string;
+      writingTemplate: SectionWritingTemplate;
+    },
   ) => {
     commitTreeUpdate(prev =>
       updateTreeNodes(prev, node =>
@@ -669,6 +818,7 @@ const NestedTree: FC<{
               ...node,
               attachments: payload.attachments,
               sectionPrompt: payload.sectionPrompt,
+              writingTemplate: payload.writingTemplate,
             }
           : node,
       ),
@@ -689,6 +839,41 @@ const NestedTree: FC<{
           // keep UI responsive even if background image extraction fails
         });
       }
+    }
+  };
+
+  const onQuickAppendFile = (
+    sectionId: string,
+    attachment: SectionAttachment,
+  ) => {
+    commitTreeUpdate(prev =>
+      updateTreeNodes(prev, node => {
+        if (node.id !== sectionId) {
+          return node;
+        }
+        const existing = node.attachments || [];
+        if (
+          existing.some(
+            item => item.type === 'file' && item.url === attachment.url,
+          )
+        ) {
+          return node;
+        }
+        return {
+          ...node,
+          attachments: [...existing, attachment],
+        };
+      }),
+    );
+    if (attachment.url && !isEsgMockModeEnabled() && !isMockReportId(id)) {
+      postEsgAnalyzeFilesExtractImages(
+        {
+          reportId: id,
+          sectionId,
+          referFiles: [{ name: attachment.name, url: attachment.url }],
+        },
+        { silentResponseError: true },
+      ).catch(() => {});
     }
   };
 
@@ -715,13 +900,14 @@ const NestedTree: FC<{
     [treeData, indicatorModalSectionId],
   );
 
-  const attachmentModalSection = useMemo(
+  const attachmentModalContext = useMemo(
     () =>
       attachmentModalSectionId
-        ? findNodeById(treeData, attachmentModalSectionId)
+        ? findNodeContextById(treeData, attachmentModalSectionId)
         : null,
     [treeData, attachmentModalSectionId],
   );
+  const attachmentModalSection = attachmentModalContext?.node || null;
 
   return (
     <div
@@ -775,6 +961,7 @@ const NestedTree: FC<{
                 key={node.id}
                 node={node}
                 depth={0}
+                inheritedAttachmentCount={0}
                 disabled={disabled}
                 onAddChild={onAddChild}
                 onEditTitle={onEditTitle}
@@ -786,6 +973,7 @@ const NestedTree: FC<{
                 onOpenAttachmentModal={target =>
                   setAttachmentModalSectionId(target.id)
                 }
+                onQuickAppendFile={onQuickAppendFile}
                 onRemoveIndicator={onRemoveIndicator}
                 onRemoveAttachment={onRemoveAttachment}
                 onReorderSiblings={onReorderSiblings}
@@ -816,8 +1004,14 @@ const NestedTree: FC<{
       <SectionAttachmentModal
         open={!!attachmentModalSection}
         sectionTitle={attachmentModalSection?.title || ''}
+        sectionPath={attachmentModalContext?.path}
+        sectionDepth={attachmentModalContext?.depth || 0}
         value={attachmentModalSection?.attachments || []}
+        inheritedAttachments={
+          attachmentModalContext?.inheritedAttachments || []
+        }
         sectionPrompt={attachmentModalSection?.sectionPrompt}
+        writingTemplate={attachmentModalSection?.writingTemplate}
         globalReferFiles={reportInfo?.referFiles}
         globalReferLinks={reportInfo?.referLink}
         globalReferTexts={reportInfo?.referText}

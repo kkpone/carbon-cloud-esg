@@ -1,14 +1,35 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   padding-top: 8px;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+}
+
+.rowTwo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.groupTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #026961;
+  padding-top: 4px;
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .field {
@@ -59,6 +80,8 @@
   font-size: 12px;
   line-height: 20px;
   white-space: pre-wrap;
+  max-height: 240px;
+  overflow-y: auto;
 }
 
 .footer {

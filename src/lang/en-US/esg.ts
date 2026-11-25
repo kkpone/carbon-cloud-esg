@@ -279,15 +279,15 @@ export default {
   thisOrganizationIsCurrentlyUnavailable:
     'The organization currently has no agenda items',
   bindIndicators: 'Link Indicators',
-  sectionAttachments: 'Section Attachments',
+  sectionAttachments: 'Section Evidence',
   sectionPrompt: 'Section Writing Instructions',
   sectionPromptPlaceholder:
     'Specify key points, data scope, or phrasing for this section',
   selectSectionIndicators: 'Select Section Indicators',
-  sectionAttachmentTitle: 'Upload Section Attachments',
+  sectionAttachmentTitle: 'Configure Section / Subsection Evidence',
   addFromReportLibrary: 'Import from Report References',
   addSectionAttachmentTip:
-    'Attach dedicated files, links, or text notes to this section. Report generation will prioritize section-level materials.',
+    'Upload PDF/Word/Excel/image files, links, or text notes for this chapter or subsection as primary grounding evidence during generation.',
   noAvailableIndicatorsTip:
     'No system indicator framework is linked to this report yet. You can upload section attachments or choose a framework on the creation page.',
   uploadedExcelIndicatorModeTip:
@@ -329,4 +329,44 @@ export default {
   mockFallbackNotice:
     'Backend write permission unavailable; switched to local simulation mode',
   mockExportSuccess: 'Report exported via local simulation',
+  chapterLevelTag: 'Chapter',
+  subsectionLevelTag: 'Subsection',
+  sectionPathLabel: 'Outline Path',
+  quickUploadFile: 'Upload Evidence File',
+  inheritedEvidenceTip:
+    'Inherits {val1} evidence file(s) from parent chapter; you can also upload subsection-specific files here.',
+  inheritedEvidenceCount: 'Inherits {val1} parent file(s)',
+  evidenceCategoryLabel: 'Material Type',
+  evidenceCategoryPolicy: 'Policy Document',
+  evidenceCategoryLedger: 'Data Ledger',
+  evidenceCategoryCertificate: 'Certificate',
+  evidenceCategoryCase: 'Case Material',
+  evidenceCategoryOther: 'Supplementary',
+  evidenceNotePlaceholder: 'Optional: specify extraction scope or key focus',
+  sectionWritingTemplateLabel: 'Writing Template',
+  writingTemplateAuto: 'Auto (5-Step for Routine / 4-Pillar for Core)',
+  writingTemplateFiveStep: '5-Step Routine Topic Formula',
+  writingTemplateFourPillar: '4-Pillar Core Topic Framework',
+  writingTemplateStarCase: 'STAR 4-Step Highlight Case',
+  enableStyleGuide: 'Enable ESG 4 Writing Style Principles',
+  enableStyleGuideDesc:
+    'Use objective third-person voice, pair actions with quantitative data, summarize policies instead of copying verbatim, and unify year/number/unit formatting.',
+  enableFiveStepTemplate: 'Enable 5-Step Standard Sentence Template',
+  enableFiveStepTemplateDesc:
+    'Structure routine topics as Policy -> Governance -> Systems -> Key Actions -> Quantitative Performance.',
+  enableFourPillarTemplate: 'Enable 4-Pillar Framework for Core Topics',
+  enableFourPillarTemplateDesc:
+    'Structure material topics (climate, supply chain) as Governance -> Strategy -> Risk Management -> Metrics & Targets.',
+  enableStarCaseTemplate: 'Enable STAR 4-Step Case Rewriting Formula',
+  enableStarCaseTemplateDesc:
+    'Rewrite project materials into ~300-char highlight boxes: Situation -> Target -> Action -> Quantified Result.',
+  companyShortNameLabel: 'Unified Company Short Name',
+  companyShortNamePlaceholder: 'Defaults to company name or "the Company"',
+  preferredCarbonUnitLabel: 'Unified GHG Emission Unit',
+  preferredCarbonUnitOptionCn: 'tCO2e (Chinese)',
+  preferredCarbonUnitOptionEn: 'tCO2e',
+  styleGuideSectionTitle:
+    'ESG Standard Sentence Templates & Writing Style Guide',
+  copyPromptBtn: 'Copy Full Prompt',
+  copyPromptSuccess: 'Full prompt copied',
 };

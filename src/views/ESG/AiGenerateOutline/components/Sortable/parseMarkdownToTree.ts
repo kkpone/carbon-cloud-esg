@@ -4,6 +4,7 @@ import {
   OutlineSectionNode,
   SectionAttachment,
   SectionIndicatorRef,
+  SectionWritingTemplate,
 } from '../../service';
 
 type BindingsSnapshot = {
@@ -11,6 +12,7 @@ type BindingsSnapshot = {
   attachments: SectionAttachment[];
   indicators: SectionIndicatorRef[];
   sectionPrompt?: string;
+  writingTemplate?: SectionWritingTemplate;
 };
 
 const SID_COMMENT_REGEX = /<!--\s*sid:([a-zA-Z0-9_-]+)\s*-->/;
@@ -32,12 +34,15 @@ export function parseMarkdownToTree(
     parentTitles: string[] = [],
   ) => {
     nodes.forEach((node, idx) => {
-      const pathKey = [...parentTitles, `${idx}:${node.title.trim()}`].join('>');
+      const pathKey = [...parentTitles, `${idx}:${node.title.trim()}`].join(
+        '>',
+      );
       const snapshot: BindingsSnapshot = {
         id: node.id,
         attachments: node.attachments || [],
         indicators: node.indicators || [],
         sectionPrompt: node.sectionPrompt,
+        writingTemplate: node.writingTemplate,
       };
       byId.set(node.id, snapshot);
       byPath.set(pathKey, snapshot);
@@ -45,7 +50,10 @@ export function parseMarkdownToTree(
         byTitle.set(node.title.trim(), snapshot);
       }
       if (node.children?.length) {
-        indexExisting(node.children, [...parentTitles, `${idx}:${node.title.trim()}`]);
+        indexExisting(node.children, [
+          ...parentTitles,
+          `${idx}:${node.title.trim()}`,
+        ]);
       }
     });
   };
@@ -54,7 +62,8 @@ export function parseMarkdownToTree(
 
   const lines = markdown.split('\n');
   const tree: OutlineSectionNode[] = [];
-  const stack: { level: number; node: OutlineSectionNode; pathKey: string }[] = [];
+  const stack: { level: number; node: OutlineSectionNode; pathKey: string }[] =
+    [];
   let currentNode: OutlineSectionNode | null = null;
 
   for (const line of lines) {
@@ -94,6 +103,7 @@ export function parseMarkdownToTree(
         attachments: matched?.attachments || [],
         indicators: matched?.indicators || [],
         sectionPrompt: matched?.sectionPrompt,
+        writingTemplate: matched?.writingTemplate,
         children: [],
       };
 

@@ -23,6 +23,7 @@ import { Toast } from '@/utils';
 import styles from './index.module.less';
 import { postDownloadReport, postEditReport } from './service';
 import {
+  buildReportSystemPrompt,
   getStoredOutlineSections,
   getStoredPromptConfig,
   mergePromptConfig,
@@ -141,12 +142,21 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
 
   const generateReport = async (info?: ReportDetailsType) => {
     const numericId = Number(id);
-    const effectivePromptConfig = mergePromptConfig(
+    const mergedPromptConfig = mergePromptConfig(
       info?.promptConfig || getStoredPromptConfig(numericId),
       getCurrentLocale(),
     );
     const effectiveSections =
       info?.outlineSections || getStoredOutlineSections(numericId) || [];
+    const systemPrompt = buildReportSystemPrompt({
+      reportInfo: info,
+      sections: effectiveSections,
+      config: mergedPromptConfig,
+    });
+    const effectivePromptConfig = {
+      ...mergedPromptConfig,
+      systemPrompt,
+    };
     setSyncToHocuspocus(true);
     cancelRequest.current = new AbortController();
     canScroll.current = true;
@@ -173,6 +183,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
         data: {
           reportId: numericId,
           promptConfig: effectivePromptConfig,
+          systemPrompt,
           outlineSections: effectiveSections,
         },
         onMessage: onStreamMessage,

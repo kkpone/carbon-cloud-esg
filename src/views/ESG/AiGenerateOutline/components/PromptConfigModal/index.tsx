@@ -1,9 +1,13 @@
+import { CopyOutlined } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
 import { Button, Input, Modal, Select, Switch } from 'antd';
 import { FC, useEffect, useMemo, useState } from 'react';
 
+import { Toast } from '@/utils';
+import { copyToClipboard } from '@/utils/clipboard';
+
 import styles from './index.module.less';
-import { buildReportPromptPreview } from '../../promptUtils';
+import { buildReportSystemPrompt } from '../../promptUtils';
 import {
   OutlineSectionNode,
   ReportDetailsType,
@@ -40,7 +44,7 @@ export const PromptConfigModal: FC<IPromptConfigModalProps> = ({
 
   const previewText = useMemo(
     () =>
-      buildReportPromptPreview({
+      buildReportSystemPrompt({
         reportInfo,
         sections,
         config: draft,
@@ -48,10 +52,17 @@ export const PromptConfigModal: FC<IPromptConfigModalProps> = ({
     [reportInfo, sections, draft],
   );
 
+  const handleCopyPrompt = async () => {
+    const ok = await copyToClipboard(previewText);
+    if (ok) {
+      Toast('success', I18N.esg.copyPromptSuccess);
+    }
+  };
+
   return (
     <Modal
       title={I18N.esg.reportPromptTitle}
-      width={720}
+      width={800}
       open={open}
       destroyOnClose
       footer={null}
@@ -107,6 +118,118 @@ export const PromptConfigModal: FC<IPromptConfigModalProps> = ({
           </div>
         </div>
 
+        <div className={styles.rowTwo}>
+          <div className={styles.field}>
+            <div className={styles.label}>{I18N.esg.companyShortNameLabel}</div>
+            <Input
+              value={draft.companyShortName}
+              placeholder={I18N.esg.companyShortNamePlaceholder}
+              maxLength={40}
+              onChange={e =>
+                setDraft(prev => ({
+                  ...prev,
+                  companyShortName: e.target.value,
+                }))
+              }
+            />
+          </div>
+          <div className={styles.field}>
+            <div className={styles.label}>
+              {I18N.esg.preferredCarbonUnitLabel}
+            </div>
+            <Select<string>
+              value={
+                draft.preferredCarbonUnit === 'tCO2e' ? 'tCO2e' : 'tco2e_cn'
+              }
+              onChange={preferredCarbonUnit =>
+                setDraft(prev => ({ ...prev, preferredCarbonUnit }))
+              }
+              options={[
+                {
+                  label: I18N.esg.preferredCarbonUnitOptionCn,
+                  value: 'tco2e_cn',
+                },
+                {
+                  label: I18N.esg.preferredCarbonUnitOptionEn,
+                  value: 'tCO2e',
+                },
+              ]}
+            />
+          </div>
+        </div>
+
+        <div className={styles.groupTitle}>
+          {I18N.esg.styleGuideSectionTitle}
+        </div>
+
+        <div className={styles.switchCard}>
+          <div className={styles.switchText}>
+            <div className={styles.switchTitle}>
+              {I18N.esg.enableStyleGuide}
+            </div>
+            <div className={styles.switchDesc}>
+              {I18N.esg.enableStyleGuideDesc}
+            </div>
+          </div>
+          <Switch
+            checked={draft.enableStyleGuide}
+            onChange={enableStyleGuide =>
+              setDraft(prev => ({ ...prev, enableStyleGuide }))
+            }
+          />
+        </div>
+
+        <div className={styles.switchCard}>
+          <div className={styles.switchText}>
+            <div className={styles.switchTitle}>
+              {I18N.esg.enableFiveStepTemplate}
+            </div>
+            <div className={styles.switchDesc}>
+              {I18N.esg.enableFiveStepTemplateDesc}
+            </div>
+          </div>
+          <Switch
+            checked={draft.enableFiveStepTemplate}
+            onChange={enableFiveStepTemplate =>
+              setDraft(prev => ({ ...prev, enableFiveStepTemplate }))
+            }
+          />
+        </div>
+
+        <div className={styles.switchCard}>
+          <div className={styles.switchText}>
+            <div className={styles.switchTitle}>
+              {I18N.esg.enableFourPillarTemplate}
+            </div>
+            <div className={styles.switchDesc}>
+              {I18N.esg.enableFourPillarTemplateDesc}
+            </div>
+          </div>
+          <Switch
+            checked={draft.enableFourPillarTemplate}
+            onChange={enableFourPillarTemplate =>
+              setDraft(prev => ({ ...prev, enableFourPillarTemplate }))
+            }
+          />
+        </div>
+
+        <div className={styles.switchCard}>
+          <div className={styles.switchText}>
+            <div className={styles.switchTitle}>
+              {I18N.esg.enableStarCaseTemplate}
+            </div>
+            <div className={styles.switchDesc}>
+              {I18N.esg.enableStarCaseTemplateDesc}
+            </div>
+          </div>
+          <Switch
+            checked={draft.enableStarCaseTemplate}
+            onChange={enableStarCaseTemplate =>
+              setDraft(prev => ({ ...prev, enableStarCaseTemplate }))
+            }
+          />
+        </div>
+
         <div className={styles.switchCard}>
           <div className={styles.switchText}>
             <div className={styles.switchTitle}>{I18N.esg.strictDataMode}</div>
@@ -140,9 +263,7 @@ export const PromptConfigModal: FC<IPromptConfigModalProps> = ({
         </div>
 
         <div className={styles.field}>
-          <div className={styles.label}>
-            {I18N.esg.globalPromptInstruction}
-          </div>
+          <div className={styles.label}>{I18N.esg.globalPromptInstruction}</div>
           <Input.TextArea
             value={draft.customInstruction}
             onChange={e =>
@@ -159,7 +280,17 @@ export const PromptConfigModal: FC<IPromptConfigModalProps> = ({
         </div>
 
         <div className={styles.field}>
-          <div className={styles.label}>{I18N.esg.promptPreviewTitle}</div>
+          <div className={styles.previewHeader}>
+            <div className={styles.label}>{I18N.esg.promptPreviewTitle}</div>
+            <Button
+              type='link'
+              size='small'
+              icon={<CopyOutlined />}
+              onClick={handleCopyPrompt}
+            >
+              {I18N.esg.copyPromptBtn}
+            </Button>
+          </div>
           <div className={styles.previewBox}>{previewText}</div>
         </div>
       </div>
@@ -169,7 +300,10 @@ export const PromptConfigModal: FC<IPromptConfigModalProps> = ({
         <Button
           type='primary'
           onClick={() => {
-            onConfirm(draft);
+            onConfirm({
+              ...draft,
+              systemPrompt: previewText,
+            });
             onCancel();
           }}
         >

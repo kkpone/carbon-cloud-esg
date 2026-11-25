@@ -261,14 +261,14 @@ export default {
   importanceOfApplication: '應用重要性議題分析結果',
   thisOrganizationIsCurrentlyUnavailable: '該組織暫無議題',
   bindIndicators: '關聯指標',
-  sectionAttachments: '章節附件',
+  sectionAttachments: '章節依據文件',
   sectionPrompt: '章節寫作要求',
   sectionPromptPlaceholder: '補充本章節重點強調的內容、數據口徑或表達方式',
   selectSectionIndicators: '選擇章節關聯指標',
-  sectionAttachmentTitle: '上傳章節附件',
+  sectionAttachmentTitle: '配置章節/小節生成依據',
   addFromReportLibrary: '從報告參考資料導入',
   addSectionAttachmentTip:
-    '為當前章節掛載專屬文件、鏈接或文字說明，生成正文時將優先參考本章節資料',
+    '支持為當前章節或小節自定義上傳 PDF/Word/Excel/圖片、補充鏈接或文字，作為本節點正文生成的核心依據',
   noAvailableIndicatorsTip:
     '當前報告未關聯系統指標體系或暫無可選指標，可在下方上傳附件或先在首頁選擇指標體系',
   uploadedExcelIndicatorModeTip:
@@ -292,7 +292,8 @@ export default {
   strictDataModeDesc:
     '僅使用已關聯指標與附件中的真實數值，缺失數據以佔位提示代替，不虛構數字或案例',
   highlightStandards: '標註標準條款索引',
-  highlightStandardsDesc: '在對應章節輸出對標標準編號（如 GRI / ISSB / 指引條款）',
+  highlightStandardsDesc:
+    '在對應章節輸出對標標準編號（如 GRI / ISSB / 指引條款）',
   globalPromptInstruction: '整體生成提示詞補充',
   globalPromptPlaceholder:
     '例如：突出年度減碳目標與進展，定量指標優先以對比表格呈現，避免空洞套話',
@@ -304,7 +305,47 @@ export default {
   hasReportValue: '有填報值',
   allIndicatorsFilter: '全部指標',
   mockModeLabel: '演示模擬模式',
-  mockModeTooltip: '開啟後在後端無權限或離線時本地模擬生成大綱、報告正文與導出流程',
+  mockModeTooltip:
+    '開啟後在後端無權限或離線時本地模擬生成大綱、報告正文與導出流程',
   mockFallbackNotice: '當前賬號無後端寫入權限，已自動切換至本地模擬流程',
   mockExportSuccess: '已通過本地模擬導出報告文件',
+  chapterLevelTag: '章節',
+  subsectionLevelTag: '小節',
+  sectionPathLabel: '所屬路徑',
+  quickUploadFile: '上傳依據文件',
+  inheritedEvidenceTip:
+    '已繼承上級章節 {val1} 份依據文件，也可在本小節單獨上傳專屬文件覆蓋補充',
+  inheritedEvidenceCount: '繼承上級 {val1} 份依據',
+  evidenceCategoryLabel: '資料分類',
+  evidenceCategoryPolicy: '制度文件',
+  evidenceCategoryLedger: '數據台賬',
+  evidenceCategoryCertificate: '資質證書',
+  evidenceCategoryCase: '案例素材',
+  evidenceCategoryOther: '補充材料',
+  evidenceNotePlaceholder: '可選：補充該文件的取數範圍或引用重點',
+  sectionWritingTemplateLabel: '章節寫作模板',
+  writingTemplateAuto: '自動匹配（常規用五步法 / 核心用四支柱）',
+  writingTemplateFiveStep: '常態化議題五步法',
+  writingTemplateFourPillar: '核心議題四支柱框架',
+  writingTemplateStarCase: 'STAR四步法亮點案例框',
+  enableStyleGuide: '啟用 ESG 文筆風格四項基本要求',
+  enableStyleGuideDesc:
+    '統一第三人稱客觀視角、堅持管理動作+定量數據閉環、制度概括轉述、統一明確年份/千分位/小數位與計量單位',
+  enableFiveStepTemplate: '啟用常態化議題「五步法」標準句式',
+  enableFiveStepTemplateDesc:
+    '常規小節按「方針理念 → 組織架構 → 制度體系 → 核心舉措 → 定量績效」五步法結構撰寫',
+  enableFourPillarTemplate: '啟用核心議題「四支柱框架」',
+  enableFourPillarTemplateDesc:
+    '氣候變化、供應鏈等核心實質性議題按「治理 → 戰略 → 影響/風險/機遇管理 → 指標與目標」展開',
+  enableStarCaseTemplate: '啟用亮點案例「STAR四步法」改寫公式',
+  enableStarCaseTemplateDesc:
+    '將業務總結與案例素材改寫為約300字專欄案例：背景痛點(S) → 改造目標(T) → 核心動作(A) → 量化結果(R)',
+  companyShortNameLabel: '正文統一企業簡稱',
+  companyShortNamePlaceholder: '留空默認使用企業全稱或「公司」',
+  preferredCarbonUnitLabel: '統一碳排放計量單位',
+  preferredCarbonUnitOptionCn: '噸二氧化碳當量',
+  preferredCarbonUnitOptionEn: 'tCO2e',
+  styleGuideSectionTitle: 'ESG 標準句式模板與文筆風格指南',
+  copyPromptBtn: '複製完整提示詞',
+  copyPromptSuccess: '已複製完整提示詞',
 };

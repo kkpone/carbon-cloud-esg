@@ -261,14 +261,14 @@ export default {
   importanceOfApplication: '应用重要性议题分析结果',
   thisOrganizationIsCurrentlyUnavailable: '该组织暂无议题',
   bindIndicators: '关联指标',
-  sectionAttachments: '章节附件',
+  sectionAttachments: '章节依据文件',
   sectionPrompt: '章节写作要求',
   sectionPromptPlaceholder: '补充本章节重点强调的内容、数据口径或表达方式',
   selectSectionIndicators: '选择章节关联指标',
-  sectionAttachmentTitle: '上传章节附件',
+  sectionAttachmentTitle: '配置章节/小节生成依据',
   addFromReportLibrary: '从报告参考资料导入',
   addSectionAttachmentTip:
-    '为当前章节挂载专属文件、链接或文字说明，生成正文时将优先参考本章节资料',
+    '支持为当前章节或小节自定义上传 PDF/Word/Excel/图片、补充链接或文字，作为本节点正文生成的核心依据',
   noAvailableIndicatorsTip:
     '当前报告未关联系统指标体系或暂无可选指标，可在下方上传附件或先在首页选择指标体系',
   uploadedExcelIndicatorModeTip:
@@ -292,7 +292,8 @@ export default {
   strictDataModeDesc:
     '仅使用已关联指标与附件中的真实数值，缺失数据以占位提示代替，不虚构数字或案例',
   highlightStandards: '标注标准条款索引',
-  highlightStandardsDesc: '在对应章节输出对标标准编号（如 GRI / ISSB / 指引条款）',
+  highlightStandardsDesc:
+    '在对应章节输出对标标准编号（如 GRI / ISSB / 指引条款）',
   globalPromptInstruction: '整体生成提示词补充',
   globalPromptPlaceholder:
     '例如：突出年度减碳目标与进展，定量指标优先以对比表格呈现，避免空洞套话',
@@ -304,7 +305,47 @@ export default {
   hasReportValue: '有填报值',
   allIndicatorsFilter: '全部指标',
   mockModeLabel: '演示模拟模式',
-  mockModeTooltip: '开启后在后端无权限或离线时本地模拟生成大纲、报告正文与导出流程',
+  mockModeTooltip:
+    '开启后在后端无权限或离线时本地模拟生成大纲、报告正文与导出流程',
   mockFallbackNotice: '当前账号无后端写入权限，已自动切换至本地模拟流程',
   mockExportSuccess: '已通过本地模拟导出报告文件',
+  chapterLevelTag: '章节',
+  subsectionLevelTag: '小节',
+  sectionPathLabel: '所属路径',
+  quickUploadFile: '上传依据文件',
+  inheritedEvidenceTip:
+    '已继承上级章节 {val1} 份依据文件，也可在本小节单独上传专属文件覆盖补充',
+  inheritedEvidenceCount: '继承上级 {val1} 份依据',
+  evidenceCategoryLabel: '资料分类',
+  evidenceCategoryPolicy: '制度文件',
+  evidenceCategoryLedger: '数据台账',
+  evidenceCategoryCertificate: '资质证书',
+  evidenceCategoryCase: '案例素材',
+  evidenceCategoryOther: '补充材料',
+  evidenceNotePlaceholder: '可选：补充该文件的取数范围或引用重点',
+  sectionWritingTemplateLabel: '章节写作模板',
+  writingTemplateAuto: '自动匹配（常规用五步法 / 核心用四支柱）',
+  writingTemplateFiveStep: '常态化议题五步法',
+  writingTemplateFourPillar: '核心议题四支柱框架',
+  writingTemplateStarCase: 'STAR四步法亮点案例框',
+  enableStyleGuide: '启用 ESG 文笔风格四项基本要求',
+  enableStyleGuideDesc:
+    '统一第三人称客观视角、坚持管理动作+定量数据闭环、制度概括转述、统一明确年份/千分位/小数位与计量单位',
+  enableFiveStepTemplate: '启用常态化议题“五步法”标准句式',
+  enableFiveStepTemplateDesc:
+    '常规小节按“方针理念 → 组织架构 → 制度体系 → 核心举措 → 定量绩效”五步法结构撰写',
+  enableFourPillarTemplate: '启用核心议题“四支柱框架”',
+  enableFourPillarTemplateDesc:
+    '气候变化、供应链等核心实质性议题按“治理 → 战略 → 影响/风险/机遇管理 → 指标与目标”展开',
+  enableStarCaseTemplate: '启用亮点案例“STAR四步法”改写公式',
+  enableStarCaseTemplateDesc:
+    '将业务总结与案例素材改写为约300字专栏案例：背景痛点(S) → 改造目标(T) → 核心动作(A) → 量化结果(R)',
+  companyShortNameLabel: '正文统一企业简称',
+  companyShortNamePlaceholder: '留空默认使用企业全称或“公司”',
+  preferredCarbonUnitLabel: '统一碳排放计量单位',
+  preferredCarbonUnitOptionCn: '吨二氧化碳当量',
+  preferredCarbonUnitOptionEn: 'tCO2e',
+  styleGuideSectionTitle: 'ESG 标准句式模板与文笔风格指南',
+  copyPromptBtn: '复制完整提示词',
+  copyPromptSuccess: '已复制完整提示词',
 };
