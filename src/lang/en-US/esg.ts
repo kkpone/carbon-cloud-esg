@@ -498,4 +498,12 @@ export default {
   preResearchHandoffCases: '2. Adopted Peer Spotlight Themes: {val1}',
   preResearchHandoffCaseItem: 'Theme "{val1}" (Ref: {val2})',
   preResearchHandoffMaterials: '3. Key Supporting Files to Collect: {val1}',
+  preResearchModuleGap: 'Module 1 · Compliance & Rating Gap',
+  preResearchModuleBenchmark: 'Module 2 · Peer Benchmarking',
+  preResearchModuleInterview: 'Module 3 · Department Interview Guide',
+  preResearchInputCollapseLabel: 'Input Materials & Config ({val1})',
+  preResearchSelfFileCount: '{val1} internal files uploaded',
+  preResearchPeerCountLabel: '{val1} benchmark peers',
+  preResearchDeptCountLabel: '{val1} departments',
+  preResearchCluesSummary: 'Website & Annual Report Clues (Skip Known Facts)',
 };

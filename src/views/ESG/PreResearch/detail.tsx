@@ -5,7 +5,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
-import { Button, Empty, Spin, Tabs, Tag } from 'antd';
+import { Button, Collapse, Empty, Spin, Tabs, Tag } from 'antd';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
@@ -45,7 +45,7 @@ export const PreResearchDetail: FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
-  const [activeTab, setActiveTab] = useState('materials');
+  const [activeTab, setActiveTab] = useState('gap');
   const [project, setProject] = useState<PreResearchProject | null>(() => {
     const local = id ? getLocalPreResearchById(id) : undefined;
     if (local) return local;
@@ -350,60 +350,145 @@ export const PreResearchDetail: FC = () => {
             onChange={setActiveTab}
             items={[
               {
-                key: 'materials',
-                label: I18N.esg.preResearchTabMaterials,
-                children: (
-                  <InputMaterialsPanel
-                    project={project}
-                    onChange={setProject}
-                    onGenerateAll={handleGenerateAll}
-                    generating={generating}
-                  />
-                ),
-              },
-              {
                 key: 'gap',
-                label: `${I18N.esg.preResearchTabGap} (${project.gapItems.length})`,
+                label: `${I18N.esg.preResearchModuleGap} (${project.gapItems.length})`,
                 children: (
-                  <GapDiagnosisPanel
-                    project={project}
-                    onChange={gapItems =>
-                      persistProject({ ...project, gapItems })
-                    }
-                    onRegenerate={handleGenerateGap}
-                    generating={generating}
-                  />
+                  <div className={styles.moduleStack}>
+                    <Collapse
+                      size='small'
+                      defaultActiveKey={
+                        project.gapItems.length === 0 ? ['inputs'] : []
+                      }
+                      items={[
+                        {
+                          key: 'inputs',
+                          label: I18N.template(
+                            I18N.esg.preResearchInputCollapseLabel,
+                            {
+                              val1: `${I18N.template(
+                                I18N.esg.preResearchSelfFileCount,
+                                { val1: project.selfMaterials.length },
+                              )} · ${project.standards.length} ${
+                                I18N.esg.referenceStandards
+                              }`,
+                            },
+                          ),
+                          children: (
+                            <InputMaterialsPanel
+                              project={project}
+                              onChange={next => persistProject(next)}
+                              generating={generating}
+                              sections={['self', 'reg']}
+                            />
+                          ),
+                        },
+                      ]}
+                    />
+                    <GapDiagnosisPanel
+                      project={project}
+                      onChange={gapItems =>
+                        persistProject({ ...project, gapItems })
+                      }
+                      onRegenerate={handleGenerateGap}
+                      generating={generating}
+                    />
+                  </div>
                 ),
               },
               {
                 key: 'benchmark',
-                label: `${I18N.esg.preResearchTabBenchmark} (${project.benchmarkRows.length})`,
+                label: `${I18N.esg.preResearchModuleBenchmark} (${project.benchmarkRows.length})`,
                 children: (
-                  <PeerBenchmarkPanel
-                    project={project}
-                    onChangeRows={benchmarkRows =>
-                      persistProject({ ...project, benchmarkRows })
-                    }
-                    onChangeCases={highlightCases =>
-                      persistProject({ ...project, highlightCases })
-                    }
-                    onRegenerate={handleGenerateBenchmark}
-                    generating={generating}
-                  />
+                  <div className={styles.moduleStack}>
+                    <Collapse
+                      size='small'
+                      defaultActiveKey={
+                        project.benchmarkRows.length === 0 ? ['inputs'] : []
+                      }
+                      items={[
+                        {
+                          key: 'inputs',
+                          label: I18N.template(
+                            I18N.esg.preResearchInputCollapseLabel,
+                            {
+                              val1: `${I18N.template(
+                                I18N.esg.preResearchSelfFileCount,
+                                { val1: project.selfMaterials.length },
+                              )} · ${I18N.template(
+                                I18N.esg.preResearchPeerCountLabel,
+                                { val1: project.peers.length },
+                              )}`,
+                            },
+                          ),
+                          children: (
+                            <InputMaterialsPanel
+                              project={project}
+                              onChange={next => persistProject(next)}
+                              generating={generating}
+                              sections={['self', 'peer']}
+                            />
+                          ),
+                        },
+                      ]}
+                    />
+                    <PeerBenchmarkPanel
+                      project={project}
+                      onChangeRows={benchmarkRows =>
+                        persistProject({ ...project, benchmarkRows })
+                      }
+                      onChangeCases={highlightCases =>
+                        persistProject({ ...project, highlightCases })
+                      }
+                      onRegenerate={handleGenerateBenchmark}
+                      generating={generating}
+                    />
+                  </div>
                 ),
               },
               {
                 key: 'interview',
-                label: `${I18N.esg.preResearchTabInterview} (${project.interviewQuestions.length})`,
+                label: `${I18N.esg.preResearchModuleInterview} (${project.interviewQuestions.length})`,
                 children: (
-                  <InterviewOutlinePanel
-                    project={project}
-                    onChange={interviewQuestions =>
-                      persistProject({ ...project, interviewQuestions })
-                    }
-                    onRegenerate={handleGenerateInterview}
-                    generating={generating}
-                  />
+                  <div className={styles.moduleStack}>
+                    <Collapse
+                      size='small'
+                      defaultActiveKey={
+                        project.interviewQuestions.length === 0
+                          ? ['inputs']
+                          : []
+                      }
+                      items={[
+                        {
+                          key: 'inputs',
+                          label: I18N.template(
+                            I18N.esg.preResearchInputCollapseLabel,
+                            {
+                              val1: `${I18N.template(
+                                I18N.esg.preResearchDeptCountLabel,
+                                { val1: project.departments.length },
+                              )} · ${I18N.esg.preResearchCluesSummary}`,
+                            },
+                          ),
+                          children: (
+                            <InputMaterialsPanel
+                              project={project}
+                              onChange={next => persistProject(next)}
+                              generating={generating}
+                              sections={['dept', 'clues']}
+                            />
+                          ),
+                        },
+                      ]}
+                    />
+                    <InterviewOutlinePanel
+                      project={project}
+                      onChange={interviewQuestions =>
+                        persistProject({ ...project, interviewQuestions })
+                      }
+                      onRegenerate={handleGenerateInterview}
+                      generating={generating}
+                    />
+                  </div>
                 ),
               },
             ]}

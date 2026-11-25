@@ -469,4 +469,12 @@ export default {
   preResearchHandoffCases: '2. 擬借鑒同業專題：{val1}',
   preResearchHandoffCaseItem: '專題借鑒《{val1}》（參考{val2}）',
   preResearchHandoffMaterials: '3. 待收集關鍵底稿清單：{val1}',
+  preResearchModuleGap: '模組1 · 合規與評級差距診斷',
+  preResearchModuleBenchmark: '模組2 · 同業標杆對標分析',
+  preResearchModuleInterview: '模組3 · 分部門定製化訪談提綱',
+  preResearchInputCollapseLabel: '輸入資料配置（{val1}）',
+  preResearchSelfFileCount: '已上傳 {val1} 份自身文件',
+  preResearchPeerCountLabel: '已配置 {val1} 家標杆企業',
+  preResearchDeptCountLabel: '已配置 {val1} 個受訪部門',
+  preResearchCluesSummary: '官網及年報線索（用於免問已知資訊）',
 };

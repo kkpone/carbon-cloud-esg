@@ -469,4 +469,12 @@ export default {
   preResearchHandoffCases: '2. 拟借鉴同业专题：{val1}',
   preResearchHandoffCaseItem: '专题借鉴《{val1}》（参考{val2}）',
   preResearchHandoffMaterials: '3. 待收集关键底稿清单：{val1}',
+  preResearchModuleGap: '模块1 · 合规与评级差距诊断',
+  preResearchModuleBenchmark: '模块2 · 同业标杆对标分析',
+  preResearchModuleInterview: '模块3 · 分部门定制化访谈提纲',
+  preResearchInputCollapseLabel: '输入资料配置（{val1}）',
+  preResearchSelfFileCount: '已上传 {val1} 份自身文件',
+  preResearchPeerCountLabel: '已配置 {val1} 家标杆企业',
+  preResearchDeptCountLabel: '已配置 {val1} 个受访部门',
+  preResearchCluesSummary: '官网及年报线索（用于免问已知信息）',
 };

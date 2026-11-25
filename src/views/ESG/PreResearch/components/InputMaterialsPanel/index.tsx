@@ -28,8 +28,9 @@ import {
 export interface IInputMaterialsPanelProps {
   project: PreResearchProject;
   onChange: (next: PreResearchProject) => void;
-  onGenerateAll: () => void;
+  onGenerateAll?: () => void;
   generating: boolean;
+  sections?: ('self' | 'reg' | 'peer' | 'dept' | 'clues')[];
 }
 
 const ACCEPT_FILES = '.pdf,.doc,.docx,.xlsx,.xls,.PDF,.DOC,.DOCX,.XLSX,.XLS';
@@ -39,7 +40,10 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
   onChange,
   onGenerateAll,
   generating,
+  sections,
 }) => {
+  const has = (sec: 'self' | 'reg' | 'peer' | 'dept' | 'clues') =>
+    !sections || sections.includes(sec);
   const [newPeerName, setNewPeerName] = useState('');
   const [newPeerTag, setNewPeerTag] = useState(
     I18N.esg.preResearchDefaultPeerTag,
@@ -180,208 +184,267 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.topGrid}>
-        <Card
-          size='small'
-          title={I18N.esg.preResearchLookSelf}
-          extra={
-            <Upload
-              name='file'
-              multiple
-              showUploadList={false}
-              accept={ACCEPT_FILES}
-              action={`${
-                process.env.REACT_APP_API_URL || ''
-              }/file/file/uploadImg`}
-              beforeUpload={file => {
-                if (isEsgMockModeEnabled() || !process.env.REACT_APP_API_URL) {
-                  appendSelfMaterial(file.name, undefined, file.size);
-                  return false;
-                }
-                return true;
-              }}
-              onChange={({ file }) => {
-                if (file.status === 'done') {
-                  const url = (file.response as { data?: string })?.data;
-                  appendSelfMaterial(file.name, url, file.size);
-                } else if (file.status === 'error') {
-                  appendSelfMaterial(file.name, undefined, file.size);
-                }
-              }}
-            >
-              <Button size='small' icon={<UploadOutlined />}>
-                {I18N.esg.preResearchUploadSelfFile}
-              </Button>
-            </Upload>
+      {(has('self') || has('reg')) && (
+        <div
+          className={
+            has('self') && has('reg') ? styles.topGrid : styles.singleCol
           }
         >
-          <div className={styles.fileTags}>
-            {project.selfMaterials.map(mat => (
-              <Tag
-                key={mat.id}
-                closable
-                color='cyan'
-                onClose={() =>
-                  updateField(
-                    'selfMaterials',
-                    project.selfMaterials.filter(m => m.id !== mat.id),
-                  )
-                }
-              >
-                {`${mat.name} (${mat.fileSize || '—'})`}
-              </Tag>
-            ))}
-          </div>
-          <div className={styles.fieldGroup}>
-            <div className={styles.fieldLabel}>
-              {I18N.esg.preResearchAnnualClues}
-            </div>
-            <Input.TextArea
-              value={project.annualReportClues}
-              autoSize={{ minRows: 2, maxRows: 4 }}
-              onChange={e => updateField('annualReportClues', e.target.value)}
-            />
-          </div>
-          <div className={styles.fieldGroup}>
-            <div className={styles.fieldLabel}>
-              {I18N.esg.preResearchWebsiteClues}
-            </div>
-            <Input.TextArea
-              value={project.websiteHighlights}
-              autoSize={{ minRows: 2, maxRows: 4 }}
-              onChange={e => updateField('websiteHighlights', e.target.value)}
-            />
-          </div>
-        </Card>
-
-        <Card size='small' title={I18N.esg.preResearchLookReg}>
-          <div className={styles.fieldGroup}>
-            <div className={styles.fieldLabel}>
-              {I18N.esg.referenceStandards}
-            </div>
-            <Select
-              mode='multiple'
-              style={{ width: '100%' }}
-              value={project.standards}
-              options={DEFAULT_STANDARD_OPTIONS.map(s => ({
-                label: s,
-                value: s,
-              }))}
-              onChange={vals => updateField('standards', vals)}
-            />
-          </div>
-          <div className={styles.fieldGroup}>
-            <div className={styles.fieldLabel}>{I18N.esg.esgRating}</div>
-            <Select
-              mode='multiple'
-              style={{ width: '100%' }}
-              value={project.ratings}
-              options={DEFAULT_RATING_OPTIONS.map(r => ({
-                label: r,
-                value: r,
-              }))}
-              onChange={vals => updateField('ratings', vals)}
-            />
-          </div>
-          <div className={styles.generateBanner}>
-            <Button type='primary' loading={generating} onClick={onGenerateAll}>
-              {I18N.esg.preResearchGenerateAll}
-            </Button>
-          </div>
-        </Card>
-      </div>
-
-      <Card size='small' title={I18N.esg.preResearchLookPeer}>
-        <div className={styles.peerAddBar}>
-          <Input
-            value={newPeerName}
-            onChange={e => setNewPeerName(e.target.value)}
-            placeholder={I18N.esg.preResearchCompanyName}
-            style={{ width: 220 }}
-          />
-          <Input
-            value={newPeerTag}
-            onChange={e => setNewPeerTag(e.target.value)}
-            style={{ width: 160 }}
-          />
-          <Input
-            value={newPeerRating}
-            onChange={e => setNewPeerRating(e.target.value)}
-            placeholder={I18N.esg.esgRating}
-            style={{ width: 180 }}
-          />
-          <Button icon={<PlusOutlined />} onClick={handleAddPeer}>
-            {I18N.esg.preResearchAddPeer}
-          </Button>
-        </div>
-        <div className={styles.peerCards}>
-          {project.peers.map(peer => (
-            <div key={peer.id} className={styles.peerCard}>
-              <div className={styles.peerCardHead}>
-                <span className={styles.peerName}>{peer.name}</span>
-                <Button
-                  type='text'
-                  danger
-                  size='small'
-                  icon={<DeleteOutlined />}
-                  onClick={() =>
-                    updateField(
-                      'peers',
-                      project.peers.filter(p => p.id !== peer.id),
-                    )
-                  }
-                />
-              </div>
-              <div className={styles.peerMeta}>
-                <Tag color='geekblue'>{peer.tag}</Tag>
-                <span>{peer.ratingSummary}</span>
-              </div>
-              <div className={styles.peerUpload}>
+          {has('self') && (
+            <Card
+              size='small'
+              title={I18N.esg.preResearchLookSelf}
+              extra={
                 <Upload
                   name='file'
+                  multiple
                   showUploadList={false}
                   accept={ACCEPT_FILES}
+                  action={`${
+                    process.env.REACT_APP_API_URL || ''
+                  }/file/file/uploadImg`}
                   beforeUpload={file => {
-                    const next = project.peers.map(p =>
-                      p.id === peer.id
-                        ? { ...p, reportFileName: file.name }
-                        : p,
-                    );
-                    updateField('peers', next);
-                    return false;
+                    if (
+                      isEsgMockModeEnabled() ||
+                      !process.env.REACT_APP_API_URL
+                    ) {
+                      appendSelfMaterial(file.name, undefined, file.size);
+                      return false;
+                    }
+                    return true;
+                  }}
+                  onChange={({ file }) => {
+                    if (file.status === 'done') {
+                      const url = (file.response as { data?: string })?.data;
+                      appendSelfMaterial(file.name, url, file.size);
+                    } else if (file.status === 'error') {
+                      appendSelfMaterial(file.name, undefined, file.size);
+                    }
                   }}
                 >
                   <Button size='small' icon={<UploadOutlined />}>
-                    {peer.reportFileName || I18N.esg.preResearchUploadPeerFile}
+                    {I18N.esg.preResearchUploadSelfFile}
                   </Button>
                 </Upload>
+              }
+            >
+              <div className={styles.fileTags}>
+                {project.selfMaterials.map(mat => (
+                  <Tag
+                    key={mat.id}
+                    closable
+                    color='cyan'
+                    onClose={() =>
+                      updateField(
+                        'selfMaterials',
+                        project.selfMaterials.filter(m => m.id !== mat.id),
+                      )
+                    }
+                  >
+                    {`${mat.name} (${mat.fileSize || '—'})`}
+                  </Tag>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
-      </Card>
+              {has('clues') && (
+                <>
+                  <div className={styles.fieldGroup}>
+                    <div className={styles.fieldLabel}>
+                      {I18N.esg.preResearchAnnualClues}
+                    </div>
+                    <Input.TextArea
+                      value={project.annualReportClues}
+                      autoSize={{ minRows: 2, maxRows: 4 }}
+                      onChange={e =>
+                        updateField('annualReportClues', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className={styles.fieldGroup}>
+                    <div className={styles.fieldLabel}>
+                      {I18N.esg.preResearchWebsiteClues}
+                    </div>
+                    <Input.TextArea
+                      value={project.websiteHighlights}
+                      autoSize={{ minRows: 2, maxRows: 4 }}
+                      onChange={e =>
+                        updateField('websiteHighlights', e.target.value)
+                      }
+                    />
+                  </div>
+                </>
+              )}
+            </Card>
+          )}
 
-      <Card
-        size='small'
-        title={I18N.esg.preResearchDeptDutyTable}
-        extra={
-          <Button
-            size='small'
-            icon={<PlusOutlined />}
-            onClick={handleAddDepartment}
-          >
-            {I18N.esg.preResearchAddDept}
-          </Button>
-        }
-      >
-        <Table
-          rowKey='id'
+          {has('reg') && (
+            <Card size='small' title={I18N.esg.preResearchLookReg}>
+              <div className={styles.fieldGroup}>
+                <div className={styles.fieldLabel}>
+                  {I18N.esg.referenceStandards}
+                </div>
+                <Select
+                  mode='multiple'
+                  style={{ width: '100%' }}
+                  value={project.standards}
+                  options={DEFAULT_STANDARD_OPTIONS.map(s => ({
+                    label: s,
+                    value: s,
+                  }))}
+                  onChange={vals => updateField('standards', vals)}
+                />
+              </div>
+              <div className={styles.fieldGroup}>
+                <div className={styles.fieldLabel}>{I18N.esg.esgRating}</div>
+                <Select
+                  mode='multiple'
+                  style={{ width: '100%' }}
+                  value={project.ratings}
+                  options={DEFAULT_RATING_OPTIONS.map(r => ({
+                    label: r,
+                    value: r,
+                  }))}
+                  onChange={vals => updateField('ratings', vals)}
+                />
+              </div>
+              {onGenerateAll && (
+                <div className={styles.generateBanner}>
+                  <Button
+                    type='primary'
+                    loading={generating}
+                    onClick={onGenerateAll}
+                  >
+                    {I18N.esg.preResearchGenerateAll}
+                  </Button>
+                </div>
+              )}
+            </Card>
+          )}
+        </div>
+      )}
+
+      {has('clues') && !has('self') && (
+        <Card size='small' title={I18N.esg.preResearchCluesSummary}>
+          <div className={styles.topGrid}>
+            <div className={styles.fieldGroup}>
+              <div className={styles.fieldLabel}>
+                {I18N.esg.preResearchAnnualClues}
+              </div>
+              <Input.TextArea
+                value={project.annualReportClues}
+                autoSize={{ minRows: 2, maxRows: 4 }}
+                onChange={e => updateField('annualReportClues', e.target.value)}
+              />
+            </div>
+            <div className={styles.fieldGroup}>
+              <div className={styles.fieldLabel}>
+                {I18N.esg.preResearchWebsiteClues}
+              </div>
+              <Input.TextArea
+                value={project.websiteHighlights}
+                autoSize={{ minRows: 2, maxRows: 4 }}
+                onChange={e => updateField('websiteHighlights', e.target.value)}
+              />
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {has('peer') && (
+        <Card size='small' title={I18N.esg.preResearchLookPeer}>
+          <div className={styles.peerAddBar}>
+            <Input
+              value={newPeerName}
+              onChange={e => setNewPeerName(e.target.value)}
+              placeholder={I18N.esg.preResearchCompanyName}
+              style={{ width: 220 }}
+            />
+            <Input
+              value={newPeerTag}
+              onChange={e => setNewPeerTag(e.target.value)}
+              style={{ width: 160 }}
+            />
+            <Input
+              value={newPeerRating}
+              onChange={e => setNewPeerRating(e.target.value)}
+              placeholder={I18N.esg.esgRating}
+              style={{ width: 180 }}
+            />
+            <Button icon={<PlusOutlined />} onClick={handleAddPeer}>
+              {I18N.esg.preResearchAddPeer}
+            </Button>
+          </div>
+          <div className={styles.peerCards}>
+            {project.peers.map(peer => (
+              <div key={peer.id} className={styles.peerCard}>
+                <div className={styles.peerCardHead}>
+                  <span className={styles.peerName}>{peer.name}</span>
+                  <Button
+                    type='text'
+                    danger
+                    size='small'
+                    icon={<DeleteOutlined />}
+                    onClick={() =>
+                      updateField(
+                        'peers',
+                        project.peers.filter(p => p.id !== peer.id),
+                      )
+                    }
+                  />
+                </div>
+                <div className={styles.peerMeta}>
+                  <Tag color='geekblue'>{peer.tag}</Tag>
+                  <span>{peer.ratingSummary}</span>
+                </div>
+                <div className={styles.peerUpload}>
+                  <Upload
+                    name='file'
+                    showUploadList={false}
+                    accept={ACCEPT_FILES}
+                    beforeUpload={file => {
+                      const next = project.peers.map(p =>
+                        p.id === peer.id
+                          ? { ...p, reportFileName: file.name }
+                          : p,
+                      );
+                      updateField('peers', next);
+                      return false;
+                    }}
+                  >
+                    <Button size='small' icon={<UploadOutlined />}>
+                      {peer.reportFileName ||
+                        I18N.esg.preResearchUploadPeerFile}
+                    </Button>
+                  </Upload>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {has('dept') && (
+        <Card
           size='small'
-          pagination={false}
-          columns={deptColumns}
-          dataSource={project.departments}
-        />
-      </Card>
+          title={I18N.esg.preResearchDeptDutyTable}
+          extra={
+            <Button
+              size='small'
+              icon={<PlusOutlined />}
+              onClick={handleAddDepartment}
+            >
+              {I18N.esg.preResearchAddDept}
+            </Button>
+          }
+        >
+          <Table
+            rowKey='id'
+            size='small'
+            pagination={false}
+            columns={deptColumns}
+            dataSource={project.departments}
+          />
+        </Card>
+      )}
     </div>
   );
 };
