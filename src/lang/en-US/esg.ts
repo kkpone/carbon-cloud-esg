@@ -369,4 +369,17 @@ export default {
     'ESG Standard Sentence Templates & Writing Style Guide',
   copyPromptBtn: 'Copy Full Prompt',
   copyPromptSuccess: 'Full prompt copied',
+  translateReportBtn: 'Translate',
+  translateToZhCn: 'Simplified Chinese',
+  translateToEnUs: 'English',
+  translateToZhTw: 'Traditional Chinese',
+  translatingReport: 'Translating report...',
+  translateReportSuccess: 'Switched to {val1} version',
+  translateReportLocalTip:
+    'Backend translation unavailable; applied local glossary conversion for {val1}',
+  translateReportFailed: 'Failed to translate report, please retry',
+  exportReportBtn: 'Export',
+  exportWord: 'Export Word (.docx)',
+  exportPdf: 'Export PDF (.pdf)',
+  exportPdfPrintTip: 'Opened print dialog; choose "Save as PDF" to export',
 };

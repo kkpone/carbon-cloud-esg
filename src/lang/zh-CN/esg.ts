@@ -348,4 +348,17 @@ export default {
   styleGuideSectionTitle: 'ESG 标准句式模板与文笔风格指南',
   copyPromptBtn: '复制完整提示词',
   copyPromptSuccess: '已复制完整提示词',
+  translateReportBtn: '翻译',
+  translateToZhCn: '简体中文',
+  translateToEnUs: '英文',
+  translateToZhTw: '繁体中文',
+  translatingReport: '正在翻译报告内容...',
+  translateReportSuccess: '已切换为{val1}版本',
+  translateReportLocalTip:
+    '当前后端翻译接口不可用，已使用本地术语映射完成{val1}转换',
+  translateReportFailed: '报告翻译失败，请稍后重试',
+  exportReportBtn: '导出',
+  exportWord: '导出 Word (.docx)',
+  exportPdf: '导出 PDF (.pdf)',
+  exportPdfPrintTip: '已打开 PDF 导出打印窗口，请选择“另存为 PDF”',
 };

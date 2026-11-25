@@ -1,4 +1,11 @@
 /* eslint-disable consistent-return */
+import {
+  CheckOutlined,
+  DownloadOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
+  TranslationOutlined,
+} from '@ant-design/icons';
 import qrCodeImg from '@assets/svg/service_qr_code.png';
 import {
   HocuspocusProvider,
@@ -7,7 +14,7 @@ import {
 import aiSvg from '@src/assets/icon/esg/ai.svg';
 import I18N, { getCurrentLocale } from '@src/lang/I18N';
 import { useMount, useThrottleFn, useUnmount } from 'ahooks';
-import { Button, Spin, theme, Tooltip } from 'antd';
+import { Button, Dropdown, Spin, theme, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { saveAs } from 'file-saver';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -21,7 +28,17 @@ import { RouteMaps } from '@/router/route-paths';
 import { Toast } from '@/utils';
 
 import styles from './index.module.less';
-import { postDownloadReport, postEditReport } from './service';
+import {
+  buildWordBlobFromHtml,
+  exportHtmlToPdfViaPrint,
+  translateReportMarkdown,
+} from './reportActions';
+import {
+  ReportExportFormat,
+  ReportTranslateLang,
+  postDownloadReport,
+  postEditReport,
+} from './service';
 import {
   buildReportSystemPrompt,
   getStoredOutlineSections,
@@ -55,6 +72,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
 
   const [reportName, setReportName] = useState('');
   const [reportContent, setReportContent] = useState('');
+  const latestContentRef = useRef('');
   const [reportInfo, setReportInfo] = useState<ReportDetailsType>();
   const [syncToHocuspocus, setSyncToHocuspocus] = useState(false);
 
@@ -65,39 +83,153 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
   const [ratingModalOpen, setRatingModalOpen] = useState(false);
 
   const [downloading, setDownloading] = useState(false);
+  const [translating, setTranslating] = useState(false);
+  const [currentLang, setCurrentLang] = useState<ReportTranslateLang>('zh-CN');
+  const langContentCacheRef = useRef<
+    Partial<Record<ReportTranslateLang, string>>
+  >({});
 
   const editorRef = useRef<{ submitReport: () => Promise<void> }>();
+  const [editorVersion, setEditorVersion] = useState(0);
 
-  const downloadReport = async () => {
+  const getLangLabel = (lang: ReportTranslateLang) => {
+    if (lang === 'en-US') return I18N.esg.translateToEnUs;
+    if (lang === 'zh-TW') return I18N.esg.translateToZhTw;
+    return I18N.esg.translateToZhCn;
+  };
+
+  const readCurrentEditorHtml = () => {
+    const el = document.querySelector('#your-element-id .ProseMirror');
+    return el ? el.innerHTML : '';
+  };
+
+  const syncEditorContent = (nextMd: string) => {
+    latestContentRef.current = nextMd;
+    setReportContent(nextMd);
+    setSyncToHocuspocus(true);
+    setEditorVersion(v => v + 1);
+    setTimeout(() => {
+      setSyncToHocuspocus(false);
+    }, 80);
+  };
+
+  const handleTranslate = async (targetLang: ReportTranslateLang) => {
+    if (syncToHocuspocus || translating) {
+      return;
+    }
+    if (targetLang === currentLang) {
+      return;
+    }
+    await editorRef.current?.submitReport?.().catch(() => {});
+    const currentMd =
+      latestContentRef.current ||
+      reportContent ||
+      reportInfo?.reportContent ||
+      '';
+    if (!currentMd.trim()) {
+      return;
+    }
+    langContentCacheRef.current[currentLang] = currentMd;
+    const cachedTarget = langContentCacheRef.current[targetLang];
+    if (cachedTarget && cachedTarget.trim()) {
+      setCurrentLang(targetLang);
+      syncEditorContent(cachedTarget);
+      await editReport(cachedTarget);
+      Toast(
+        'success',
+        I18N.template(I18N.esg.translateReportSuccess, {
+          val1: getLangLabel(targetLang),
+        }),
+      );
+      return;
+    }
+    setTranslating(true);
+    try {
+      const numericId = Number(id);
+      const { content: translatedMd, usedLocalFallback } =
+        await translateReportMarkdown({
+          reportId: numericId,
+          content: currentMd,
+          targetLang,
+          cachedVersions: langContentCacheRef.current,
+        });
+      langContentCacheRef.current[targetLang] = translatedMd;
+      setCurrentLang(targetLang);
+      syncEditorContent(translatedMd);
+      await editReport(translatedMd);
+      Toast(
+        usedLocalFallback ? 'info' : 'success',
+        I18N.template(
+          usedLocalFallback
+            ? I18N.esg.translateReportLocalTip
+            : I18N.esg.translateReportSuccess,
+          { val1: getLangLabel(targetLang) },
+        ),
+      );
+    } catch {
+      Toast('warn', I18N.esg.translateReportFailed);
+    } finally {
+      setTranslating(false);
+    }
+  };
+
+  const exportLocalFallback = (format: ReportExportFormat) => {
+    const fileBaseName = reportName || 'ESGReport';
+    const editorHtml = readCurrentEditorHtml();
+    const markdown =
+      latestContentRef.current ||
+      reportContent ||
+      reportInfo?.reportContent ||
+      '';
+    if (format === 'pdf') {
+      const printableHtml =
+        editorHtml ||
+        `<pre style="white-space:pre-wrap;font-family:inherit;">${markdown
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')}</pre>`;
+      const opened = exportHtmlToPdfViaPrint(fileBaseName, printableHtml);
+      if (opened) {
+        Toast('info', I18N.esg.exportPdfPrintTip);
+      }
+      return;
+    }
+    const blob = editorHtml
+      ? buildWordBlobFromHtml(fileBaseName, editorHtml)
+      : exportMarkdownAsDocFile(fileBaseName, markdown);
+    saveAs(blob, `${fileBaseName}.docx`);
+    Toast('success', I18N.esg.mockExportSuccess);
+  };
+
+  const downloadReport = async (format: ReportExportFormat = 'word') => {
     setDownloading(true);
     try {
       await editorRef.current?.submitReport?.().catch(() => {});
       const numericId = Number(id);
       if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
-        const blob = exportMarkdownAsDocFile(
-          reportName || 'ESGReport',
-          reportContent || reportInfo?.reportContent || '',
-        );
-        saveAs(blob, `${reportName || 'ESGReport'}.docx`);
-        Toast('success', I18N.esg.mockExportSuccess);
+        exportLocalFallback(format);
         return;
       }
       const result = await postDownloadReport(
-        { id: numericId },
+        { id: numericId, format, language: currentLang },
         { silentResponseError: true },
       );
-      const { reportUrl } = result.data.data;
+      const reportUrl = result?.data?.data?.reportUrl;
+      if (!reportUrl) {
+        exportLocalFallback(format);
+        return;
+      }
+      if (format === 'pdf' && !/\.pdf(\?|$)/i.test(reportUrl)) {
+        exportLocalFallback('pdf');
+        return;
+      }
       const response = await fetch(reportUrl);
       const blob = await response.blob();
-      saveAs(blob, `${reportName || 'ESGReport'}.docx`);
+      const ext = format === 'pdf' ? 'pdf' : 'docx';
+      saveAs(blob, `${reportName || 'ESGReport'}.${ext}`);
     } catch (error) {
       if (isPermissionOrUnavailableError(error)) {
-        const blob = exportMarkdownAsDocFile(
-          reportName || 'ESGReport',
-          reportContent || reportInfo?.reportContent || '',
-        );
-        saveAs(blob, `${reportName || 'ESGReport'}.docx`);
-        Toast('success', I18N.esg.mockExportSuccess);
+        exportLocalFallback(format);
       } else {
         const errMsg =
           (error as { data?: { msg?: string } })?.data?.msg ||
@@ -161,7 +293,11 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
     cancelRequest.current = new AbortController();
     canScroll.current = true;
     const onStreamMessage = (e: string) => {
-      setReportContent(pre => pre + e);
+      setReportContent(pre => {
+        const next = pre + e;
+        latestContentRef.current = next;
+        return next;
+      });
       if (canScroll.current) {
         run();
       }
@@ -235,6 +371,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
       if (!info.reportContent) {
         generateReport(info);
       } else {
+        latestContentRef.current = info.reportContent;
         setReportContent(info.reportContent);
       }
     }
@@ -280,6 +417,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
   const editReport = async (reportStr: string) => {
     if (!id) return;
     const numericId = Number(id);
+    latestContentRef.current = reportStr;
     setReportContent(reportStr);
     if (isEsgMockModeEnabled() || isMockReportId(numericId)) {
       saveMockReportContent({
@@ -332,6 +470,42 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
             {reportName}
           </div>
           <div className={styles.rightBtns}>
+            {!syncToHocuspocus && (
+              <Dropdown
+                trigger={['click']}
+                disabled={translating}
+                menu={{
+                  items: (
+                    [
+                      { key: 'zh-CN', label: I18N.esg.translateToZhCn },
+                      { key: 'en-US', label: I18N.esg.translateToEnUs },
+                      { key: 'zh-TW', label: I18N.esg.translateToZhTw },
+                    ] as { key: ReportTranslateLang; label: string }[]
+                  ).map(item => ({
+                    key: item.key,
+                    label: (
+                      <div className={styles.dropdownItem}>
+                        <span>{item.label}</span>
+                        {currentLang === item.key && (
+                          <CheckOutlined className={styles.checkIcon} />
+                        )}
+                      </div>
+                    ),
+                    onClick: () => handleTranslate(item.key),
+                  })),
+                }}
+              >
+                <Button
+                  className={styles.actionBtn}
+                  icon={<TranslationOutlined />}
+                  loading={translating}
+                >
+                  {`${I18N.esg.translateReportBtn} · ${getLangLabel(
+                    currentLang,
+                  )}`}
+                </Button>
+              </Dropdown>
+            )}
             <Button
               className={styles.ratingBtn}
               type='primary'
@@ -357,14 +531,32 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
             </Tooltip>
             {!syncToHocuspocus && (
               <Spin spinning={downloading}>
-                <div
-                  className={styles.download}
-                  onClick={() => {
-                    downloadReport();
+                <Dropdown
+                  trigger={['click']}
+                  menu={{
+                    items: [
+                      {
+                        key: 'word',
+                        icon: <FileWordOutlined />,
+                        label: I18N.esg.exportWord,
+                        onClick: () => downloadReport('word'),
+                      },
+                      {
+                        key: 'pdf',
+                        icon: <FilePdfOutlined />,
+                        label: I18N.esg.exportPdf,
+                        onClick: () => downloadReport('pdf'),
+                      },
+                    ],
                   }}
                 >
-                  <IconAlibaba type='icon-icon_daoru' />
-                </div>
+                  <Button
+                    className={styles.actionBtn}
+                    icon={<DownloadOutlined />}
+                  >
+                    {I18N.esg.exportReportBtn}
+                  </Button>
+                </Dropdown>
               </Spin>
             )}
           </div>
@@ -377,6 +569,7 @@ export const AiGenerateDetail: FC<IAiGenerateDetailProps> = () => {
         )}
         {socket && provider && !!reportContent && (
           <SimpleEditor
+            key={`editor-${editorVersion}`}
             connectStatus={connect}
             reportId={Number(id)}
             syncToHocuspocus={syncToHocuspocus}

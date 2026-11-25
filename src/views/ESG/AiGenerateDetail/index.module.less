@@ -48,7 +48,18 @@
     .rightBtns {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
+
+      .actionBtn {
+        height: 32px;
+        border-color: #d7eeea;
+        color: #026961;
+
+        &:hover {
+          border-color: #026961;
+          color: #026961;
+        }
+      }
 
       .ratingBtn {
         height: 32px;
@@ -104,4 +115,17 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 112px;
+}
+
+.checkIcon {
+  color: #026961;
+  font-size: 12px;
 }
