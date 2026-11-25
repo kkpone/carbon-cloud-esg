@@ -119,10 +119,6 @@ const SecurityModeBadge = () => {
           <span className={style.bannerText}>
             {teamText('securityBannerTitle')}
           </span>
-          <span className={style.bannerDivider} aria-hidden='true'>
-            ·
-          </span>
-          <span className={style.bannerRegion}>{regionLabel}</span>
         </button>
       </Popover>
     </div>
