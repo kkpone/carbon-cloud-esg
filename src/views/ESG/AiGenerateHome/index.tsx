@@ -40,6 +40,7 @@ import {
   MockCreateReportPayload,
 } from '../mockReportService';
 import { resolveEsgRoute } from '../routeUtils';
+import { PRE_RESEARCH_HANDOFF_KEY } from '../PreResearch/detail';
 import { IndicatorSystem } from '../type';
 
 export interface IAiGenerateHomeProps {}
@@ -153,7 +154,10 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
       if (isEsgMockModeEnabled()) {
         const mockId = createMockReport(payload);
         history.push(
-          `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${mockId}`,
+          `${resolveEsgRoute(
+            RouteMaps.ESGAiGenerateOutline,
+            location.pathname,
+          )}?id=${mockId}`,
         );
         return;
       }
@@ -163,7 +167,10 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
 
       if (result?.data?.data) {
         history.push(
-          `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${result.data.data}`,
+          `${resolveEsgRoute(
+            RouteMaps.ESGAiGenerateOutline,
+            location.pathname,
+          )}?id=${result.data.data}`,
         );
       }
     } catch (error) {
@@ -171,7 +178,10 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
         const mockId = createMockReport(payload);
         Toast('info', I18N.esg.mockFallbackNotice);
         history.push(
-          `${resolveEsgRoute(RouteMaps.ESGAiGenerateOutline, location.pathname)}?id=${mockId}`,
+          `${resolveEsgRoute(
+            RouteMaps.ESGAiGenerateOutline,
+            location.pathname,
+          )}?id=${mockId}`,
         );
       } else {
         const errMsg =
@@ -234,6 +244,26 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
   };
 
   useMount(async () => {
+    try {
+      const handoffRaw = window.sessionStorage.getItem(
+        PRE_RESEARCH_HANDOFF_KEY,
+      );
+      if (handoffRaw) {
+        const parsed = JSON.parse(handoffRaw) as {
+          companyName?: string;
+          period?: string;
+          userContent?: string;
+        };
+        if (parsed.companyName) setOrgName(parsed.companyName);
+        if (parsed.period && !Number.isNaN(Number(parsed.period))) {
+          setYear(Number(parsed.period));
+        }
+        if (parsed.userContent) setUserContent(parsed.userContent);
+        window.sessionStorage.removeItem(PRE_RESEARCH_HANDOFF_KEY);
+      }
+    } catch {
+      // ignore handoff read error
+    }
     const urlSearchParams = new URLSearchParams(location.search);
     const taskId = urlSearchParams.get('taskId');
     const resp = await getTaskPeriodList();
@@ -262,8 +292,28 @@ export const AiGenerateHome: FC<IAiGenerateHomeProps> = () => {
       <div className={styles.content}>
         <div className={styles.body}>
           <div className={styles.footer}>
-            <div className={styles.footerTitle}>
-              {I18N.esg.aiIntelligentAssistant}
+            <div className={styles.titleRow}>
+              <div className={styles.footerTitle}>
+                {I18N.esg.aiIntelligentAssistant}
+              </div>
+              <div
+                className={styles.preResearchBanner}
+                onClick={() =>
+                  history.push(
+                    resolveEsgRoute(
+                      RouteMaps.ESGPreResearch,
+                      location.pathname,
+                    ),
+                  )
+                }
+              >
+                <div className={styles.preResearchBannerTitle}>
+                  {I18N.esg.preResearchQuickEntry}
+                </div>
+                <div className={styles.preResearchBannerDesc}>
+                  {I18N.esg.preResearchQuickEntryDesc}
+                </div>
+              </div>
             </div>
             {/* <div className={styles.subTitle}>
               {I18N.esg.pleaseProvideADescription}

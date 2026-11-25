@@ -13,12 +13,13 @@ import { useLocation } from 'react-router-dom';
 
 import logoPng from '@/assets/images/logo.png';
 import EnLogoPng from '@/assets/images/logo_en.png';
-import { LocaleType } from '@/lang/I18N';
+import I18N, { LocaleType } from '@/lang/I18N';
 import { menuRoutes, Routes } from '@/router/config';
 import { RouteMaps } from '@/router/route-paths';
 import { RouteMapsSupplyChain2 } from '@/router/route-paths/supplyChain2';
 import { caculateCheckedMenu, getFlatedRoutes } from '@/router/utils';
 import { usePermissionMenuTree } from '@/store/hooks';
+import { resolveEsgRoute } from '@/views/ESG/routeUtils';
 
 import { UserInfoCard } from './components/UserInfoCard';
 import styles from './index.module.less';
@@ -83,6 +84,48 @@ LayoutNavBarProps) => {
 
   const { pathname } = location;
   const activeMenuPath = getActiveMenuPath(pathname);
+
+  const mergedRouters = useMemo(() => {
+    if (!allrouter?.length) return allrouter;
+    const injectPreResearch = (items: ItemType[]): ItemType[] =>
+      items.map(item => {
+        const isEsgGroup =
+          item.path === '/ESG' ||
+          item.path === '/ESG2' ||
+          item.permissionName === 'ESG' ||
+          item.permissionName === 'ESG2';
+        if (!isEsgGroup || !item.children?.length) {
+          return item.children?.length
+            ? { ...item, children: injectPreResearch(item.children) }
+            : item;
+        }
+        const targetPath = resolveEsgRoute(
+          RouteMaps.ESGPreResearch,
+          item.path || pathname,
+        );
+        const exists = item.children.some(c =>
+          c.path?.toLowerCase().includes('preresearch'),
+        );
+        if (exists) return item;
+        const sampleChild = item.children[0];
+        const injected: ItemType = {
+          ...sampleChild,
+          id: null,
+          permissionId: -9101,
+          permissionName: I18N.esg.preResearchMenu,
+          title: I18N.esg.preResearchMenu,
+          path: targetPath,
+          web_path: targetPath,
+          orderNum: 0,
+          children: [],
+        };
+        return {
+          ...item,
+          children: [injected, ...item.children],
+        };
+      });
+    return injectPreResearch(allrouter);
+  }, [allrouter, pathname]);
 
   const [openKeys, setOpenKeys] = useState<string[]>();
 
@@ -175,13 +218,13 @@ LayoutNavBarProps) => {
     };
     dfs({
       path: '',
-      children: allrouter,
+      children: mergedRouters,
     });
     if (result.length === 0) {
       return compact([parent, child]);
     }
     return result.flat();
-  }, [activeMenuPath, allrouter, child, parent]);
+  }, [activeMenuPath, mergedRouters, child, parent]);
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
@@ -210,13 +253,13 @@ LayoutNavBarProps) => {
     };
     dfs({
       path: '',
-      children: allrouter,
+      children: mergedRouters,
     });
     if (result.length === 0) {
       result.push(compact([child]));
     }
     setSelectedKeys(result.flat());
-  }, [activeMenuPath, allrouter, child]);
+  }, [activeMenuPath, mergedRouters, child]);
 
   const handleOpenChange = (newOpenKeys: string[]) => {
     if ((newOpenKeys || [])?.length > (openKeys || [])?.length) {
@@ -307,8 +350,8 @@ LayoutNavBarProps) => {
             theme={theme}
             {...inlineCollapsed}
           >
-            {allrouter &&
-              allrouter?.map(menu =>
+            {mergedRouters &&
+              mergedRouters?.map(menu =>
                 renderMenu(
                   menu,
                   true,

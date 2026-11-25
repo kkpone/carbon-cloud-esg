@@ -122,6 +122,22 @@ const esgSubRoutes: Routes[] = [
       },
     ],
   },
+  {
+    path: RouteMaps.ESGPreResearch,
+    scope: 'cloud',
+    component: lazy(() => import('@views/ESG/PreResearch')),
+    meta: {
+      title: '前期调研与访谈',
+    },
+  },
+  {
+    path: RouteMaps.ESGPreResearchDetail,
+    scope: 'cloud',
+    component: lazy(() => import('@views/ESG/PreResearch/detail')),
+    meta: {
+      title: '前期调研与访谈详情',
+    },
+  },
 ];
 
 const mapEsgRoutePrefix = (

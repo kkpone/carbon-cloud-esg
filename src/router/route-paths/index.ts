@@ -809,6 +809,8 @@ export enum RouteMaps {
   'ESGImportanceAnalysisInfo' = '/ESG/importanceAnalysis/:id',
   'ESGImportanceAnalysisFill' = '/ESG/importanceAnalysis/fill/:id',
   'ESGImportanceAnalysisResult' = '/ESG/importanceAnalysis/result/:id',
+  'ESGPreResearch' = '/ESG/preResearch',
+  'ESGPreResearchDetail' = '/ESG/preResearch/:id',
   /** 问卷服务 */
   'questionnaire' = '/questionnaire',
   'questionnaireList' = '/questionnaire/list',
