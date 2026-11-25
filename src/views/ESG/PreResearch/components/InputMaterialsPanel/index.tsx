@@ -102,6 +102,7 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
       tag: newPeerTag.trim() || I18N.esg.preResearchDefaultPeerTagFallback,
       listingMarket: I18N.esg.preResearchDefaultPeerMarket,
       ratingSummary: newPeerRating.trim() || '-',
+      selected: true,
     };
     updateField('peers', [...project.peers, peer]);
     setNewPeerName('');

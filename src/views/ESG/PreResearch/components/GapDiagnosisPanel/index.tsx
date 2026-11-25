@@ -173,13 +173,12 @@ export const GapDiagnosisPanel: FC<IGapDiagnosisPanelProps> = ({
       ),
     },
     {
-      title: I18N.esg.preResearchTabGap,
+      title: I18N.esg.preResearchModuleGapShort,
       dataIndex: 'gap_description',
       width: 340,
       render: (_, record) => (
         <div className={styles.descCell}>
           <div className={styles.reqText}>{record.requirement_detail}</div>
-          <div className={styles.evidenceBox}>{record.evidence_ref}</div>
           <Input.TextArea
             size='small'
             autoSize={{ minRows: 2, maxRows: 4 }}

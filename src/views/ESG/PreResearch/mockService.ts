@@ -98,6 +98,7 @@ const buildSamplePeers = (): PeerCompanyItem[] => [
     listingMarket: 'A+H股',
     ratingSummary: 'MSCI AA / CSA 68分',
     reportFileName: '标杆A_2025年度ESG报告.pdf',
+    selected: true,
   },
   {
     id: 'peer-b',
@@ -106,6 +107,7 @@ const buildSamplePeers = (): PeerCompanyItem[] => [
     listingMarket: '上交所主板',
     ratingSummary: 'Wind AA / EcoVadis 银牌',
     reportFileName: '标杆B_2025可持续发展报告.pdf',
+    selected: true,
   },
   {
     id: 'peer-c',
@@ -114,6 +116,7 @@ const buildSamplePeers = (): PeerCompanyItem[] => [
     listingMarket: '科创板',
     ratingSummary: 'MSCI A / EcoVadis 金牌',
     reportFileName: '标杆C_2025ESG及气候报告.pdf',
+    selected: true,
   },
 ];
 
@@ -304,7 +307,10 @@ export const buildGeneratedBenchmarks = (
   benchmarkRows: PeerBenchmarkRow[];
   highlightCases: HighlightCaseItem[];
 } => {
-  const peers = project.peers.length > 0 ? project.peers : buildSamplePeers();
+  const basePeers =
+    project.peers.length > 0 ? project.peers : buildSamplePeers();
+  const selectedPeers = basePeers.filter(p => p.selected !== false);
+  const peers = selectedPeers.length > 0 ? selectedPeers : basePeers;
   const val = (idx: number, vals: string[]) =>
     vals[idx] ?? vals[vals.length - 1];
   const mapPeers = (vals: string[]) =>

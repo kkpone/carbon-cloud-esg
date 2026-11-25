@@ -351,7 +351,7 @@ export const PreResearchDetail: FC = () => {
             items={[
               {
                 key: 'gap',
-                label: `${I18N.esg.preResearchModuleGap} (${project.gapItems.length})`,
+                label: `${I18N.esg.preResearchModuleGapShort} (${project.gapItems.length})`,
                 children: (
                   <div className={styles.moduleStack}>
                     <Collapse
@@ -397,7 +397,7 @@ export const PreResearchDetail: FC = () => {
               },
               {
                 key: 'benchmark',
-                label: `${I18N.esg.preResearchModuleBenchmark} (${project.benchmarkRows.length})`,
+                label: `${I18N.esg.preResearchModuleBenchmarkShort} (${project.benchmarkRows.length})`,
                 children: (
                   <div className={styles.moduleStack}>
                     <Collapse
@@ -439,6 +439,9 @@ export const PreResearchDetail: FC = () => {
                       onChangeCases={highlightCases =>
                         persistProject({ ...project, highlightCases })
                       }
+                      onChangePeers={peers =>
+                        persistProject({ ...project, peers })
+                      }
                       onRegenerate={handleGenerateBenchmark}
                       generating={generating}
                     />
@@ -447,7 +450,7 @@ export const PreResearchDetail: FC = () => {
               },
               {
                 key: 'interview',
-                label: `${I18N.esg.preResearchModuleInterview} (${project.interviewQuestions.length})`,
+                label: `${I18N.esg.preResearchModuleInterviewShort} (${project.interviewQuestions.length})`,
                 children: (
                   <div className={styles.moduleStack}>
                     <Collapse
@@ -466,7 +469,7 @@ export const PreResearchDetail: FC = () => {
                               val1: `${I18N.template(
                                 I18N.esg.preResearchDeptCountLabel,
                                 { val1: project.departments.length },
-                              )} · ${I18N.esg.preResearchCluesSummary}`,
+                              )}`,
                             },
                           ),
                           children: (

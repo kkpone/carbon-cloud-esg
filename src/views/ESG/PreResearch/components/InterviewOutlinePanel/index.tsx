@@ -2,29 +2,13 @@ import {
   CopyOutlined,
   DeleteOutlined,
   FileWordOutlined,
-  HolderOutlined,
   PlusOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
-import {
-  DndContext,
-  DragEndEvent,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import {
-  SortableContext,
-  arrayMove,
-  useSortable,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import I18N from '@src/lang/I18N';
-import { Button, Input, Select, Tag } from 'antd';
-import classNames from 'classnames';
-import { CSSProperties, FC, useEffect, useMemo, useState } from 'react';
+import { Button, Input, Select, Table, Tag } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import { FC, useMemo, useState } from 'react';
 
 import { Toast } from '@/utils';
 import { copyToClipboard } from '@/utils/clipboard';
@@ -65,119 +49,6 @@ const getStageTitle = (stage: InterviewStageGroup): string => {
   return I18N.esg.preResearchStageCase;
 };
 
-const SortableQuestionCard: FC<{
-  item: InterviewQuestionItem;
-  onUpdate: (next: InterviewQuestionItem) => void;
-  onDelete: (id: string) => void;
-}> = ({ item, onUpdate, onDelete }) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: item.question_id });
-
-  const style: CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.65 : 1,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} className={styles.questionCard}>
-      <div className={styles.cardHeader}>
-        <div className={styles.cardTitleLeft}>
-          <span className={styles.dragHandle} {...attributes} {...listeners}>
-            <HolderOutlined />
-          </span>
-          <span className={styles.qCode}>{item.question_id}</span>
-          <Select<GapPriority>
-            size='small'
-            value={item.priority_level}
-            style={{ width: 82 }}
-            options={[
-              { label: 'P0', value: 'P0' },
-              { label: 'P1', value: 'P1' },
-              { label: 'P2', value: 'P2' },
-            ]}
-            onChange={priority_level => onUpdate({ ...item, priority_level })}
-          />
-          <Tag color={PRIORITY_COLOR[item.priority_level]}>
-            {item.esg_topic}
-          </Tag>
-        </div>
-        <div className={styles.cardActions}>
-          <Button
-            type='text'
-            size='small'
-            icon={<CopyOutlined />}
-            onClick={() => {
-              const textBlock = `${item.question_id} ${
-                item.main_question
-              }\n${item.follow_up_prompts.join('\n')}`;
-              copyToClipboard(textBlock)
-                .then(() => Toast('success', I18N.esg.preResearchCopiedTip))
-                .catch(() => {});
-            }}
-          />
-          <Button
-            type='text'
-            danger
-            size='small'
-            icon={<DeleteOutlined />}
-            onClick={() => onDelete(item.question_id)}
-          />
-        </div>
-      </div>
-
-      <div className={styles.originBox}>
-        <span className={styles.metaLabel}>
-          {`${I18N.esg.preResearchQuestionOrigin}：`}
-        </span>
-        <span>{item.question_origin}</span>
-      </div>
-
-      <Input.TextArea
-        className={styles.mainInput}
-        autoSize={{ minRows: 2, maxRows: 4 }}
-        value={item.main_question}
-        onChange={e => onUpdate({ ...item, main_question: e.target.value })}
-      />
-
-      <div className={styles.subGrid}>
-        <div className={styles.subBlock}>
-          <div className={styles.metaLabel}>{I18N.esg.preResearchFollowUp}</div>
-          <Input.TextArea
-            size='small'
-            autoSize={{ minRows: 2, maxRows: 5 }}
-            value={item.follow_up_prompts.join('\n')}
-            onChange={e =>
-              onUpdate({
-                ...item,
-                follow_up_prompts: e.target.value.split('\n').filter(Boolean),
-              })
-            }
-          />
-        </div>
-        <div className={styles.subBlock}>
-          <div className={styles.metaLabel}>
-            {I18N.esg.preResearchExpectedMaterials}
-          </div>
-          <div className={styles.materialTags}>
-            {item.expected_materials.map(mat => (
-              <Tag key={mat} color='cyan'>
-                {mat}
-              </Tag>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
   project,
   onChange,
@@ -190,23 +61,21 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
     return Array.from(new Set([...fromDuty, ...fromQuestions]));
   }, [project.departments, project.interviewQuestions]);
 
-  const [activeDept, setActiveDept] = useState<string>(deptNames[0] || '');
+  const [deptFilter, setDeptFilter] = useState<string>('ALL');
+  const [stageFilter, setStageFilter] = useState<string>('ALL');
+  const [priorityFilter, setPriorityFilter] = useState<string>('ALL');
 
-  useEffect(() => {
-    if (deptNames.length > 0 && !deptNames.includes(activeDept)) {
-      setActiveDept(deptNames[0]);
-    }
-  }, [deptNames, activeDept]);
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
-    }),
-  );
-
-  const deptQuestions = useMemo(
-    () => project.interviewQuestions.filter(q => q.target_dept === activeDept),
-    [project.interviewQuestions, activeDept],
+  const filteredQuestions = useMemo(
+    () =>
+      project.interviewQuestions.filter(q => {
+        if (deptFilter !== 'ALL' && q.target_dept !== deptFilter) return false;
+        if (stageFilter !== 'ALL' && q.stage_group !== stageFilter)
+          return false;
+        if (priorityFilter !== 'ALL' && q.priority_level !== priorityFilter)
+          return false;
+        return true;
+      }),
+    [project.interviewQuestions, deptFilter, stageFilter, priorityFilter],
   );
 
   const handleUpdateQuestion = (next: InterviewQuestionItem) => {
@@ -224,17 +93,18 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
   };
 
   const handleAddQuestion = () => {
-    if (!activeDept) return;
+    const targetDept = deptFilter !== 'ALL' ? deptFilter : deptNames[0];
+    if (!targetDept) return;
     const deptCode =
       project.departments
-        .find(d => d.deptName === activeDept)
+        .find(d => d.deptName === targetDept)
         ?.deptCode?.toUpperCase() || 'DEPT';
-    const nextNum = String(deptQuestions.length + 1).padStart(2, '0');
+    const nextNum = String(filteredQuestions.length + 1).padStart(2, '0');
     const nextItem: InterviewQuestionItem = {
       question_id: `Q-${deptCode}-${nextNum}-${Date.now()
         .toString()
         .slice(-3)}`,
-      target_dept: activeDept,
+      target_dept: targetDept,
       stage_group: 'actions_gap_closure',
       esg_topic: I18N.esg.preResearchDefaultQuestionTopic,
       priority_level: 'P1',
@@ -246,142 +116,209 @@ export const InterviewOutlinePanel: FC<IInterviewOutlinePanelProps> = ({
     onChange([...project.interviewQuestions, nextItem]);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-    const oldIdx = project.interviewQuestions.findIndex(
-      q => q.question_id === String(active.id),
-    );
-    const newIdx = project.interviewQuestions.findIndex(
-      q => q.question_id === String(over.id),
-    );
-    if (oldIdx !== -1 && newIdx !== -1) {
-      const activeItem = project.interviewQuestions[oldIdx];
-      const overItem = project.interviewQuestions[newIdx];
-      const moved = arrayMove(project.interviewQuestions, oldIdx, newIdx);
-      if (activeItem.stage_group !== overItem.stage_group) {
-        onChange(
-          moved.map(q =>
-            q.question_id === activeItem.question_id
-              ? { ...q, stage_group: overItem.stage_group }
-              : q,
-          ),
-        );
-        return;
-      }
-      onChange(moved);
-    }
-  };
+  const columns: ColumnsType<InterviewQuestionItem> = [
+    {
+      title: I18N.esg.preResearchDeptCol,
+      dataIndex: 'target_dept',
+      width: 150,
+      fixed: 'left',
+      render: (_, record) => (
+        <div className={styles.deptCell}>
+          <span className={styles.deptName}>{record.target_dept}</span>
+          <span className={styles.qCode}>{record.question_id}</span>
+        </div>
+      ),
+    },
+    {
+      title: I18N.esg.preResearchStageCol,
+      dataIndex: 'stage_group',
+      width: 160,
+      render: (_, record) => (
+        <Select<InterviewStageGroup>
+          size='small'
+          style={{ width: '100%' }}
+          value={record.stage_group}
+          options={STAGE_ORDER.map(s => ({
+            label: getStageTitle(s),
+            value: s,
+          }))}
+          onChange={stage_group =>
+            handleUpdateQuestion({ ...record, stage_group })
+          }
+        />
+      ),
+    },
+    {
+      title: I18N.esg.preResearchTopicPriorityCol,
+      dataIndex: 'esg_topic',
+      width: 170,
+      render: (_, record) => (
+        <div className={styles.topicCell}>
+          <Tag color={PRIORITY_COLOR[record.priority_level]}>
+            {record.esg_topic}
+          </Tag>
+          <Select<GapPriority>
+            size='small'
+            value={record.priority_level}
+            style={{ width: 76 }}
+            options={[
+              { label: 'P0', value: 'P0' },
+              { label: 'P1', value: 'P1' },
+              { label: 'P2', value: 'P2' },
+            ]}
+            onChange={priority_level =>
+              handleUpdateQuestion({ ...record, priority_level })
+            }
+          />
+        </div>
+      ),
+    },
+    {
+      title: I18N.esg.preResearchQuestionCol,
+      dataIndex: 'main_question',
+      width: 340,
+      render: (_, record) => (
+        <Input.TextArea
+          size='small'
+          autoSize={{ minRows: 2, maxRows: 4 }}
+          value={record.main_question}
+          onChange={e =>
+            handleUpdateQuestion({ ...record, main_question: e.target.value })
+          }
+        />
+      ),
+    },
+    {
+      title: I18N.esg.preResearchFollowUpCol,
+      dataIndex: 'follow_up_prompts',
+      width: 300,
+      render: (_, record) => (
+        <div className={styles.followCell}>
+          <Input.TextArea
+            size='small'
+            autoSize={{ minRows: 2, maxRows: 4 }}
+            value={record.follow_up_prompts.join('\n')}
+            onChange={e =>
+              handleUpdateQuestion({
+                ...record,
+                follow_up_prompts: e.target.value.split('\n').filter(Boolean),
+              })
+            }
+          />
+          <div className={styles.materialTags}>
+            {record.expected_materials.map(mat => (
+              <Tag key={mat} color='cyan'>
+                {mat}
+              </Tag>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: I18N.esg.preResearchActionCol,
+      width: 88,
+      fixed: 'right',
+      render: (_, record) => (
+        <div className={styles.cardActions}>
+          <Button
+            type='text'
+            size='small'
+            icon={<CopyOutlined />}
+            onClick={() => {
+              const textBlock = `${record.question_id} ${
+                record.main_question
+              }\n${record.follow_up_prompts.join('\n')}`;
+              copyToClipboard(textBlock)
+                .then(() => Toast('success', I18N.esg.preResearchCopiedTip))
+                .catch(() => {});
+            }}
+          />
+          <Button
+            type='text'
+            danger
+            size='small'
+            icon={<DeleteOutlined />}
+            onClick={() => handleDeleteQuestion(record.question_id)}
+          />
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.deptSidebar}>
-        <div className={styles.sidebarTitle}>
-          {I18N.esg.preResearchDeptListTitle}
+      <div className={styles.toolbar}>
+        <div className={styles.filters}>
+          <Select
+            value={deptFilter}
+            onChange={setDeptFilter}
+            style={{ width: 170 }}
+            options={[
+              { label: I18N.esg.preResearchAllDepts, value: 'ALL' },
+              ...deptNames.map(d => ({ label: d, value: d })),
+            ]}
+          />
+          <Select
+            value={stageFilter}
+            onChange={setStageFilter}
+            style={{ width: 180 }}
+            options={[
+              { label: I18N.esg.preResearchAllStages, value: 'ALL' },
+              ...STAGE_ORDER.map(s => ({ label: getStageTitle(s), value: s })),
+            ]}
+          />
+          <Select
+            value={priorityFilter}
+            onChange={setPriorityFilter}
+            style={{ width: 120 }}
+            options={[
+              {
+                label: `${I18N.esg.preResearchFilterPriority}: ${I18N.esg.preResearchFilterAll}`,
+                value: 'ALL',
+              },
+              { label: 'P0', value: 'P0' },
+              { label: 'P1', value: 'P1' },
+              { label: 'P2', value: 'P2' },
+            ]}
+          />
         </div>
-        <div className={styles.deptList}>
-          {deptNames.map(dept => {
-            const list = project.interviewQuestions.filter(
-              q => q.target_dept === dept,
-            );
-            const p0 = list.filter(q => q.priority_level === 'P0').length;
-            const mins = Math.min(60, Math.max(35, list.length * 5));
-            return (
-              <button
-                type='button'
-                key={dept}
-                className={classNames(styles.deptItem, {
-                  [styles.deptItemActive]: dept === activeDept,
-                })}
-                onClick={() => setActiveDept(dept)}
-              >
-                <div className={styles.deptItemName}>{dept}</div>
-                <div className={styles.deptItemMeta}>
-                  <span>
-                    {I18N.template(I18N.esg.preResearchQuestionCount, {
-                      val1: list.length,
-                      val2: p0,
-                    })}
-                  </span>
-                  <span>
-                    {I18N.template(I18N.esg.preResearchEstDuration, {
-                      val1: mins,
-                    })}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className={styles.mainContent}>
-        <div className={styles.toolbar}>
-          <div className={styles.activeDeptTitle}>{activeDept}</div>
-          <div className={styles.actions}>
-            <Button icon={<PlusOutlined />} onClick={handleAddQuestion}>
-              {I18N.esg.preResearchAddQuestion}
-            </Button>
-            <Button
-              icon={<SyncOutlined />}
-              loading={generating}
-              onClick={onRegenerate}
-            >
-              {I18N.esg.preResearchGenerateInterview}
-            </Button>
+        <div className={styles.actions}>
+          <Button icon={<PlusOutlined />} onClick={handleAddQuestion}>
+            {I18N.esg.preResearchAddQuestion}
+          </Button>
+          <Button
+            icon={<SyncOutlined />}
+            loading={generating}
+            onClick={onRegenerate}
+          >
+            {I18N.esg.preResearchGenerateInterview}
+          </Button>
+          {deptFilter !== 'ALL' && (
             <Button
               icon={<FileWordOutlined />}
-              onClick={() => exportInterviewOutlineWord(project, activeDept)}
+              onClick={() => exportInterviewOutlineWord(project, deptFilter)}
             >
               {I18N.esg.preResearchExportDeptWord}
             </Button>
-            <Button
-              type='primary'
-              icon={<FileWordOutlined />}
-              onClick={() => exportInterviewOutlineWord(project)}
-            >
-              {I18N.esg.preResearchExportAllWord}
-            </Button>
-          </div>
+          )}
+          <Button
+            type='primary'
+            icon={<FileWordOutlined />}
+            onClick={() => exportInterviewOutlineWord(project)}
+          >
+            {I18N.esg.preResearchExportAllWord}
+          </Button>
         </div>
-
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <div className={styles.stageSections}>
-            {STAGE_ORDER.map(stage => {
-              const stageList = deptQuestions.filter(
-                q => q.stage_group === stage,
-              );
-              if (stageList.length === 0) return null;
-              return (
-                <div key={stage} className={styles.stageGroup}>
-                  <div className={styles.stageHeader}>
-                    {getStageTitle(stage)}
-                  </div>
-                  <SortableContext
-                    items={stageList.map(q => q.question_id)}
-                    strategy={verticalListSortingStrategy}
-                  >
-                    <div className={styles.cardStack}>
-                      {stageList.map(item => (
-                        <SortableQuestionCard
-                          key={item.question_id}
-                          item={item}
-                          onUpdate={handleUpdateQuestion}
-                          onDelete={handleDeleteQuestion}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </div>
-              );
-            })}
-          </div>
-        </DndContext>
       </div>
+
+      <Table
+        rowKey='question_id'
+        columns={columns}
+        dataSource={filteredQuestions}
+        pagination={{ pageSize: 12, showSizeChanger: false }}
+        scroll={{ x: 1150 }}
+      />
     </div>
   );
 };

@@ -43,6 +43,7 @@ export interface PeerCompanyItem {
   ratingSummary: string;
   reportFileName?: string;
   reportUrl?: string;
+  selected?: boolean;
 }
 
 export interface GapDiagnosisItem {

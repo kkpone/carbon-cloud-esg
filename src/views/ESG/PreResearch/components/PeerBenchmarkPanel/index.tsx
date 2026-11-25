@@ -5,9 +5,11 @@ import {
   SyncOutlined,
 } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
-import { Button, Card, Input, Switch, Table, Tag } from 'antd';
+import { Button, Card, Checkbox, Empty, Input, Switch, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { FC, useMemo, useState } from 'react';
+
+import { Toast } from '@/utils';
 
 import styles from './index.module.less';
 import {
@@ -24,6 +26,7 @@ export interface IPeerBenchmarkPanelProps {
   project: PreResearchProject;
   onChangeRows: (rows: PeerBenchmarkRow[]) => void;
   onChangeCases: (cases: HighlightCaseItem[]) => void;
+  onChangePeers: (peers: PreResearchProject['peers']) => void;
   onRegenerate: () => void;
   generating: boolean;
 }
@@ -32,10 +35,32 @@ export const PeerBenchmarkPanel: FC<IPeerBenchmarkPanelProps> = ({
   project,
   onChangeRows,
   onChangeCases,
+  onChangePeers,
   onRegenerate,
   generating,
 }) => {
   const [blindOnly, setBlindOnly] = useState(false);
+
+  const selectedPeers = useMemo(
+    () => project.peers.filter(p => p.selected !== false),
+    [project.peers],
+  );
+
+  const togglePeerSelected = (peerId: string) => {
+    onChangePeers(
+      project.peers.map(p =>
+        p.id === peerId ? { ...p, selected: p.selected === false } : p,
+      ),
+    );
+  };
+
+  const handleConfirmGenerate = () => {
+    if (selectedPeers.length === 0) {
+      Toast('warn', I18N.esg.preResearchSelectAtLeastOnePeer);
+      return;
+    }
+    onRegenerate();
+  };
 
   const visibleRows = useMemo(
     () =>
@@ -71,7 +96,7 @@ export const PeerBenchmarkPanel: FC<IPeerBenchmarkPanelProps> = ({
 
   const columns: ColumnsType<PeerBenchmarkRow> = [
     {
-      title: I18N.esg.preResearchTabBenchmark,
+      title: I18N.esg.preResearchModuleBenchmarkShort,
       dataIndex: 'metricName',
       width: 210,
       fixed: 'left',
@@ -100,7 +125,7 @@ export const PeerBenchmarkPanel: FC<IPeerBenchmarkPanelProps> = ({
         />
       ),
     },
-    ...project.peers.map(peer => ({
+    ...selectedPeers.map(peer => ({
       title: (
         <div>
           <div>{peer.name}</div>
@@ -132,19 +157,49 @@ export const PeerBenchmarkPanel: FC<IPeerBenchmarkPanelProps> = ({
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.peerSelectCard}>
+        <div className={styles.peerSelectHeader}>
+          <span className={styles.peerSelectTitle}>
+            {I18N.template(I18N.esg.preResearchSelectPeersStep, {
+              val1: selectedPeers.length,
+            })}
+          </span>
+          <Button
+            type='primary'
+            icon={<SyncOutlined />}
+            loading={generating}
+            onClick={handleConfirmGenerate}
+          >
+            {I18N.esg.preResearchConfirmBenchmarkBtn}
+          </Button>
+        </div>
+        <div className={styles.peerSelectList}>
+          {project.peers.map(peer => {
+            const checked = peer.selected !== false;
+            return (
+              <div
+                key={peer.id}
+                className={checked ? styles.peerChipSelected : styles.peerChip}
+                onClick={() => togglePeerSelected(peer.id)}
+              >
+                <Checkbox checked={checked} />
+                <span className={styles.peerChipName}>{peer.name}</span>
+                <Tag color='geekblue'>{peer.tag}</Tag>
+                <span className={styles.peerChipRating}>
+                  {peer.ratingSummary}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className={styles.toolbar}>
         <div className={styles.switchWrap}>
           <Switch checked={blindOnly} onChange={setBlindOnly} />
           <span>{I18N.esg.preResearchBlindSpotOnly}</span>
         </div>
         <div className={styles.actions}>
-          <Button
-            icon={<SyncOutlined />}
-            loading={generating}
-            onClick={onRegenerate}
-          >
-            {I18N.esg.preResearchGenerateBenchmark}
-          </Button>
           <Button
             icon={<DownloadOutlined />}
             onClick={() => exportPeerBenchmarkExcel(project)}
@@ -161,13 +216,17 @@ export const PeerBenchmarkPanel: FC<IPeerBenchmarkPanelProps> = ({
         </div>
       </div>
 
-      <Table
-        rowKey='id'
-        columns={columns}
-        dataSource={visibleRows}
-        pagination={false}
-        scroll={{ x: 1150 }}
-      />
+      {visibleRows.length === 0 ? (
+        <Empty description={I18N.esg.preResearchConfirmPeersTip} />
+      ) : (
+        <Table
+          rowKey='id'
+          columns={columns}
+          dataSource={visibleRows}
+          pagination={false}
+          scroll={{ x: 1150 }}
+        />
+      )}
 
       <Card size='small' title={I18N.esg.preResearchHighlightPool}>
         <div className={styles.caseGrid}>
