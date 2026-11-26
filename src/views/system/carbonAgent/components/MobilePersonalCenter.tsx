@@ -12,7 +12,10 @@ import { useContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import Icon from './Icon';
+import CompetitionAwardMedals from '../../components/CompetitionAwardMedals';
+import type { CompetitionAwardSummary } from '../../carbonCompetition/types';
 import { icons } from '../constants';
+import sidebarStyles from './Sidebar.module.less';
 import style from '../index.module.less';
 import I18N, { LocaleType } from '@src/lang/I18N';
 import { LocaleContext } from '@src/components/LocaleProvider';
@@ -42,6 +45,7 @@ const getMobileLanguageLabel = (languageValue: LocaleType) => {
 
 type MobilePersonalCenterProps = {
   account: string;
+  competitionAwards?: CompetitionAwardSummary;
   open: boolean;
   personalWorkspace?: boolean;
   planName: string;
@@ -68,6 +72,7 @@ type MobilePersonalCenterProps = {
 
 const MobilePersonalCenter = ({
   account,
+  competitionAwards,
   open,
   personalWorkspace = true,
   planName,
@@ -163,7 +168,14 @@ const MobilePersonalCenter = ({
               alt=''
             />
             <div className={style.mobilePersonalProfileText}>
-              <strong>{userName}</strong>
+              <div className={sidebarStyles.popoverNameRow}>
+                <strong>{userName}</strong>
+                <CompetitionAwardMedals
+                  personal={competitionAwards?.personal}
+                  enterprise={competitionAwards?.enterprise}
+                  compact
+                />
+              </div>
               <span>{account}</span>
             </div>
           </div>

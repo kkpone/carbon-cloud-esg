@@ -23,6 +23,9 @@ import type { Dicts } from '@/views/emission/Show/type';
 
 import { icons } from '../constants';
 import style from '../index.module.less';
+import CompetitionAwardMedals from '../../components/CompetitionAwardMedals';
+import { useCurrentUserCompetitionAwards } from '../../components/CompetitionAwardMedals/useCompetitionAwards';
+import sidebarStyles from './Sidebar.module.less';
 import I18N from '@src/lang/I18N';
 import {
   editAgentCompanyInfo,
@@ -187,6 +190,9 @@ const PersonalSettingsPanel = ({
   );
   const userInfo = userState.userInfo || getUserInfo()?.userInfo;
   const userName = userInfo?.username || '';
+  const competitionAwards = useCurrentUserCompetitionAwards(
+    Boolean(active && userName),
+  );
   const currentCompany = useMemo(
     () =>
       userInfo?.companyVoList?.find(
@@ -511,7 +517,14 @@ const PersonalSettingsPanel = ({
               alt=''
             />
             <div className={style.personalSettingsProfileText}>
-              <strong>{displayName}</strong>
+              <div className={sidebarStyles.popoverNameRow}>
+                <strong>{displayName}</strong>
+                <CompetitionAwardMedals
+                  personal={competitionAwards.personal}
+                  enterprise={competitionAwards.enterprise}
+                  compact
+                />
+              </div>
               <span>{displayAccount}</span>
             </div>
           </div>

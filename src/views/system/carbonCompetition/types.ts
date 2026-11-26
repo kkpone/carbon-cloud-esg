@@ -225,32 +225,79 @@ export type CheckinMe = {
   status: string;
 };
 
+export type AwardLevel = 'GOLD' | 'SILVER' | 'BRONZE' | 'COMPLETED';
+
 export type PreliminaryResult = {
   subjectType: string;
   subjectId: string;
+  teamId?: string;
   displayName: string;
   teamNameSnapshot?: string;
+  trackSnapshot?: string;
+  productScore?: number;
+  enterpriseScore?: number;
   cScore?: number;
   eScore?: number;
   bonusRate?: number;
   totalScore?: number;
   ranking?: number;
   qualified?: number;
+  awardLevel?: AwardLevel | string;
+  certificateNo?: string;
+  issuedAt?: string;
 };
+
+export type FinalResult = {
+  subjectId: string;
+  teamId?: string;
+  displayName: string;
+  preliminaryScore?: number;
+  rScore?: number;
+  oScore?: number;
+  sScore?: number;
+  finalScore?: number;
+  totalScore?: number;
+  ranking?: number;
+  awardLevel?: AwardLevel | string;
+  certificateNo?: string;
+  issuedAt?: string;
+};
+
 export type PublishedResults = {
   id?: string;
   status: string;
   batchVersion?: number;
   publishedAt?: string;
   results: PreliminaryResult[];
+  finalStatus?: string;
+  finalPublishedAt?: string;
+  finalResults?: FinalResult[];
 };
+
+export type CompetitionAwardMedal = {
+  scope: 'PERSONAL' | 'ENTERPRISE';
+  level: Exclude<AwardLevel, 'COMPLETED'>;
+  title: string;
+  recipientName: string;
+  ranking?: number;
+};
+
+export type CompetitionAwardSummary = {
+  personal?: CompetitionAwardMedal;
+  enterprise?: CompetitionAwardMedal;
+};
+
 export type Poster = {
   kind: string;
   batchId: string;
   shareUrl?: string;
   inviteUrl?: string;
   inviteEnabled: boolean;
+  certificateNo?: string;
+  issuedAt?: string;
+  awardLevel?: AwardLevel | string;
   result?: PreliminaryResult;
+  finalResult?: FinalResult;
   checkin?: LeaderboardEntry;
 };
 

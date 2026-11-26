@@ -29,6 +29,8 @@ import { IconAlibabaNew } from '@/components/iconfont';
 import { withCurrentLocalePrefix } from '@/router/localePath';
 
 import CompetitionEntry from '../../components/CompetitionEntry';
+import CompetitionAwardMedals from '../../components/CompetitionAwardMedals';
+import { useCurrentUserCompetitionAwards } from '../../components/CompetitionAwardMedals/useCompetitionAwards';
 import ConversationItem from './ConversationItem';
 import Icon from './Icon';
 import MobilePersonalCenter from './MobilePersonalCenter';
@@ -1218,6 +1220,7 @@ const Sidebar = ({
     [conversations, projectConversationIdSet, projectFeatureEnabled],
   );
   const userInfo = getUserInfo()?.userInfo;
+  const competitionAwards = useCurrentUserCompetitionAwards(authenticated);
   const profileName =
     (authenticated &&
       (userInfo?.user?.nickName || userInfo?.nickName || userInfo?.username)) ||
@@ -2420,10 +2423,26 @@ const Sidebar = ({
             {!collapsed ? (
               <>
                 <span className={style.profileIdentity}>
-                  <span className={style.userName}>
-                    {mobile && !authenticated
-                      ? I18N.carbonAgent.guestLoginAction
-                      : workspaceName}
+                  <span
+                    className={classNames(
+                      style.userName,
+                      sidebarStyles.userNameRow,
+                    )}
+                  >
+                    <span className={sidebarStyles.userNameText}>
+                      {mobile && !authenticated
+                        ? I18N.carbonAgent.guestLoginAction
+                        : workspaceName}
+                    </span>
+                    {authenticated &&
+                    (competitionAwards.personal ||
+                      competitionAwards.enterprise) ? (
+                      <CompetitionAwardMedals
+                        personal={competitionAwards.personal}
+                        enterprise={competitionAwards.enterprise}
+                        compact
+                      />
+                    ) : null}
                   </span>
                   <span
                     className={classNames(
@@ -2473,7 +2492,14 @@ const Sidebar = ({
                   alt=''
                 />
                 <div className={style.profilePopoverText}>
-                  <strong>{workspaceName}</strong>
+                  <div className={sidebarStyles.popoverNameRow}>
+                    <strong>{workspaceName}</strong>
+                    <CompetitionAwardMedals
+                      personal={competitionAwards.personal}
+                      enterprise={competitionAwards.enterprise}
+                      compact
+                    />
+                  </div>
                   <span>{profileAccount}</span>
                 </div>
               </div>
@@ -2536,6 +2562,7 @@ const Sidebar = ({
       {mobileProfileEnabled && authenticated ? (
         <MobilePersonalCenter
           account={profileAccount}
+          competitionAwards={competitionAwards}
           open={mobileProfileOpen}
           personalWorkspace={personal}
           planName={planName}

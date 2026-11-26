@@ -136,7 +136,11 @@ export default function CompetitionPage() {
       // 只以实际发布结果为准；查询失败不影响报名与任务页面。
       getCompetitionResults(e.code)
         .then(result => {
-          if (current() && result.id && result.status === 'PUBLISHED')
+          if (
+            current() &&
+            ((result.id && result.status === 'PUBLISHED') ||
+              (result.finalResults && result.finalResults.length > 0))
+          )
             setPublishedResultsCode(code);
         })
         .catch(() => {
