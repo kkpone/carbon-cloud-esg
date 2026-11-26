@@ -403,27 +403,6 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
                   <Tag color='geekblue'>{peer.tag}</Tag>
                   <span>{peer.ratingSummary}</span>
                 </div>
-                <div className={styles.peerUpload}>
-                  <Upload
-                    name='file'
-                    showUploadList={false}
-                    accept={ACCEPT_FILES}
-                    beforeUpload={file => {
-                      const next = project.peers.map(p =>
-                        p.id === peer.id
-                          ? { ...p, reportFileName: file.name }
-                          : p,
-                      );
-                      updateField('peers', next);
-                      return false;
-                    }}
-                  >
-                    <Button size='small' icon={<UploadOutlined />}>
-                      {peer.reportFileName ||
-                        I18N.esg.preResearchUploadPeerFile}
-                    </Button>
-                  </Upload>
-                </div>
               </div>
             ))}
           </div>

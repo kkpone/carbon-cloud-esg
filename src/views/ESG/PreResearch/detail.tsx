@@ -5,7 +5,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
-import { Button, Collapse, Empty, Spin, Tabs, Tag } from 'antd';
+import { Button, Card, Collapse, Empty, Spin, Tabs, Tag } from 'antd';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
@@ -124,6 +124,11 @@ export const PreResearchDetail: FC = () => {
 
   const handleGenerateBenchmark = async () => {
     if (!project) return;
+    const selectedPeers = project.peers.filter(p => p.selected !== false);
+    if (selectedPeers.length === 0) {
+      Toast('warn', I18N.esg.preResearchSelectAtLeastOnePeer);
+      return;
+    }
     setGenerating(true);
     try {
       let bm = buildGeneratedBenchmarks(project);
@@ -400,26 +405,28 @@ export const PreResearchDetail: FC = () => {
                 label: `${I18N.esg.preResearchModuleBenchmarkShort} (${project.benchmarkRows.length})`,
                 children: (
                   <div className={styles.moduleStack}>
-                    <Collapse
+                    <Card
                       size='small'
-                      defaultActiveKey={
-                        project.benchmarkRows.length === 0 ? ['inputs'] : []
+                      title={I18N.esg.preResearchSelectPeersTitle}
+                      extra={
+                        <Button
+                          type='primary'
+                          size='small'
+                          icon={<RocketOutlined />}
+                          loading={generating}
+                          onClick={handleGenerateBenchmark}
+                        >
+                          {I18N.esg.preResearchAiAnalyzeBtn}
+                        </Button>
                       }
-                      items={[
-                        {
-                          key: 'inputs',
-                          label: I18N.esg.preResearchSelectPeersTitle,
-                          children: (
-                            <InputMaterialsPanel
-                              project={project}
-                              onChange={next => persistProject(next)}
-                              generating={generating}
-                              sections={['peer']}
-                            />
-                          ),
-                        },
-                      ]}
-                    />
+                    >
+                      <InputMaterialsPanel
+                        project={project}
+                        onChange={next => persistProject(next)}
+                        generating={generating}
+                        sections={['peer']}
+                      />
+                    </Card>
                     <PeerBenchmarkPanel
                       project={project}
                       onChangeRows={benchmarkRows =>
