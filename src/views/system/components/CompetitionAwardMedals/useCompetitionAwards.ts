@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getToken } from '@/utils/cookie';
-import { resolveCurrentUserAwards } from '../carbonCompetition/awards';
+import { resolveCurrentUserAwards } from '../../carbonCompetition/awards';
 import {
   call,
   getCompetitionResults,
   overview,
   prefix,
-} from '../carbonCompetition/service';
-import type { CompetitionAwardSummary, Me } from '../carbonCompetition/types';
+} from '../../carbonCompetition/service';
+import type {
+  CompetitionAwardSummary,
+  Me,
+} from '../../carbonCompetition/types';
 
 type CachedAwards = {
   token: string;
