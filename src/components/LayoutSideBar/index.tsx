@@ -96,45 +96,93 @@ LayoutNavBarProps) => {
 
   const mergedRouters = useMemo(() => {
     if (!allrouter?.length) return allrouter;
+    const buildPreResearchItem = (
+      template: ItemType,
+      parentId: number,
+      targetPath: string,
+      permissionId: number,
+    ): ItemType => ({
+      ...template,
+      id: null,
+      permissionId,
+      parentId,
+      type: 'M',
+      icon: '',
+      permissionName: I18N.esg.preResearchMenu,
+      title: I18N.esg.preResearchMenu,
+      name: I18N.esg.preResearchMenu,
+      path: targetPath,
+      web_path: targetPath,
+      orderNum: 0,
+      children: [],
+    });
     const injectPreResearch = (items: ItemType[]): ItemType[] =>
-      items.map(item => {
+      items.map((item, idx) => {
+        const normalizedName = (item.permissionName || '').trim().toUpperCase();
+        const normalizedPath = (item.path || '').trim();
         const isEsgGroup =
-          item.path === '/ESG' ||
-          item.path === '/ESG2' ||
-          item.permissionName === 'ESG' ||
-          item.permissionName === 'ESG2';
-        if (!isEsgGroup || !item.children?.length) {
+          normalizedPath === '/ESG' ||
+          normalizedPath === '/ESG2' ||
+          normalizedPath.toLowerCase() === '/esg2' ||
+          normalizedName === 'ESG' ||
+          normalizedName === 'ESG2';
+        if (!isEsgGroup) {
           return item.children?.length
             ? { ...item, children: injectPreResearch(item.children) }
             : item;
         }
-        const targetPath = resolveEsgRoute(
-          RouteMaps.ESGPreResearch,
-          item.path || pathname,
-        );
-        const exists = item.children.some(c =>
+        const isEsg2 =
+          normalizedPath.toLowerCase().startsWith('/esg2') ||
+          normalizedName === 'ESG2';
+        const prefix = isEsg2 ? '/ESG2' : '/ESG';
+        const targetPath = resolveEsgRoute(RouteMaps.ESGPreResearch, prefix);
+        const existingChildren = item.children || [];
+        const exists = existingChildren.some(c =>
           c.path?.toLowerCase().includes('preresearch'),
         );
         if (exists) return item;
-        const sampleChild = item.children[0];
-        const injected: ItemType = {
-          ...sampleChild,
+        const menuChildren = existingChildren.filter(
+          c => c.type !== 'B' && !!c.path,
+        );
+        const baseTemplate = existingChildren[0] || item;
+        const injected = buildPreResearchItem(
+          baseTemplate,
+          item.permissionId || 0,
+          targetPath,
+          -9101 - idx,
+        );
+        if (menuChildren.length > 0) {
+          return {
+            ...item,
+            children: [injected, ...existingChildren],
+          };
+        }
+        const aiReportPath = resolveEsgRoute(
+          RouteMaps.ESGAiGenerateHome,
+          prefix,
+        );
+        const aiReportItem: ItemType = {
+          ...baseTemplate,
           id: null,
-          permissionId: -9101,
-          permissionName: I18N.esg.preResearchMenu,
-          title: I18N.esg.preResearchMenu,
-          path: targetPath,
-          web_path: targetPath,
-          orderNum: 0,
+          permissionId: -9201 - idx,
+          parentId: item.permissionId || 0,
+          type: 'M',
+          icon: '',
+          permissionName: I18N.router.aiReport,
+          title: I18N.router.aiReport,
+          name: I18N.router.aiReport,
+          path: aiReportPath,
+          web_path: aiReportPath,
+          orderNum: 1,
           children: [],
         };
         return {
           ...item,
-          children: [injected, ...item.children],
+          children: [injected, aiReportItem, ...existingChildren],
         };
       });
     return injectPreResearch(allrouter);
-  }, [allrouter, pathname]);
+  }, [allrouter, locale]);
 
   const [openKeys, setOpenKeys] = useState<string[]>();
 
@@ -221,7 +269,10 @@ LayoutNavBarProps) => {
         result.push(parentUrls);
       } else {
         route.children?.forEach(childRoute =>
-          dfs(childRoute, [...parentUrls, route.path || '']),
+          dfs(childRoute, [
+            ...parentUrls,
+            route.path || route.permissionName || '',
+          ]),
         );
       }
     };
