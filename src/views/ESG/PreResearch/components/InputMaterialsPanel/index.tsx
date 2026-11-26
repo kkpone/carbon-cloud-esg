@@ -4,7 +4,16 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import I18N from '@src/lang/I18N';
-import { Button, Card, Input, Select, Table, Tag, Upload } from 'antd';
+import {
+  Button,
+  Card,
+  Checkbox,
+  Input,
+  Select,
+  Table,
+  Tag,
+  Upload,
+} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
@@ -45,10 +54,6 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
   const has = (sec: 'self' | 'reg' | 'peer' | 'dept' | 'clues') =>
     !sections || sections.includes(sec);
   const [newPeerName, setNewPeerName] = useState('');
-  const [newPeerTag, setNewPeerTag] = useState(
-    I18N.esg.preResearchDefaultPeerTag,
-  );
-  const [newPeerRating, setNewPeerRating] = useState('');
 
   const updateField = <K extends keyof PreResearchProject>(
     key: K,
@@ -99,14 +104,13 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
     const peer: PeerCompanyItem = {
       id: `peer-${uuid().slice(0, 6)}`,
       name: newPeerName.trim(),
-      tag: newPeerTag.trim() || I18N.esg.preResearchDefaultPeerTagFallback,
+      tag: I18N.esg.preResearchDefaultPeerTagFallback,
       listingMarket: I18N.esg.preResearchDefaultPeerMarket,
-      ratingSummary: newPeerRating.trim() || '-',
+      ratingSummary: '-',
       selected: true,
     };
     updateField('peers', [...project.peers, peer]);
     setNewPeerName('');
-    setNewPeerRating('');
   };
 
   const deptColumns: ColumnsType<DepartmentDutyItem> = [
@@ -351,24 +355,13 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
       )}
 
       {has('peer') && (
-        <Card size='small' title={I18N.esg.preResearchLookPeer}>
+        <div className={styles.peerSection}>
           <div className={styles.peerAddBar}>
             <Input
               value={newPeerName}
               onChange={e => setNewPeerName(e.target.value)}
               placeholder={I18N.esg.preResearchCompanyName}
               style={{ width: 220 }}
-            />
-            <Input
-              value={newPeerTag}
-              onChange={e => setNewPeerTag(e.target.value)}
-              style={{ width: 160 }}
-            />
-            <Input
-              value={newPeerRating}
-              onChange={e => setNewPeerRating(e.target.value)}
-              placeholder={I18N.esg.esgRating}
-              style={{ width: 180 }}
             />
             <Button icon={<PlusOutlined />} onClick={handleAddPeer}>
               {I18N.esg.preResearchAddPeer}
@@ -378,7 +371,21 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
             {project.peers.map(peer => (
               <div key={peer.id} className={styles.peerCard}>
                 <div className={styles.peerCardHead}>
-                  <span className={styles.peerName}>{peer.name}</span>
+                  <Checkbox
+                    checked={peer.selected !== false}
+                    onChange={e =>
+                      updateField(
+                        'peers',
+                        project.peers.map(p =>
+                          p.id === peer.id
+                            ? { ...p, selected: e.target.checked }
+                            : p,
+                        ),
+                      )
+                    }
+                  >
+                    <span className={styles.peerName}>{peer.name}</span>
+                  </Checkbox>
                   <Button
                     type='text'
                     danger
@@ -420,7 +427,7 @@ export const InputMaterialsPanel: FC<IInputMaterialsPanelProps> = ({
               </div>
             ))}
           </div>
-        </Card>
+        </div>
       )}
 
       {has('dept') && (

@@ -519,4 +519,5 @@ export default {
   preResearchPeerCountLabel: '{val1} benchmark peers',
   preResearchDeptCountLabel: '{val1} departments',
   preResearchCluesSummary: 'Website & Annual Report Clues (Skip Known Facts)',
+  preResearchSelectPeersTitle: 'Select Benchmark Peers',
 };

@@ -493,4 +493,5 @@ export default {
   preResearchPeerCountLabel: '已配置 {val1} 家标杆企业',
   preResearchDeptCountLabel: '已配置 {val1} 个受访部门',
   preResearchCluesSummary: '官网及年报线索（用于免问已知信息）',
+  preResearchSelectPeersTitle: '选择对标企业',
 };

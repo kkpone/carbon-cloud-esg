@@ -408,24 +408,13 @@ export const PreResearchDetail: FC = () => {
                       items={[
                         {
                           key: 'inputs',
-                          label: I18N.template(
-                            I18N.esg.preResearchInputCollapseLabel,
-                            {
-                              val1: `${I18N.template(
-                                I18N.esg.preResearchSelfFileCount,
-                                { val1: project.selfMaterials.length },
-                              )} · ${I18N.template(
-                                I18N.esg.preResearchPeerCountLabel,
-                                { val1: project.peers.length },
-                              )}`,
-                            },
-                          ),
+                          label: I18N.esg.preResearchSelectPeersTitle,
                           children: (
                             <InputMaterialsPanel
                               project={project}
                               onChange={next => persistProject(next)}
                               generating={generating}
-                              sections={['self', 'peer']}
+                              sections={['peer']}
                             />
                           ),
                         },
@@ -438,9 +427,6 @@ export const PreResearchDetail: FC = () => {
                       }
                       onChangeCases={highlightCases =>
                         persistProject({ ...project, highlightCases })
-                      }
-                      onChangePeers={peers =>
-                        persistProject({ ...project, peers })
                       }
                       onRegenerate={handleGenerateBenchmark}
                       generating={generating}
