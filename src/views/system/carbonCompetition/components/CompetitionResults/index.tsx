@@ -711,6 +711,26 @@ export default function CompetitionResults({
         ]}
         onChange={next => onChange(next as BoardGroup)}
       />
+      {batch?.id && (authenticated || usingMockData) ? (
+        <div className={styles.posterActions}>
+          <Button
+            className={styles.linearActionBtn}
+            icon={<FileImageOutlined />}
+            onClick={() => openPoster('PERSONAL')}
+          >
+            {r.generatePersonalPoster}
+          </Button>
+          {!authenticated || me?.team || fallbackCompanyName ? (
+            <Button
+              className={styles.linearActionBtn}
+              icon={<TrophyOutlined />}
+              onClick={() => openPoster('ENTERPRISE')}
+            >
+              {r.generateEnterprisePoster}
+            </Button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 
@@ -911,25 +931,6 @@ export default function CompetitionResults({
               </button>
             ))}
           </div>
-          {authenticated || usingMockData ? (
-            <div className={styles.posterActions}>
-              <Button
-                type='primary'
-                icon={<FileImageOutlined />}
-                onClick={() => openPoster('PERSONAL')}
-              >
-                {r.generatePersonalPoster}
-              </Button>
-              {!authenticated || me?.team || fallbackCompanyName ? (
-                <Button
-                  icon={<TrophyOutlined />}
-                  onClick={() => openPoster('ENTERPRISE')}
-                >
-                  {r.generateEnterprisePoster}
-                </Button>
-              ) : null}
-            </div>
-          ) : null}
         </div>
       ) : (
         <h1 className={styles.fallbackTitle}>{t.design.results}</h1>
