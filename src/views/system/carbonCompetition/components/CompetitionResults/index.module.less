@@ -41,13 +41,25 @@
   }
 }
 
+.preliminaryStack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.boardSection {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .boardHeader {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px 16px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .boardTitleGroup {
@@ -150,16 +162,18 @@
   color: #344054;
 }
 
-.pinnedFooter {
+.pinnedDock {
   position: sticky;
   bottom: 0;
-  z-index: 6;
+  z-index: 12;
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 12px 16px;
-  background: linear-gradient(90deg, #effaf7 0%, #f7fcfb 100%);
-  border-top: 2px solid #0cbf9f;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ecf9f6 0%, #f6fcfa 100%);
+  border: 1px solid #8bdac9;
+  box-shadow: 0 -6px 20px rgba(4, 37, 43, 0.08);
 }
 
 .pinnedRow {
@@ -199,6 +213,11 @@
   font-weight: 600;
   color: #04252b;
   font-variant-numeric: tabular-nums;
+}
+
+.pinnedMuted {
+  font-size: 13px;
+  color: #6c757d;
 }
 
 .pinnedMetrics {

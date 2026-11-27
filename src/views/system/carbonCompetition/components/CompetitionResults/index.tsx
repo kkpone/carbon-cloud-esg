@@ -3,22 +3,14 @@ import {
   ReloadOutlined,
   TrophyOutlined,
 } from '@ant-design/icons';
-import {
-  Alert,
-  Button,
-  Empty,
-  Segmented,
-  Spin,
-  Table,
-  Tabs,
-  Tag,
-  message,
-} from 'antd';
+import { Alert, Button, Empty, Spin, Table, Tabs, Tag, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import I18N from '@src/lang/I18N';
+import { getUserInfo } from '@src/utils';
+import { getToken } from '@/utils/cookie';
 import trophyOne from '@/assets/images/carbonCompetition/leader-trophy-1.png';
 import trophyTwo from '@/assets/images/carbonCompetition/leader-trophy-2.png';
 import trophyThree from '@/assets/images/carbonCompetition/leader-trophy-3.png';
@@ -53,7 +45,6 @@ import ResultPosterModal, {
 import styles from './index.module.less';
 
 type StageTab = 'PRELIMINARY' | 'FINAL';
-type PreliminaryGroup = 'TEAM' | 'PARTICIPANT';
 
 const FINAL_TROPHIES = [trophyOne, trophyTwo, trophyThree];
 const PODIUM_CLASS_MAP = [
@@ -80,7 +71,6 @@ export default function CompetitionResults({
   const location = useLocation();
   const [batch, setBatch] = useState<PublishedResults>();
   const [stageTab, setStageTab] = useState<StageTab>('PRELIMINARY');
-  const [groupTab, setGroupTab] = useState<PreliminaryGroup>('TEAM');
   const [posterPayload, setPosterPayload] =
     useState<CertificatePosterPayload>();
   const [posterBusy, setPosterBusy] = useState(false);
@@ -183,6 +173,22 @@ export default function CompetitionResults({
     load();
   }, [load]);
 
+  const authenticated = Boolean(getToken());
+  const currentUserInfo = getUserInfo()?.userInfo;
+  const fallbackUserName =
+    me?.participant?.realName ||
+    currentUserInfo?.user?.nickName ||
+    currentUserInfo?.nickName ||
+    currentUserInfo?.username ||
+    '';
+  const fallbackCompanyName =
+    me?.team?.enterpriseName ||
+    currentUserInfo?.companyVoList?.find(
+      company =>
+        String(company.companyId) === String(currentUserInfo.companyId),
+    )?.companyName ||
+    '';
+
   const teamRows = useMemo(
     () => filterPreliminaryByType(batch, 'TEAM'),
     [batch],
@@ -206,11 +212,17 @@ export default function CompetitionResults({
   }, [me?.participant?.id, personalRows]);
 
   const myTeamRow = useMemo(() => {
-    if (!me?.team?.id) return undefined;
-    return teamRows.find(
-      row => row.subjectId === me.team?.id || row.teamId === me.team?.id,
-    );
-  }, [me?.team?.id, teamRows]);
+    if (me?.team?.id) {
+      const matched = teamRows.find(
+        row => row.subjectId === me.team?.id || row.teamId === me.team?.id,
+      );
+      if (matched) return matched;
+    }
+    if (fallbackCompanyName) {
+      return teamRows.find(row => row.displayName === fallbackCompanyName);
+    }
+    return undefined;
+  }, [fallbackCompanyName, me?.team?.id, teamRows]);
 
   const myFinalTeamRow = useMemo(() => {
     if (!me?.team?.id) return undefined;
@@ -219,28 +231,28 @@ export default function CompetitionResults({
     );
   }, [finalRows, me?.team?.id]);
 
-  const myPersonalOutsideTopTen = useMemo(() => {
+  const myPersonalInTopTen = useMemo(() => {
     if (!myPersonalRow) return false;
-    return !topTenPersonal.some(
+    return topTenPersonal.some(
       row => row.subjectId === myPersonalRow.subjectId,
     );
   }, [myPersonalRow, topTenPersonal]);
 
-  const myTeamOutsideTopTen = useMemo(() => {
+  const myTeamInTopTen = useMemo(() => {
     if (!myTeamRow) return false;
-    return !topTenTeams.some(row => row.subjectId === myTeamRow.subjectId);
+    return topTenTeams.some(row => row.subjectId === myTeamRow.subjectId);
   }, [myTeamRow, topTenTeams]);
 
-  const showPinnedFooter =
-    Boolean(me?.participant) &&
-    (myPersonalOutsideTopTen || myTeamOutsideTopTen);
+  const showPinnedPersonal = authenticated && !myPersonalInTopTen;
+  const showPinnedTeam = authenticated && !myTeamInTopTen;
+  const showPinnedDock = !authenticated || showPinnedPersonal || showPinnedTeam;
 
   const openPoster = async (scope: 'PERSONAL' | 'ENTERPRISE') => {
     const isEnterprise = scope === 'ENTERPRISE';
     const localRow = isEnterprise ? myFinalTeamRow || myTeamRow : myPersonalRow;
     const recipientName = isEnterprise
-      ? localRow?.displayName || me?.team?.enterpriseName
-      : localRow?.displayName || me?.participant?.realName;
+      ? localRow?.displayName || me?.team?.enterpriseName || fallbackCompanyName
+      : localRow?.displayName || me?.participant?.realName || fallbackUserName;
 
     if (!recipientName) {
       message.warning(isEnterprise ? r.noEnterpriseResult : r.noPersonalResult);
@@ -340,8 +352,9 @@ export default function CompetitionResults({
           ? medalMap.enterpriseByTeamId.get(teamKey)
           : undefined;
         const isOwn = Boolean(
-          me?.team?.id &&
-            (row.subjectId === me.team.id || row.teamId === me.team.id),
+          (me?.team?.id &&
+            (row.subjectId === me.team.id || row.teamId === me.team.id)) ||
+            (myTeamRow && row.subjectId === myTeamRow.subjectId),
         );
         return (
           <div className={styles.subjectCell}>
@@ -555,173 +568,196 @@ export default function CompetitionResults({
     },
   ];
 
-  const renderPreliminaryBoard = () => {
-    const isTeam = groupTab === 'TEAM';
-    const rows = isTeam ? topTenTeams : topTenPersonal;
+  const renderPinnedPersonalRow = () => {
+    const rankLabel = myPersonalRow
+      ? myPersonalRow.ranking != null
+        ? I18N.template(r.posterRankSummary, {
+            rank: String(myPersonalRow.ranking),
+          })
+        : r.outsideTopTenBadge
+      : me?.participant
+      ? r.unrankedStatus
+      : r.notRegisteredRank;
+
+    const displayName = myPersonalRow?.displayName || fallbackUserName || '—';
+    const personalMedal = myPersonalRow
+      ? medalMap.personalBySubjectId.get(myPersonalRow.subjectId)
+      : undefined;
+    const enterpriseMedal = myPersonalRow?.teamId
+      ? medalMap.enterpriseByTeamId.get(myPersonalRow.teamId)
+      : me?.team?.id
+      ? medalMap.enterpriseByTeamId.get(me.team.id)
+      : undefined;
+
     return (
-      <div>
-        <div className={styles.boardHeader}>
-          <div className={styles.boardTitleGroup}>
-            <h2>{isTeam ? r.enterpriseTopTenTitle : r.personalTopTenTitle}</h2>
-            <p>
-              {isTeam ? r.preliminaryEnterpriseHint : r.preliminaryPersonalHint}
-            </p>
+      <div className={styles.pinnedRow}>
+        <div className={styles.pinnedMain}>
+          <span className={styles.pinnedLabel}>{r.myRankPinnedTitle}</span>
+          <span className={styles.pinnedRank}>{rankLabel}</span>
+          <div className={styles.subjectCell}>
+            <span className={styles.subjectName}>{displayName}</span>
+            <CompetitionAwardMedals
+              personal={personalMedal}
+              enterprise={enterpriseMedal}
+              compact
+            />
           </div>
-          <Segmented
-            value={groupTab}
-            options={[
-              { value: 'TEAM', label: r.enterpriseGroupTab },
-              { value: 'PARTICIPANT', label: r.personalGroupTab },
-            ]}
-            onChange={value => setGroupTab(value as PreliminaryGroup)}
-          />
         </div>
-
-        <div className={styles.tableCard}>
-          {isTeam ? (
-            <Table<PreliminaryResult>
-              className={styles.resultTable}
-              rowKey='subjectId'
-              dataSource={rows}
-              columns={teamColumns}
-              pagination={false}
-              scroll={{ x: 760 }}
-              rowClassName={row =>
-                me?.team?.id &&
-                (row.subjectId === me.team.id || row.teamId === me.team.id)
-                  ? styles.ownRow
-                  : ''
-              }
-              locale={{
-                emptyText: (
-                  <Empty
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description={r.notOnBoard}
-                  />
-                ),
-              }}
-            />
-          ) : (
-            <Table<PreliminaryResult>
-              className={styles.resultTable}
-              rowKey='subjectId'
-              dataSource={rows}
-              columns={personalColumns}
-              pagination={false}
-              scroll={{ x: 920 }}
-              rowClassName={row =>
-                me?.participant?.id && row.subjectId === me.participant.id
-                  ? styles.ownRow
-                  : ''
-              }
-              locale={{
-                emptyText: (
-                  <Empty
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description={r.notOnBoard}
-                  />
-                ),
-              }}
-            />
-          )}
-
-          {showPinnedFooter ? (
-            <div className={styles.pinnedFooter}>
-              {myPersonalRow ? (
-                <div className={styles.pinnedRow}>
-                  <div className={styles.pinnedMain}>
-                    <span className={styles.pinnedLabel}>
-                      {r.myRankPinnedTitle}
-                    </span>
-                    <span className={styles.pinnedRank}>
-                      {myPersonalRow.ranking != null
-                        ? I18N.template(r.posterRankSummary, {
-                            rank: String(myPersonalRow.ranking),
-                          })
-                        : r.outsideTopTenBadge}
-                    </span>
-                    <div className={styles.subjectCell}>
-                      <span className={styles.subjectName}>
-                        {myPersonalRow.displayName}
-                      </span>
-                      <CompetitionAwardMedals
-                        personal={medalMap.personalBySubjectId.get(
-                          myPersonalRow.subjectId,
-                        )}
-                        enterprise={
-                          myPersonalRow.teamId
-                            ? medalMap.enterpriseByTeamId.get(
-                                myPersonalRow.teamId,
-                              )
-                            : undefined
-                        }
-                        compact
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.pinnedMetrics}>
-                    <span>
-                      {r.cScoreColumn}: {formatScore(myPersonalRow.cScore)}
-                    </span>
-                    <span>
-                      {r.eScoreColumn}: {formatScore(myPersonalRow.eScore)}
-                    </span>
-                    <span>
-                      {r.preliminaryTotalColumn}:{' '}
-                      <strong>{formatScore(myPersonalRow.totalScore)}</strong>
-                    </span>
-                  </div>
-                </div>
-              ) : null}
-
-              {myTeamRow ? (
-                <div className={styles.pinnedRow}>
-                  <div className={styles.pinnedMain}>
-                    <span className={styles.pinnedLabel}>
-                      {r.myTeamRankPinnedTitle}
-                    </span>
-                    <span className={styles.pinnedRank}>
-                      {myTeamRow.ranking != null
-                        ? I18N.template(r.posterRankSummary, {
-                            rank: String(myTeamRow.ranking),
-                          })
-                        : r.outsideTopTenBadge}
-                    </span>
-                    <div className={styles.subjectCell}>
-                      <span className={styles.subjectName}>
-                        {myTeamRow.displayName}
-                      </span>
-                      <CompetitionAwardMedals
-                        enterprise={medalMap.enterpriseByTeamId.get(
-                          myTeamRow.teamId || myTeamRow.subjectId,
-                        )}
-                        compact
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.pinnedMetrics}>
-                    <span>
-                      {r.cScoreColumn}: {formatScore(myTeamRow.cScore)}
-                    </span>
-                    <span>
-                      {r.eScoreColumn}: {formatScore(myTeamRow.eScore)}
-                    </span>
-                    <span>
-                      {r.preliminaryTotalColumn}:{' '}
-                      <strong>{formatScore(myTeamRow.totalScore)}</strong>
-                    </span>
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
+        <div className={styles.pinnedMetrics}>
+          <span>
+            {r.cScoreColumn}: {formatScore(myPersonalRow?.cScore)}
+          </span>
+          <span>
+            {r.eScoreColumn}: {formatScore(myPersonalRow?.eScore)}
+          </span>
+          <span>
+            {r.preliminaryTotalColumn}:{' '}
+            <strong>{formatScore(myPersonalRow?.totalScore)}</strong>
+          </span>
         </div>
       </div>
     );
   };
 
+  const renderPinnedTeamRow = () => {
+    const hasTeam = Boolean(myTeamRow || me?.team || fallbackCompanyName);
+    const rankLabel = myTeamRow
+      ? myTeamRow.ranking != null
+        ? I18N.template(r.posterRankSummary, {
+            rank: String(myTeamRow.ranking),
+          })
+        : r.outsideTopTenBadge
+      : hasTeam
+      ? r.unrankedStatus
+      : r.noTeamJoined;
+
+    const displayName =
+      myTeamRow?.displayName || fallbackCompanyName || r.noTeamJoined;
+    const teamKey = myTeamRow?.teamId || myTeamRow?.subjectId || me?.team?.id;
+    const enterpriseMedal = teamKey
+      ? medalMap.enterpriseByTeamId.get(teamKey)
+      : undefined;
+
+    return (
+      <div className={styles.pinnedRow}>
+        <div className={styles.pinnedMain}>
+          <span className={styles.pinnedLabel}>{r.myTeamRankPinnedTitle}</span>
+          <span className={styles.pinnedRank}>{rankLabel}</span>
+          <div className={styles.subjectCell}>
+            <span className={styles.subjectName}>{displayName}</span>
+            <CompetitionAwardMedals enterprise={enterpriseMedal} compact />
+          </div>
+        </div>
+        <div className={styles.pinnedMetrics}>
+          <span>
+            {r.cScoreColumn}: {formatScore(myTeamRow?.cScore)}
+          </span>
+          <span>
+            {r.eScoreColumn}: {formatScore(myTeamRow?.eScore)}
+          </span>
+          <span>
+            {r.preliminaryTotalColumn}:{' '}
+            <strong>{formatScore(myTeamRow?.totalScore)}</strong>
+          </span>
+        </div>
+      </div>
+    );
+  };
+
+  const renderPreliminaryBoards = () => (
+    <div className={styles.preliminaryStack}>
+      <section className={styles.boardSection}>
+        <div className={styles.boardHeader}>
+          <div className={styles.boardTitleGroup}>
+            <h2>{r.enterpriseTopTenTitle}</h2>
+            <p>{r.preliminaryEnterpriseHint}</p>
+          </div>
+        </div>
+        <div className={styles.tableCard}>
+          <Table<PreliminaryResult>
+            className={styles.resultTable}
+            rowKey='subjectId'
+            dataSource={topTenTeams}
+            columns={teamColumns}
+            pagination={false}
+            scroll={{ x: 760 }}
+            rowClassName={row =>
+              (me?.team?.id &&
+                (row.subjectId === me.team.id || row.teamId === me.team.id)) ||
+              (myTeamRow && row.subjectId === myTeamRow.subjectId)
+                ? styles.ownRow
+                : ''
+            }
+            locale={{
+              emptyText: (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={r.notOnBoard}
+                />
+              ),
+            }}
+          />
+        </div>
+      </section>
+
+      <section className={styles.boardSection}>
+        <div className={styles.boardHeader}>
+          <div className={styles.boardTitleGroup}>
+            <h2>{r.personalTopTenTitle}</h2>
+            <p>{r.preliminaryPersonalHint}</p>
+          </div>
+        </div>
+        <div className={styles.tableCard}>
+          <Table<PreliminaryResult>
+            className={styles.resultTable}
+            rowKey='subjectId'
+            dataSource={topTenPersonal}
+            columns={personalColumns}
+            pagination={false}
+            scroll={{ x: 920 }}
+            rowClassName={row =>
+              me?.participant?.id && row.subjectId === me.participant.id
+                ? styles.ownRow
+                : ''
+            }
+            locale={{
+              emptyText: (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={r.notOnBoard}
+                />
+              ),
+            }}
+          />
+        </div>
+      </section>
+
+      {showPinnedDock ? (
+        <div className={styles.pinnedDock}>
+          {!authenticated ? (
+            <div className={styles.pinnedRow}>
+              <div className={styles.pinnedMain}>
+                <span className={styles.pinnedLabel}>
+                  {r.myRankPinnedTitle}
+                </span>
+                <span className={styles.pinnedMuted}>
+                  {r.loginToViewMyRank}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <>
+              {showPinnedPersonal ? renderPinnedPersonalRow() : null}
+              {showPinnedTeam ? renderPinnedTeamRow() : null}
+            </>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+
   const renderFinalBoard = () => (
-    <div>
+    <section className={styles.boardSection}>
       <div className={styles.boardHeader}>
         <div className={styles.boardTitleGroup}>
           <h2>{r.finalTopThreeTitle}</h2>
@@ -809,7 +845,7 @@ export default function CompetitionResults({
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 
   return (
@@ -834,7 +870,7 @@ export default function CompetitionResults({
           ) : null}
         </div>
 
-        {batch?.id && me?.participant ? (
+        {batch?.id && authenticated ? (
           <div className={styles.posterActions}>
             <Button
               type='primary'
@@ -843,7 +879,7 @@ export default function CompetitionResults({
             >
               {r.generatePersonalPoster}
             </Button>
-            {me.team ? (
+            {me?.team || fallbackCompanyName ? (
               <Button
                 icon={<TrophyOutlined />}
                 onClick={() => openPoster('ENTERPRISE')}
@@ -867,7 +903,7 @@ export default function CompetitionResults({
               {
                 key: 'PRELIMINARY',
                 label: r.preliminaryTab,
-                children: renderPreliminaryBoard(),
+                children: renderPreliminaryBoards(),
               },
               {
                 key: 'FINAL',
