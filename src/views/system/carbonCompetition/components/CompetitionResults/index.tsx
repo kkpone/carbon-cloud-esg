@@ -462,12 +462,6 @@ export default function CompetitionResults({
       },
     },
     {
-      title: r.teamColumn,
-      width: 180,
-      ellipsis: true,
-      render: (_value, row) => row.teamNameSnapshot || '—',
-    },
-    {
       title: r.cScoreColumn,
       width: 112,
       render: (_value, row) => (
@@ -746,7 +740,7 @@ export default function CompetitionResults({
             dataSource={topTenPersonal}
             columns={personalColumns}
             pagination={false}
-            scroll={{ x: 800 }}
+            scroll={{ x: 640 }}
             rowClassName={row =>
               me?.participant?.id && row.subjectId === me.participant.id
                 ? styles.ownRow
