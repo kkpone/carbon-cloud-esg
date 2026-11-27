@@ -3,7 +3,17 @@ import {
   ReloadOutlined,
   TrophyOutlined,
 } from '@ant-design/icons';
-import { Alert, Button, Empty, Spin, Table, Tabs, Tag, message } from 'antd';
+import {
+  Alert,
+  Button,
+  Empty,
+  Segmented,
+  Spin,
+  Table,
+  Tabs,
+  Tag,
+  message,
+} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -13,9 +23,6 @@ import I18N from '@src/lang/I18N';
 import type { RootState } from '@/store';
 import { getUserInfo } from '@src/utils';
 import { getToken } from '@/utils/cookie';
-import trophyOne from '@/assets/images/carbonCompetition/leader-trophy-1.png';
-import trophyTwo from '@/assets/images/carbonCompetition/leader-trophy-2.png';
-import trophyThree from '@/assets/images/carbonCompetition/leader-trophy-3.png';
 import CompetitionAwardMedals from '../../../components/CompetitionAwardMedals';
 import {
   buildAwardMedalMap,
@@ -48,13 +55,7 @@ import ResultPosterModal, {
 import styles from './index.module.less';
 
 type StageTab = 'PRELIMINARY' | 'FINAL';
-
-const FINAL_TROPHIES = [trophyOne, trophyTwo, trophyThree];
-const PODIUM_CLASS_MAP = [
-  styles.podiumGold,
-  styles.podiumSilver,
-  styles.podiumBronze,
-];
+type PreliminaryGroup = 'TEAM' | 'PARTICIPANT';
 
 const formatScore = (value?: number | null) =>
   value == null ? '—' : Number(value).toFixed(2);
@@ -74,6 +75,8 @@ export default function CompetitionResults({
   const location = useLocation();
   const [batch, setBatch] = useState<PublishedResults>();
   const [stageTab, setStageTab] = useState<StageTab>('PRELIMINARY');
+  const [preliminaryGroup, setPreliminaryGroup] =
+    useState<PreliminaryGroup>('TEAM');
   const [posterPayload, setPosterPayload] =
     useState<CertificatePosterPayload>();
   const [posterBusy, setPosterBusy] = useState(false);
@@ -501,10 +504,6 @@ export default function CompetitionResults({
       title: r.companyColumn,
       minWidth: 220,
       render: (_value, row) => {
-        const teamKey = row.teamId || row.subjectId;
-        const enterpriseMedal = teamKey
-          ? medalMap.enterpriseByTeamId.get(teamKey)
-          : undefined;
         const isOwn = Boolean(
           me?.team?.id &&
             (row.subjectId === me.team.id || row.teamId === me.team.id),
@@ -515,48 +514,50 @@ export default function CompetitionResults({
             {isOwn ? (
               <span className={styles.selfTag}>{r.myTeamSuffix}</span>
             ) : null}
-            <CompetitionAwardMedals enterprise={enterpriseMedal} compact />
           </div>
         );
       },
     },
     {
-      title: r.preliminaryTotalColumn,
-      width: 114,
+      title: r.cShortColumn,
+      width: 84,
       render: (_value, row) => (
-        <span className={styles.numericCell}>
-          {formatScore(row.preliminaryScore)}
-        </span>
+        <span className={styles.numericCell}>{formatScore(row.cScore)}</span>
       ),
     },
     {
-      title: r.finalRScoreColumn,
-      width: 108,
+      title: r.rShortColumn,
+      width: 84,
       render: (_value, row) => (
         <span className={styles.numericCell}>{formatScore(row.rScore)}</span>
       ),
     },
     {
-      title: r.finalOScoreColumn,
-      width: 108,
+      title: r.eShortColumn,
+      width: 84,
+      render: (_value, row) => (
+        <span className={styles.numericCell}>{formatScore(row.eScore)}</span>
+      ),
+    },
+    {
+      title: r.oShortColumn,
+      width: 84,
       render: (_value, row) => (
         <span className={styles.numericCell}>{formatScore(row.oScore)}</span>
       ),
     },
     {
-      title: r.finalSScoreColumn,
-      width: 108,
+      title: r.sShortColumn,
+      width: 84,
       render: (_value, row) => (
         <span className={styles.numericCell}>{formatScore(row.sScore)}</span>
       ),
     },
     {
-      title: r.finalScoreColumn,
-      width: 108,
+      title: r.bonusColumn,
+      width: 96,
       render: (_value, row) => (
-        <span className={styles.numericCell}>
-          {formatScore(row.finalScore)}
-        </span>
+        <span className={styles.numericCell}>{formatBonus(row.bonusRate)}</span>
       ),
     },
     {
@@ -572,6 +573,19 @@ export default function CompetitionResults({
       render: (_value, row, index) =>
         renderAwardTag(
           normalizeFinalAwardLevel(row.awardLevel, row.ranking ?? index + 1),
+        ),
+    },
+  ];
+
+  const finalPersonalColumns: ColumnsType<PreliminaryResult> = [
+    ...personalColumns,
+    {
+      title: r.awardColumn,
+      width: 104,
+      render: (_value, row, index) =>
+        renderAwardTag(
+          normalizeAwardLevel(row.awardLevel, row.ranking ?? index + 1),
+          row.qualified,
         ),
     },
   ];
@@ -665,16 +679,6 @@ export default function CompetitionResults({
           </div>
         </div>
         <div className={styles.pinnedMetrics}>
-          <span>
-            {r.cScoreColumn}: {formatScore(myTeamRow?.cScore)}
-          </span>
-          <span>
-            {r.eScoreColumn}: {formatScore(myTeamRow?.eScore)}
-          </span>
-          <span>
-            {r.preliminaryTotalColumn}:{' '}
-            <strong>{formatScore(myTeamRow?.totalScore)}</strong>
-          </span>
           {hasTeam ? (
             <Button
               size='small'
@@ -690,47 +694,150 @@ export default function CompetitionResults({
     );
   };
 
-  const renderPreliminaryBoards = () => (
+  const renderPreliminaryBoards = () => {
+    const isTeam = preliminaryGroup === 'TEAM';
+    return (
+      <div className={styles.preliminaryStack}>
+        <section className={styles.boardSection}>
+          <div className={styles.boardHeader}>
+            <div className={styles.boardTitleGroup}>
+              <h2>
+                {isTeam ? r.enterpriseTopTenTitle : r.personalTopTenTitle}
+              </h2>
+              <p>
+                {isTeam
+                  ? r.preliminaryEnterpriseHint
+                  : r.preliminaryPersonalHint}
+              </p>
+            </div>
+            <Segmented
+              value={preliminaryGroup}
+              options={[
+                { value: 'TEAM', label: r.enterpriseGroupTab },
+                { value: 'PARTICIPANT', label: r.personalGroupTab },
+              ]}
+              onChange={value => setPreliminaryGroup(value as PreliminaryGroup)}
+            />
+          </div>
+          <div className={styles.tableCard}>
+            {isTeam ? (
+              <Table<PreliminaryResult>
+                className={styles.resultTable}
+                rowKey='subjectId'
+                dataSource={topTenTeams}
+                columns={teamColumns}
+                pagination={false}
+                scroll={{ x: 640 }}
+                rowClassName={row =>
+                  (me?.team?.id &&
+                    (row.subjectId === me.team.id ||
+                      row.teamId === me.team.id)) ||
+                  (myTeamRow && row.subjectId === myTeamRow.subjectId)
+                    ? styles.ownRow
+                    : ''
+                }
+                locale={{
+                  emptyText: (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description={r.notOnBoard}
+                    />
+                  ),
+                }}
+              />
+            ) : (
+              <Table<PreliminaryResult>
+                className={styles.resultTable}
+                rowKey='subjectId'
+                dataSource={topTenPersonal}
+                columns={personalColumns}
+                pagination={false}
+                scroll={{ x: 640 }}
+                rowClassName={row =>
+                  me?.participant?.id && row.subjectId === me.participant.id
+                    ? styles.ownRow
+                    : ''
+                }
+                locale={{
+                  emptyText: (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description={r.notOnBoard}
+                    />
+                  ),
+                }}
+              />
+            )}
+          </div>
+        </section>
+
+        {showPinnedDock ? (
+          <div className={styles.pinnedDock}>
+            {!authenticated ? (
+              <div className={styles.pinnedRow}>
+                <div className={styles.pinnedMain}>
+                  <span className={styles.pinnedLabel}>
+                    {r.myRankPinnedTitle}
+                  </span>
+                  <span className={styles.pinnedMuted}>
+                    {r.loginToViewMyRank}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <>
+                {showPinnedPersonal ? renderPinnedPersonalRow() : null}
+                {showPinnedTeam ? renderPinnedTeamRow() : null}
+              </>
+            )}
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+
+  const renderFinalBoard = () => (
     <div className={styles.preliminaryStack}>
       <section className={styles.boardSection}>
         <div className={styles.boardHeader}>
           <div className={styles.boardTitleGroup}>
-            <h2>{r.enterpriseTopTenTitle}</h2>
-            <p>{r.preliminaryEnterpriseHint}</p>
+            <h2>{r.finalTopSixTitle}</h2>
+            <p>{r.finalBoardHint}</p>
           </div>
         </div>
-        <div className={styles.tableCard}>
-          <Table<PreliminaryResult>
-            className={styles.resultTable}
-            rowKey='subjectId'
-            dataSource={topTenTeams}
-            columns={teamColumns}
-            pagination={false}
-            scroll={{ x: 640 }}
-            rowClassName={row =>
-              (me?.team?.id &&
-                (row.subjectId === me.team.id || row.teamId === me.team.id)) ||
-              (myTeamRow && row.subjectId === myTeamRow.subjectId)
-                ? styles.ownRow
-                : ''
-            }
-            locale={{
-              emptyText: (
-                <Empty
-                  image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description={r.notOnBoard}
-                />
-              ),
-            }}
-          />
-        </div>
+
+        {finalRows.length === 0 ? (
+          <div className={styles.finalEmpty}>
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={r.finalPendingHint}
+            />
+          </div>
+        ) : (
+          <div className={styles.tableCard}>
+            <Table<FinalResult>
+              className={styles.resultTable}
+              rowKey='subjectId'
+              dataSource={finalRows.slice(0, 6)}
+              columns={finalColumns}
+              pagination={false}
+              scroll={{ x: 960 }}
+              rowClassName={row =>
+                me?.team?.id &&
+                (row.subjectId === me.team.id || row.teamId === me.team.id)
+                  ? styles.ownRow
+                  : ''
+              }
+            />
+          </div>
+        )}
       </section>
 
       <section className={styles.boardSection}>
         <div className={styles.boardHeader}>
           <div className={styles.boardTitleGroup}>
-            <h2>{r.personalTopTenTitle}</h2>
-            <p>{r.preliminaryPersonalHint}</p>
+            <h2>{r.finalPersonalTopTenTitle}</h2>
+            <p>{r.finalPersonalHint}</p>
           </div>
         </div>
         <div className={styles.tableCard}>
@@ -738,9 +845,9 @@ export default function CompetitionResults({
             className={styles.resultTable}
             rowKey='subjectId'
             dataSource={topTenPersonal}
-            columns={personalColumns}
+            columns={finalPersonalColumns}
             pagination={false}
-            scroll={{ x: 640 }}
+            scroll={{ x: 740 }}
             rowClassName={row =>
               me?.participant?.id && row.subjectId === me.participant.id
                 ? styles.ownRow
@@ -757,121 +864,7 @@ export default function CompetitionResults({
           />
         </div>
       </section>
-
-      {showPinnedDock ? (
-        <div className={styles.pinnedDock}>
-          {!authenticated ? (
-            <div className={styles.pinnedRow}>
-              <div className={styles.pinnedMain}>
-                <span className={styles.pinnedLabel}>
-                  {r.myRankPinnedTitle}
-                </span>
-                <span className={styles.pinnedMuted}>
-                  {r.loginToViewMyRank}
-                </span>
-              </div>
-            </div>
-          ) : (
-            <>
-              {showPinnedPersonal ? renderPinnedPersonalRow() : null}
-              {showPinnedTeam ? renderPinnedTeamRow() : null}
-            </>
-          )}
-        </div>
-      ) : null}
     </div>
-  );
-
-  const renderFinalBoard = () => (
-    <section className={styles.boardSection}>
-      <div className={styles.boardHeader}>
-        <div className={styles.boardTitleGroup}>
-          <h2>{r.finalTopThreeTitle}</h2>
-          <p>{r.finalBoardHint}</p>
-        </div>
-      </div>
-
-      {finalRows.length === 0 ? (
-        <div className={styles.finalEmpty}>
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={r.finalPendingHint}
-          />
-        </div>
-      ) : (
-        <>
-          <div className={styles.podiumGrid}>
-            {finalRows.slice(0, 3).map((row, index) => {
-              const rank = row.ranking ?? index + 1;
-              const awardLevel = normalizeFinalAwardLevel(row.awardLevel, rank);
-              const teamKey = row.teamId || row.subjectId;
-              const enterpriseMedal = teamKey
-                ? medalMap.enterpriseByTeamId.get(teamKey)
-                : undefined;
-              return (
-                <article
-                  key={row.subjectId}
-                  className={`${styles.podiumCard} ${
-                    PODIUM_CLASS_MAP[index] || ''
-                  }`}
-                >
-                  <div className={styles.podiumTop}>
-                    <div className={styles.subjectCell}>
-                      {renderRank(rank)}
-                      {renderAwardTag(awardLevel)}
-                    </div>
-                    {FINAL_TROPHIES[index] ? (
-                      <img
-                        className={styles.podiumTrophy}
-                        src={FINAL_TROPHIES[index]}
-                        alt=''
-                      />
-                    ) : null}
-                  </div>
-                  <div className={styles.subjectCell}>
-                    <h3 className={styles.podiumName}>{row.displayName}</h3>
-                    <CompetitionAwardMedals
-                      enterprise={enterpriseMedal}
-                      compact
-                    />
-                  </div>
-                  <div className={styles.podiumScore}>
-                    <strong>{formatScore(row.totalScore)}</strong>
-                    <span>{r.pointsUnit}</span>
-                  </div>
-                  <div className={styles.podiumBreakdown}>
-                    <span>
-                      {r.preliminaryTotalColumn}:{' '}
-                      {formatScore(row.preliminaryScore)}
-                    </span>
-                    <span>
-                      {r.finalScoreColumn}: {formatScore(row.finalScore)}
-                    </span>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          <div className={styles.tableCard}>
-            <Table<FinalResult>
-              className={styles.resultTable}
-              rowKey='subjectId'
-              dataSource={finalRows.slice(0, 3)}
-              columns={finalColumns}
-              pagination={false}
-              scroll={{ x: 960 }}
-              rowClassName={row =>
-                me?.team?.id &&
-                (row.subjectId === me.team.id || row.teamId === me.team.id)
-                  ? styles.ownRow
-                  : ''
-              }
-            />
-          </div>
-        </>
-      )}
-    </section>
   );
 
   return (

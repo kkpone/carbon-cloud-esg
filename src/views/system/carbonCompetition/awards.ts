@@ -41,8 +41,8 @@ export function normalizeFinalAwardLevel(
   if (upper === 'BRONZE' || upper === 'THIRD' || upper === '3') return 'BRONZE';
   if (ranking != null && ranking > 0) {
     if (ranking === 1) return 'GOLD';
-    if (ranking === 2) return 'SILVER';
-    if (ranking === 3) return 'BRONZE';
+    if (ranking <= 3) return 'SILVER';
+    if (ranking <= 6) return 'BRONZE';
   }
   return 'COMPLETED';
 }
@@ -75,7 +75,7 @@ export function sortByRankAndScore<
 export function extractFinalResults(batch?: PublishedResults): FinalResult[] {
   if (!batch) return [];
   if (Array.isArray(batch.finalResults) && batch.finalResults.length > 0) {
-    return sortByRankAndScore(batch.finalResults).slice(0, 3);
+    return sortByRankAndScore(batch.finalResults).slice(0, 6);
   }
   const finalTyped = (batch.results || []).filter(row => {
     const type = (row.subjectType || '').toUpperCase();
@@ -83,11 +83,14 @@ export function extractFinalResults(batch?: PublishedResults): FinalResult[] {
   });
   if (finalTyped.length > 0) {
     return sortByRankAndScore(finalTyped)
-      .slice(0, 3)
+      .slice(0, 6)
       .map((row, idx) => ({
         subjectId: row.subjectId,
         teamId: row.teamId || row.subjectId,
         displayName: row.displayName,
+        cScore: row.cScore,
+        eScore: row.eScore,
+        bonusRate: row.bonusRate,
         preliminaryScore: row.totalScore,
         totalScore: row.totalScore,
         ranking: row.ranking ?? idx + 1,

@@ -215,18 +215,6 @@ export default function TaskRankingDock({
                   r.noTeamJoined}
               </span>
             </div>
-            <div className={styles.dockMetrics}>
-              <span>
-                {r.cScoreColumn}: {formatScore(myTeamRow?.cScore)}
-              </span>
-              <span>
-                {r.eScoreColumn}: {formatScore(myTeamRow?.eScore)}
-              </span>
-              <span>
-                {r.preliminaryTotalColumn}:{' '}
-                <strong>{formatScore(myTeamRow?.totalScore)}</strong>
-              </span>
-            </div>
           </div>
         </>
       )}

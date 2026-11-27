@@ -254,6 +254,9 @@ export type FinalResult = {
   teamId?: string;
   displayName: string;
   preliminaryScore?: number;
+  cScore?: number;
+  eScore?: number;
+  bonusRate?: number;
   rScore?: number;
   oScore?: number;
   sScore?: number;

@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Alert, Button, Empty, Spin, Table, Tag } from 'antd';
+import { Alert, Button, Empty, Spin, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -109,8 +109,8 @@ export default function CompetitionFullRanking({
   );
 
   const topTwentyTeams = useMemo(() => teamRows.slice(0, 20), [teamRows]);
-  const topFiftyPersonal = useMemo(
-    () => personalRows.slice(0, 50),
+  const topTwentyPersonal = useMemo(
+    () => personalRows.slice(0, 20),
     [personalRows],
   );
 
@@ -165,7 +165,7 @@ export default function CompetitionFullRanking({
     },
     {
       title: r.companyColumn,
-      minWidth: 220,
+      minWidth: 160,
       render: (_value, row) => {
         const isOwn = Boolean(
           (me?.team?.id &&
@@ -184,7 +184,7 @@ export default function CompetitionFullRanking({
     },
     {
       title: r.memberCountColumn,
-      width: 120,
+      width: 96,
       render: (_value, row) => {
         const count = row.rosterCount ?? row.registeredMemberCount;
         return (
@@ -196,20 +196,10 @@ export default function CompetitionFullRanking({
     },
     {
       title: r.bonusColumn,
-      width: 100,
+      width: 96,
       render: (_value, row) => (
         <span className={styles.numericCell}>{formatBonus(row.bonusRate)}</span>
       ),
-    },
-    {
-      title: r.awardColumn,
-      width: 120,
-      render: (_value, row) =>
-        row.qualified === 1 ? (
-          <Tag color='cyan'>{r.qualifiedTag}</Tag>
-        ) : (
-          <Tag>{r.completedAward}</Tag>
-        ),
     },
   ];
 
@@ -220,8 +210,8 @@ export default function CompetitionFullRanking({
       render: (_value, row, index) => renderRank(row.ranking, index),
     },
     {
-      title: r.participantColumn,
-      minWidth: 180,
+      title: r.nameColumn,
+      minWidth: 150,
       render: (_value, row) => {
         const isOwn = Boolean(
           (me?.participant?.id && row.subjectId === me.participant.id) ||
@@ -238,31 +228,10 @@ export default function CompetitionFullRanking({
       },
     },
     {
-      title: r.cScoreColumn,
-      width: 112,
-      render: (_value, row) => (
-        <span className={styles.numericCell}>{formatScore(row.cScore)}</span>
-      ),
-    },
-    {
-      title: r.eScoreColumn,
-      width: 112,
-      render: (_value, row) => (
-        <span className={styles.numericCell}>{formatScore(row.eScore)}</span>
-      ),
-    },
-    {
       title: r.bonusColumn,
-      width: 96,
+      width: 100,
       render: (_value, row) => (
         <span className={styles.numericCell}>{formatBonus(row.bonusRate)}</span>
-      ),
-    },
-    {
-      title: r.preliminaryTotalColumn,
-      width: 116,
-      render: (_value, row) => (
-        <span className={styles.scoreValue}>{formatScore(row.totalScore)}</span>
       ),
     },
   ];
@@ -315,70 +284,72 @@ export default function CompetitionFullRanking({
 
       <Spin spinning={loading}>
         <div className={styles.boardsStack}>
-          <section className={styles.boardSection}>
-            <div className={styles.boardHeader}>
-              <h2>{r.enterpriseTopTwentyTitle}</h2>
-              <p>{r.fullRankingEnterpriseHint}</p>
-            </div>
-            <div className={styles.tableCard}>
-              <Table<PreliminaryResult>
-                className={styles.rankTable}
-                rowKey='subjectId'
-                dataSource={topTwentyTeams}
-                columns={teamColumns}
-                pagination={false}
-                scroll={{ x: 640 }}
-                rowClassName={row =>
-                  (me?.team?.id &&
-                    (row.subjectId === me.team.id ||
-                      row.teamId === me.team.id)) ||
-                  (myTeamRow && row.subjectId === myTeamRow.subjectId)
-                    ? styles.ownRow
-                    : ''
-                }
-                locale={{
-                  emptyText: (
-                    <Empty
-                      image={Empty.PRESENTED_IMAGE_SIMPLE}
-                      description={r.notOnBoard}
-                    />
-                  ),
-                }}
-              />
-            </div>
-          </section>
+          <div className={styles.boardsGrid}>
+            <section className={styles.boardSection}>
+              <div className={styles.boardHeader}>
+                <h2>{r.enterpriseTopTwentyTitle}</h2>
+                <p>{r.fullRankingEnterpriseHint}</p>
+              </div>
+              <div className={styles.tableCard}>
+                <Table<PreliminaryResult>
+                  className={styles.rankTable}
+                  rowKey='subjectId'
+                  dataSource={topTwentyTeams}
+                  columns={teamColumns}
+                  pagination={false}
+                  scroll={{ x: 460 }}
+                  rowClassName={row =>
+                    (me?.team?.id &&
+                      (row.subjectId === me.team.id ||
+                        row.teamId === me.team.id)) ||
+                    (myTeamRow && row.subjectId === myTeamRow.subjectId)
+                      ? styles.ownRow
+                      : ''
+                  }
+                  locale={{
+                    emptyText: (
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description={r.notOnBoard}
+                      />
+                    ),
+                  }}
+                />
+              </div>
+            </section>
 
-          <section className={styles.boardSection}>
-            <div className={styles.boardHeader}>
-              <h2>{r.personalTopFiftyTitle}</h2>
-              <p>{r.fullRankingPersonalHint}</p>
-            </div>
-            <div className={styles.tableCard}>
-              <Table<PreliminaryResult>
-                className={styles.rankTable}
-                rowKey='subjectId'
-                dataSource={topFiftyPersonal}
-                columns={personalColumns}
-                pagination={false}
-                scroll={{ x: 640 }}
-                rowClassName={row =>
-                  (me?.participant?.id &&
-                    row.subjectId === me.participant.id) ||
-                  (myPersonalRow && row.subjectId === myPersonalRow.subjectId)
-                    ? styles.ownRow
-                    : ''
-                }
-                locale={{
-                  emptyText: (
-                    <Empty
-                      image={Empty.PRESENTED_IMAGE_SIMPLE}
-                      description={r.notOnBoard}
-                    />
-                  ),
-                }}
-              />
-            </div>
-          </section>
+            <section className={styles.boardSection}>
+              <div className={styles.boardHeader}>
+                <h2>{r.personalTopTwentyTitle}</h2>
+                <p>{r.fullRankingPersonalHint}</p>
+              </div>
+              <div className={styles.tableCard}>
+                <Table<PreliminaryResult>
+                  className={styles.rankTable}
+                  rowKey='subjectId'
+                  dataSource={topTwentyPersonal}
+                  columns={personalColumns}
+                  pagination={false}
+                  scroll={{ x: 360 }}
+                  rowClassName={row =>
+                    (me?.participant?.id &&
+                      row.subjectId === me.participant.id) ||
+                    (myPersonalRow && row.subjectId === myPersonalRow.subjectId)
+                      ? styles.ownRow
+                      : ''
+                  }
+                  locale={{
+                    emptyText: (
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description={r.notOnBoard}
+                      />
+                    ),
+                  }}
+                />
+              </div>
+            </section>
+          </div>
 
           {authenticated ? (
             <div className={styles.pinnedDock}>
@@ -416,18 +387,6 @@ export default function CompetitionFullRanking({
                     {myTeamRow?.displayName ||
                       fallbackCompanyName ||
                       r.noTeamJoined}
-                  </span>
-                </div>
-                <div className={styles.pinnedMetrics}>
-                  <span>
-                    {r.cScoreColumn}: {formatScore(myTeamRow?.cScore)}
-                  </span>
-                  <span>
-                    {r.eScoreColumn}: {formatScore(myTeamRow?.eScore)}
-                  </span>
-                  <span>
-                    {r.preliminaryTotalColumn}:{' '}
-                    <strong>{formatScore(myTeamRow?.totalScore)}</strong>
                   </span>
                 </div>
               </div>
