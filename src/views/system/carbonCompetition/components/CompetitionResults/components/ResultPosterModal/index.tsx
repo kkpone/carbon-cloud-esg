@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { DownloadOutlined, TrophyOutlined } from '@ant-design/icons';
 import { Button, Modal, Tabs, message } from 'antd';
-import dayjs from 'dayjs';
 import html2canvas from 'html2canvas';
 import I18N from '@/lang/I18N';
 import bannerLogo from '@/assets/images/carbonCompetition/banner-logo.png';
@@ -59,7 +58,6 @@ export default function ResultPosterModal({
 
   const isEnterprise = payload.scope === 'ENTERPRISE';
   const isAwardPersonal = personalMode === 'AWARD';
-  const issuedDate = dayjs(payload.issuedAt || undefined).format('YYYY-MM-DD');
   const awardText = isMedalTier(payload.awardLevel)
     ? getAwardLevelText(payload.awardLevel)
     : r.certificateTopTenAward;
@@ -161,9 +159,7 @@ export default function ResultPosterModal({
 
           <div className={styles.footer}>
             <div className={styles.meta}>
-              <p className={styles.issuerLine}>
-                {r.certificateIssuer}　{issuedDate}
-              </p>
+              <p className={styles.issuerLine}>{r.certificateIssuer}</p>
               <p className={styles.certNo}>
                 {I18N.template(r.certificateNoLabel, {
                   no: payload.certificateNo,
@@ -236,9 +232,7 @@ export default function ResultPosterModal({
 
           <div className={styles.footer}>
             <div className={styles.meta}>
-              <p className={styles.issuerLine}>
-                {r.certificateIssuer}　{issuedDate}
-              </p>
+              <p className={styles.issuerLine}>{r.certificateIssuer}</p>
               <p className={styles.certNo}>
                 {I18N.template(r.certificateNoLabel, {
                   no: payload.certificateNo,
@@ -306,7 +300,6 @@ export default function ResultPosterModal({
 
           <div className={styles.enterpriseFooter}>
             <span>{r.certificateIssuer}</span>
-            <span>{issuedDate}</span>
           </div>
         </div>
       </div>
