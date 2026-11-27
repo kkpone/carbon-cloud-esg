@@ -363,7 +363,7 @@ export default {
     finalBoardHint:
       'Displays the top 6 winning enterprises in the finals (1 Gold, 2 Silver, 3 Bronze). Enterprise grand total = preliminary score + final score.',
     finalPersonalHint:
-      'Displays the top 10 individual rankings and awards (1 Gold, 2 Silver, 3 Bronze).',
+      'Displays the top 10 individual final rankings (including enterprise team members).',
     finalPendingHint:
       'The top 6 enterprise finalists and award winners will be announced after final judging concludes.',
     myRankPinnedTitle: 'My Individual Rank',
@@ -376,7 +376,9 @@ export default {
     mockDataNotice:
       'Showing simulated Top 10 and Finals sample data while full scores are not yet returned by the test API. Live scores will replace this automatically.',
     viewFullRanking: 'View Full Leaderboard',
-    fullRankingModalTitle: 'Full Competition Rankings',
+    fullRankingModalTitle: 'Competition Rankings',
+    tPlusOneNotice:
+      'Rankings update on a T+1 basis; today displays standings as of yesterday.',
     backToTasks: 'Back to My Tasks',
     enterpriseTopTwentyTitle: 'Enterprise Top 20',
     personalTopTwentyTitle: 'Individual Top 20',
@@ -417,7 +419,7 @@ export default {
       '1st China Enterprise Carbon Management Competition · Individual Track {award}',
     enterpriseMedalTooltip:
       '1st China Enterprise Carbon Management Competition · Enterprise Track {award} ({company})',
-    generatePersonalPoster: 'Generate Individual Poster',
+    generatePersonalPoster: 'Generate Individual Certificate',
     generateEnterprisePoster: 'Generate Enterprise Poster',
     posterModalTitlePersonal: 'Individual Share Poster',
     posterModalTitleEnterprise: 'Enterprise Share Poster',

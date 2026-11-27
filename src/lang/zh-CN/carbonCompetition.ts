@@ -346,8 +346,7 @@ export default {
       '展示个人组初赛前 10 名（含企业组成员）；若本人未进入前 10，将在榜单底部固定展示本人成绩与排名。',
     finalBoardHint:
       '决赛榜单展示企业组前 6 名获奖企业（金奖 1 名、银奖 2 名、铜奖 3 名）。企业组大赛总分 = 初赛总分 + 决赛总分。',
-    finalPersonalHint:
-      '展示个人组前 10 名最终成绩与奖项（金奖 1 名、银奖 2 名、铜奖 3 名）。',
+    finalPersonalHint: '展示个人组前 10 名最终成绩（含企业组成员）。',
     finalPendingHint:
       '决赛评审完成后将公示企业组前 6 名成绩与获奖名单，敬请关注。',
     myRankPinnedTitle: '我的个人排名',
@@ -360,7 +359,8 @@ export default {
     mockDataNotice:
       '当前测试环境接口尚未返回完整分数与个人/决赛明细，页面已补充模拟前十及决赛示例数据（后端返回完整成绩后自动切换为真实数据）。',
     viewFullRanking: '查看完整排名榜单',
-    fullRankingModalTitle: '完整排名榜单',
+    fullRankingModalTitle: '大赛排名榜单',
+    tPlusOneNotice: '榜单按 T+1 更新，当前展示为昨日统计排名。',
     backToTasks: '返回我的参赛任务',
     enterpriseTopTwentyTitle: '企业组排名 TOP 20',
     personalTopTwentyTitle: '个人组排名 TOP 20',
@@ -398,7 +398,7 @@ export default {
     personalMedalTooltip: '首届中国企业碳管理大赛 · 个人赛道{award}',
     enterpriseMedalTooltip:
       '首届中国企业碳管理大赛 · 企业赛道{award}（{company}）',
-    generatePersonalPoster: '生成个人分享海报',
+    generatePersonalPoster: '生成个人完赛证书',
     generateEnterprisePoster: '生成企业分享海报',
     posterModalTitlePersonal: '个人分享海报',
     posterModalTitleEnterprise: '企业分享海报',

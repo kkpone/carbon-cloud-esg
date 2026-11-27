@@ -1,7 +1,6 @@
 import { ArrowLeftOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Alert, Button, Empty, Spin, Table } from 'antd';
+import { Button, Empty, Spin, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import I18N from '@src/lang/I18N';
@@ -256,13 +255,7 @@ export default function CompetitionFullRanking({
       <header className={styles.header}>
         <div className={styles.headerLeft}>
           <h1>{r.fullRankingModalTitle}</h1>
-          {rawBatch?.publishedAt ? (
-            <p>
-              {t.publishedAt}:{' '}
-              {dayjs(rawBatch.publishedAt).format('YYYY-MM-DD HH:mm:ss')} ·{' '}
-              {t.resultVersion} {rawBatch.batchVersion}
-            </p>
-          ) : null}
+          <p>{r.tPlusOneNotice}</p>
         </div>
         <div className={styles.headerActions}>
           <Button
@@ -277,10 +270,6 @@ export default function CompetitionFullRanking({
           </Button>
         </div>
       </header>
-
-      {usingMockData ? (
-        <Alert type='info' showIcon message={r.mockDataNotice} />
-      ) : null}
 
       <Spin spinning={loading}>
         <div className={styles.boardsStack}>

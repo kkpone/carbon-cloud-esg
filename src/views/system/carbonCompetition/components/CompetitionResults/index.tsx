@@ -55,7 +55,7 @@ import ResultPosterModal, {
 import styles from './index.module.less';
 
 type StageTab = 'PRELIMINARY' | 'FINAL';
-type PreliminaryGroup = 'TEAM' | 'PARTICIPANT';
+type BoardGroup = 'TEAM' | 'PARTICIPANT';
 
 const formatScore = (value?: number | null) =>
   value == null ? '—' : Number(value).toFixed(2);
@@ -75,8 +75,8 @@ export default function CompetitionResults({
   const location = useLocation();
   const [batch, setBatch] = useState<PublishedResults>();
   const [stageTab, setStageTab] = useState<StageTab>('PRELIMINARY');
-  const [preliminaryGroup, setPreliminaryGroup] =
-    useState<PreliminaryGroup>('TEAM');
+  const [preliminaryGroup, setPreliminaryGroup] = useState<BoardGroup>('TEAM');
+  const [finalGroup, setFinalGroup] = useState<BoardGroup>('TEAM');
   const [posterPayload, setPosterPayload] =
     useState<CertificatePosterPayload>();
   const [posterBusy, setPosterBusy] = useState(false);
@@ -577,19 +577,6 @@ export default function CompetitionResults({
     },
   ];
 
-  const finalPersonalColumns: ColumnsType<PreliminaryResult> = [
-    ...personalColumns,
-    {
-      title: r.awardColumn,
-      width: 104,
-      render: (_value, row, index) =>
-        renderAwardTag(
-          normalizeAwardLevel(row.awardLevel, row.ranking ?? index + 1),
-          row.qualified,
-        ),
-    },
-  ];
-
   const renderPinnedPersonalRow = () => {
     const rankLabel = myPersonalRow
       ? myPersonalRow.ranking != null
@@ -636,14 +623,6 @@ export default function CompetitionResults({
             {r.preliminaryTotalColumn}:{' '}
             <strong>{formatScore(myPersonalRow?.totalScore)}</strong>
           </span>
-          <Button
-            size='small'
-            type='link'
-            icon={<FileImageOutlined />}
-            onClick={() => openPoster('PERSONAL')}
-          >
-            {r.generatePersonalPoster}
-          </Button>
         </div>
       </div>
     );
@@ -678,27 +657,34 @@ export default function CompetitionResults({
             <CompetitionAwardMedals enterprise={enterpriseMedal} compact />
           </div>
         </div>
-        <div className={styles.pinnedMetrics}>
-          {hasTeam ? (
-            <Button
-              size='small'
-              type='link'
-              icon={<TrophyOutlined />}
-              onClick={() => openPoster('ENTERPRISE')}
-            >
-              {r.generateEnterprisePoster}
-            </Button>
-          ) : null}
-        </div>
       </div>
     );
   };
+
+  const renderGroupSwitcher = (
+    value: BoardGroup,
+    onChange: (next: BoardGroup) => void,
+  ) => (
+    <div className={styles.groupSwitcherWrap}>
+      <Segmented
+        className={styles.groupSwitcher}
+        size='large'
+        value={value}
+        options={[
+          { value: 'TEAM', label: r.enterpriseGroupTab },
+          { value: 'PARTICIPANT', label: r.personalGroupTab },
+        ]}
+        onChange={next => onChange(next as BoardGroup)}
+      />
+    </div>
+  );
 
   const renderPreliminaryBoards = () => {
     const isTeam = preliminaryGroup === 'TEAM';
     return (
       <div className={styles.preliminaryStack}>
         <section className={styles.boardSection}>
+          {renderGroupSwitcher(preliminaryGroup, setPreliminaryGroup)}
           <div className={styles.boardHeader}>
             <div className={styles.boardTitleGroup}>
               <h2>
@@ -710,14 +696,6 @@ export default function CompetitionResults({
                   : r.preliminaryPersonalHint}
               </p>
             </div>
-            <Segmented
-              value={preliminaryGroup}
-              options={[
-                { value: 'TEAM', label: r.enterpriseGroupTab },
-                { value: 'PARTICIPANT', label: r.personalGroupTab },
-              ]}
-              onChange={value => setPreliminaryGroup(value as PreliminaryGroup)}
-            />
           </div>
           <div className={styles.tableCard}>
             {isTeam ? (
@@ -796,76 +774,76 @@ export default function CompetitionResults({
     );
   };
 
-  const renderFinalBoard = () => (
-    <div className={styles.preliminaryStack}>
-      <section className={styles.boardSection}>
-        <div className={styles.boardHeader}>
-          <div className={styles.boardTitleGroup}>
-            <h2>{r.finalTopSixTitle}</h2>
-            <p>{r.finalBoardHint}</p>
+  const renderFinalBoard = () => {
+    const isTeam = finalGroup === 'TEAM';
+    return (
+      <div className={styles.preliminaryStack}>
+        <section className={styles.boardSection}>
+          {renderGroupSwitcher(finalGroup, setFinalGroup)}
+          <div className={styles.boardHeader}>
+            <div className={styles.boardTitleGroup}>
+              <h2>
+                {isTeam ? r.finalTopSixTitle : r.finalPersonalTopTenTitle}
+              </h2>
+              <p>{isTeam ? r.finalBoardHint : r.finalPersonalHint}</p>
+            </div>
           </div>
-        </div>
 
-        {finalRows.length === 0 ? (
-          <div className={styles.finalEmpty}>
-            <Empty
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description={r.finalPendingHint}
-            />
-          </div>
-        ) : (
-          <div className={styles.tableCard}>
-            <Table<FinalResult>
-              className={styles.resultTable}
-              rowKey='subjectId'
-              dataSource={finalRows.slice(0, 6)}
-              columns={finalColumns}
-              pagination={false}
-              scroll={{ x: 960 }}
-              rowClassName={row =>
-                me?.team?.id &&
-                (row.subjectId === me.team.id || row.teamId === me.team.id)
-                  ? styles.ownRow
-                  : ''
-              }
-            />
-          </div>
-        )}
-      </section>
-
-      <section className={styles.boardSection}>
-        <div className={styles.boardHeader}>
-          <div className={styles.boardTitleGroup}>
-            <h2>{r.finalPersonalTopTenTitle}</h2>
-            <p>{r.finalPersonalHint}</p>
-          </div>
-        </div>
-        <div className={styles.tableCard}>
-          <Table<PreliminaryResult>
-            className={styles.resultTable}
-            rowKey='subjectId'
-            dataSource={topTenPersonal}
-            columns={finalPersonalColumns}
-            pagination={false}
-            scroll={{ x: 740 }}
-            rowClassName={row =>
-              me?.participant?.id && row.subjectId === me.participant.id
-                ? styles.ownRow
-                : ''
-            }
-            locale={{
-              emptyText: (
+          {isTeam ? (
+            finalRows.length === 0 ? (
+              <div className={styles.finalEmpty}>
                 <Empty
                   image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description={r.notOnBoard}
+                  description={r.finalPendingHint}
                 />
-              ),
-            }}
-          />
-        </div>
-      </section>
-    </div>
-  );
+              </div>
+            ) : (
+              <div className={styles.tableCard}>
+                <Table<FinalResult>
+                  className={styles.resultTable}
+                  rowKey='subjectId'
+                  dataSource={finalRows.slice(0, 6)}
+                  columns={finalColumns}
+                  pagination={false}
+                  scroll={{ x: 960 }}
+                  rowClassName={row =>
+                    me?.team?.id &&
+                    (row.subjectId === me.team.id || row.teamId === me.team.id)
+                      ? styles.ownRow
+                      : ''
+                  }
+                />
+              </div>
+            )
+          ) : (
+            <div className={styles.tableCard}>
+              <Table<PreliminaryResult>
+                className={styles.resultTable}
+                rowKey='subjectId'
+                dataSource={topTenPersonal}
+                columns={personalColumns}
+                pagination={false}
+                scroll={{ x: 640 }}
+                rowClassName={row =>
+                  me?.participant?.id && row.subjectId === me.participant.id
+                    ? styles.ownRow
+                    : ''
+                }
+                locale={{
+                  emptyText: (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description={r.notOnBoard}
+                    />
+                  ),
+                }}
+              />
+            </div>
+          )}
+        </section>
+      </div>
+    );
+  };
 
   return (
     <section className={styles.panel}>
@@ -930,33 +908,23 @@ export default function CompetitionResults({
         {!batch?.id ? (
           <Alert type='info' showIcon message={t.notPublished} />
         ) : (
-          <>
-            {usingMockData ? (
-              <Alert
-                type='info'
-                showIcon
-                message={r.mockDataNotice}
-                style={{ marginBottom: 16 }}
-              />
-            ) : null}
-            <Tabs
-              className={styles.stageTabs}
-              activeKey={stageTab}
-              onChange={key => setStageTab(key as StageTab)}
-              items={[
-                {
-                  key: 'PRELIMINARY',
-                  label: r.preliminaryTab,
-                  children: renderPreliminaryBoards(),
-                },
-                {
-                  key: 'FINAL',
-                  label: r.finalTab,
-                  children: renderFinalBoard(),
-                },
-              ]}
-            />
-          </>
+          <Tabs
+            className={styles.stageTabs}
+            activeKey={stageTab}
+            onChange={key => setStageTab(key as StageTab)}
+            items={[
+              {
+                key: 'PRELIMINARY',
+                label: r.preliminaryTab,
+                children: renderPreliminaryBoards(),
+              },
+              {
+                key: 'FINAL',
+                label: r.finalTab,
+                children: renderFinalBoard(),
+              },
+            ]}
+          />
         )}
       </Spin>
 
