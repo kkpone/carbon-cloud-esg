@@ -8,6 +8,7 @@ type Props = {
   personal?: CompetitionAwardMedal;
   enterprise?: CompetitionAwardMedal;
   compact?: boolean;
+  iconOnly?: boolean;
 };
 
 const TIER_CLASS = {
@@ -83,6 +84,7 @@ export default function CompetitionAwardMedals({
   personal,
   enterprise,
   compact = false,
+  iconOnly = false,
 }: Props) {
   const list = [personal, enterprise].filter(
     (item): item is CompetitionAwardMedal => Boolean(item),
@@ -106,11 +108,11 @@ export default function CompetitionAwardMedals({
             <span
               className={`${styles.medal} ${TIER_CLASS[medal.level]} ${
                 compact ? styles.compact : ''
-              }`}
+              } ${iconOnly ? styles.iconOnly : ''}`}
               aria-label={tooltip}
             >
               <MedalGlyph scope={medal.scope} level={medal.level} />
-              <span>{medal.title}</span>
+              {iconOnly ? null : <span>{medal.title}</span>}
             </span>
           </Tooltip>
         );

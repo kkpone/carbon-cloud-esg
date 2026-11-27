@@ -7,8 +7,10 @@ import { Alert, Button, Empty, Spin, Table, Tabs, Tag, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import I18N from '@src/lang/I18N';
+import type { RootState } from '@/store';
 import { getUserInfo } from '@src/utils';
 import { getToken } from '@/utils/cookie';
 import trophyOne from '@/assets/images/carbonCompetition/leader-trophy-1.png';
@@ -174,8 +176,9 @@ export default function CompetitionResults({
     load();
   }, [load]);
 
-  const authenticated = Boolean(getToken());
-  const currentUserInfo = getUserInfo()?.userInfo;
+  const userStore = useSelector((state: RootState) => state.companyUserInfo);
+  const authenticated = Boolean(userStore?.access_token || getToken());
+  const currentUserInfo = userStore?.userInfo || getUserInfo()?.userInfo;
   const fallbackUserName =
     me?.participant?.realName ||
     currentUserInfo?.user?.nickName ||
@@ -283,20 +286,26 @@ export default function CompetitionResults({
   const openPoster = async (scope: 'PERSONAL' | 'ENTERPRISE') => {
     const isEnterprise = scope === 'ENTERPRISE';
     const localRow = isEnterprise ? myFinalTeamRow || myTeamRow : myPersonalRow;
+    const demoRow = isEnterprise
+      ? finalRows[0] || teamRows[0]
+      : personalRows[0];
+    const targetRow = localRow || (usingMockData ? demoRow : undefined);
     const recipientName = isEnterprise
-      ? localRow?.displayName || me?.team?.enterpriseName || fallbackCompanyName
-      : localRow?.displayName || me?.participant?.realName || fallbackUserName;
+      ? targetRow?.displayName ||
+        me?.team?.enterpriseName ||
+        fallbackCompanyName
+      : targetRow?.displayName || me?.participant?.realName || fallbackUserName;
 
     if (!recipientName) {
       message.warning(isEnterprise ? r.noEnterpriseResult : r.noPersonalResult);
       return;
     }
 
-    const ranking = localRow?.ranking ?? undefined;
+    const ranking = targetRow?.ranking ?? undefined;
     const localAwardLevel =
-      isEnterprise && myFinalTeamRow
-        ? normalizeFinalAwardLevel(myFinalTeamRow.awardLevel, ranking)
-        : normalizeAwardLevel(localRow?.awardLevel, ranking);
+      isEnterprise && (myFinalTeamRow || (!localRow && finalRows[0]))
+        ? normalizeFinalAwardLevel(targetRow?.awardLevel, ranking)
+        : normalizeAwardLevel(targetRow?.awardLevel, ranking);
 
     const fallbackPayload: CertificatePosterPayload = {
       scope,
@@ -306,21 +315,24 @@ export default function CompetitionResults({
         competitionCode: event.code,
         scope,
         subjectId:
-          localRow?.subjectId ||
+          targetRow?.subjectId ||
           (isEnterprise ? me?.team?.id : me?.participant?.id),
         batchVersion: batch?.batchVersion,
-        explicitNo: localRow?.certificateNo,
+        explicitNo: targetRow?.certificateNo,
       }),
       issuedAt:
-        localRow?.issuedAt ||
+        targetRow?.issuedAt ||
         (isEnterprise && myFinalTeamRow
           ? batch?.finalPublishedAt || batch?.publishedAt
           : batch?.publishedAt),
       ranking,
-      totalScore: localRow?.totalScore ?? undefined,
+      totalScore: targetRow?.totalScore ?? undefined,
     };
 
     setPosterPayload(fallbackPayload);
+    if (!authenticated || usingMockData) {
+      return;
+    }
     setPosterBusy(true);
     try {
       const remote = await createCompetitionPoster(event.id, {
@@ -647,6 +659,14 @@ export default function CompetitionResults({
             {r.preliminaryTotalColumn}:{' '}
             <strong>{formatScore(myPersonalRow?.totalScore)}</strong>
           </span>
+          <Button
+            size='small'
+            type='link'
+            icon={<FileImageOutlined />}
+            onClick={() => openPoster('PERSONAL')}
+          >
+            {r.generatePersonalPoster}
+          </Button>
         </div>
       </div>
     );
@@ -692,6 +712,16 @@ export default function CompetitionResults({
             {r.preliminaryTotalColumn}:{' '}
             <strong>{formatScore(myTeamRow?.totalScore)}</strong>
           </span>
+          {hasTeam ? (
+            <Button
+              size='small'
+              type='link'
+              icon={<TrophyOutlined />}
+              onClick={() => openPoster('ENTERPRISE')}
+            >
+              {r.generateEnterprisePoster}
+            </Button>
+          ) : null}
         </div>
       </div>
     );
@@ -920,6 +950,22 @@ export default function CompetitionResults({
                 {r.generateEnterprisePoster}
               </Button>
             ) : null}
+          </div>
+        ) : batch?.id && usingMockData ? (
+          <div className={styles.posterActions}>
+            <Button
+              type='primary'
+              icon={<FileImageOutlined />}
+              onClick={() => openPoster('PERSONAL')}
+            >
+              {r.generatePersonalPoster}
+            </Button>
+            <Button
+              icon={<TrophyOutlined />}
+              onClick={() => openPoster('ENTERPRISE')}
+            >
+              {r.generateEnterprisePoster}
+            </Button>
           </div>
         ) : null}
       </div>

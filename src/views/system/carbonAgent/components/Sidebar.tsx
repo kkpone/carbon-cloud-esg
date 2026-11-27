@@ -2441,6 +2441,7 @@ const Sidebar = ({
                         personal={competitionAwards.personal}
                         enterprise={competitionAwards.enterprise}
                         compact
+                        iconOnly
                       />
                     ) : null}
                   </span>
