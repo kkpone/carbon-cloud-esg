@@ -356,6 +356,12 @@ export default {
     loginToViewMyRank: '登录后查看我的个人排名与企业排名',
     mockDataNotice:
       '当前测试环境接口尚未返回完整分数与个人/决赛明细，页面已补充模拟前十及决赛示例数据（后端返回完整成绩后自动切换为真实数据）。',
+    viewFullRanking: '查看完整排名榜单',
+    fullRankingModalTitle: '完整排名榜单',
+    enterpriseTopTwentyTitle: '企业组排名 TOP 20',
+    personalTopFiftyTitle: '个人组排名 TOP 50',
+    fullRankingEnterpriseHint: '展示企业组前 20 名成绩与排名。',
+    fullRankingPersonalHint: '展示个人组前 50 名成绩与排名（含企业组成员）。',
     notOnBoard: '暂无排名数据',
     rankColumn: '排名',
     companyColumn: '企业名称',

@@ -23,6 +23,7 @@ import CompetitionCheckin from '../CompetitionCheckin';
 import MaterialSubmission from './components/MaterialSubmission';
 import TeamTaskProgress from './components/TeamTaskProgress';
 import FinalMaterialForm from './components/FinalMaterialForm';
+import TaskRankingDock from './components/TaskRankingDock';
 import { canSubmitModule, phaseStatus, taskModules } from './taskAccess';
 import type { TaskModule } from './taskAccess';
 import lockIcon from '@/assets/images/carbonCompetition/task-lock.svg';
@@ -426,6 +427,7 @@ export default function CompetitionTasks({
             ))}
         </>
       )}
+      <TaskRankingDock event={event} me={me} />
     </section>
   );
 }

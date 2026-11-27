@@ -372,6 +372,14 @@ export default {
     loginToViewMyRank: 'Sign in to view your personal and company rankings',
     mockDataNotice:
       'Showing simulated Top 10 and Finals sample data while full scores are not yet returned by the test API. Live scores will replace this automatically.',
+    viewFullRanking: 'View Full Leaderboard',
+    fullRankingModalTitle: 'Full Competition Rankings',
+    enterpriseTopTwentyTitle: 'Enterprise Top 20',
+    personalTopFiftyTitle: 'Individual Top 50',
+    fullRankingEnterpriseHint:
+      'Displays the top 20 enterprise rankings and scores.',
+    fullRankingPersonalHint:
+      'Displays the top 50 individual rankings and scores (including enterprise team members).',
     notOnBoard: 'No ranking yet',
     rankColumn: 'Rank',
     companyColumn: 'Enterprise',

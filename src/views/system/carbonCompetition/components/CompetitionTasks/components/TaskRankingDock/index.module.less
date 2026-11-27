@@ -1,0 +1,186 @@
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ecf9f6 0%, #f6fcfa 100%);
+  border: 1px solid #8bdac9;
+  box-shadow: 0 -6px 20px rgba(4, 37, 43, 0.08);
+}
+
+.dockRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #ccebe4;
+}
+
+.dockMain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dockLabel {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #0cbf9f1a;
+  color: #026961;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dockRank {
+  font-size: 14px;
+  font-weight: 600;
+  color: #04252b;
+  font-variant-numeric: tabular-nums;
+}
+
+.dockName {
+  font-weight: 500;
+  color: #04252b;
+  word-break: break-word;
+}
+
+.dockMuted {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.dockMetrics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  font-size: 13px;
+  color: #475467;
+  font-variant-numeric: tabular-nums;
+
+  strong {
+    color: #026961;
+    font-weight: 600;
+  }
+}
+
+.dockFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 72vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.boardSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.boardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: #04252b;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;
+    color: #6c757d;
+  }
+}
+
+.tableWrap {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.rankTable {
+  :global(.ant-table-thead > tr > th) {
+    background: #f7f8f9;
+    color: #04252b;
+    font-weight: 500;
+    padding: 10px 14px;
+  }
+
+  :global(.ant-table-tbody > tr > td) {
+    padding: 10px 14px;
+    vertical-align: middle;
+  }
+}
+
+.ownRow {
+  background: #f2fbf9;
+
+  :global(td) {
+    background: #f2fbf9 !important;
+  }
+}
+
+.rankCell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #04252b;
+}
+
+.numericCell {
+  font-variant-numeric: tabular-nums;
+  color: #344054;
+}
+
+.scoreValue {
+  font-weight: 600;
+  color: #026961;
+  font-variant-numeric: tabular-nums;
+}
+
+.selfTag {
+  margin-left: 6px;
+  font-size: 12px;
+  color: #026961;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .dockRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
