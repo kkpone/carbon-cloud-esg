@@ -370,6 +370,8 @@ export default {
     unrankedStatus: 'Unranked',
     noTeamJoined: 'No company team',
     loginToViewMyRank: 'Sign in to view your personal and company rankings',
+    mockDataNotice:
+      'Showing simulated Top 10 and Finals sample data while full scores are not yet returned by the test API. Live scores will replace this automatically.',
     notOnBoard: 'No ranking yet',
     rankColumn: 'Rank',
     companyColumn: 'Enterprise',

@@ -354,6 +354,8 @@ export default {
     unrankedStatus: '未上榜',
     noTeamJoined: '未加入企业团队',
     loginToViewMyRank: '登录后查看我的个人排名与企业排名',
+    mockDataNotice:
+      '当前测试环境接口尚未返回完整分数与个人/决赛明细，页面已补充模拟前十及决赛示例数据（后端返回完整成绩后自动切换为真实数据）。',
     notOnBoard: '暂无排名数据',
     rankColumn: '排名',
     companyColumn: '企业名称',

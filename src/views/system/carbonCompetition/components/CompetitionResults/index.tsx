@@ -25,6 +25,7 @@ import {
   normalizeAwardLevel,
   normalizeFinalAwardLevel,
 } from '../../awards';
+import { hydrateResultsWithMockFallback } from '../../mockResults';
 import {
   createCompetitionPoster,
   getCompetitionPoster,
@@ -189,16 +190,32 @@ export default function CompetitionResults({
     )?.companyName ||
     '';
 
+  const { batch: effectiveBatch, usingMockData } = useMemo(
+    () =>
+      hydrateResultsWithMockFallback(batch, {
+        me,
+        fallbackUserName,
+        fallbackCompanyName,
+      }),
+    [batch, fallbackCompanyName, fallbackUserName, me],
+  );
+
   const teamRows = useMemo(
-    () => filterPreliminaryByType(batch, 'TEAM'),
-    [batch],
+    () => filterPreliminaryByType(effectiveBatch, 'TEAM'),
+    [effectiveBatch],
   );
   const personalRows = useMemo(
-    () => filterPreliminaryByType(batch, 'PARTICIPANT'),
-    [batch],
+    () => filterPreliminaryByType(effectiveBatch, 'PARTICIPANT'),
+    [effectiveBatch],
   );
-  const finalRows = useMemo(() => extractFinalResults(batch), [batch]);
-  const medalMap = useMemo(() => buildAwardMedalMap(batch), [batch]);
+  const finalRows = useMemo(
+    () => extractFinalResults(effectiveBatch),
+    [effectiveBatch],
+  );
+  const medalMap = useMemo(
+    () => buildAwardMedalMap(effectiveBatch),
+    [effectiveBatch],
+  );
 
   const topTenTeams = useMemo(() => teamRows.slice(0, 10), [teamRows]);
   const topTenPersonal = useMemo(
@@ -207,9 +224,21 @@ export default function CompetitionResults({
   );
 
   const myPersonalRow = useMemo(() => {
-    if (!me?.participant?.id) return undefined;
-    return personalRows.find(row => row.subjectId === me.participant?.id);
-  }, [me?.participant?.id, personalRows]);
+    if (me?.participant?.id) {
+      const matched = personalRows.find(
+        row => row.subjectId === me.participant?.id,
+      );
+      if (matched) return matched;
+    }
+    if (usingMockData && fallbackUserName) {
+      return personalRows.find(
+        row =>
+          row.subjectId === 'mock-current-user' ||
+          row.displayName === fallbackUserName,
+      );
+    }
+    return undefined;
+  }, [fallbackUserName, me?.participant?.id, personalRows, usingMockData]);
 
   const myTeamRow = useMemo(() => {
     if (me?.team?.id) {
@@ -219,7 +248,11 @@ export default function CompetitionResults({
       if (matched) return matched;
     }
     if (fallbackCompanyName) {
-      return teamRows.find(row => row.displayName === fallbackCompanyName);
+      return teamRows.find(
+        row =>
+          row.subjectId === 'mock-current-team' ||
+          row.displayName === fallbackCompanyName,
+      );
     }
     return undefined;
   }, [fallbackCompanyName, me?.team?.id, teamRows]);
@@ -895,23 +928,33 @@ export default function CompetitionResults({
         {!batch?.id ? (
           <Alert type='info' showIcon message={t.notPublished} />
         ) : (
-          <Tabs
-            className={styles.stageTabs}
-            activeKey={stageTab}
-            onChange={key => setStageTab(key as StageTab)}
-            items={[
-              {
-                key: 'PRELIMINARY',
-                label: r.preliminaryTab,
-                children: renderPreliminaryBoards(),
-              },
-              {
-                key: 'FINAL',
-                label: r.finalTab,
-                children: renderFinalBoard(),
-              },
-            ]}
-          />
+          <>
+            {usingMockData ? (
+              <Alert
+                type='info'
+                showIcon
+                message={r.mockDataNotice}
+                style={{ marginBottom: 16 }}
+              />
+            ) : null}
+            <Tabs
+              className={styles.stageTabs}
+              activeKey={stageTab}
+              onChange={key => setStageTab(key as StageTab)}
+              items={[
+                {
+                  key: 'PRELIMINARY',
+                  label: r.preliminaryTab,
+                  children: renderPreliminaryBoards(),
+                },
+                {
+                  key: 'FINAL',
+                  label: r.finalTab,
+                  children: renderFinalBoard(),
+                },
+              ]}
+            />
+          </>
         )}
       </Spin>
 
