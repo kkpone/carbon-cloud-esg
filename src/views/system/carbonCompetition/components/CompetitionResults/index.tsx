@@ -6,7 +6,6 @@ import {
   Segmented,
   Spin,
   Table,
-  Tabs,
   Tag,
   message,
 } from 'antd';
@@ -885,49 +884,66 @@ export default function CompetitionResults({
     <section className={styles.panel}>
       {error ? <Alert type='error' message={error} showIcon /> : null}
 
-      {batch?.id && (authenticated || usingMockData) ? (
-        <div className={styles.toolbar}>
-          <div className={styles.posterActions}>
-            <Button
-              type='primary'
-              icon={<FileImageOutlined />}
-              onClick={() => openPoster('PERSONAL')}
-            >
-              {r.generatePersonalPoster}
-            </Button>
-            {!authenticated || me?.team || fallbackCompanyName ? (
-              <Button
-                icon={<TrophyOutlined />}
-                onClick={() => openPoster('ENTERPRISE')}
+      {batch?.id ? (
+        <div className={styles.topBar}>
+          <div
+            className={styles.stageTabs}
+            role='tablist'
+            aria-label={t.design.results}
+          >
+            {(
+              [
+                ['PRELIMINARY', r.preliminaryTab],
+                ['FINAL', r.finalTab],
+              ] as [StageTab, string][]
+            ).map(([key, label]) => (
+              <button
+                key={key}
+                type='button'
+                role='tab'
+                aria-selected={stageTab === key}
+                className={`${styles.stageTab} ${
+                  stageTab === key ? styles.stageTabActive : ''
+                }`}
+                onClick={() => setStageTab(key)}
               >
-                {r.generateEnterprisePoster}
-              </Button>
-            ) : null}
+                {label}
+              </button>
+            ))}
           </div>
+          {authenticated || usingMockData ? (
+            <div className={styles.posterActions}>
+              <Button
+                type='primary'
+                icon={<FileImageOutlined />}
+                onClick={() => openPoster('PERSONAL')}
+              >
+                {r.generatePersonalPoster}
+              </Button>
+              {!authenticated || me?.team || fallbackCompanyName ? (
+                <Button
+                  icon={<TrophyOutlined />}
+                  onClick={() => openPoster('ENTERPRISE')}
+                >
+                  {r.generateEnterprisePoster}
+                </Button>
+              ) : null}
+            </div>
+          ) : null}
         </div>
-      ) : null}
+      ) : (
+        <h1 className={styles.fallbackTitle}>{t.design.results}</h1>
+      )}
 
       <Spin spinning={busy}>
         {!batch?.id ? (
           <Alert type='info' showIcon message={t.notPublished} />
         ) : (
-          <Tabs
-            className={styles.stageTabs}
-            activeKey={stageTab}
-            onChange={key => setStageTab(key as StageTab)}
-            items={[
-              {
-                key: 'PRELIMINARY',
-                label: r.preliminaryTab,
-                children: renderPreliminaryBoards(),
-              },
-              {
-                key: 'FINAL',
-                label: r.finalTab,
-                children: renderFinalBoard(),
-              },
-            ]}
-          />
+          <div role='tabpanel'>
+            {stageTab === 'PRELIMINARY'
+              ? renderPreliminaryBoards()
+              : renderFinalBoard()}
+          </div>
         )}
       </Spin>
 

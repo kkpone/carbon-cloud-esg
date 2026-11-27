@@ -591,7 +591,6 @@ export default function CompetitionPage() {
                 )}
                 {tab === 'results' && (
                   <div className={styles.content}>
-                    <h1>{d.results}</h1>
                     <CompetitionResults event={event} me={me} />
                   </div>
                 )}

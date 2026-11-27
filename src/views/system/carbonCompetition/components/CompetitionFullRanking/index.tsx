@@ -205,12 +205,12 @@ export default function CompetitionFullRanking({
   const personalColumns: ColumnsType<PreliminaryResult> = [
     {
       title: r.rankColumn,
-      width: 84,
+      width: 68,
       render: (_value, row, index) => renderRank(row.ranking, index),
     },
     {
       title: r.nameColumn,
-      minWidth: 150,
+      minWidth: 100,
       render: (_value, row) => {
         const isOwn = Boolean(
           (me?.participant?.id && row.subjectId === me.participant.id) ||
@@ -227,10 +227,31 @@ export default function CompetitionFullRanking({
       },
     },
     {
+      title: r.cShortColumn,
+      width: 78,
+      render: (_value, row) => (
+        <span className={styles.numericCell}>{formatScore(row.cScore)}</span>
+      ),
+    },
+    {
+      title: r.eShortColumn,
+      width: 78,
+      render: (_value, row) => (
+        <span className={styles.numericCell}>{formatScore(row.eScore)}</span>
+      ),
+    },
+    {
       title: r.bonusColumn,
-      width: 100,
+      width: 84,
       render: (_value, row) => (
         <span className={styles.numericCell}>{formatBonus(row.bonusRate)}</span>
+      ),
+    },
+    {
+      title: r.preliminaryTotalColumn,
+      width: 78,
+      render: (_value, row) => (
+        <span className={styles.scoreValue}>{formatScore(row.totalScore)}</span>
       ),
     },
   ];
@@ -312,7 +333,7 @@ export default function CompetitionFullRanking({
                   dataSource={topTwentyPersonal}
                   columns={personalColumns}
                   pagination={false}
-                  scroll={{ x: 360 }}
+                  scroll={{ x: 486 }}
                   rowClassName={row =>
                     (me?.participant?.id &&
                       row.subjectId === me.participant.id) ||
