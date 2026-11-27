@@ -212,6 +212,10 @@ export default function CompetitionResults({
     () => extractFinalResults(effectiveBatch),
     [effectiveBatch],
   );
+  const specialAwards = useMemo(
+    () => (effectiveBatch?.specialAwards || []).slice(0, 3),
+    [effectiveBatch],
+  );
   const medalMap = useMemo(
     () => buildAwardMedalMap(effectiveBatch),
     [effectiveBatch],
@@ -464,16 +468,6 @@ export default function CompetitionResults({
         <span className={styles.numericCell}>{formatBonus(row.bonusRate)}</span>
       ),
     },
-    {
-      title: r.awardColumn,
-      width: 120,
-      render: (_value, row) =>
-        row.qualified === 0 ? (
-          <Tag>{r.completedAward}</Tag>
-        ) : (
-          <Tag color='cyan'>{r.qualifiedTag}</Tag>
-        ),
-    },
   ];
 
   const personalColumns: ColumnsType<PreliminaryResult> = [
@@ -655,6 +649,9 @@ export default function CompetitionResults({
             {r.eScoreColumn}: {formatScore(myPersonalRow?.eScore)}
           </span>
           <span>
+            {r.bonusColumn}: {formatBonus(myPersonalRow?.bonusRate)}
+          </span>
+          <span>
             {r.preliminaryTotalColumn}:{' '}
             <strong>{formatScore(myPersonalRow?.totalScore)}</strong>
           </span>
@@ -681,6 +678,9 @@ export default function CompetitionResults({
     const enterpriseMedal = teamKey
       ? medalMap.enterpriseByTeamId.get(teamKey)
       : undefined;
+    const isTeamQualified =
+      myTeamRow?.qualified === 1 ||
+      (myTeamRow?.ranking != null && myTeamRow.ranking <= 10);
 
     return (
       <div className={styles.pinnedRow}>
@@ -692,6 +692,15 @@ export default function CompetitionResults({
             <CompetitionAwardMedals enterprise={enterpriseMedal} compact />
           </div>
         </div>
+        {hasTeam ? (
+          <div className={styles.pinnedMetrics}>
+            {isTeamQualified ? (
+              <Tag color='cyan'>{r.qualifiedTag}</Tag>
+            ) : (
+              <Tag>{r.notQualifiedTag}</Tag>
+            )}
+          </div>
+        ) : null}
       </div>
     );
   };
@@ -853,22 +862,54 @@ export default function CompetitionResults({
                 />
               </div>
             ) : (
-              <div className={styles.tableCard}>
-                <Table<FinalResult>
-                  className={styles.resultTable}
-                  rowKey='subjectId'
-                  dataSource={finalRows.slice(0, 6)}
-                  columns={finalColumns}
-                  pagination={false}
-                  scroll={{ x: 960 }}
-                  rowClassName={row =>
-                    me?.team?.id &&
-                    (row.subjectId === me.team.id || row.teamId === me.team.id)
-                      ? styles.ownRow
-                      : ''
-                  }
-                />
-              </div>
+              <>
+                <div className={styles.tableCard}>
+                  <Table<FinalResult>
+                    className={styles.resultTable}
+                    rowKey='subjectId'
+                    dataSource={finalRows.slice(0, 6)}
+                    columns={finalColumns}
+                    pagination={false}
+                    scroll={{ x: 960 }}
+                    rowClassName={row =>
+                      me?.team?.id &&
+                      (row.subjectId === me.team.id ||
+                        row.teamId === me.team.id)
+                        ? styles.ownRow
+                        : ''
+                    }
+                  />
+                </div>
+                {specialAwards.length > 0 ? (
+                  <div className={styles.specialAwardSection}>
+                    <div className={styles.specialAwardHeader}>
+                      <h3>{r.specialAwardTitle}</h3>
+                      <p>{r.specialAwardHint}</p>
+                    </div>
+                    <div className={styles.specialAwardGrid}>
+                      {specialAwards.map(item => (
+                        <article
+                          key={item.id}
+                          className={styles.specialAwardCard}
+                        >
+                          <div className={styles.specialAwardTop}>
+                            <span className={styles.specialAwardBadge}>
+                              <TrophyOutlined />
+                              <span>{r.specialAwardBadge}</span>
+                            </span>
+                            <span className={styles.specialAwardName}>
+                              {item.awardName}
+                            </span>
+                          </div>
+                          <p className={styles.specialAwardCompany}>
+                            {item.companyName}
+                          </p>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </>
             )
           ) : (
             <div className={styles.tableCard}>

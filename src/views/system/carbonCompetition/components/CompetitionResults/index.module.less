@@ -430,8 +430,89 @@
   background: #ffffff;
 }
 
+.specialAwardSection {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.specialAwardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #04252b;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 20px;
+    color: #6c757d;
+  }
+}
+
+.specialAwardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.specialAwardCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid #d4efe9;
+  background: linear-gradient(180deg, #f4fbf9 0%, #ffffff 100%);
+}
+
+.specialAwardTop {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.specialAwardBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #04252b;
+  color: #f8dfa5;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.specialAwardName {
+  font-size: 13px;
+  font-weight: 500;
+  color: #026961;
+}
+
+.specialAwardCompany {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: #04252b;
+  word-break: break-word;
+}
+
 @media (max-width: 960px) {
-  .podiumGrid {
+  .podiumGrid,
+  .specialAwardGrid {
     grid-template-columns: 1fr;
   }
 }

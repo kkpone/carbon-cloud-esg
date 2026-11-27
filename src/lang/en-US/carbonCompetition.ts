@@ -353,9 +353,13 @@ export default {
     enterpriseGroupTab: 'Enterprise Track',
     personalGroupTab: 'Individual Track',
     enterpriseTopTenTitle: 'Enterprise Preliminary Top 10',
-    personalTopTenTitle: 'Individual Preliminary Top 10',
-    finalTopSixTitle: 'Enterprise Final Top 6',
+    personalTopTenTitle: 'Individual Top 10',
+    finalTopSixTitle: 'Enterprise Award Winners',
     finalPersonalTopTenTitle: 'Individual Top 10',
+    specialAwardTitle: 'Enterprise Special Awards',
+    specialAwardHint:
+      'The following 3 enterprises received Special Awards in this competition.',
+    specialAwardBadge: 'Special Award',
     preliminaryEnterpriseHint:
       'Displays the top 10 enterprises in the preliminary round. If your company ranks outside the top 10, its score and rank stay pinned at the bottom.',
     preliminaryPersonalHint:
@@ -411,6 +415,7 @@ export default {
     bronzeAward: 'Bronze Award',
     completedAward: 'Completed',
     qualifiedTag: 'Finalist',
+    notQualifiedTag: 'Not Qualified',
     personalMedalLabel: 'Individual {award}',
     enterpriseMedalLabel: 'Enterprise {award}',
     personalMedalTooltip:
@@ -425,6 +430,18 @@ export default {
       '1st China Enterprise Carbon Management Competition | {type}',
     certificateTypeAward: 'Award Certificate',
     certificateTypeCompletion: 'Completion Certificate',
+    certificateTabAward: 'Award Certificate',
+    certificateTabCompletion: 'Completion Certificate',
+    certificateTopTenAward: 'Individual Top 10 Excellence Award',
+    enterprisePosterBanner:
+      '1st China Enterprise Carbon Management Competition | Enterprise Poster',
+    enterprisePosterTag: 'Enterprise Track Honors',
+    enterprisePosterBodyFinal:
+      'Congratulations to {name} on winning the {award} in the Enterprise Track of the 1st China Enterprise Carbon Management Competition!',
+    enterprisePosterBodyRanked:
+      'Congratulations to {name} on an outstanding ranking in the Enterprise Track of the 1st China Enterprise Carbon Management Competition!',
+    enterprisePosterSlogan:
+      'Driving high-quality growth through carbon management toward a net-zero future.',
     certificateBodyAward:
       'This certifies that {name} has won the {award} in the {track} of the 1st China Enterprise Carbon Management Competition.',
     certificateBodyCompletion:

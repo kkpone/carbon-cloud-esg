@@ -268,6 +268,13 @@ export type FinalResult = {
   issuedAt?: string;
 };
 
+export type SpecialAwardResult = {
+  id: string;
+  awardName: string;
+  companyName: string;
+  description?: string;
+};
+
 export type PublishedResults = {
   id?: string;
   status: string;
@@ -277,6 +284,7 @@ export type PublishedResults = {
   finalStatus?: string;
   finalPublishedAt?: string;
   finalResults?: FinalResult[];
+  specialAwards?: SpecialAwardResult[];
 };
 
 export type CompetitionAwardMedal = {

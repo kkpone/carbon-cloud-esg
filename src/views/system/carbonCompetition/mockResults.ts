@@ -3,6 +3,7 @@ import type {
   Me,
   PreliminaryResult,
   PublishedResults,
+  SpecialAwardResult,
 } from './types';
 
 const MOCK_TEAM_ROWS: PreliminaryResult[] = [
@@ -1143,6 +1144,24 @@ const MOCK_FINAL_ROWS: FinalResult[] = [
   },
 ];
 
+const MOCK_SPECIAL_AWARDS: SpecialAwardResult[] = [
+  {
+    id: 'special-award-1',
+    awardName: '最佳碳管理创新实践奖',
+    companyName: '中科低碳新材料研究院',
+  },
+  {
+    id: 'special-award-2',
+    awardName: '最佳减排路径突破奖',
+    companyName: '海川智慧能源有限公司',
+  },
+  {
+    id: 'special-award-3',
+    awardName: '最佳低碳传播影响力奖',
+    companyName: '云杉环保装备股份公司',
+  },
+];
+
 export function hydrateResultsWithMockFallback(
   batch: PublishedResults | undefined,
   options: {
@@ -1169,6 +1188,7 @@ export function hydrateResultsWithMockFallback(
     rawPersonal.length > 0 &&
     rawPersonal.some(row => row.totalScore != null || row.ranking != null);
   const finalHasData = rawFinal.length > 0;
+  const rawSpecialAwards = batch.specialAwards || [];
 
   let usingMockData = false;
 
@@ -1296,6 +1316,16 @@ export function hydrateResultsWithMockFallback(
       ...batch,
       results: [...teamResults, ...personalResults, ...extraRows],
       finalResults,
+      specialAwards:
+        rawSpecialAwards.length > 0
+          ? rawSpecialAwards
+          : (MOCK_SPECIAL_AWARDS.map((item, idx) => {
+              const fallbackTeam = teamResults[6 + idx];
+              return {
+                ...item,
+                companyName: fallbackTeam?.displayName || item.companyName,
+              };
+            }) as SpecialAwardResult[]),
       finalStatus: batch.finalStatus || 'PUBLISHED',
       finalPublishedAt:
         batch.finalPublishedAt || batch.publishedAt || '2026-11-26T10:00:00Z',

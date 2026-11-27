@@ -336,10 +336,13 @@ export default {
     finalTab: '決賽榜單',
     enterpriseGroupTab: '企業組榜單',
     personalGroupTab: '個人組榜單',
-    enterpriseTopTenTitle: '企業組初賽前十榜單',
-    personalTopTenTitle: '個人組初賽前十榜單',
-    finalTopSixTitle: '企業組決賽前六榜單',
-    finalPersonalTopTenTitle: '個人組前十榜單',
+    enterpriseTopTenTitle: '企業組初賽Top10',
+    personalTopTenTitle: '個人組Top10榜單',
+    finalTopSixTitle: '企業組獲獎榜單',
+    finalPersonalTopTenTitle: '個人組Top10榜單',
+    specialAwardTitle: '企業特別獎',
+    specialAwardHint: '以下 3 家企業榮獲本屆大賽企業組特別獎。',
+    specialAwardBadge: '特別獎',
     preliminaryEnterpriseHint:
       '展示企業組初賽前 10 名；若本人所在企業未進入前 10，將在榜單底部固定展示本企業成績與排名。',
     preliminaryPersonalHint:
@@ -393,6 +396,7 @@ export default {
     bronzeAward: '銅獎',
     completedAward: '完賽',
     qualifiedTag: '晉級決賽',
+    notQualifiedTag: '未晉級',
     personalMedalLabel: '個人{award}',
     enterpriseMedalLabel: '企業{award}',
     personalMedalTooltip: '首屆中國企業碳管理大賽 · 個人賽道{award}',
@@ -405,6 +409,16 @@ export default {
     certificateBanner: '首屆中國企業碳管理大賽｜{type}',
     certificateTypeAward: '獲獎證書',
     certificateTypeCompletion: '完賽證書',
+    certificateTabAward: '獲獎證書',
+    certificateTabCompletion: '完賽證書',
+    certificateTopTenAward: '個人賽道前十名優勝獎',
+    enterprisePosterBanner: '首屆中國企業碳管理大賽｜企業榮耀海報',
+    enterprisePosterTag: '企業賽道榮耀榜單',
+    enterprisePosterBodyFinal:
+      '熱烈祝賀 {name} 在首屆中國企業碳管理大賽企業賽道中表現優異，榮獲 {award}！',
+    enterprisePosterBodyRanked:
+      '熱烈祝賀 {name} 在首屆中國企業碳管理大賽企業賽道中積極踐行雙碳管理，取得優異排名！',
+    enterprisePosterSlogan: '以碳管理驅動企業高品質發展，共赴零碳未來。',
     certificateBodyAward:
       '茲證明 {name} 在首屆中國企業碳管理大賽{track}中，榮獲 {award}',
     certificateBodyCompletion:
