@@ -382,10 +382,8 @@ export default {
     backToTasks: 'Back to My Tasks',
     enterpriseTopTwentyTitle: 'Enterprise Top 20',
     personalTopTwentyTitle: 'Individual Top 20',
-    fullRankingEnterpriseHint:
-      'Displays the top 20 enterprise rankings and scores.',
-    fullRankingPersonalHint:
-      'Displays the top 20 individual rankings and scores (including enterprise team members).',
+    fullRankingEnterpriseHint: 'Displays top 20 enterprise rankings.',
+    fullRankingPersonalHint: 'Displays top 20 individual rankings.',
     notOnBoard: 'No ranking yet',
     rankColumn: 'Rank',
     companyColumn: 'Enterprise',

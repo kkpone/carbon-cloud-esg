@@ -20,15 +20,31 @@ const badges = [
   [shadow3, surface3, letter3, mask, glow],
 ];
 
-export default function CompetitionRankBadge({ rank }: { rank: number }) {
-  const assets = badges[rank - 1];
+export type RankBadgeTier = 1 | 2 | 3;
+
+export default function CompetitionRankBadge({
+  rank,
+  tier,
+  hideNumber = false,
+  ariaLabel,
+}: {
+  rank: number;
+  tier?: RankBadgeTier;
+  hideNumber?: boolean;
+  ariaLabel?: string;
+}) {
+  const badgeIndex = (tier ?? rank) - 1;
+  const assets = badges[badgeIndex];
   if (!assets) return <span>{rank}</span>;
   const [shadow, surface, lettering, clip, reflection] = assets;
+  const tierClass = styles[`rank${tier ?? rank}`];
   return (
     <span
-      className={`${styles.badge} ${styles[`rank${rank}`]}`}
+      className={`${styles.badge} ${tierClass} ${
+        hideNumber ? styles.noNumber : ''
+      }`}
       role='img'
-      aria-label={String(rank)}
+      aria-label={ariaLabel || String(rank)}
     >
       <img className={styles.shadow} src={shadow} alt='' />
       <img className={styles.surface} src={surface} alt='' />
@@ -36,8 +52,24 @@ export default function CompetitionRankBadge({ rank }: { rank: number }) {
         <img src={reflection} alt='' />
       </span>
       <img className={styles.border} src={border} alt='' />
-      <img className={styles.lettering} src={lettering} alt='' />
-      <span className={styles.number}>{rank}</span>
+      {hideNumber ? (
+        <svg
+          className={styles.medalStar}
+          viewBox='0 0 16 16'
+          fill='none'
+          aria-hidden='true'
+        >
+          <path
+            d='M8 2.1L9.62 5.38L13.24 5.9L10.62 8.45L11.24 12.06L8 10.36L4.76 12.06L5.38 8.45L2.76 5.9L6.38 5.38L8 2.1Z'
+            fill='currentColor'
+          />
+        </svg>
+      ) : (
+        <>
+          <img className={styles.lettering} src={lettering} alt='' />
+          <span className={styles.number}>{rank}</span>
+        </>
+      )}
     </span>
   );
 }

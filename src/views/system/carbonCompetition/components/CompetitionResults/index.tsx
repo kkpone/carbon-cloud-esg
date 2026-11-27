@@ -1,8 +1,4 @@
-import {
-  FileImageOutlined,
-  ReloadOutlined,
-  TrophyOutlined,
-} from '@ant-design/icons';
+import { FileImageOutlined, TrophyOutlined } from '@ant-design/icons';
 import {
   Alert,
   Button,
@@ -15,7 +11,6 @@ import {
   message,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -370,6 +365,47 @@ export default function CompetitionResults({
     return <span className={styles.rankCell}>{value}</span>;
   };
 
+  const renderFinalEnterpriseRank = (
+    row: FinalResult,
+    fallbackIndex?: number,
+  ) => {
+    const value =
+      row.ranking ?? (fallbackIndex != null ? fallbackIndex + 1 : null);
+    if (value == null) return <span className={styles.rankCell}>—</span>;
+    const level = normalizeFinalAwardLevel(row.awardLevel, value);
+    if (level === 'GOLD') {
+      return (
+        <CompetitionRankBadge
+          rank={value}
+          tier={1}
+          hideNumber
+          ariaLabel={getAwardLevelText('GOLD')}
+        />
+      );
+    }
+    if (level === 'SILVER') {
+      return (
+        <CompetitionRankBadge
+          rank={value}
+          tier={2}
+          hideNumber
+          ariaLabel={getAwardLevelText('SILVER')}
+        />
+      );
+    }
+    if (level === 'BRONZE') {
+      return (
+        <CompetitionRankBadge
+          rank={value}
+          tier={3}
+          hideNumber
+          ariaLabel={getAwardLevelText('BRONZE')}
+        />
+      );
+    }
+    return <span className={styles.rankCell}>{value}</span>;
+  };
+
   const renderAwardTag = (
     level: ReturnType<typeof normalizeAwardLevel>,
     qualified?: number,
@@ -498,7 +534,7 @@ export default function CompetitionResults({
     {
       title: r.rankColumn,
       width: 84,
-      render: (_value, row, index) => renderRank(row.ranking, index),
+      render: (_value, row, index) => renderFinalEnterpriseRank(row, index),
     },
     {
       title: r.companyColumn,
@@ -849,25 +885,8 @@ export default function CompetitionResults({
     <section className={styles.panel}>
       {error ? <Alert type='error' message={error} showIcon /> : null}
 
-      <div className={styles.toolbar}>
-        <div className={styles.toolbarMeta}>
-          <Button
-            icon={<ReloadOutlined />}
-            loading={busy}
-            onClick={() => load()}
-          >
-            {t.retry}
-          </Button>
-          {batch?.publishedAt ? (
-            <span>
-              {t.publishedAt}:{' '}
-              {dayjs(batch.publishedAt).format('YYYY-MM-DD HH:mm:ss')} ·{' '}
-              {t.resultVersion} {batch.batchVersion}
-            </span>
-          ) : null}
-        </div>
-
-        {batch?.id && authenticated ? (
+      {batch?.id && (authenticated || usingMockData) ? (
+        <div className={styles.toolbar}>
           <div className={styles.posterActions}>
             <Button
               type='primary'
@@ -876,7 +895,7 @@ export default function CompetitionResults({
             >
               {r.generatePersonalPoster}
             </Button>
-            {me?.team || fallbackCompanyName ? (
+            {!authenticated || me?.team || fallbackCompanyName ? (
               <Button
                 icon={<TrophyOutlined />}
                 onClick={() => openPoster('ENTERPRISE')}
@@ -885,24 +904,8 @@ export default function CompetitionResults({
               </Button>
             ) : null}
           </div>
-        ) : batch?.id && usingMockData ? (
-          <div className={styles.posterActions}>
-            <Button
-              type='primary'
-              icon={<FileImageOutlined />}
-              onClick={() => openPoster('PERSONAL')}
-            >
-              {r.generatePersonalPoster}
-            </Button>
-            <Button
-              icon={<TrophyOutlined />}
-              onClick={() => openPoster('ENTERPRISE')}
-            >
-              {r.generateEnterprisePoster}
-            </Button>
-          </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       <Spin spinning={busy}>
         {!batch?.id ? (

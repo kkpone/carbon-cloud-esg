@@ -1,11 +1,9 @@
 import { useRef, useState } from 'react';
-import { DownloadOutlined, LinkOutlined } from '@ant-design/icons';
-import { Alert, Button, Modal, message } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Button, Modal, message } from 'antd';
 import dayjs from 'dayjs';
 import html2canvas from 'html2canvas';
-import { QRCodeSVG } from 'qrcode.react';
 import I18N from '@/lang/I18N';
-import { copyToClipboard } from '@/utils/clipboard';
 import bannerLogo from '@/assets/images/carbonCompetition/banner-logo.png';
 import { getAwardLevelText, isMedalTier } from '../../../../awards';
 import type { AwardLevel } from '../../../../types';
@@ -70,14 +68,6 @@ export default function ResultPosterModal({
         track: trackName,
       });
   const issuedDate = dayjs(payload.issuedAt || undefined).format('YYYY-MM-DD');
-  const qrValue =
-    payload.inviteUrl && /^https?:\/\//i.test(payload.inviteUrl)
-      ? payload.inviteUrl
-      : payload.shareUrl && /^https?:\/\//i.test(payload.shareUrl)
-      ? payload.shareUrl
-      : typeof window !== 'undefined'
-      ? window.location.href
-      : '';
 
   const handleDownload = async () => {
     if (!posterRef.current || downloading) return;
@@ -101,19 +91,6 @@ export default function ResultPosterModal({
     } finally {
       setDownloading(false);
     }
-  };
-
-  const handleCopyLink = () => {
-    const targetUrl =
-      payload.shareUrl ||
-      (typeof window !== 'undefined' ? window.location.href : '');
-    copyToClipboard(targetUrl)
-      .then(() => {
-        message.success(r.posterLinkCopied);
-      })
-      .catch(err => {
-        message.error(err instanceof Error ? err.message : t.failed);
-      });
   };
 
   return (
@@ -201,20 +178,10 @@ export default function ResultPosterModal({
                     })}
                   </p>
                 </div>
-                {qrValue ? (
-                  <div className={styles.qrBox}>
-                    <QRCodeSVG value={qrValue} size={76} />
-                    <span className={styles.qrHint}>{r.posterQrHint}</span>
-                  </div>
-                ) : null}
               </div>
             </div>
           </div>
         </div>
-
-        {payload.inviteEnabled === false ? (
-          <Alert type='info' showIcon message={t.shareInviteClosed} />
-        ) : null}
 
         <div className={styles.actions}>
           <Button
@@ -224,13 +191,6 @@ export default function ResultPosterModal({
             onClick={handleDownload}
           >
             {r.downloadPoster}
-          </Button>
-          <Button
-            icon={<LinkOutlined />}
-            disabled={loading}
-            onClick={handleCopyLink}
-          >
-            {r.copyPosterLink}
           </Button>
         </div>
       </div>

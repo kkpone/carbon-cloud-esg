@@ -1,4 +1,4 @@
-import { ArrowLeftOutlined, ReloadOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Button, Empty, Spin, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -258,13 +258,6 @@ export default function CompetitionFullRanking({
           <p>{r.tPlusOneNotice}</p>
         </div>
         <div className={styles.headerActions}>
-          <Button
-            icon={<ReloadOutlined />}
-            loading={loading}
-            onClick={() => load()}
-          >
-            {t.retry}
-          </Button>
           <Button icon={<ArrowLeftOutlined />} onClick={onBack}>
             {r.backToTasks}
           </Button>
