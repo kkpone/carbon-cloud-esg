@@ -1,0 +1,220 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  color: #04252b;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 500;
+    color: #04252b;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    color: #6c757d;
+  }
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.boardsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.boardSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.boardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    color: #04252b;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 20px;
+    color: #6c757d;
+  }
+}
+
+.tableCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.rankTable {
+  :global(.ant-table) {
+    border-radius: 0;
+  }
+
+  :global(.ant-table-thead > tr > th) {
+    background: #f7f8f9;
+    color: #04252b;
+    font-weight: 500;
+    padding: 12px 16px;
+    border-bottom-color: #ebeef2;
+  }
+
+  :global(.ant-table-tbody > tr > td) {
+    padding: 12px 16px;
+    border-bottom-color: #f2f4f7;
+    vertical-align: middle;
+  }
+}
+
+.ownRow {
+  background: #f2fbf9;
+
+  :global(td) {
+    background: #f2fbf9 !important;
+  }
+}
+
+.rankCell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #04252b;
+}
+
+.subjectName {
+  font-weight: 500;
+  color: #04252b;
+  word-break: break-word;
+}
+
+.selfTag {
+  margin-left: 6px;
+  font-size: 12px;
+  color: #026961;
+  font-weight: 500;
+}
+
+.numericCell {
+  font-variant-numeric: tabular-nums;
+  color: #344054;
+}
+
+.scoreValue {
+  font-weight: 600;
+  color: #026961;
+  font-variant-numeric: tabular-nums;
+}
+
+.pinnedDock {
+  position: sticky;
+  bottom: 0;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ecf9f6 0%, #f6fcfa 100%);
+  border: 1px solid #8bdac9;
+  box-shadow: 0 -6px 20px rgba(4, 37, 43, 0.08);
+}
+
+.pinnedRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #ccebe4;
+}
+
+.pinnedMain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pinnedLabel {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #0cbf9f1a;
+  color: #026961;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pinnedRank {
+  font-size: 14px;
+  font-weight: 600;
+  color: #04252b;
+  font-variant-numeric: tabular-nums;
+}
+
+.pinnedMetrics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  font-size: 13px;
+  color: #475467;
+  font-variant-numeric: tabular-nums;
+
+  strong {
+    color: #026961;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 767px) {
+  .pinnedRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

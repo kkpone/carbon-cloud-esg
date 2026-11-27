@@ -13,6 +13,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import CompetitionLeaderboard from './components/CompetitionLeaderboard';
+import CompetitionFullRanking from './components/CompetitionFullRanking';
 import CompetitionResults from './components/CompetitionResults';
 import CompetitionTasks from './components/CompetitionTasks';
 import CompetitionContacts from './components/CompetitionContacts';
@@ -90,6 +91,7 @@ export default function CompetitionPage() {
       'tasks',
       'checkin',
       'leaderboard',
+      'fullRanking',
       'results',
     ].includes(requestedTab) &&
     (requestedTab !== 'results' || resultsAvailable)
@@ -357,14 +359,14 @@ export default function CompetitionPage() {
                   type='button'
                   disabled={key === 'results' && !resultsAvailable}
                   className={
-                    (['checkin', 'leaderboard'].includes(tab)
+                    (['checkin', 'leaderboard', 'fullRanking'].includes(tab)
                       ? 'tasks'
                       : tab) === key
                       ? styles.active
                       : ''
                   }
                   aria-current={
-                    (['checkin', 'leaderboard'].includes(tab)
+                    (['checkin', 'leaderboard', 'fullRanking'].includes(tab)
                       ? 'tasks'
                       : tab) === key
                       ? 'page'
@@ -577,6 +579,15 @@ export default function CompetitionPage() {
                     }
                     onBack={() => changeTab('checkin')}
                   />
+                )}
+                {tab === 'fullRanking' && (
+                  <div className={styles.content}>
+                    <CompetitionFullRanking
+                      event={event}
+                      me={me}
+                      onBack={() => changeTab('tasks')}
+                    />
+                  </div>
                 )}
                 {tab === 'results' && (
                   <div className={styles.content}>

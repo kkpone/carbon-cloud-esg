@@ -358,6 +358,7 @@ export default {
       '目前測試環境介面尚未回傳完整分數與個人/決賽明細，頁面已補充模擬前十及決賽範例資料（後端回傳完整成績後自動切換為真實資料）。',
     viewFullRanking: '查看完整排名榜單',
     fullRankingModalTitle: '完整排名榜單',
+    backToTasks: '返回我的參賽任務',
     enterpriseTopTwentyTitle: '企業組排名 TOP 20',
     personalTopFiftyTitle: '個人組排名 TOP 50',
     fullRankingEnterpriseHint: '展示企業組前 20 名成績與排名。',

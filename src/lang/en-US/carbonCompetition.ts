@@ -374,6 +374,7 @@ export default {
       'Showing simulated Top 10 and Finals sample data while full scores are not yet returned by the test API. Live scores will replace this automatically.',
     viewFullRanking: 'View Full Leaderboard',
     fullRankingModalTitle: 'Full Competition Rankings',
+    backToTasks: 'Back to My Tasks',
     enterpriseTopTwentyTitle: 'Enterprise Top 20',
     personalTopFiftyTitle: 'Individual Top 50',
     fullRankingEnterpriseHint:
