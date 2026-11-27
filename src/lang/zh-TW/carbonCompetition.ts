@@ -359,6 +359,7 @@ export default {
     notOnBoard: '暫無排名資料',
     rankColumn: '排名',
     companyColumn: '企業名稱',
+    memberCountColumn: '組員人數',
     participantColumn: '參賽者',
     teamColumn: '所屬企業',
     cScoreColumn: 'C 階段得分',

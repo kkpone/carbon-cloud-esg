@@ -236,6 +236,8 @@ export type PreliminaryResult = {
   trackSnapshot?: string;
   productScore?: number;
   enterpriseScore?: number;
+  rosterCount?: number;
+  registeredMemberCount?: number;
   cScore?: number;
   eScore?: number;
   bonusRate?: number;

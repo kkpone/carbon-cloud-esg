@@ -375,6 +375,7 @@ export default {
     notOnBoard: 'No ranking yet',
     rankColumn: 'Rank',
     companyColumn: 'Enterprise',
+    memberCountColumn: 'Team Members',
     participantColumn: 'Participant',
     teamColumn: 'Company',
     cScoreColumn: 'C Score',

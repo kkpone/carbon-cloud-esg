@@ -392,10 +392,6 @@ export default function CompetitionResults({
       title: r.companyColumn,
       minWidth: 220,
       render: (_value, row) => {
-        const teamKey = row.teamId || row.subjectId;
-        const enterpriseMedal = teamKey
-          ? medalMap.enterpriseByTeamId.get(teamKey)
-          : undefined;
         const isOwn = Boolean(
           (me?.team?.id &&
             (row.subjectId === me.team.id || row.teamId === me.team.id)) ||
@@ -407,24 +403,21 @@ export default function CompetitionResults({
             {isOwn ? (
               <span className={styles.selfTag}>{r.myTeamSuffix}</span>
             ) : null}
-            <CompetitionAwardMedals enterprise={enterpriseMedal} compact />
           </div>
         );
       },
     },
     {
-      title: r.cScoreColumn,
-      width: 118,
-      render: (_value, row) => (
-        <span className={styles.numericCell}>{formatScore(row.cScore)}</span>
-      ),
-    },
-    {
-      title: r.eScoreColumn,
-      width: 118,
-      render: (_value, row) => (
-        <span className={styles.numericCell}>{formatScore(row.eScore)}</span>
-      ),
+      title: r.memberCountColumn,
+      width: 120,
+      render: (_value, row) => {
+        const count = row.rosterCount ?? row.registeredMemberCount;
+        return (
+          <span className={styles.numericCell}>
+            {count == null ? '—' : count}
+          </span>
+        );
+      },
     },
     {
       title: r.bonusColumn,
@@ -434,19 +427,13 @@ export default function CompetitionResults({
       ),
     },
     {
-      title: r.preliminaryTotalColumn,
-      width: 120,
-      render: (_value, row) => (
-        <span className={styles.scoreValue}>{formatScore(row.totalScore)}</span>
-      ),
-    },
-    {
       title: r.awardColumn,
       width: 120,
       render: (_value, row) =>
-        renderAwardTag(
-          normalizeAwardLevel(row.awardLevel, row.ranking),
-          row.qualified,
+        row.qualified === 0 ? (
+          <Tag>{r.completedAward}</Tag>
+        ) : (
+          <Tag color='cyan'>{r.qualifiedTag}</Tag>
         ),
     },
   ];
@@ -461,10 +448,6 @@ export default function CompetitionResults({
       title: r.participantColumn,
       minWidth: 220,
       render: (_value, row) => {
-        const personalMedal = medalMap.personalBySubjectId.get(row.subjectId);
-        const enterpriseMedal = row.teamId
-          ? medalMap.enterpriseByTeamId.get(row.teamId)
-          : undefined;
         const isOwn = Boolean(
           me?.participant?.id && row.subjectId === me.participant.id,
         );
@@ -474,11 +457,6 @@ export default function CompetitionResults({
             {isOwn ? (
               <span className={styles.selfTag}>{r.selfSuffix}</span>
             ) : null}
-            <CompetitionAwardMedals
-              personal={personalMedal}
-              enterprise={enterpriseMedal}
-              compact
-            />
           </div>
         );
       },
@@ -516,15 +494,6 @@ export default function CompetitionResults({
       render: (_value, row) => (
         <span className={styles.scoreValue}>{formatScore(row.totalScore)}</span>
       ),
-    },
-    {
-      title: r.awardColumn,
-      width: 116,
-      render: (_value, row) =>
-        renderAwardTag(
-          normalizeAwardLevel(row.awardLevel, row.ranking),
-          row.qualified,
-        ),
     },
   ];
 
@@ -743,7 +712,7 @@ export default function CompetitionResults({
             dataSource={topTenTeams}
             columns={teamColumns}
             pagination={false}
-            scroll={{ x: 760 }}
+            scroll={{ x: 640 }}
             rowClassName={row =>
               (me?.team?.id &&
                 (row.subjectId === me.team.id || row.teamId === me.team.id)) ||
@@ -777,7 +746,7 @@ export default function CompetitionResults({
             dataSource={topTenPersonal}
             columns={personalColumns}
             pagination={false}
-            scroll={{ x: 920 }}
+            scroll={{ x: 800 }}
             rowClassName={row =>
               me?.participant?.id && row.subjectId === me.participant.id
                 ? styles.ownRow
